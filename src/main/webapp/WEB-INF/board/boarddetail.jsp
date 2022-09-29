@@ -121,8 +121,8 @@
 		<tr>
 			<td>
 				<h2><b>${dto.subject}</b></h2>
-				<c:if test="${memphoto!='no'}"><!-- 탈퇴한 회원은 사진 안나옴 -->
-					<img src="${root}/upload/${memphoto}" onerror="this.src='../images/noimage.png'" width="60" height="60" class="rounded-circle">
+				<c:if test="${userphoto!='no'}"><!-- 탈퇴한 회원은 사진 안나옴 -->
+					<img src="${root}/upload/${userphoto}" onerror="this.src='../images/noimage.png'" width="60" height="60" class="rounded-circle">
 				</c:if>
 				<b>${dto.name}(${dto.id})</b>
 				&nbsp;

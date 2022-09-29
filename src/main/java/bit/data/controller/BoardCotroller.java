@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import bit.data.dto.BoardDto;
 import bit.data.service.BoardAnswerServiceInter;
 import bit.data.service.BoardServiceInter;
-import bit.data.service.MemberServiceInter;
 import util.ChangeName;
 
 @Controller
@@ -34,7 +34,7 @@ public class BoardCotroller {
 	BoardAnswerServiceInter answerService;
 
 	@Autowired
-	MemberServiceInter memberService;
+	UserServiceInter userService;
 
 	@GetMapping("/board/list")
 	public String board(@RequestParam(defaultValue = "1") int currentPage, /* null일 경우 defaultvalue(기본페이지)를 1로 줌 */
@@ -164,18 +164,18 @@ public class BoardCotroller {
 		boardService.updateReadCount(num);
 		// num에 해당하는 dto얻기
 		BoardDto dto = boardService.getData(num);
-		// 글쓴사람의 사진을 memphoto
+		// 글쓴사람의 사진을 userphoto
 		// 이때 글쓴 사람이 탈퇴했을 경우 널포인터 에러가 발생한다
-		String memphoto = "";
+		String userphoto = "";
 		try {
-			memphoto = memberService.getDataById(dto.getId()).getPhoto();
+			userphoto = userService.getDataById(dto.getId()).getPhoto();
 		} catch (NullPointerException e) {
-			memphoto = "no";
+			userphoto = "no";
 			dto.setName("탈퇴한회원");
 		}
 
 		mview.addObject("dto", dto);
-		mview.addObject("memphoto", memphoto);
+		mview.addObject("userphoto", userphoto);
 		mview.addObject("currentPage", currentPage);
 
 		mview.setViewName("/bit/board/boarddetail");

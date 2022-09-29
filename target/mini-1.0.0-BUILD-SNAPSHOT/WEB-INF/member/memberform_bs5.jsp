@@ -145,7 +145,7 @@
 	      <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
 	      
 	      <label>
-	        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> 작성 임시 저장
+	        <input type="checkbox" checked="checked" name="reuser" style="margin-bottom:15px"> 작성 임시 저장
 	      </label>
 	
 	      <p>계정 생성과 관련된 <a href="#" style="color:dodgerblue">계정 약관</a>을 확인해주세요.</p>
