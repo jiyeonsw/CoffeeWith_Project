@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,42 +21,41 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mysql.cj.Session;
 
-import bit.data.dto.MemberDto;
-import bit.data.service.MemberServiceInter;
+import bit.data.dto.UserDto;
 import util.ChangeName;
 
 @Controller
 //앞에 공통적으로 들어가는 매핑 설정 
-@RequestMapping("/member")
-public class MemberController {
+@RequestMapping("/user")
+public class UserController {
 	
 	@Autowired
-	MemberServiceInter memberService;
+	UserServiceInter userService;
 	
 	@GetMapping("/list")
-	public String member(Model model) {
+	public String user(Model model) {
 		
 		//총 멤버 인원수를 db에서 얻는다
-		int totalCount = memberService.getTotalCount();
+		int totalCount = userService.getTotalCount();
 		
 		//전체 멤버데이터를 가져온다
-		List<MemberDto> list = memberService.getAllMembers();
+		List<UserDto> list = userService.getAllusers();
 		
 		//model에 저장을 한다
 		model.addAttribute("totalCount",totalCount);
 		model.addAttribute("list",list);
 		
-		return "/bit2/member/memberlist";
+		return "/bit2/user/userlist";
 	}
 	
 	@GetMapping("/form")
 	public String mform() {
 		
-		return "/bit2/member/memberform";
+		return "/bit2/user/userform";
 	}
 	
 	@PostMapping("/insert")
-	public String insert(HttpServletRequest request, MemberDto dto, MultipartFile myphoto) {
+	public String insert(HttpServletRequest request, UserDto dto, MultipartFile myphoto) {
 		
 		//톰캣에 올라간 upload 폴더 경로 구하기
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
@@ -69,13 +69,13 @@ public class MemberController {
 			myphoto.transferTo(new File(path+"/"+fileName));
 			
 			//db.insert
-			memberService.insertMember(dto);
+			userService.insertuser(dto);
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return "redirect:list";// /member/list 매핑 주소 호출 - 컨트롤러 메서드 호출
+		return "redirect:list";// /user/list 매핑 주소 호출 - 컨트롤러 메서드 호출
 	}
 	
 	//아이디 체크하는 메서드
@@ -85,7 +85,7 @@ public class MemberController {
 	public Map<String,Integer> getSearchId(String id){
 		
 		Map<String,Integer> map = new HashMap<String, Integer>();
-		int count =  memberService.getSearchId(id);// 아이디가 있을 경우 1, 없을 경우 0 반환
+		int count =  userService.getSearchId(id);// 아이디가 있을 경우 1, 없을 경우 0 반환
 		map.put("count", count);
 		
 		return map;
@@ -106,7 +106,7 @@ public class MemberController {
 			photo.transferTo(new File(path+"/"+fileName));
 			System.out.println(fileName);
 			
-			memberService.updatePhoto(num, fileName);
+			userService.updatePhoto(num, fileName);
 			session.setAttribute("loginphoto", fileName);
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
@@ -118,7 +118,7 @@ public class MemberController {
 	@GetMapping("/delete")
 	@ResponseBody
 	public void delete(int num,HttpSession session){
-		memberService.deleteMember(num);	
+		userService.deleteuser(num);	
 		//로그인한 본인 삭제후 모든 세션 지우기
 		session.removeAttribute("loginok");
 		session.removeAttribute("loginid");
@@ -129,15 +129,15 @@ public class MemberController {
 	//수정폼에 출력할 데이터 전환
 	@GetMapping("/updateform")
 	@ResponseBody
-	public MemberDto getData(int num) {
-		return memberService.getDataByNum(num);
+	public UserDto getData(int num) {
+		return userService.getDataByNum(num);
 	}
 
 	//수정
 	@PostMapping("/update")
 	@ResponseBody
-	public void update(MemberDto dto, HttpSession session) {
-		memberService.updateMember(dto);
+	public void update(UserDto dto, HttpSession session) {
+		userService.updateuser(dto);
 		//세션에 저장된 이름도 변경하기
 		session.setAttribute("loginname", dto.getName());
 	}

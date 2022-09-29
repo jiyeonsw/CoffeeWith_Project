@@ -45,7 +45,7 @@ public class AnswerController {
 		Map<String, String> map=new HashMap<>();
 		map.put("aphoto", uploadPhoto);
 		
-		return map;// /member/list 매핑 주소 호출 - 컨트롤러 메서드 호출
+		return map;// /user/list 매핑 주소 호출 - 컨트롤러 메서드 호출
 	}
 	
 	@PostMapping("/insert")

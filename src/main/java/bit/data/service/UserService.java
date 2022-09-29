@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bit.data.dao.UserDaoInter;
+import bit.data.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import bit.data.dao.MemberDaoInter;
-import bit.data.dto.MemberDto;
 @Service
-public class MemberService implements MemberServiceInter {
+public class UserService implements UserServiceInter {
 	
 	@Autowired
-	MemberDaoInter memberDao;
+	UserDaoInter userDao;
 	
 	@Override
 	public int getIdPassCheck(String id, String pass) {
@@ -21,17 +21,17 @@ public class MemberService implements MemberServiceInter {
 		map.put("loginid", id);
 		map.put("loginpass", pass);
 		
-		return memberDao.getIdPassCheck(map);
+		return userDao.getIdPassCheck(map);
 	}
 
 	@Override
-	public MemberDto getDataById(String id) {
-		return memberDao.getDataById(id);
+	public UserDto getDataById(String id) {
+		return userDao.getDataById(id);
 	}
 
 	@Override
-	public MemberDto getDataByNum(int num) {
-		return memberDao.getDataByNum(num);
+	public UserDto getDataByNum(int num) {
+		return userDao.getDataByNum(num);
 	}
 
 	@Override
@@ -40,43 +40,43 @@ public class MemberService implements MemberServiceInter {
 		map.put("num",num);
 		map.put("photo", photo);
 		
-		memberDao.updatePhoto(map);
+		userDao.updatePhoto(map);
 	}
 
 	@Override
-	public void updateMember(MemberDto dto) {
-		memberDao.updateMember(dto);
+	public void updateuser(UserDto dto) {
+		userDao.updateuser(dto);
 	}
 
 	@Override
-	public void deleteMember(int num) {
-		memberDao.deleteMember(num);;
+	public void deleteuser(int num) {
+		userDao.deleteuser(num);;
 	}
 
 	
 	@Override
 	public int getTotalCount() {
-		return memberDao.getTotalCount();
+		return userDao.getTotalCount();
 	}
 
 	@Override
-	public List<MemberDto> getAllMembers() {
-		return memberDao.getAllMembers();
+	public List<UserDto> getAllusers() {
+		return userDao.getAllusers();
 	}
 
 	@Override
-	public void insertMember(MemberDto dto) {
-		memberDao.insertMember(dto);
+	public void insertuser(UserDto dto) {
+		userDao.insertuser(dto);
 	}
 
 	@Override
 	public int getSearchId(String id) {
-		return memberDao.getSearchId(id);
+		return userDao.getSearchId(id);
 	}
 
 	@Override
 	public String getName(String id) {
-		return memberDao.getName(id);
+		return userDao.getName(id);
 	}
 
 }

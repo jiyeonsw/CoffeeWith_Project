@@ -1,208 +1,220 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Gugi&family=Lobster&family=Rubik+Beastly&family=Single+Day&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-	<style type="text/css">
-		*{
-			font-family: 'Gugi';
-		}
-		
-		#btnlogin, #btnlogout{
-			position: fixed;
-			right: 7%;
-    		top: 40%;
-    		background-color: rgb(234,190,195);
-    		border-color: #FF9F9F;
-    		opacity: 0.9;
-		}
-		
-		
-		.loginid{
-			position: fixed;
-			right: 8%;
-   			top: 46%;
-			color: black;
-			font-size: 25px;
-			
-		}
-		
-		
-		
-		#btnlogin:hover {
-			opacity:1;
-		}
-		
-		{box-sizing: border-box;}
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
+          rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <style type="text/css">
+        body * {
+            font-family: 'Jua';
+            color: #664400;
+        }
 
-		/* Button used to open the contact form - fixed at the bottom of the page */
-		.open-button {
-		  background-color: #555;
-		  color: white;
-		  padding: 16px 20px;
-		  border: none;
-		  cursor: pointer;
-		  opacity: 0.8;
-		  position: ab;
-		  bottom: 23px;
-		  right: 28px;
-		  width: 280px;
-		}
-		
-		/* The popup form - hidden by default */
-		.form-popup {
-		  display: none;
-		  position: fixed;
-		  bottom: 0;
-		  right: 15px;
-		  border: 3px solid #f1f1f1;
-		  	z-index: 9;
-		}
-		
-		/* Add styles to the form container */
-		.form-container {
-		  max-width: 300px;
-		  padding: 10px;
-		  background-color: white;
-		}
-		
-		/* Full-width input fields */
-		.form-container input[type=text], .form-container input[type=password] {
-		  width: 100%;
-		  padding: 15px;
-		  margin: 5px 0 22px 0;
-		  border: none;
-		  background: #f1f1f1;
-		}
-		
-		/* When the inputs get focus, do something */
-		.form-container input[type=text]:focus, .form-container input[type=password]:focus {
-		  background-color: #ddd;
-		  outline: none;
-		}
-		
-		/* Set a style for the submit/login button */
-		.form-container .btn {
-		  background-color: #04AA6D;
-		  color: white;
-		  padding: 16px 20px;
-		  border: none;
-		  cursor: pointer;
-		  width: 100%;
-		  margin-bottom:10px;
-		  opacity: 0.8;
-		}
-		
-		/* Add a red background color to the cancel button */
-		.form-container .cancel {
-		  background-color: red;
-		}
-		
-		/* Add some hover effects to buttons */
-		.form-container .btn:hover, .open-button:hover {
-		  opacity: 1;
-		}
-				
-		.header-box{
-			width:1000px;
-		    height:100%;
-			background-image: url("https://i.pinimg.com/originals/da/4f/00/da4f0047275dbcc62465e06e5b29ea84.gif");
-		    background-size: 100%;
-		   	background-repeat: no-repeat;
-		   	background-position: center;
-		   	display: flex;
-		    justify-content: center;
-		    align-items: center;
-		    color: white;
-		}
-	}
+        #btnlogin {
+            margin-left: 200px;
+        }
 
-	</style>
+        #loginstate {
+            font-size: 15px;
+            text-align: right;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        li.main {
+            float: left;
+        }
+
+        li.main > a {
+            display: block;
+            width: 180px;
+            font-family: 'Jua';
+        }
+
+        li.main > a:hover {
+            cursor: pointer;
+        }
+
+        ul.submenu {
+            margin-left: 0px;
+            font-size: 14px;
+            font-family: 'Jua';
+            padding-left: 0px;
+            margin-top: 15px;
+        }
+
+        ul.submenu > li > a {
+            display: block;
+            width: 180px;
+            height: 20px;
+        }
+
+        ul.submenu > li:hover {
+            color: "#994d00";
+            cursor: pointer;
+        }
+
+        div.menu {
+            color: #1a0d00;
+            background-color: #cccccc
+        }
+
+        div.submenu {
+            color: #1a0d00;
+        }
+
+    </style>
 </head>
 <body>
-	<c:set var="root" value="<%=request.getContextPath()%>"/>
-	<div class="header-box">
-		<h1>비트캠프</h1>	
-		<span>
-			<c:if test="${sessionScope.loginok==null}">
-				<button type="button" class="btn btn-danger" id="btnlogin" onclick="openForm()">로그인</button>
-			</c:if>
-			
-			<c:if test="${sessionScope.loginok!=null}">
-				&nbsp;&nbsp;<b class="loginid">${sessionScope.loginname}님</b>
-				<button type="button" class="btn btn-danger" id="btnlogout">로그아웃</button>
-			</c:if>
-		</span>
-	</div>
-	<!-- The form -->
-	<div class="form-popup" id="myForm">
-	  <div class="form-container">
-	    <h1>Login</h1>
-	
-	    <label for="text"><b>아이디</b></label>
-	    <input type="text" placeholder="Enter Email" id="loginid"required>
-	
-	    <label for="psw"><b>비밀번호</b></label>
-	    <input type="password" placeholder="Enter Password" id="loginpass" required>
-	
-	    <button type="submit" class="btn longin-btn">Login</button>
-	    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-	  </div>
-	</div>
-<script>
-	function openForm() {
-	  document.getElementById("myForm").style.display = "block";
-	}
-	
-	function closeForm() {
-	  document.getElementById("myForm").style.display = "none";
-	}	
-	//popup login button
-	$(".longin-btn").click(function () {
-		var id =$("#loginid").val();
-		var pass =$("#loginpass").val();
-		var root = '${root}';
-		
-		console.log(id)
-		console.log(pass)
-		console.log("root"+root);
-		
-		$.ajax({
-			type:"get",
-			url:root+"/member/login",
-			dataType:"json",
-			data:{"id":id,"pass":pass},
-			success: function(res){
-				if(res.result == 'fail'){
-					alert("아이디나 비번이 맞지 않습니다");
-				}else {
-					location.reload();
-				}
-			}
-		})
-	})
-	//logout
-	$("#btnlogout").click(function () {
-		var root = '${root}';
-		$.ajax({
-			type:"get",
-			url:root+"/member/logout",
-			dataType:"text",
-			success: function(res){
-				location.reload();
-			}
-		})
-	})
-	
+<!-- 로고 버튼 누르면 홈으로 -->
+<c:set var="root" value="<%=request.getContextPath()%>"/>
+<a href="${root}/" class="logo" style="font-size: 30px;">
+    <img src="${root}/images/logo1.png" class="rounded-circle" width="40" height="40" align="top">
+    <b> Coffee With </b></a>
+
+<!-- 메뉴 구성 -->
+<c:set var="root" value="<%=request.getContextPath() %>"/>
+<div class="menu">
+    <ul>
+        <!-- 1번째 메뉴 -->
+        <li class="main">
+            <a>메인페이지</a>
+            <ul class="submenu">
+                <li><a href="${root}/">홈페이지</a></li>
+            </ul>
+        </li>
+
+        <!-- 2번째 메뉴 -->
+        <li class="main">
+            <a>카페지도</a>
+            <ul class="submenu">
+                <li>전체 카페 지도</li>
+                <li>찜한 카페 지도</li>
+            </ul>
+        </li>
+
+        <!-- 3번째 메뉴 -->
+        <li class="main">
+            <a>투어모집글</a>
+            <ul class="submenu">
+                <li>모임글 쓰기</li>
+                <li>모임글 목록</li>
+            </ul>
+        </li>
+
+        <!--4번째 메뉴 -->
+        <li class="main">
+            <a>정보공유글</a>
+            <ul class="submenu">
+                <li>정보글 쓰기</li>
+                <li>정보글 목록</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+<!-- 로그인 로그아웃 -->
+<span id="loginstate" ; style="text-align: right;">
+    <c:if test="${sessionScope.loginok==null}">
+        <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
+                data-bs-toggle="modal" data-bs-target="#myModal">Login</button>
+    </c:if>
+
+		<c:if test="${sessionScope.loginok!=null}">
+            <b>${sessionScope.loginname}님</b> &nbsp;
+            <button type="button" class="btn btn-info btn-sm" id="btnlogout">Logout</button>
+        </c:if>
+</span>
+
+
+<!-- 로그인창 -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">회원 로그인 해주세요</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="input-group mb-3 input-group-sm">
+                    <span class="input-group-text">LoginId</span> <input type="text"
+                                                                         class="form-control" id="loginid">
+                </div>
+                <div class="input-group mb-3 input-group-sm">
+                    <span class="input-group-text">LoginPass</span> <input
+                        type="password" class="form-control" id="loginpass">
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success"
+                        data-bs-dismiss="modal" id="btnloginok">Login
+                </button>
+                <button type="button" class="btn btn-danger"
+                        data-bs-dismiss="modal">Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 스크립트 이벤트 -->
+<script type="text/javascript">
+
+    // 팝업창에 있는 로그인 버튼
+    $("#btnloginok").click(function () {
+        // 아이디와 비번 읽기
+        var id = $("#loginid").val();
+        var pass = $("#loginpass").val();
+        var root = '${root}';
+        console.log("root" + root);
+
+        $.ajax({
+            type: "get",
+            url: root + "/member/login",
+            dataType: "json",
+            data: {"id": id, "pass": pass},
+            success: function (res) {
+                if (res.result == 'fail') {
+                    alert("아이디나 비번이 맞지 않습니다");
+                } else {
+                    location.reload();
+                }
+            }
+        });
+    });
+
+    // 로그아웃
+    $("#btnlogout").click(function () {
+        var root = '${root}';
+
+        $.ajax({
+            type: "get",
+            url: root + "/member/logout",
+            dataType: "text",
+
+            success: function (res) {
+                location.reload();
+            }
+        });
+    });
 </script>
 </body>
 </html>
