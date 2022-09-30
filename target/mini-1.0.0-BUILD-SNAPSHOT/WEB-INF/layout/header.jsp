@@ -59,7 +59,6 @@
         }
 
         ul.submenu > li:hover {
-            color: "#994d00";
             cursor: pointer;
         }
 

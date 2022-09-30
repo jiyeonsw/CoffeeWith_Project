@@ -1,11 +1,10 @@
 package bit.data.service;
 
-import java.util.List;
-
-import bit.data.dto.UserDto;
-
 public interface UserServiceInter {
-	public int getTotalCount();
+
+    public int selectSearchId(String email_id);
+
+	/*public int getTotalCount();
 	public List<UserDto> getAllusers();
 	public void insertuser(UserDto dto);
 	public int getSearchId(String id);
@@ -16,5 +15,5 @@ public interface UserServiceInter {
 	public UserDto getDataByNum(int num);
 	public void updatePhoto(int num, String photo);
 	public void updateuser(UserDto dto);
-	public void deleteuser(int num);
+	public void deleteuser(int num);*/
 }
