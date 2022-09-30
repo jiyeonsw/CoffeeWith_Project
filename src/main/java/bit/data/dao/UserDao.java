@@ -1,21 +1,22 @@
 package bit.data.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import bit.data.dto.UserDto;
-
 @Repository
 public class UserDao implements UserDaoInter {
-	@Autowired
-	SqlSession session;
-	//namespace를 짧게 만들어 편의성을 줌.
-	String ns = "bit.data.dao.userDao.";
-	
+    @Autowired
+    SqlSession session;
+    //namespace를 짧게 만들어 편의성을 줌.
+    String ns = "bit.data.dao.userDao.";
+
+    @Override
+    public int selectSearchId(String email_id) {
+        return session.selectOne(ns + "selectSearchId", email_id);
+    }
+
+	/*
 	@Override
 	public int getIdPassCheck(Map<String, String> map) {
 		return session.selectOne(ns+"loginIdPassCheck", map);
@@ -71,6 +72,6 @@ public class UserDao implements UserDaoInter {
 	@Override
 	public String getName(String id) {
 		return session.selectOne(ns+"getName",id);
-	}
+	}*/
 
 }

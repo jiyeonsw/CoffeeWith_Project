@@ -1,26 +1,17 @@
 package bit.data.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import bit.data.dto.UserDto;
 
 @Controller
 @RequestMapping("/user")
 public class LoginController {
-   
-   @Autowired
-   UserServiceInter userService;
-   
+
+    @Autowired
+    UserServiceInter userService;
+   /*
    @GetMapping("/login")
    @ResponseBody
    public Map<String, String> loginprocess(String id, String pass, HttpSession session)
@@ -49,6 +40,6 @@ public class LoginController {
 	   //로그아웃시 제거되어야할 세션
 	   session.removeAttribute("loginok");
 	   session.removeAttribute("loginid");
-   }
+   }*/
 }
 

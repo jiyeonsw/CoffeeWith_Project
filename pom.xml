@@ -6,6 +6,7 @@
     <artifactId>mini</artifactId>
     <name>SpringMiniProject</name>
     <packaging>war</packaging>
+    <version>version 1.0.0-build-snapshot</version>
     <properties>
         <java-version>11</java-version>
         <org.springframework-version>5.1.2.RELEASE</org.springframework-version>
@@ -207,8 +208,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <source>7</source>
-                    <target>7</target>
+                    <source>11</source>
+                    <target>11</target>
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
