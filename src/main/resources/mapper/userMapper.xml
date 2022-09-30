@@ -2,12 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.UserDao">
-    <select id="selectSearchId" parameterType="String" resultType="int">-->
-    SELECT count(*)
-    FROM ur
-    WHERE email_id = #{email_id}
+    <select id="selectSearchId" parameterType="String" resultType="int">
+        SELECT count(*)
+        FROM ur
+        WHERE email_id = #{email_id}
     </select>
-
+    <insert id="insertUser" parameterType="UserDto">
+        insert into ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
+                        loc_gu, status, report)
+        values (null, '임시용', #{userName}, #{userPass}, '되라', '제발', #{emailId}, null,
+                null, null, null, null, '정상', 0)
+    </insert>
 
     <!--    <select id="selectTotalCount" resultType="int">-->
     <!--        select count(*)-->

@@ -1,6 +1,7 @@
 package bit.data.service;
 
 import bit.data.dao.UserDaoInter;
+import bit.data.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,14 @@ public class UserService implements UserServiceInter {
 
     @Override
     public int selectSearchId(String email_id) {
-        System.out.println(email_id);
+//        System.out.println(email_id);
         return userDao.selectSearchId(email_id);
+    }
+
+    @Override
+    public void insertUser(UserDto dto) {
+        System.out.println("ser " + dto.getEmailId());
+        userDao.insertUser(dto);
     }
 
     /* @Override

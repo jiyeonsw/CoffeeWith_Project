@@ -1,12 +1,15 @@
 package bit.data.controller;
 
+import bit.data.dto.UserDto;
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,9 +41,25 @@ public class UserController {
         Map<String, Integer> map = new HashMap<>();
         // 아이디가 있을 경우 1, 없을 경우 0 반환
         int countId = userService.selectSearchId(email_id);
+//        System.out.println(countId);
         map.put("countId", countId);
 
         return map;
+    }
+
+    @PostMapping("/insert_user")
+    public void insert(HttpServletRequest request, UserDto dto) {
+        System.out.println(request.getParameter("emailId"));
+        System.out.println(request.getParameter("userName"));
+
+        try {
+            //db.insert
+            userService.insertUser(dto);
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
 
