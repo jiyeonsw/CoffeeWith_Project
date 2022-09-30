@@ -13,7 +13,7 @@ public class CafeController {
     @Autowired
     CafeServiceInter cafeService;
 
-    @GetMapping("/cafe/info")
+    @GetMapping("/cafe/detail")
     public ModelAndView selectCafe(int cf_id){
         ModelAndView mview=new ModelAndView();
         CafeDto dto=cafeService.selectCafe(cf_id);
