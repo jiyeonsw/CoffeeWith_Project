@@ -1,7 +1,11 @@
 package bit.data.dao;
 
+import bit.data.dto.UserDto;
+
 public interface UserDaoInter {
     public int selectSearchId(String email_id);
+
+    public void insertUser(UserDto dto);
 
 /*    public int getTotalCount();
 

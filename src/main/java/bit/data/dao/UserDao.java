@@ -1,5 +1,6 @@
 package bit.data.dao;
 
+import bit.data.dto.UserDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,12 +10,20 @@ public class UserDao implements UserDaoInter {
     @Autowired
     SqlSession session;
     //namespace를 짧게 만들어 편의성을 줌.
-    String ns = "bit.data.dao.userDao.";
+    String ns = "bit.data.dao.UserDao.";
 
     @Override
     public int selectSearchId(String email_id) {
+        System.out.println("email" + email_id);
         return session.selectOne(ns + "selectSearchId", email_id);
     }
+
+    @Override
+    public void insertUser(UserDto dto) {
+        session.insert(ns + "insertUser", dto);
+
+    }
+
 
 	/*
 	@Override
