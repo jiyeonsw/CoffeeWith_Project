@@ -30,7 +30,7 @@
 
 <body>
 <div id="main">
-	메인 홈 페이지 부분
+	메인 홈 페이지 부분dddd
 
 </div>
 </body>

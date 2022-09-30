@@ -83,7 +83,7 @@
 
         <!-- 2번째 메뉴 -->
         <li class="main">
-            <a>카페지도</a>
+            <a href="${root}/map/mainmap">카페지도</a>
         </li>
 
         <!-- 3번째 메뉴 -->
@@ -99,7 +99,7 @@
 </div>
 
 <!-- 로그인 로그아웃 -->
-<span id="loginstate" ; style="text-align: right;">
+<span id="loginstate" style="text-align: right;">
     <c:if test="${sessionScope.loginok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
                 onclick="location.href='login_main'">Login</button>
