@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -22,7 +22,7 @@
 <!-- 			<beans:property name="prefix" value="/WEB-INF/" /> -->
 <!-- 			<beans:property name="suffix" value=".jsp" /> -->
 <!-- 		</beans:bean> -->
-	
+
 <!-- 	Tiles Resolver -->
 	<beans:bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
@@ -39,13 +39,13 @@
 		<beans:property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles3.TilesView"/>
 	</beans:bean>
-	
+
 	<!-- file upload setting -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="5000000"/><!--약 500mb -->
 		<beans:property name="defaultEncoding" value="utf-8"/>
 	</beans:bean>
-	
+
 	<context:component-scan base-package="com.bit.mini, bit.data.*" />
 </beans:beans>
 

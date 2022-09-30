@@ -8,53 +8,50 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Lobster&family=Rubik+Beastly&family=Single+Day&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <title>Layout1</title>
+
     <style type="text/css">
-        body * {
-            font-family: 'THE하늘색바람';
+        * {
+            font-family: 'Jua';
         }
 
-        div.mainlayout1 {
-            display: block;
-            width: 1000px;
-            position: relative;
-            margin: 0 auto
+        body {
+            font-family: 'Jua';
+            font-size: 20px;
+        }
+
+        .main_layout1 {
+            display: flex;
+            flex-direction: column;
+        }
+
+        a:link, a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            cursor: pointer;
         }
 
         #header {
-            overflow: hidden;
-            width: 1000px;
-            height: 300px;
+            height: 90px;
+            text-align: center;
         }
-
-        #main {
-            width: 100%;
-        }
-
     </style>
 </head>
 <body>
-<div class="mainlayout1">
-
+<div class="main_layout1">
     <div class="main" id="header">
         <tiles:insertAttribute name="header"/>
     </div>
-    <div class="main" id="menu">
-        <tiles:insertAttribute name="menu"/>
-    </div>
-    <div style="display: flex;">
-        <div class="main" id="info" style="width: 280px; height: 600px;align-self: flex-start;">
-            <tiles:insertAttribute name="info"/>
-        </div>
-        <div class="main" id="main">
-            <tiles:insertAttribute name="main"/>
-        </div>
+    <hr>
+    <div class="main" id="main">
+        <tiles:insertAttribute name="main"/>
     </div>
 </div>
 </body>
