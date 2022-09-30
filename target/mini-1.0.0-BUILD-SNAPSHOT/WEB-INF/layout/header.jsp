@@ -128,12 +128,14 @@
     <c:if test="${sessionScope.loginok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
                 data-bs-toggle="modal" data-bs-target="#myModal">Login</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
+                onclick="location.href='user_form'">Sign Up</button>
     </c:if>
 
-		<c:if test="${sessionScope.loginok!=null}">
-            <b>${sessionScope.loginname}님</b> &nbsp;
-            <button type="button" class="btn btn-info btn-sm" id="btnlogout">Logout</button>
-        </c:if>
+    <c:if test="${sessionScope.loginok!=null}">
+        <b>${sessionScope.loginname}님</b> &nbsp;
+        <button type="button" class="btn btn-info btn-sm" id="btnlogout">Logout</button>
+    </c:if>
 </span>
 
 
@@ -170,7 +172,6 @@
                         data-bs-dismiss="modal">Close
                 </button>
             </div>
-
         </div>
     </div>
 </div>

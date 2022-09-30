@@ -1,9 +1,9 @@
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		 pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
+
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -14,18 +14,24 @@
 	<title>Title</title>
 
 	<style type="text/css">
-		body{font-size: 20px;}
-		#main {font-family:'Jua'; font-size:20px; color:#664400; padding-top: 30px;}
+		body {
+			font-size: 20px;
+		}
+
+		#main {
+			font-family: 'Jua';
+			font-size: 20px;
+			color: #664400;
+			padding-top: 30px;
+		}
 
 	</style>
 </head>
 
 <body>
-
 <div id="main">
 	메인 홈 페이지 부분
 
 </div>
-
 </body>
 </html>
