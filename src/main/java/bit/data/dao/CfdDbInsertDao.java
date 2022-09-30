@@ -1,15 +1,15 @@
 package bit.data.dao;
 
-import bit.data.dto.DbInsertDto;
+import bit.data.dto.CfdDbInsertDto;
 import util.DbConnect;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DbInsertDao {
+public class CfdDbInsertDao {
     DbConnect db=new DbConnect();
-    public void insertCf(DbInsertDto dto){
+    public void insertCf(CfdDbInsertDto dto){
         String sql="insert into cf values (null,?,?,?,?,?,?,?,?,? ,0,0,?,?)";
         Connection conn=null;
         PreparedStatement pstmt=null;

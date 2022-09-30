@@ -8,6 +8,5 @@
 		<typeAlias type="bit.data.dto.UserDto" alias="userDto"/>
 		<typeAlias type="bit.data.dto.BoardDto" alias="bdto"/>
 		<typeAlias type="bit.data.dto.BoardAnswerDto" alias="badto"/>
-		<typeAlias type="bit.data.dto.DbInsertDtoDto" alias="didto"/>
 	</typeAliases>
 </configuration>

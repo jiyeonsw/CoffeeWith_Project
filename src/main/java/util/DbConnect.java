@@ -13,7 +13,7 @@ public class DbConnect {
 
     static final String MYSQL_DRIVER="com.mysql.cj.jdbc.Driver";
     //내pc
-    static final String MYSQL_URL="jdbc:mysql://coffewith.c195hphxfgkw.ap-northeast-2.rds.amazonaws.com:3306/bitcamp4?serverTimezone=Asia/Seoul";
+    static final String MYSQL_URL="jdbc:mysql://coffeewith.c195hphxfgkw.ap-northeast-2.rds.amazonaws.com:3306/bitcamp4?serverTimezone=Asia/Seoul";
     //강사님pc (ip변경)
     //static final String MYSQL_URL="jdbc:mysql://192.168.0.27:3306/bitcamp?serverTimezone=Asia/Seoul";
 
