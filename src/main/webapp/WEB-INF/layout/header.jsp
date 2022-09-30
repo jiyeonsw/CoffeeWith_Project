@@ -94,7 +94,7 @@
 
         <!-- 2번째 메뉴 -->
         <li class="main">
-            <a>카페지도</a>
+            <a href="${root}/map/mainmap">카페지도</a>
             <ul class="submenu">
                 <li>전체 카페 지도</li>
                 <li>찜한 카페 지도</li>
@@ -123,7 +123,7 @@
 
 
 <!-- 로그인 로그아웃 -->
-<span id="loginstate" ; style="text-align: right;">
+<span id="loginstate" style="text-align: right;">
     <c:if test="${sessionScope.loginok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
                 data-bs-toggle="modal" data-bs-target="#myModal">Login</button>
