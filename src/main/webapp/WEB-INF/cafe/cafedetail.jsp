@@ -19,29 +19,68 @@
         div.cf-top{
             display: flex;
         }
+        div.cf-bottom{
+            display: flex;
+        }
+        div.cf-middle a{
+            font-size: 30px;
+            width: 300px;
+        }
     </style>
 
 </head>
 <body>
    <div style="margin: 50px 50px;">
        <div class="cf-top">
-       <div>
-           <img src="../images/noimage.png" width="300" height="300">
+           <div>
+               <img src="../images/cwith2022093011603.png" width="300" height="300" style="border-radius: 10px;">
+           </div>
+           <div style="margin-left: 10px;">
+               <div><h1>${dto.cf_nm}</h1></div>
+               <div>${dto.cf_txt}</div>
+               <br>
+               <div><span>위치</span>  <span>나중에 </span></div>
+               <div><span>리뷰</span>  <span>${dto.cm_cnt}</span></div>
+               <hr>
+                <div><i class="fa-regular fa-heart"></i>${dto.ck_cnt}</div>
+           </div>
        </div>
-       <div>
-       <div>${dto.cf_nm}</div>
-       <div>${dto.cf_txt}</div>
+       <div class="cf-middle">
+           <a>카페정보</a><a>리뷰(${dto.ck_cnt})</a><a>사진</a>
        </div>
-       </div>
+        <div class="cf-bottom">
        <div id="map" style="width:300px;height:400px;"></div>
-
+        <div>
+            <div><span>영업시간</span> <span>${dto.open_time}</span></div>
+            <div><span>휴무일</span> <span>${dto.off_day}</span></div>
+            <div><span>전화번호</span> <span>${dto.cf_tel}</span></div>
+            <div><span>주소</span> <span>${dto.loc_addr}</span></div>
+            <div><span>대표메뉴</span> <span>${dto.menu}</span></div>
+        </div>
+        </div>
        <script>
+           var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
            var mapOptions = {
-               center:new naver.maps.LatLng(37.3595704, 127.105399),
-               zoom: 1
+               center:position,
+               zoom: 18
            };
-
            var map =new naver.maps.Map('map', mapOptions);
+
+           var markerOptions = {
+               position: position,
+               map: map,
+               icon: {
+                   url: '../images/cafemarker.png',
+                   size: new naver.maps.Size(22, 35),
+                   origin: new naver.maps.Point(0, 0),
+                   anchor: new naver.maps.Point(11, 35)
+               }
+           };
+           var marker = new naver.maps.Marker({
+               position: position,
+               map: map,
+               markerOptions : markerOptions
+           });
        </script>
 
    </div>
