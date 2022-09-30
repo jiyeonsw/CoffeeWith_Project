@@ -3,6 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.CafeDao">
 	<select id="selectCafe" parameterType="int" resultType="cfdto">
-		select * from cf where cf_id=${cf_id}
+		SELECT * FROM cf WHERE cf_id=#{cf_id}
+	</select>
+	<select id="selectAllCafe" resultType="cfdto">
+		SELECT * FROM cf WHERE ORDER BY cf_id DESC
 	</select>
 </mapper>
