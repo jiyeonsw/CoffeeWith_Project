@@ -5,22 +5,29 @@ import bit.data.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService implements UserServiceInter {
 
     @Autowired
-    UserDaoInter userDao;
+    UserDaoInter UserDao;
 
     @Override
-    public int selectSearchId(String email_id) {
-//        System.out.println(email_id);
-        return userDao.selectSearchId(email_id);
+    public int selectSearchId(String emailId) {
+//        System.out.println(emailId);
+        return UserDao.selectSearchId(emailId);
     }
 
     @Override
     public void insertUser(UserDto dto) {
         System.out.println("ser " + dto.getEmailId());
-        userDao.insertUser(dto);
+        UserDao.insertUser(dto);
+    }
+
+    @Override
+    public List<String> selectSubstrSi() {
+        return UserDao.selectSubstrSi();
     }
 
     /* @Override

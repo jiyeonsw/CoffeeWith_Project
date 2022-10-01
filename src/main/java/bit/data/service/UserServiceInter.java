@@ -2,11 +2,15 @@ package bit.data.service;
 
 import bit.data.dto.UserDto;
 
+import java.util.List;
+
 public interface UserServiceInter {
 
-    public int selectSearchId(String email_id);
+    public int selectSearchId(String emailId);
 
     public void insertUser(UserDto dto);
+
+    public List<String> selectSubstrSi();
 
 	/*public int getTotalCount();
 	public List<UserDto> getAllusers();

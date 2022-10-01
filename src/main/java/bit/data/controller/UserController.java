@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
-//앞에 공통적으로 들어가는 매핑 설정 
+//앞에 공통적으로 들어가는 매핑 설정
 @RequestMapping("/")
 public class UserController {
 
@@ -36,11 +39,11 @@ public class UserController {
     //email_id check
     @GetMapping("/id_check")
     @ResponseBody
-    public Map<String, Integer> selectSearchId(String email_id) {
-//        System.out.println(email_id);
+    public Map<String, Integer> selectSearchId(String emailId) {
+        System.out.println(emailId);
         Map<String, Integer> map = new HashMap<>();
         // 아이디가 있을 경우 1, 없을 경우 0 반환
-        int countId = userService.selectSearchId(email_id);
+        int countId = userService.selectSearchId(emailId);
 //        System.out.println(countId);
         map.put("countId", countId);
 
@@ -48,21 +51,43 @@ public class UserController {
     }
 
     @PostMapping("/insert_user")
-    public void insert(HttpServletRequest request, UserDto dto) {
+    public String insert(HttpServletRequest request, UserDto dto) {
         System.out.println(request.getParameter("emailId"));
         System.out.println(request.getParameter("userName"));
 
-        try {
+      /*  try {
             //db.insert
             userService.insertUser(dto);
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-
+        }*/
+        return "redirect:/login_main";
     }
 
+    @PostMapping("/pass_check")
+    @ResponseBody
+    public boolean PassCheck(String userPass) {
 
+        boolean check = false;
+
+        String pwChk = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*?&`~'\"+=])[A-Za-z[0-9]$@$!%*?&`~'\"+=]{7,16}$";
+
+        Pattern pattern_symbol = Pattern.compile(pwChk);
+        Matcher matcher_symbol = pattern_symbol.matcher(userPass);
+
+        if (matcher_symbol.find()) {
+            check = true;
+        }
+        return check;
+    }
+
+    @GetMapping("/select_si")
+    @ResponseBody
+    public List<String> selectSi() {
+        List<String> list = userService.selectSubstrSi();
+        return list;
+    }
 
    /* @GetMapping("/id_check")
     @ResponseBody//json을 반환한다는 뜻. REST 컨트롤러를 따로 주지 않기 위해 ResponseBody를 줌

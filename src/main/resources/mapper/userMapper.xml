@@ -5,7 +5,7 @@
     <select id="selectSearchId" parameterType="String" resultType="int">
         SELECT count(*)
         FROM ur
-        WHERE email_id = #{email_id}
+        WHERE email_id = #{emailId}
     </select>
     <insert id="insertUser" parameterType="UserDto">
         insert into ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
@@ -13,6 +13,12 @@
         values (null, '임시용', #{userName}, #{userPass}, '되라', '제발', #{emailId}, null,
                 null, null, null, null, '정상', 0)
     </insert>
+    <select id="selectSubstrSi" resultType="String">
+        select substr(loc_addr, 1, instr(loc_addr, ' ') - 1) as 'city'
+        from cf
+        group by city;
+    </select>
+
 
     <!--    <select id="selectTotalCount" resultType="int">-->
     <!--        select count(*)-->
