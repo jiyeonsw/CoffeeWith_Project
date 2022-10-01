@@ -2,10 +2,14 @@ package bit.data.dao;
 
 import bit.data.dto.UserDto;
 
+import java.util.List;
+
 public interface UserDaoInter {
-    public int selectSearchId(String email_id);
+    public int selectSearchId(String emaiId);
 
     public void insertUser(UserDto dto);
+
+    public List<String> selectSubstrSi();
 
 /*    public int getTotalCount();
 

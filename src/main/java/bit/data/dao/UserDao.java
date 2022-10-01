@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class UserDao implements UserDaoInter {
     @Autowired
@@ -13,15 +15,20 @@ public class UserDao implements UserDaoInter {
     String ns = "bit.data.dao.UserDao.";
 
     @Override
-    public int selectSearchId(String email_id) {
-        System.out.println("email" + email_id);
-        return session.selectOne(ns + "selectSearchId", email_id);
+    public int selectSearchId(String emailId) {
+        System.out.println("Dao_email: " + emailId);
+        return session.selectOne(ns + "selectSearchId", emailId);
     }
 
     @Override
     public void insertUser(UserDto dto) {
         session.insert(ns + "insertUser", dto);
 
+    }
+
+    @Override
+    public List<String> selectSubstrSi() {
+        return session.selectList(ns + "selectSubstrSi");
     }
 
 

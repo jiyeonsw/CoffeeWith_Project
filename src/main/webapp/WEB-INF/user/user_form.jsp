@@ -58,7 +58,7 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<form action="${root}/insert_user" method="post" onsubmit="return check()">
+<form action="insert_user" method="post" onsubmit="return check()">
     <div id="container" class="container">
         <div id="contents" class="contents">
             <%--컨텐츠영역--%>
@@ -81,6 +81,7 @@
                         <input type="password" id="inp-pass" placeholder="영문,숫자,특수문자 8~16자이내" class="form-control"
                                required="required" name="userPass">
                     </div>
+                    <div class="pass-success"></div>
                 </div>
                 <div class="inp-frm">
                     <label for="inp-repass" class="titLab">비밀번호 확인</label>
@@ -88,68 +89,128 @@
                         <input type="password" id="inp-repass" placeholder="확인을 위해 한번 더 입력해주세요" class="form-control"
                                required="required">
                     </div>
-                    <div class="pass-success"></div>
+                    <div class="repass-success"></div>
                 </div>
                 <div class="inp-frm">
                     <label for="inp-email" class="titLab">이름</label>
                     <div class="inpB">
                         <input type="text" id="inp-name" placeholder="이름을 입력해주세요" class="form-control"
-                               required="required" name="userPass">
+                               required="required" name="userName">
                     </div>
                 </div>
-                <%--                <div class="inp-frm">--%>
-                <%--                    <label for="inp-phone" class="titLab">휴대전화번호</label>--%>
-                <%--                    <div class="inpA">--%>
-                <%--                        <input type="text" id="inp-phone" placeholder="010-0000-0000" class="form-control">--%>
-                <%--                        <button type="button" id="btn-phone-chk" class="btn btn-outline-info btnA">본인확인</button>--%>
-                <%--                    </div>--%>
-                <%--                </div>--%>
-                <button type="submit" class="btn btn-info" style="width: 450px;">회원가입</button>
+                <div class="inp-frm">
+                    <label for="inp-nick" class="titLab">닉네임</label>
+                    <div class="inpB">
+                        <input type="text" id="inp-nick" placeholder="닉네임을 입력해주세요" class="form-control"
+                               required="required" name="userNick">
+                    </div>
+                </div>
+                <div class="inp-frm">
+                    <label for="inp-nick" class="titLab">시/도</label>
+                    <div class="inpB">
+                        <select id="sel-si" class="form-select"></select>
+                    </div>
+                </div>
+
+                <button type="submit" id="inp-btn" class="btn btn-info" style="width: 450px;">회원가입</button>
             </fieldset>
         </div>
     </div>
 </form>
 <script>
+    $("#sel-si").click(function () {
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "select_si",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
+            success: function (res) {
+                alert("yes");
+                $.each(res, function (idx, val) {
+                    console.log(idx + " : " + val);
+                })
+            }
+        })
+
+    })
+
+    //이메일 아이디 변경 시 체크
+    $("#inp-email").change(function () {
+        $("div.id-success").text("입력하신 이메일 아이디를 중복 확인해주세요.").attr("value", "");
+    })//$("#inp-email")
+
+    //이메일 아이디 중복 조회
     $("#btn-id-chk").click(function () {
         const inpEmail = $("#inp-email").val();
-        alert(inpEmail);
         $.ajax({
             type: "get",
             dataType: "json",
             url: "id_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
-            data: {"email_id": inpEmail},
+            data: {"emailId": inpEmail},
             success: function (res) {
                 if (res.countId == 0) {
-                    console.log(res.countId)
-                    $("div.id-success").text("해당 이메일로 가입하실 수 있습니다.");
+                    // console.log(res.countId)
+                    $("div.id-success").text("해당 이메일 아이디로 가입하실 수 있습니다.").attr("value", "Y");
                 } else {
-                    $("div.id-success").text("동일한 이메일이 현재 등록되어있습니다.");
+                    $("div.id-success").text("해당 이메일 아이디는 가입이 불가능합니다.").attr("value", "N");
                 }
             }//success
         })//$.ajax
     })//$("#btn-id-chk")
 
+    //비밀번호 유효성 검사
+    $("#inp-pass").keyup(function () {
+        const inpPass = $(this).val();
+        $("#inp-repass").val("");
+        $("div.repass-success").text("").attr("value", "");
+        // console.log(inpPass);
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "pass_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
+            data: {"userPass": inpPass},
+            success: function (res) {
+                if (res == true) {
+                    $("div.pass-success").text("입력한 비밀번호는 사용이 가능합니다.");
+                } else {
+                    $("div.pass-success").text("영문,숫자,특수문자 구성으로 8~16자 이내로 입력해주세요.");
+                }
+            },
+            error: function (request, status) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        })
+    })// $("#inp-pass")
+
+    //비밀번호 일치 확인
     $("#inp-repass").keyup(function () {
         var p1 = $("#inp-pass").val();
         var p2 = $(this).val();
         if (p1 == p2) {
-            $("div.pass-success").text("ok");
+            $("div.repass-success").text("입력한 비밀번호를 사용 가능합니다.").attr("value", "Y");
+        } else if (p2 == "") {
+            $("div.repass-success").text("").attr("value", "");
         } else {
-            $("div.pass-success").text("다름");
-        }//else
+            $("div.repass-success").text("입력한 비밀번호가 일치하지 않습니다.").attr("value", "N");
+        }
+        //else
     })//$("#inp-repass")
 
     function check() {
 
-        //중복체크
-        if ($("div.id-success").text() == '') {
-            alert("아이디 중복체크를 해주세요");
-            return false; //false를 해야 return이 호출되지 않음.
+        if ($("#inp-name").val().length <= 1) {
+            alert("이름을 정확히 입력해주세요");
+            return false;
         }
-        //비밀번호
-        if ($("div.pass-success").text() == '') {
-            alert("비밀번호가 서로 다릅니다");
-            return false; //false를 해야 return이 호출되지 않음.
+        var idChk = $(".id-success").attr("value");
+        var passChk = $(".repass-success").attr("value");
+        if (idChk != 'Y') {
+            alert("동일한 이메일 아이디가 존재합니다. 수정 후 회원가입해주세요.");
+            return false;
+        }
+
+        if (passChk != 'Y') {
+            alert("입력한 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+            return false;
         }
     }//check()
 </script>
