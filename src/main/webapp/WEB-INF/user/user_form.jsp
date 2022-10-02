@@ -31,10 +31,9 @@
         }
 
         .inp-frm {
-            width: 450px;
             display: flex;
             flex-direction: column;
-            margin-bottom: 13px;
+            margin-bottom: 15px;
         }
 
         .inpA {
@@ -105,33 +104,49 @@
                                required="required" name="userNick">
                     </div>
                 </div>
+                <br>
+                <hr>
+                <br>
                 <div class="inp-frm">
-                    <label for="inp-nick" class="titLab">시/도</label>
+                    <label for="inp-nick" class="titLab">선호지역</label>
                     <div class="inpB">
-                        <select id="sel-si" class="form-select"></select>
+                        <select id="sel-si" class="form-select">
+                            <option disabled selected>- 지역 선택 -</option>
+                        </select>
                     </div>
                 </div>
-
-                <button type="submit" id="inp-btn" class="btn btn-info" style="width: 450px;">회원가입</button>
+                <button type="submit" id="inp-btn" class="btn btn-info btnB">회원가입</button>
             </fieldset>
         </div>
     </div>
 </form>
 <script>
-    $("#sel-si").click(function () {
+    $(document).ready(function () {
+        selCity();
+    })
+
+    //선호지역 옵션 구현(DB(지역추출)-> Controller -> ajax(출력))
+    function selCity() {
+        //중복 출력 되지 않도록 기존출력값(selected는 제외한) remove
+        $("#sel-si").children('option:not(:first)').remove();
+        //ajax가 실행되기전까지 선택되지않도록 세팅
+        $("#sel-si").attr("disabled", true);
         $.ajax({
             type: "get",
             dataType: "json",
-            url: "select_si",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
+            url: "select_si",
             success: function (res) {
-                alert("yes");
+                //ajax가 실행되기전까지 선택되지않도록 세팅
+                $("#sel-si").attr("disabled", false);
                 $.each(res, function (idx, val) {
-                    console.log(idx + " : " + val);
+                    if (val != "") {
+                        var cityOption = "<option value='" + val + "'>" + val + "</option>";
+                        $("#sel-si").append(cityOption);
+                    }
                 })
             }
         })
-
-    })
+    }
 
     //이메일 아이디 변경 시 체크
     $("#inp-email").change(function () {
@@ -141,12 +156,14 @@
     //이메일 아이디 중복 조회
     $("#btn-id-chk").click(function () {
         const inpEmail = $("#inp-email").val();
+        $("#inp-email").attr("disabled", true);
         $.ajax({
             type: "get",
             dataType: "json",
             url: "id_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
             data: {"emailId": inpEmail},
             success: function (res) {
+                $("#inp-email").attr("disabled", false);
                 if (res.countId == 0) {
                     // console.log(res.countId)
                     $("div.id-success").text("해당 이메일 아이디로 가입하실 수 있습니다.").attr("value", "Y");
