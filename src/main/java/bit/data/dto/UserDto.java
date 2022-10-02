@@ -14,8 +14,9 @@ public class UserDto {
     private String naverId;
     private String kakaoId;
     private String googleId;
-    private String locationSi;
-    private String locationGu;
+    private String locSi;
+    private String locGu;
     private String userStatus;
     private int report;
+    private String userPhnum;
 }

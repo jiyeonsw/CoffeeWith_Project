@@ -20,8 +20,13 @@ public class UserService implements UserServiceInter {
     }
 
     @Override
+    public int selectSearchNick(String userNick) {
+        return UserDao.selectSearchNick(userNick);
+    }
+
+    @Override
     public void insertUser(UserDto dto) {
-        System.out.println("ser " + dto.getEmailId());
+//        System.out.println("ser " + dto.getEmailId());
         UserDao.insertUser(dto);
     }
 
@@ -29,6 +34,14 @@ public class UserService implements UserServiceInter {
     public List<String> selectSubstrSi() {
         return UserDao.selectSubstrSi();
     }
+
+    @Override
+    public UserDto selectDataById(int userId) {
+        System.out.println(userId);
+        return UserDao.selectDataById(userId);
+    }
+
+
 
     /* @Override
     public int getIdPassCheck(String id, String pass) {

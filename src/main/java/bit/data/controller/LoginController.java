@@ -1,9 +1,14 @@
 package bit.data.controller;
 
+import bit.data.dto.UserDto;
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -32,14 +37,32 @@ public class LoginController {
       
       map.put("result", result==1?"success":"fail");
       return map;
-   }
-
-   @GetMapping("/logout")
-   @ResponseBody
-   public void logout(HttpSession session) {
-	   //로그아웃시 제거되어야할 세션
-	   session.removeAttribute("loginok");
-	   session.removeAttribute("loginid");
    }*/
+
+    @GetMapping("/logout")
+    @ResponseBody
+    public void logout(HttpSession session) {
+        //로그아웃시 제거되어야할 세션
+        session.removeAttribute("login_ok");
+        session.removeAttribute("login_id");
+        session.removeAttribute("login_nick");
+    }
+
+    //임시 세션 저장
+    @GetMapping("/call_session")
+    @ResponseBody
+    public void callSession(HttpSession session) {
+        session.setMaxInactiveInterval(60 * 60 * 12);
+        
+        UserDto dto = userService.selectDataById(2);
+
+        System.out.println(dto.getUserId());
+        System.out.println(dto.getEmailId());
+        System.out.println(dto.getUserNick());
+
+        session.setAttribute("login_ok", "yes");
+        session.setAttribute("login_id", dto.getEmailId());
+        session.setAttribute("login_nick", dto.getUserNick());
+    }
 }
 

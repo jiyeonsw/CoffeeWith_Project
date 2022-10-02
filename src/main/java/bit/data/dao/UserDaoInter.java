@@ -7,9 +7,13 @@ import java.util.List;
 public interface UserDaoInter {
     public int selectSearchId(String emaiId);
 
+    public int selectSearchNick(String userNick);
+
     public void insertUser(UserDto dto);
 
     public List<String> selectSubstrSi();
+
+    public UserDto selectDataById(int userId);
 
 /*    public int getTotalCount();
 
