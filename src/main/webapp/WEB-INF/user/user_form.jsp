@@ -52,6 +52,20 @@
             width: 100%;
         }
 
+        .role-box {
+            display: grid;
+            grid-template-columns: 0.2fr 1.8fr 0.5fr;
+            row-gap: 10px;
+            margin-top: 10px;
+            border: 1px solid gray;
+            padding: 10px 10px 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 15px; /*Desired width*/
+            height: 15px; /*Desired height*/
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -91,7 +105,7 @@
                     <div class="repass-success"></div>
                 </div>
                 <div class="inp-frm">
-                    <label for="inp-email" class="titLab">이름</label>
+                    <label for="inp-name" class="titLab">이름</label>
                     <div class="inpB">
                         <input type="text" id="inp-name" placeholder="이름을 입력해주세요" class="form-control"
                                required="required" name="userName">
@@ -99,20 +113,39 @@
                 </div>
                 <div class="inp-frm">
                     <label for="inp-nick" class="titLab">닉네임</label>
-                    <div class="inpB">
+                    <div class="inpA">
                         <input type="text" id="inp-nick" placeholder="닉네임을 입력해주세요" class="form-control"
                                required="required" name="userNick">
+                        <button type="button" id="btn-nick-chk" class="btn btn-outline-info btnA">중복확인</button>
                     </div>
+                    <div class="nick-success"></div>
                 </div>
-                <br>
                 <hr>
-                <br>
                 <div class="inp-frm">
                     <label for="inp-nick" class="titLab">선호지역</label>
                     <div class="inpB">
-                        <select id="sel-si" class="form-select">
+                        <select id="sel-si" class="form-select" name='locSi'>
                             <option disabled selected>- 지역 선택 -</option>
                         </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="inp-frm">
+                    <label for="chk-useRole" class="titLab">이용약관 / 개인정보 수집 및 이용 동의</label>
+                    <div class="role-box" id="chk-useRole">
+                        <input type="checkbox" class="allchk-col" id="role-allchk">
+                        전체 동의
+                        <a style="visibility: hidden;"></a>
+                        <input type="checkbox" class="role-chk" required>
+                        (필수) 만 14세 이상입니다.
+                        <a style="visibility: hidden;"></a>
+                        <input type="checkbox" class="role-chk" required>
+                        (필수) 이용약관 동의
+                        <a href="#">내용보기</a>
+                        <input type="checkbox" class="role-chk" required>
+                        (필수) 개인정보 수집 및 이용 동의
+                        <a href="#">내용보기</a>
+
                     </div>
                 </div>
                 <button type="submit" id="inp-btn" class="btn btn-info btnB">회원가입</button>
@@ -174,6 +207,27 @@
         })//$.ajax
     })//$("#btn-id-chk")
 
+    //닉네임 중복 조회
+    $("#btn-nick-chk").click(function () {
+        const inpNick = $("#inp-nick").val();
+        $("#inp-nick").attr("disabled", true);
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "nick_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
+            data: {"userNick": inpNick},
+            success: function (res) {
+                $("#inp-nick").attr("disabled", false);
+                if (res.countNick == 0) {
+                    console.log(res.countNick)
+                    $("div.nick-success").text("해당 닉네임으로 사용가능합니다.").attr("value", "Y");
+                } else {
+                    $("div.nick-success").text("입력하신 닉네임은 현재 사용중입니다.").attr("value", "N");
+                }
+            }
+        })
+    })//$("#btn-nick-chk")
+
     //비밀번호 유효성 검사
     $("#inp-pass").keyup(function () {
         const inpPass = $(this).val();
@@ -212,10 +266,26 @@
         //else
     })//$("#inp-repass")
 
+    //이용약관 전체 체크
+    $("#role-allchk").click(function () {
+        var allchk = $(this).prop("checked");
+        // console.log(allchk);
+        if (allchk == true) {
+            $(".role-chk").prop("checked", true);
+        } else {
+            $(".role-chk").prop("checked", false);
+        }
+    })
+
     function check() {
 
         if ($("#inp-name").val().length <= 1) {
             alert("이름을 정확히 입력해주세요");
+            return false;
+        }
+
+        if ($("#inp-nick").val().length <= 2) {
+            alert("닉네임을 3글자 이상 입력해주세요");
             return false;
         }
         var idChk = $(".id-success").attr("value");

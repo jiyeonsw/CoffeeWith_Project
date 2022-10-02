@@ -8,9 +8,13 @@ public interface UserServiceInter {
 
     public int selectSearchId(String emailId);
 
+    public int selectSearchNick(String userNick);
+
     public void insertUser(UserDto dto);
 
     public List<String> selectSubstrSi();
+
+    public UserDto selectDataById(int userId);
 
 	/*public int getTotalCount();
 	public List<UserDto> getAllusers();

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,19 +49,18 @@ public class UserController {
         return map;
     }
 
-    @PostMapping("/insert_user")
-    public String insert(HttpServletRequest request, UserDto dto) {
-        System.out.println(request.getParameter("emailId"));
-        System.out.println(request.getParameter("userName"));
+    //nickname check
+    @GetMapping("/nick_check")
+    @ResponseBody
+    public Map<String, Integer> selectSearchNick(String userNick) {
+        System.out.println(userNick);
+        Map<String, Integer> map = new HashMap<>();
+        // 닉네임이 있을 경우 1, 없을 경우 0 반환
+        int countNick = userService.selectSearchNick(userNick);
+        System.out.println(countNick);
+        map.put("countNick", countNick);
 
-      /*  try {
-            //db.insert
-            userService.insertUser(dto);
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/
-        return "redirect:/login_main";
+        return map;
     }
 
     @PostMapping("/pass_check")
@@ -88,6 +86,23 @@ public class UserController {
         List<String> list = userService.selectSubstrSi();
         return list;
     }
+
+    @PostMapping("/insert_user")
+    public String insert(UserDto dto) {
+        System.out.println(dto.getEmailId());
+        System.out.println(dto.getLocSi());
+
+        try {
+            //db.insert
+            userService.insertUser(dto);
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "redirect:/login_main";
+    }
+
+
 
    /* @GetMapping("/id_check")
     @ResponseBody//json을 반환한다는 뜻. REST 컨트롤러를 따로 주지 않기 위해 ResponseBody를 줌

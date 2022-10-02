@@ -16,12 +16,22 @@ public class UserDao implements UserDaoInter {
 
     @Override
     public int selectSearchId(String emailId) {
-        System.out.println("Dao_email: " + emailId);
+//        System.out.println("Dao_email: " + emailId);
         return session.selectOne(ns + "selectSearchId", emailId);
     }
 
     @Override
+    public int selectSearchNick(String userNick) {
+//        System.out.println("Dao_userNick: " + userNick);
+        return session.selectOne(ns + "selectSearchNick", userNick);
+    }
+
+    @Override
     public void insertUser(UserDto dto) {
+        System.out.println("Dao : " + dto.getEmailId());
+        System.out.println("Dao : " + dto.getUserNick());
+        System.out.println("Dao : " + dto.getUserName());
+        System.out.println("Dao : " + dto.getLocSi());
         session.insert(ns + "insertUser", dto);
 
     }
@@ -29,6 +39,12 @@ public class UserDao implements UserDaoInter {
     @Override
     public List<String> selectSubstrSi() {
         return session.selectList(ns + "selectSubstrSi");
+    }
+
+    @Override
+    public UserDto selectDataById(int userId) {
+        System.out.println(userId);
+        return session.selectOne(ns + "selectDataById", userId);
     }
 
 

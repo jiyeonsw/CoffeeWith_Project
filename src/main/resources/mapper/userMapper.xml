@@ -7,18 +7,28 @@
         FROM ur
         WHERE email_id = #{emailId}
     </select>
-    <insert id="insertUser" parameterType="UserDto">
-        insert into ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
-                        loc_gu, status, report)
-        values (null, '임시용', #{userName}, #{userPass}, '되라', '제발', #{emailId}, null,
-                null, null, null, null, '정상', 0)
-    </insert>
-    <select id="selectSubstrSi" resultType="String">
-        select substr(loc_addr, 1, instr(loc_addr, ' ') - 1) as 'city'
-        from cf
-        group by city;
+    <select id="selectSearchNick" parameterType="String" resultType="int">
+        SELECT count(*)
+        FROM ur
+        WHERE ur_nk = #{userNick}
     </select>
-
+    <insert id="insertUser" parameterType="UserDto">
+        INSERT INTO ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
+                        loc_gu, status, report, ur_phnum)
+        VALUES (null, #{userNick}, #{userName}, #{userPass}, null, null, #{emailId}, null,
+                null, null, #{locSi}, null, '정상', 0, #{userPhnum})
+    </insert>
+    <!--시/도명 추출 명령문-->
+    <select id="selectSubstrSi" resultType="String">
+        SELECT substr(loc_addr, 1, instr(loc_addr, ' ') - 1) AS 'city'
+        FROM cf
+        GROUP BY city;
+    </select>
+    <select id="selectDataById" parameterType="int" resultType="UserDto">
+        SELECT *
+        FROM ur
+        WHERE ur_id = #{userId};
+    </select>
 
     <!--    <select id="selectTotalCount" resultType="int">-->
     <!--        select count(*)-->

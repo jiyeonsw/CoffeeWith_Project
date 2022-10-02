@@ -100,16 +100,20 @@
 
 <!-- 로그인 로그아웃 -->
 <span id="loginstate" style="text-align: right;">
-    <c:if test="${sessionScope.loginok==null}">
+    <c:if test="${sessionScope.login_ok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
                 onclick="location.href='login_main'">Login</button>
         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
                 onclick="location.href='user_form'">Sign Up</button>
+        <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
+                세션주기</button>
     </c:if>
 
-    <c:if test="${sessionScope.loginok!=null}">
-        <b>${sessionScope.loginname}님</b> &nbsp;
-        <button type="button" class="btn btn-info btn-sm" id="btnlogout">Logout</button>
+    <c:if test="${sessionScope.login_ok!=null}">
+        <b>${sessionScope.login_nick}님</b> &nbsp;
+        <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
+                onclick="location.href='mypage'">My Page</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
     </c:if>
     </span>
 
@@ -117,7 +121,7 @@
 <!-- 스크립트 이벤트 -->
 <script type="text/javascript">
 
-    // 팝업창에 있는 로그인 버튼
+    //로그인 버튼
     $("#btnloginok").click(function () {
         // 아이디와 비번 읽기
         var id = $("#loginid").val();
@@ -146,14 +150,28 @@
 
         $.ajax({
             type: "get",
-            url: root + "/member/logout",
+            url: root + "user/logout",
             dataType: "text",
 
             success: function (res) {
                 location.reload();
             }
-        });
-    });
+        })
+    })
+
+    //세션주기
+    $("#call-session-btn").click(function () {
+        var root = '${root}';
+        
+        $.ajax({
+            type: "get",
+            url: root + "/user/call_session",
+            dataType: "json",
+            success: function (res) {
+                location.reload();
+            }
+        })
+    })
 </script>
 </body>
 </html>
