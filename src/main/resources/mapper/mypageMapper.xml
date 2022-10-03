@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.data.dao.MypageDao">
+    <!--마이페이지 : 카페 북마크 수-->
+    <select id="selectCfLkCnt" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM ur u
+                 INNER JOIN cf_lk c ON (u.ur_id = c.ur_id)
+        WHERE u.ur_id = #{loginId};
+    </select>
+    <!--마이페이지 : 작성한 리뷰 수-->
+    <select id="selectCfCmtCnt" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM ur u
+                 INNER JOIN cf_cmt c ON (u.ur_id = c.ur_id)
+        WHERE u.ur_id = #{loginId};
+    </select>
+</mapper>
