@@ -13,21 +13,21 @@
           rel="stylesheet">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <title>Layout1</title>
+    <title>CofeeWith</title>
 
     <style type="text/css">
-        * {
+        body * {
             font-family: 'Jua';
-        }
-
-        body {
-            font-family: 'Jua';
-            font-size: 20px;
         }
 
         .main_layout1 {
             display: flex;
             flex-direction: column;
+        }
+
+        #header {
+            height: 90px;
+            text-align: center;
         }
 
         a:link, a:visited {
@@ -38,10 +38,7 @@
             cursor: pointer;
         }
 
-        #header {
-            height: 90px;
-            text-align: center;
-        }
+
     </style>
 </head>
 <body>

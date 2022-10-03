@@ -11,27 +11,26 @@ import java.util.List;
 public class UserDao implements UserDaoInter {
     @Autowired
     SqlSession session;
-    //namespace를 짧게 만들어 편의성을 줌.
     String ns = "bit.data.dao.UserDao.";
 
     @Override
-    public int selectSearchId(String emailId) {
-//        System.out.println("Dao_email: " + emailId);
-        return session.selectOne(ns + "selectSearchId", emailId);
+    public int selectSearchId(String email_id) {
+//        System.out.println("Dao_email: " + email_id);
+        return session.selectOne(ns + "selectSearchId", email_id);
     }
 
     @Override
-    public int selectSearchNick(String userNick) {
-//        System.out.println("Dao_userNick: " + userNick);
-        return session.selectOne(ns + "selectSearchNick", userNick);
+    public int selectSearchNick(String ur_nk) {
+//        System.out.println("Dao_ur_nk: " + ur_nk);
+        return session.selectOne(ns + "selectSearchNick", ur_nk);
     }
 
     @Override
     public void insertUser(UserDto dto) {
-        System.out.println("Dao : " + dto.getEmailId());
-        System.out.println("Dao : " + dto.getUserNick());
-        System.out.println("Dao : " + dto.getUserName());
-        System.out.println("Dao : " + dto.getLocSi());
+//        System.out.println("Dao : " + dto.getEmail_id());
+//        System.out.println("Dao : " + dto.getUr_nk());
+//        System.out.println("Dao : " + dto.getUr_nm());
+//        System.out.println("Dao : " + dto.getLoc_si());
         session.insert(ns + "insertUser", dto);
 
     }
@@ -42,68 +41,8 @@ public class UserDao implements UserDaoInter {
     }
 
     @Override
-    public UserDto selectDataById(int userId) {
-        System.out.println(userId);
-        return session.selectOne(ns + "selectDataById", userId);
+    public UserDto selectDataById(int ur_id) {
+//        System.out.println("DAO:" + ur_id);
+        return session.selectOne(ns + "selectDataById", ur_id);
     }
-
-
-	/*
-	@Override
-	public int getIdPassCheck(Map<String, String> map) {
-		return session.selectOne(ns+"loginIdPassCheck", map);
-	}
-
-	@Override
-	public UserDto getDataById(String id) {
-		return session.selectOne(ns+"getDateById",id);
-	}
-
-	@Override
-	public UserDto getDataByNum(int num) {
-		return session.selectOne(ns+"getDateByNum",num);
-	}
-
-	@Override
-	public void updatePhoto(Map<String, Object> map) {
-		session.update(ns+"updatePhoto",map);
-	}
-
-	@Override
-	public void updateuser(UserDto dto) {
-		session.update(ns+"updateuser",dto);
-	}
-
-	@Override
-	public void deleteuser(int num) {
-		session.delete(ns+"deleteuser",num);
-	}
-
-	@Override
-	public int getTotalCount() {
-		//같은 id가 없을 경우 아래처럼 id만 작성
-		//같은 id가 있을 경우 namespace.getTotalCount
-		return session.selectOne(ns+"getTotalCount"); //bit.data.dao.userDao.getTotalCount
-	}
-
-	@Override
-	public List<UserDto> getAllusers() {
-		return session.selectList(ns+"getAllusers");
-	}
-
-	@Override
-	public void insertuser(UserDto dto) {
-		session.insert(ns+"insertuser",dto);
-	}
-
-	@Override
-	public int getSearchId(String id) {
-		return session.selectOne(ns+"getIdSearch",id);
-	}
-	
-	@Override
-	public String getName(String id) {
-		return session.selectOne(ns+"getName",id);
-	}*/
-
 }
