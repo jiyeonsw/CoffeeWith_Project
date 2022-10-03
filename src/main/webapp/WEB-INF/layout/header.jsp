@@ -41,6 +41,11 @@
             text-align: right;
         }
 
+        div.menu {
+            color: #1a0d00;
+            background-color: #cccccc
+        }
+
         ul li {
             list-style: none;
         }
@@ -53,7 +58,6 @@
             display: block;
             width: 180px;
             font-family: 'Jua';
-            font-size: 20px;
         }
 
         li.main > a:hover {
@@ -64,7 +68,7 @@
 <body>
 <!-- 로고 버튼 누르면 홈으로 -->
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<a href="${root}/" class="logotitle">
+<a href="${root}/" class="logotitle" style="font-size: 30px;">
     <img src="${root}/images/logo1.png" class="rounded-circle" width="40" height="40">
     <b> Coffee With </b></a>
 
@@ -110,8 +114,6 @@
         <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
                 onclick="location.href='mypage'">My Page</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
-        <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
-                세션제거</button>
     </c:if>
     </span>
 
@@ -160,27 +162,12 @@
     //세션주기
     $("#call-session-btn").click(function () {
         var root = '${root}';
-
+        
         $.ajax({
             type: "get",
             url: root + "/user/call_session",
-            dataType: "text",
+            dataType: "json",
             success: function (res) {
-                location.reload();
-            }
-        })
-    })
-
-    //세션제거
-    $("#del-session-btn").click(function () {
-        var root = '${root}';
-
-        $.ajax({
-            type: "get",
-            url: root + "/user/del_session",
-            dataType: "text",
-            success: function (res) {
-                alert("del suc");
                 location.reload();
             }
         })
