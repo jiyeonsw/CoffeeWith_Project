@@ -9,7 +9,7 @@ public interface ComFeedDaoInter {
     public int selectMaxNum();
     public int selectTotalCount(Map<String, String> map);
     public ComFeedDto selectFeed(int num);
-    public List<ComFeedDto> searchFeed(Map<String, String> map);
+    public List<ComFeedDto> searchFeedByTag(Map<String, String> map);
     public void insertFeed(ComFeedDto dto);
     public void updateFeed(ComFeedDto dto);
     public void deleteFeed(int num);

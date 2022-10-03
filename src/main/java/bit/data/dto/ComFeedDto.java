@@ -16,4 +16,5 @@ public class ComFeedDto {
     private Timestamp w_date;
     private Timestamp u_date;
     private int likes;
+    private int acount;
 }

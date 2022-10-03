@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="bit.data.dao.ComFeedDao.">
+<mapper namespace="bit.data.dao.ComFeedDao">
     <select id="selectMaxNum" resultType="int">
         select ifnull(max(num),0) from fd
     </select>
     <select id="selectTotalCount" parameterType="Map" resultType="int">
-        select count(*) from fd where
+        select count(*) from fd
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat ('%',#{searchword},'%')
+        </if>
     </select>
     <select id="selectFeed" parameterType="int" resultType="cfDto">
         select * from fd where num=#{num}
     </select>
     <select id="searchFeedByTag" parameterType="Map" resultType="cfDto">
-        select * from fd where ${searchcolumn} like #{searchword}
+        select * from fd
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat ('%',#{searchword},'%')
+        </if>
+        order by w_date desc;
     </select>
     <insert id="insertFeed" parameterType="cfDto">
         insert into fd values (null, , ,#{fd_txt},#{fd_photo},now(),null,0)

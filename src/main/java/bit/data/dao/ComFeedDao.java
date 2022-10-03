@@ -30,7 +30,9 @@ public class ComFeedDao implements ComFeedDaoInter{
     }
 
     @Override
-    public List<ComFeedDto> searchFeed(Map<String, String> map) { return session.selectList(ns+"searchFeed", map); }
+    public List<ComFeedDto> searchFeedByTag(Map<String, String> map) {
+        return session.selectList(ns+"searchFeedByTag", map);
+    }
 
     @Override
     public void insertFeed(ComFeedDto dto) {

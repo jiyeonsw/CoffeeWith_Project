@@ -3,13 +3,12 @@ package bit.data.service;
 import bit.data.dto.ComFeedDto;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ComFeedServiceInter {
     public int selectMaxNum();
-    public int selectTotalCount(Map<String, String> map);
+    public int selectTotalCount(String searchColumn, String searchWord);
     public ComFeedDto selectFeed(int num);
-    public List<ComFeedDto> searchFeed(Map<String, String> map);
+    public List<ComFeedDto> searchFeedByTag(String searchColumn, String searchWord);
     public void insertFeed(ComFeedDto dto);
     public void updateFeed(ComFeedDto dto);
     public void deleteFeed(int num);
