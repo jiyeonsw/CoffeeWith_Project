@@ -2,6 +2,7 @@ package bit.data.service;
 
 import bit.data.dao.CafeDaoInter;
 import bit.data.dto.CafeDto;
+import bit.data.dto.CafeImgDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,10 @@ public class CafeService implements CafeServiceInter {
     @Override
     public List<CafeDto> selectAllCafe() {
         return cafeDao.selectAllCafe();
+    }
+
+    @Override
+    public List<CafeImgDto> selectCafeImg(int cf_id) {
+        return cafeDao.selectCafeImg(cf_id);
     }
 }
