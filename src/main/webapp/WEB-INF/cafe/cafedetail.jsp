@@ -22,9 +22,15 @@
         div.cf-bottom{
             display: flex;
         }
+        div.cf-middle{
+            display: flex;
+            text-align: center;
+        }
         div.cf-middle a{
             font-size: 30px;
             width: 300px;
+            text-align: center;
+            cursor: pointer;
         }
     </style>
 
@@ -32,10 +38,38 @@
 <body>
    <div style="margin: 50px 50px;">
        <div class="cf-top">
-           <div>
-               <img src="../images/cwith2022093011603.png" width="300" height="300" style="border-radius: 10px;">
+           <!-- Carousel -->
+           <div id="demo" class="carousel slide" data-bs-ride="carousel">
+               <!-- Indicators/dots -->
+               <div class="carousel-indicators">
+                   <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                    <c:forEach items="${list}" var="dtoi" varStatus="i">
+                   <button type="button" data-bs-target="#demo" data-bs-slide-to="${i.index+1}"></button>
+                    </c:forEach>
+               </div>
+               <!-- The slideshow/carousel -->
+               <div class="carousel-inner">
+
+               <c:forEach items="${list}" var="dtoi" varStatus="i">
+                   <c:if test="${i.count==1}"><div class="carousel-item active"></c:if>
+                   <c:if test="${i.count>1}"><div class="carousel-item"> </c:if>
+                       <img src="../images/cafeimg/${dtoi.ci_nm}"  class="d-block" style="width:300px">
+                   </div>
+               </c:forEach>
+               </div> <!--carousel-inner-->
+
+               <!-- Left and right controls/icons -->
+               <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                   <span class="carousel-control-prev-icon"></span>
+               </button>
+               <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                   <span class="carousel-control-next-icon"></span>
+               </button>
+
            </div>
-           <div style="margin-left: 10px;">
+
+           <!--메인정보-->
+           <div style="margin-left: 30px;">
                <div><h1>${dto.cf_nm}</h1></div>
                <div>${dto.cf_txt}</div>
                <br>
@@ -44,13 +78,16 @@
                <hr>
                 <div><i class="fa-regular fa-heart"></i>${dto.ck_cnt}</div>
            </div>
-       </div>
+       </div> <!--cf_top-->
+           <br>
        <div class="cf-middle">
            <a>카페정보</a><a>리뷰(${dto.ck_cnt})</a><a>사진</a>
        </div>
+       <hr>
+       <br>
         <div class="cf-bottom">
        <div id="map" style="width:300px;height:400px;"></div>
-        <div>
+        <div style="margin-left: 30px;">
             <div><span>영업시간</span> <span>${dto.open_time}</span></div>
             <div><span>휴무일</span> <span>${dto.off_day}</span></div>
             <div><span>전화번호</span> <span>${dto.cf_tel}</span></div>
