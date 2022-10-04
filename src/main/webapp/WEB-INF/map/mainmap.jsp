@@ -11,6 +11,11 @@
     <title>간단한 지도 표시하기</title>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8mlhxamjq5"></script>
     <style>
+        #container{
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
         #map{
             float:right;
             width:80%;
@@ -19,17 +24,47 @@
 
         #sidebar{
             width:20%;
-            eight:590px;
+            height:590px;
+            background-color: white;
+        }
+
+        button.maketour{
+            float: right;
         }
     </style>
 </head>
 <body>
-<div id="sidebar">
-
+<div id="container">
+    <div id="sidebar">
+        <button type="button" class="maketour">투어 만들기</button>
+        <%--검색바--%>
+        <div class="input-group">
+            <input type="text" class="form-control cafesearch" placeholder="검색어를 입력하세요">
+            <button type="button" class="btn btn-success searchbtn">검색</button>
+        </div>
+        <div class="searchlist"></div>
+    </div>
+    <div id="map"></div>
 </div>
-
-<div id="map"></div>
 <script>
+    $("button.searchbtn").click(function (){
+        var searchword=$("input.cafesearch").val();
+        console.log(searchword);
+        $.ajax({
+            type: "get",
+            url: "searchword",
+            dataType: "json",
+            data:{"searchword":searchword},
+            success: function(res) {
+                console.log(res);
+                var s="";
+                $.each(res,function(i,elt){
+                    s+="<div>"+elt.cf_nm+"</div><br>";
+                });
+                $("div.searchlist").html(s);
+            }
+        });
+    });
     //지도 옵션
     var mapOptions = {
         center:new naver.maps.LatLng(37.4993705, 127.0290175),
@@ -45,11 +80,11 @@
     map.getPanes().floatPane.appendChild(menuLayer[0]);
     //줌 이벤트 리스터 생성
     naver.maps.Event.addListener(map, 'zoom_changed', function(zoom) {
-        console.log(zoom);
+       // console.log(zoom);
     });
     //바운드 이벤트 리스터 생성
     naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
-        console.log('Center: ' + map.getCenter().toString() + ', Bounds: ' + bounds.toString());
+       // console.log('Center: ' + map.getCenter().toString() + ', Bounds: ' + bounds.toString());
     });
     /* //마우스 클릭 이벤트시 좌표에 마커찍기
      naver.maps.Event.addListener(map, 'click', function(e) {
@@ -73,7 +108,6 @@
     //마커들 마커 배열에 넣기
     markerList.push(marker);
     </c:forEach>
-    console.log(map.size);
 </script>
 </body>
 </html>
