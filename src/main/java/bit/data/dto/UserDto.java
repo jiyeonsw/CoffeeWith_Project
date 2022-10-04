@@ -4,19 +4,19 @@ import lombok.Data;
 
 @Data
 public class UserDto {
-    private int userId;
-    private String userNick;
-    private String userName;
-    private String userPass;
-    private String userTxt;
-    private String userImg;
-    private String emailId;
-    private String naverId;
-    private String kakaoId;
-    private String googleId;
-    private String locSi;
-    private String locGu;
-    private String userStatus;
+    private int ur_id;
+    private String ur_nk;
+    private String ur_nm;
+    private String ur_pw;
+    private String ur_txt;
+    private String ur_img;
+    private String email_id;
+    private String naver_id;
+    private String kakao_id;
+    private String google_id;
+    private String loc_si;
+    private String loc_gu;
+    private String status;
     private int report;
-    private String userPhnum;
+    private String ur_phnum;
 }

@@ -26,16 +26,67 @@
             display: flex;
             text-align: center;
         }
-        div.cf-middle a{
+        div.cf-middle div{
             font-size: 30px;
             width: 300px;
             text-align: center;
             cursor: pointer;
         }
     </style>
+    <script>
+        $(function (){
+
+           var cf_id=15; //나중에 받아오기
+
+
+            $("div#cf-info").click(function (){
+                cafeinfo(cf_id);
+            })
+
+            $("div#ci-link").click(function (){
+               //console.log(cf_id);
+                $.ajax({
+                    type: "get",
+                    url: "img",
+                    dataType: "json",
+                    data: {"cf_id": cf_id},
+                    success: function (res) {
+                        var s = "";
+                        $.each(res, function (i, elt) {
+                            s += '<img src="../images/cafeimg/' + elt.ci_nm + '" style="width: 300px; height: 300px;">';
+                        });//each
+                        $("div.cf-bottom").html(s);
+                    }//succ
+                });//ajax
+            });//사진 클릭
+        });//function
+
+        function cafeinfo(cf_id){
+            var s="";
+            $.ajax({
+                type: "get",
+                url: "info",
+                dataType: "json",
+                data: {"cf_id": cf_id},
+                success: function (res) {
+                    s+= '<div id="map" style="width:300px;height:400px;"></div>';
+                    s+='<div style="margin-left: 30px;">';
+                    s+='<div><span>영업시간</span> <span>'+ res.open_time+'</span></div>';
+                    s+= '<div><span>휴무일</span> <span>'+res.off_day+'</span></div>';
+                    s+='<div><span>전화번호</span> <span>'+res.cf_tel+'</span></div>';
+                    s+='<div><span>주소</span> <span>'+res.loc_addr+'</span></div>';
+                    s+='<div><span>대표메뉴</span> <span>'+res.menu+'</span></div>';
+                    s+='</div>';
+                    $("div.cf-bottom").html(s);
+                }//succ
+
+            })//ajax
+        }//cafeinfo
+    </script>
 
 </head>
 <body>
+
    <div style="margin: 50px 50px;">
        <div class="cf-top">
            <!-- Carousel -->
@@ -81,7 +132,7 @@
        </div> <!--cf_top-->
            <br>
        <div class="cf-middle">
-           <a>카페정보</a><a>리뷰(${dto.ck_cnt})</a><a>사진</a>
+           <div id="cf-info">카페정보</div><div >리뷰(${dto.ck_cnt})</div><div id="ci-link">사진</div>
        </div>
        <hr>
        <br>
@@ -93,33 +144,34 @@
             <div><span>전화번호</span> <span>${dto.cf_tel}</span></div>
             <div><span>주소</span> <span>${dto.loc_addr}</span></div>
             <div><span>대표메뉴</span> <span>${dto.menu}</span></div>
+        </div>-
         </div>
-        </div>
-       <script>
-           var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
-           var mapOptions = {
-               center:position,
-               zoom: 18
-           };
-           var map =new naver.maps.Map('map', mapOptions);
+        <script>
+            var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
+            var mapOptions = {
+                center:position,
+                zoom: 18
+            };
+            var map =new naver.maps.Map('map', mapOptions);
 
-           var markerOptions = {
-               position: position,
-               map: map,
-               icon: {
-                   url: '../images/cafemarker.png',
-                   size: new naver.maps.Size(22, 35),
-                   origin: new naver.maps.Point(0, 0),
-                   anchor: new naver.maps.Point(11, 35)
-               }
-           };
-           var marker = new naver.maps.Marker({
-               position: position,
-               map: map,
-               markerOptions : markerOptions
-           });
-       </script>
+            var markerOptions = {
+                position: position,
+                map: map,
+                icon: {
+                    url: '../images/cafemarker.png',
+                    size: new naver.maps.Size(22, 35),
+                    origin: new naver.maps.Point(0, 0),
+                    anchor: new naver.maps.Point(11, 35)
+                }
+            };
+            var marker = new naver.maps.Marker({
+                position: position,
+                map: map,
+                markerOptions : markerOptions
+            });
 
+
+        </script>
    </div>
 </body>
 </html>

@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="main-container">
-    콘텐츠 메인
+    <div></div>
 </div>
 </body>
 </html>
