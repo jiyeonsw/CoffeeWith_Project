@@ -54,47 +54,37 @@
 
     <div class="login-input-area">
         <div class="input-row">
-
             <div id="idAreaForm" data-element="form" class="input">
                 <input type="text" data-element="input" id="userId" name="userId" class="input-text"
                        tabindex="1" placeholder="아이디" style="width: 200px;">
             </div>
             <br>
-
             <div class="input-row input-row--password">
                 <div id="pwAreaForm" data-element="form" class="input ">
                     <input type="password" data-element="input" id="userPwd" name="userPwd" class="input-text"
                            tabindex="1" placeholder="비밀번호" style="width: 200px;">
                 </div>
-
                 <!-- 등록되지 않은 아이디 or 아이디/비밀번호 불일치 시 -->
                 <p tabindex="0" id="pwErrorArea" class="input-error"></p>
             </div>
         </div>
-
         <div class="button-login">
             <button type="button" class="btn btn-secondary" style="width: 200px;">로그인</button>
             <br>
-
             <button type="button" class="button button--option" data-action="snsNaverLogin"><span class="button-text">네이버 간편로그인</span>
             </button>
             <br>
-
             <button type="button" class="button button--option" data-action="snsKakaoLogin"><span class="button-text">카카오 간편로그인</span>
             </button>
         </div>
-
     </div>
     <br>
 
     <div class="link-wrap">
         <!--하단에 회원가입 및 찾기 -->
-        <a href="#" class="link-wrap" data-action="menu" data-menu-name="join">회원가입</a>&nbsp;
-        <a href="#" class="link-wrap" data-action="menu" data-menu-name="findUserInfo">아이디/비밀번호 찾기</a></div>
+        <a href="user_form" class="link-wrap" data-action="menu" data-menu-name="join">회원가입</a>&nbsp;
+        <a href="#" class="link-wrap" data-action="menu" data-menu-name="findUserInfo">아이디/비밀번호 찾기</a>
     </div>
-    </div>
-    </div>
-
 </main>
 
 

@@ -2,17 +2,21 @@ package bit.data.dto;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
 public class UserDto {
-	private int num;
-	private String loginid;
-	private String pass;
-	private String name;
-	private String photo;
-	private String hp;
-	private String email;
-	private String address;
-	private Timestamp gaipday;
+    private int userId;
+    private String userNick;
+    private String userName;
+    private String userPass;
+    private String userTxt;
+    private String userImg;
+    private String emailId;
+    private String naverId;
+    private String kakaoId;
+    private String googleId;
+    private String locSi;
+    private String locGu;
+    private String userStatus;
+    private int report;
+    private String userPhnum;
 }
