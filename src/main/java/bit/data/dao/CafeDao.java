@@ -1,5 +1,6 @@
 package bit.data.dao;
 
+import bit.data.dto.CafeCmtDto;
 import bit.data.dto.CafeDto;
 import bit.data.dto.CafeImgDto;
 import org.apache.ibatis.session.SqlSession;
@@ -14,6 +15,8 @@ public class CafeDao implements CafeDaoInter {
     SqlSession session;
     String ns="bit.data.dao.CafeDao."; //namespace
     String nsi="bit.data.dao.CafeImgDao.";
+
+    String nsm="bit.data.dao.CafeCmtDao.";
 
     @Override
     public CafeDto selectCafe(int cf_id){
@@ -33,5 +36,10 @@ public class CafeDao implements CafeDaoInter {
     @Override
     public List<CafeImgDto> selectCafeImgAll(int cf_id) {
         return session.selectList(nsi+"selectCafeImgAll", cf_id);
+    }
+
+    @Override
+    public List<CafeCmtDto> selectCafeCmt(int cf_id) {
+        return session.selectList(nsm+"selectCafeCmt", cf_id);
     }
 }

@@ -1,5 +1,6 @@
 package bit.data.controller;
 
+import bit.data.dto.CafeCmtDto;
 import bit.data.dto.CafeDto;
 import bit.data.dto.CafeImgDto;
 import bit.data.service.CafeServiceInter;
@@ -39,5 +40,11 @@ public class CafeController {
     @ResponseBody
     public List<CafeImgDto> selectCafeImgAll(int cf_id){
         return cafeService.selectCafeImgAll(cf_id);
+    }
+
+    @GetMapping("/cmlist")
+    @ResponseBody
+    public List<CafeCmtDto> selectCafeCmt(int cf_id){
+        return cafeService.selectCafeCmt(cf_id);
     }
 }
