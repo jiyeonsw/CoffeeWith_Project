@@ -6,6 +6,6 @@
 		SELECT * FROM cf WHERE cf_id=#{cf_id}
 	</select>
 	<select id="selectAllCafe" resultType="cfdto">
-		SELECT * FROM cf WHERE ORDER BY cf_id DESC
+		SELECT * FROM cf ORDER BY cf_id ASC
 	</select>
 </mapper>
