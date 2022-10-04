@@ -28,6 +28,14 @@ public class LoginController {
         return "/bit/login/find_pw";
     }
 
+//    //이메일 본인 인증 API 추가 ?
+//    @GetMapping("/mailCheck")
+//    @ResponseBody
+//    public String mailCheck(String email) {
+//        System.out.println("이메일 인증 요청이 갔습니다");
+//        System.out.println("이메일 인증 이메일 : " + email);
+//    }
+
     @GetMapping("/logout")
     @ResponseBody
     public void logout(HttpSession session) {

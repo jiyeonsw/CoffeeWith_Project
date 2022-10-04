@@ -10,5 +10,6 @@
 		<typeAlias type="bit.data.dto.BoardAnswerDto" alias="badto"/>
 		<typeAlias type="bit.data.dto.CafeDto" alias="cfdto"/>
 		<typeAlias type="bit.data.dto.CafeImgDto" alias="cidto"/>
+		<typeAlias type="bit.data.dto.CafeCmtDto" alias="cmdto"/>
 	</typeAliases>
 </configuration>

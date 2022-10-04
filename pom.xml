@@ -47,6 +47,22 @@
             <version>1.2.2</version>
         </dependency>
 
+<!--        <version>${org.springframework-version}</version> &lt;!&ndash; 알아서 버전을 맞춰준다는 코드 추가 &ndash;&gt;-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.mail/mail &ndash;&gt; &lt;!&ndash; 이메일 본인 인증 API 추가&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>javax.mail</groupId>-->
+<!--            <artifactId>mail</artifactId>-->
+<!--            <version>1.4.7</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-context-support &ndash;&gt; &lt;!&ndash; 이메일 본인 인증 API 추가 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-context-support</artifactId>-->
+<!--            <version>5.3.9</version>-->
+<!--        </dependency>-->
+
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
