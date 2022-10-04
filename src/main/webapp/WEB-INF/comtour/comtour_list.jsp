@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<c:set var="root"></c:set>
+<c:set var="root" value="<%=request.getContextPath()%>"/>
 <div style="margin: 30px;width:1000px;">
     <div class="input-group">
 
