@@ -41,11 +41,6 @@
             text-align: right;
         }
 
-        div.menu {
-            color: #1a0d00;
-            background-color: #cccccc
-        }
-
         ul li {
             list-style: none;
         }
@@ -111,11 +106,11 @@
 
     <c:if test="${sessionScope.login_ok!=null}">
         <b>${sessionScope.login_nick}님</b> &nbsp;
-        <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
-                onclick="location.href='mypage'">My Page</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
+        <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
+                세션제거</button>
     </c:if>
-</span>
+    </span>
 
 <!-- 스크립트 이벤트 -->
 <script type="text/javascript">
@@ -161,11 +156,25 @@
     //세션주기
     $("#call-session-btn").click(function () {
         var root = '${root}';
-        
+
         $.ajax({
             type: "get",
             url: root + "/user/call_session",
-            dataType: "json",
+            dataType: "text",
+            success: function (res) {
+                location.reload();
+            }
+        })
+    })
+
+    //세션제거
+    $("#del-session-btn").click(function () {
+        var root = '${root}';
+
+        $.ajax({
+            type: "get",
+            url: root + "/user/del_session",
+            dataType: "text",
             success: function (res) {
                 location.reload();
             }
