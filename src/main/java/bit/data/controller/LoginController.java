@@ -49,22 +49,6 @@ public class LoginController {
     }
 
     //[임시] 세션 저장
-    @GetMapping("/call_session")
-    @ResponseBody
-    public void callSession(HttpSession session) {
-        session.setMaxInactiveInterval(60 * 60 * 12);
-
-        UserDto dto = userService.selectDataById(2);
-//        System.out.println(dto.getUr_id());
-//        System.out.println(dto.getEmail_id());
-//        System.out.println(dto.getUr_nk());
-
-        session.setAttribute("login_ok", "yes");
-        session.setAttribute("login_id", dto.getUr_id());
-        session.setAttribute("login_nick", dto.getUr_nk());
-    }
-
-    //[임시] 세션 저장
     @GetMapping("/del_session")
     @ResponseBody
     public void delSession(HttpSession session) {

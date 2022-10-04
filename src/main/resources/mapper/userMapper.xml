@@ -5,7 +5,7 @@
     <select id="selectSearchId" parameterType="String" resultType="int">
         SELECT count(*)
         FROM ur
-        WHERE email_id = #{email_id}
+        WHERE email_id = #{emailId}
     </select>
     <select id="selectSearchNick" parameterType="String" resultType="int">
         SELECT count(*)
@@ -15,8 +15,8 @@
     <insert id="insertUser" parameterType="UserDto">
         INSERT INTO ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
                         loc_gu, status, report, ur_phnum)
-        VALUES (null, #{ur_nk}, #{ur_nm}, #{ur_pw}, null, null, #{email_id}, null,
-                null, null, #{loc_si}, null, '정상', 0, #{ur_phnum})
+        VALUES (null, #{userNick}, #{userName}, #{userPass}, null, null, #{emailId}, null,
+                null, null, #{locSi}, null, '정상', 0, #{userPhnum})
     </insert>
     <!--시/도명 추출 명령문-->
     <select id="selectSubstrSi" resultType="String">
@@ -27,7 +27,7 @@
     <select id="selectDataById" parameterType="int" resultType="UserDto">
         SELECT *
         FROM ur
-        WHERE ur_id = #{ur_id};
+        WHERE ur_id = #{userId};
     </select>
 
     <!--    <select id="selectTotalCount" resultType="int">-->

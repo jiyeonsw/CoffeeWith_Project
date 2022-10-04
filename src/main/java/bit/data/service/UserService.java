@@ -14,19 +14,19 @@ public class UserService implements UserServiceInter {
     UserDaoInter UserDao;
 
     @Override
-    public int selectSearchId(String email_id) {
+    public int selectSearchId(String emailId) {
 //        System.out.println(emailId);
-        return UserDao.selectSearchId(email_id);
+        return UserDao.selectSearchId(emailId);
     }
 
     @Override
-    public int selectSearchNick(String ur_nk) {
-        return UserDao.selectSearchNick(ur_nk);
+    public int selectSearchNick(String userNick) {
+        return UserDao.selectSearchNick(userNick);
     }
 
     @Override
     public void insertUser(UserDto dto) {
-//        System.out.println("ser " + dto.getEmail_id());
+//        System.out.println("ser " + dto.getEmailId());
         UserDao.insertUser(dto);
     }
 
@@ -36,9 +36,9 @@ public class UserService implements UserServiceInter {
     }
 
     @Override
-    public UserDto selectDataById(int ur_id) {
-//        System.out.println(ur_id);
-        return UserDao.selectDataById(ur_id);
+    public UserDto selectDataById(int userId) {
+        System.out.println(userId);
+        return UserDao.selectDataById(userId);
     }
 
 
