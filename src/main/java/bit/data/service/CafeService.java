@@ -28,4 +28,9 @@ public class CafeService implements CafeServiceInter {
     public List<CafeImgDto> selectCafeImg(int cf_id) {
         return cafeDao.selectCafeImg(cf_id);
     }
+
+    @Override
+    public List<CafeImgDto> selectCafeImgAll(int cf_id) {
+        return cafeDao.selectCafeImgAll(cf_id);
+    }
 }
