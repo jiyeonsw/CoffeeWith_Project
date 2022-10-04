@@ -39,4 +39,5 @@ public class MypageController {
     public String MyPageComment() {
         return "/cmain/mypage/cont_cf_cmt";
     }
+    
 }

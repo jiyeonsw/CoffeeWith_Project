@@ -34,4 +34,5 @@
     <definition name="/cmain/*/*" extends="mypage"> <!-- extends:따르는 definition  -->
         <put-attribute name="cmain" value="/WEB-INF/{1}/{2}.jsp"/>
     </definition>
+
 </tiles-definitions>

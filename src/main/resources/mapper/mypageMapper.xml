@@ -20,4 +20,5 @@
     <!-- <select id="selectCfLkInfo" parameterType="int" resultType="cafeDto">
 
      </select>-->
+    
 </mapper>

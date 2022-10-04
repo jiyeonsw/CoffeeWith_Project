@@ -16,7 +16,7 @@ public class CafeService implements CafeServiceInter {
     CafeDaoInter cafeDao;
 
     @Override
-    public CafeDto selectCafe(int cf_id){
+    public CafeDto selectCafe(int cf_id) {
         return cafeDao.selectCafe(cf_id);
     }
 
@@ -38,6 +38,7 @@ public class CafeService implements CafeServiceInter {
     @Override
     public List<CafeCmtDto> selectCafeCmt(int cf_id) {
         return cafeDao.selectCafeCmt(cf_id);
+    }
 
     @Override
     public List<CafeDto> selectSearchCafe(String searchword) {
