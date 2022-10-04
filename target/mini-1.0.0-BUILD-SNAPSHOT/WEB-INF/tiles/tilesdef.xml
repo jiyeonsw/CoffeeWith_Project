@@ -13,17 +13,16 @@
     <definition name="/bit/*/*" extends="layout1"> <!-- extends:따르는 definition  -->
         <put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"/>
     </definition>
-
-    <!--   &lt;!&ndash; layout2 &ndash;&gt;
-       <definition name="layout2" template="/WEB-INF/layout2/layout2.jsp">
-           <put-attribute name="header" value="/WEB-INF/layout2/header.jsp"/>
-           <put-attribute name="menu" value="/WEB-INF/layout2/menu.jsp"/>
-           <put-attribute name="info" value="/WEB-INF/layout2/info.jsp"/>
-           <put-attribute name="main" value="/WEB-INF/layout2/main.jsp"/>
-       </definition>-->
+    <!--MyPage layout-->
+    <definition name="mypage" template="/WEB-INF/mypage/mypage.jsp">
+        <put-attribute name="header" value="/WEB-INF/mypage/header.jsp"/>
+        <put-attribute name="sub" value="/WEB-INF/mypage/sub.jsp"/>
+        <put-attribute name="top" value="/WEB-INF/mypage/top.jsp"/>
+        <put-attribute name="cmain" value="/WEB-INF/mypage/cont_main.jsp"/>
+    </definition>
     <!-- macro -->
     <!-- name에는 return 경로를 작성. -->
-    <definition name="/bit2/*/*" extends="layout2"> <!-- extends:따르는 definition  -->
+    <definition name="/cwith/*/*" extends="mypage"> <!-- extends:따르는 definition  -->
         <put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"/>
     </definition>
 </tiles-definitions>

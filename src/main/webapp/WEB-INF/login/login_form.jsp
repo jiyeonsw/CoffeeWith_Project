@@ -38,6 +38,7 @@
 </head>
 
 <body>
+<c:set var="root" value="<%=request.getContextPath() %>"/>
 <main id="main" class="main">
     <div class="page-title">로그인 하시고<br>즐거운 커윗해요</div>
     <br>
@@ -69,7 +70,7 @@
             </div>
         </div>
         <div class="button-login">
-            <button type="button" class="btn btn-secondary" style="width: 200px;">로그인</button>
+            <button type="button" class="btn btn-secondary" style="width: 200px;">로그인</button><br>
             <br>
             <button type="button" class="button button--option" data-action="snsNaverLogin"><span class="button-text">네이버 간편로그인</span>
             </button>
@@ -80,10 +81,12 @@
     </div>
     <br>
 
+    <c:set var="root" value="<%=request.getContextPath() %>"/>
     <div class="link-wrap">
-        <!--하단에 회원가입 및 찾기 -->
-        <a href="user_form" class="link-wrap" data-action="menu" data-menu-name="join">회원가입</a>&nbsp;
-        <a href="#" class="link-wrap" data-action="menu" data-menu-name="findUserInfo">아이디/비밀번호 찾기</a>
+        <!--하단에 회원가입 및 아이디 비밀번호 찾기 -->
+        <a href="user_form">회원가입하기</a><br>
+        <a href="${root}/user/find_id">아이디 찾기</a><br> <!-- Find ID  -->
+        <a href="${root}/user/find_pw">비밀번호 찾기</a> <!-- Find PW  -->
     </div>
 </main>
 
