@@ -1,10 +1,10 @@
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
           rel="stylesheet">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <title>Layout1</title>
+    <title>CoffeeWith</title>
 
     <style type="text/css">
         * {
@@ -44,8 +44,6 @@
         }
     </style>
 </head>
-
-
 <body>
 <div class="main_layout1">
     <div class="main" id="header">
