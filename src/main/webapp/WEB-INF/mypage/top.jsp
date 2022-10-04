@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="box-type-01">
-        <a href="#" class="inner">
+        <a href="${root}/mypage/bookmarks" class="inner">
             <div class="txt book-marks">
                 북마크
                 <span class="num">${sessionScope.cfLkCnt}</span>

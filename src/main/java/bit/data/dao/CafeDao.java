@@ -34,4 +34,9 @@ public class CafeDao implements CafeDaoInter {
     public List<CafeImgDto> selectCafeImgAll(int cf_id) {
         return session.selectList(nsi+"selectCafeImgAll", cf_id);
     }
+
+    @Override
+    public List<CafeDto> selectSearchCafe(String searchword) {
+        return session.selectList(ns+"selectSearchCafe", searchword);
+    }
 }

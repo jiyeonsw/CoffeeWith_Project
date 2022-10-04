@@ -33,4 +33,9 @@ public class CafeService implements CafeServiceInter {
     public List<CafeImgDto> selectCafeImgAll(int cf_id) {
         return cafeDao.selectCafeImgAll(cf_id);
     }
+
+    @Override
+    public List<CafeDto> selectSearchCafe(String searchword) {
+        return cafeDao.selectSearchCafe(searchword);
+    }
 }
