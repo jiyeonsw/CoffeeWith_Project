@@ -32,7 +32,11 @@ public class MypageController {
 
     @GetMapping("/mypage/bookmarks")
     public String MyPagebookmarks() {
+        return "/cmain/mypage/cont_cf_lk";
+    }
 
-        return "/cwith/mypage/cont_cmt";
+    @GetMapping("/mypage/review")
+    public String MyPageComment() {
+        return "/cmain/mypage/cont_cf_cmt";
     }
 }

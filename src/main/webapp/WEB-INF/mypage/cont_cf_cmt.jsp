@@ -26,7 +26,7 @@
 </head>
 <body>
 <div class="main-container">
-    <div>북마크</div>
+    <div>리뷰</div>
 </div>
 </body>
 </html>
