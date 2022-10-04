@@ -275,7 +275,7 @@
         } else {
             $(".role-chk").prop("checked", false);
         }
-    })
+    })// $("#role-allchk")
 
     function check() {
 

@@ -113,8 +113,7 @@
         <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
                 세션제거</button>
     </c:if>
-    </span>
-
+</span>
 
 <!-- 스크립트 이벤트 -->
 <script type="text/javascript">
