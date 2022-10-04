@@ -17,9 +17,15 @@ public class LoginController {
     @Autowired
     UserServiceInter userService;
 
+
     @GetMapping("/find_id")
-    public String userform() {
-        return "/bit/login/login_find";
+    public String findid(){
+        return "/bit/login/find_id";
+    }
+
+    @GetMapping("/find_pw")
+    public String findpw(){
+        return "/bit/login/find_pw";
     }
 
     @GetMapping("/logout")
@@ -37,7 +43,7 @@ public class LoginController {
     public void callSession(HttpSession session) {
         session.setMaxInactiveInterval(60 * 60 * 12);
 
-        UserDto dto = userService.selectDataById(4);
+        UserDto dto = userService.selectDataById(2);
 //        System.out.println(dto.getUr_id());
 //        System.out.println(dto.getEmail_id());
 //        System.out.println(dto.getUr_nk());
@@ -45,7 +51,6 @@ public class LoginController {
         session.setAttribute("login_ok", "yes");
         session.setAttribute("login_id", dto.getUr_id());
         session.setAttribute("login_nick", dto.getUr_nk());
-        session.setAttribute("login_ur_img", dto.getUr_img());
     }
 
 
