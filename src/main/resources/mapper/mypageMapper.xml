@@ -16,4 +16,9 @@
                  INNER JOIN cf_cmt c ON (u.ur_id = c.ur_id)
         WHERE u.ur_id = #{loginId};
     </select>
+    <!--북마크 카페 리스트-->
+    <!-- <select id="selectCfLkInfo" parameterType="int" resultType="cafeDto">
+
+     </select>-->
+    
 </mapper>
