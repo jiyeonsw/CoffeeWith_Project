@@ -8,4 +8,8 @@
 	<select id="selectAllCafe" resultType="cfdto">
 		SELECT * FROM cf ORDER BY cf_id ASC
 	</select>
+	<select id="selectSearchCafe" parameterType="String" resultType="cfdto">
+		SELECT * FROM cf where cf_nm like concat ('%',#{searchword},'%')
+			or loc_addr like concat ('%',#{searchword},'%')
+	</select>
 </mapper>
