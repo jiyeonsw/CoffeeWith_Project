@@ -10,4 +10,5 @@ public interface CafeServiceInter {
 
     public List<CafeDto> selectAllCafe();
     public List<CafeImgDto> selectCafeImg(int cf_id);
+    public List<CafeImgDto> selectCafeImgAll(int cf_id);
 }
