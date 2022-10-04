@@ -31,7 +31,6 @@
             margin: 0 auto;
             text-align: left;
             overflow: hidden;
-            min-height: 100vh;
             padding-bottom: 164px;
         }
 
@@ -60,7 +59,6 @@
         a:hover {
             cursor: pointer;
         }
-
 
         .main-mypage > div {
             border: 1px solid gray;

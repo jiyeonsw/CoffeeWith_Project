@@ -97,9 +97,9 @@
 <span id="loginstate" style="text-align: right;">
     <c:if test="${sessionScope.login_ok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
-                onclick="location.href='login_main'">Login</button>
+                onclick="location.href='${root}/login_main'">Login</button>
         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
-                onclick="location.href='user_form'">Sign Up</button>
+                onclick="location.href='${root}/user_form'">Sign Up</button>
         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
                 세션주기</button>
     </c:if>
@@ -107,7 +107,7 @@
     <c:if test="${sessionScope.login_ok!=null}">
         <b>${sessionScope.login_nick}님</b>
         <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
-                onclick="location.href='mypage'">My Page</button>
+                onclick="location.href='${root}/mypage'">My Page</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
         <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
                 세션제거</button>
@@ -172,7 +172,6 @@
     //세션제거
     $("#del-session-btn").click(function () {
         var root = '${root}';
-
         $.ajax({
             type: "get",
             url: root + "/user/del_session",

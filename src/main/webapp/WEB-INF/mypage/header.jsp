@@ -98,9 +98,9 @@
 <span id="loginstate" style="text-align: right;">
     <c:if test="${sessionScope.login_ok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
-                onclick="location.href='login_main'">Login</button>
+                onclick="location.href='${root}/login_main'">Login</button>
         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
-                onclick="location.href='user_form'">Sign Up</button>
+                onclick="location.href='${root}/user_form'">Sign Up</button>
         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
                 세션주기</button>
     </c:if>

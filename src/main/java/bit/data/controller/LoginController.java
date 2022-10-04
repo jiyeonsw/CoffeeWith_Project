@@ -16,28 +16,11 @@ public class LoginController {
 
     @Autowired
     UserServiceInter userService;
-   /*
-   @GetMapping("/login")
-   @ResponseBody
-   public Map<String, String> loginprocess(String id, String pass, HttpSession session)
-   {
-      Map<String, String> map=new HashMap<String, String>();
-      int result=userService.getIdPassCheck(id, pass);
-      if(result==1)
-      {
-         //유지시간
-         session.setMaxInactiveInterval(60*60*4);//4시간
-         //로그인한 아이디에 대한 정보를 얻어서 세션에 저장
-         UserDto userDto=userService.getDataById(id);
-         session.setAttribute("loginok", "yes");
-         session.setAttribute("loginid", id);
-         session.setAttribute("loginname", userDto.getName());
-         session.setAttribute("loginphoto", userDto.getPhoto());
-      }
-      
-      map.put("result", result==1?"success":"fail");
-      return map;
-   }*/
+
+    @GetMapping("/find_id")
+    public String userform() {
+        return "/bit/login/login_find";
+    }
 
     @GetMapping("/logout")
     @ResponseBody
@@ -54,7 +37,7 @@ public class LoginController {
     public void callSession(HttpSession session) {
         session.setMaxInactiveInterval(60 * 60 * 12);
 
-        UserDto dto = userService.selectDataById(2);
+        UserDto dto = userService.selectDataById(4);
 //        System.out.println(dto.getUr_id());
 //        System.out.println(dto.getEmail_id());
 //        System.out.println(dto.getUr_nk());
@@ -62,6 +45,7 @@ public class LoginController {
         session.setAttribute("login_ok", "yes");
         session.setAttribute("login_id", dto.getUr_id());
         session.setAttribute("login_nick", dto.getUr_nk());
+        session.setAttribute("login_ur_img", dto.getUr_img());
     }
 
 

@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <c:set var="root" value="<%=request.getContextPath() %>"/>
     <meta charset="UTF-8">
     <title>LoginPage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -82,11 +83,10 @@
 
     <div class="link-wrap">
         <!--하단에 회원가입 및 찾기 -->
-        <a href="user_form" class="link-wrap" data-action="menu" data-menu-name="join">회원가입</a>&nbsp;
-        <a href="#" class="link-wrap" data-action="menu" data-menu-name="findUserInfo">아이디/비밀번호 찾기</a>
+        <a href="${root}/user_form" class="link-wrap" data-action="menu" data-menu-name="join">회원가입</a>&nbsp;
+        <a href="#" class="link-wrap" data-action="menu" data-menu-name="findUserInfo">아이디/비밀번호
+            찾기</a>
     </div>
 </main>
-
-
 </body>
 </html>
