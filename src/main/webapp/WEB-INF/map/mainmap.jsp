@@ -10,10 +10,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>간단한 지도 표시하기</title>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8mlhxamjq5"></script>
+    <style>
+        #map{
+            float:right;
+            width:80%;
+            height:590px;
+        }
+
+        #sidebar{
+            width:20%;
+            eight:590px;
+        }
+    </style>
 </head>
 <body>
+<div id="sidebar">
 
-<div id="map" style="width:100%;height:590px;"></div>
+</div>
+
+<div id="map"></div>
 <script>
     //지도 옵션
     var mapOptions = {
@@ -22,23 +37,43 @@
     };
     //지도 초기화
     var map =new naver.maps.Map('map', mapOptions);
-    //좌표 마커 배열
+    //좌표 마커 배열 생성
     var markerList = [];
     //좌표 마커 스타일
     var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
     //좌표 마커를 찍어서 배열에 저장
     map.getPanes().floatPane.appendChild(menuLayer[0]);
-    //마우스 클릭 이벤트시 좌표에 마커찍기
-    naver.maps.Event.addListener(map, 'click', function(e) {
-        //마커 만들기
-        var marker = new naver.maps.Marker({
-            position: e.coord,
-            map: map
-        });
-        //마커 찍기
-        markerList.push(marker);
+    //줌 이벤트 리스터 생성
+    naver.maps.Event.addListener(map, 'zoom_changed', function(zoom) {
+        console.log(zoom);
     });
-
+    //바운드 이벤트 리스터 생성
+    naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
+        console.log('Center: ' + map.getCenter().toString() + ', Bounds: ' + bounds.toString());
+    });
+    /* //마우스 클릭 이벤트시 좌표에 마커찍기
+     naver.maps.Event.addListener(map, 'click', function(e) {
+         //마커 만들기
+         var marker = new naver.maps.Marker({
+             position: e.coord,
+             map: map
+         });
+         //마커 찍기
+         markerList.push(marker);
+     });*/
+    //모든 카페 리스트 받기
+    <c:forEach items="${list}" var="dto">
+    //카페 위치에 마커찍기
+    var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
+    var marker = new naver.maps.Marker({
+        position: position,
+        map: map,
+        title:"${dto.cf_id}"
+    });
+    //마커들 마커 배열에 넣기
+    markerList.push(marker);
+    </c:forEach>
+    console.log(map.size);
 </script>
 </body>
 </html>

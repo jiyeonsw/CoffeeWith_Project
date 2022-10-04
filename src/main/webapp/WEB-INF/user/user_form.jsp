@@ -31,10 +31,9 @@
         }
 
         .inp-frm {
-            width: 450px;
             display: flex;
             flex-direction: column;
-            margin-bottom: 13px;
+            margin-bottom: 15px;
         }
 
         .inpA {
@@ -53,101 +52,254 @@
             width: 100%;
         }
 
+        .role-box {
+            display: grid;
+            grid-template-columns: 0.2fr 1.8fr 0.5fr;
+            row-gap: 10px;
+            margin-top: 10px;
+            border: 1px solid gray;
+            padding: 10px 10px 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 15px; /*Desired width*/
+            height: 15px; /*Desired height*/
+            cursor: pointer;
+        }
 
     </style>
-    <script>
-
-    </script>
 </head>
 <body>
-<div id="container" class="container">
-    <div id="contents" class="contents">
-        <%--컨텐츠영역--%>
-        <p class="titDep">
-            회원가입
-        </p>
-        <fieldset>
-            <div class="inp-frm">
-                <label for="inp-email" class="titLab">이메일</label>
-                <div class="inpA">
-                    <input type="email" id="inp-email" placeholder="example@coffewith.com" class="form-control"
-                           required="required">
-                    <button type="button" id="btn-id-chk" class="btn btn-outline-info btnA">중복확인</button>
+<c:set var="root" value="<%=request.getContextPath()%>"/>
+<form action="insert_user" method="post" onsubmit="return check()">
+    <div id="container" class="container">
+        <div id="contents" class="contents">
+            <%--컨텐츠영역--%>
+            <p class="titDep">
+                회원가입
+            </p>
+            <fieldset>
+                <div class="inp-frm">
+                    <label for="inp-email" class="titLab">이메일</label>
+                    <div class="inpA">
+                        <input type="email" id="inp-email" placeholder="example@coffewith.com" class="form-control"
+                               required="required" name="emailId">
+                        <button type="button" id="btn-id-chk" class="btn btn-outline-info btnA">중복확인</button>
+                    </div>
+                    <div class="id-success"></div>
                 </div>
-                <div class="id-success"></div>
-            </div>
-            <div class="inp-frm">
-                <label for="inp-pass" class="titLab">비밀번호</label>
-                <div class="inpB">
-                    <input type="password" id="inp-pass" placeholder="영문,숫자,특수문자 8~16자이내" class="form-control"
-                           required="required">
+                <div class="inp-frm">
+                    <label for="inp-pass" class="titLab">비밀번호</label>
+                    <div class="inpB">
+                        <input type="password" id="inp-pass" placeholder="영문,숫자,특수문자 8~16자이내" class="form-control"
+                               required="required" name="userPass">
+                    </div>
+                    <div class="pass-success"></div>
                 </div>
-            </div>
-            <div class="inp-frm">
-                <label for="inp-repass" class="titLab">비밀번호 확인</label>
-                <div class="inpB">
-                    <input type="password" id="inp-repass" placeholder="확인을 위해 한번 더 입력해주세요" class="form-control"
-                           required="required">
+                <div class="inp-frm">
+                    <label for="inp-repass" class="titLab">비밀번호 확인</label>
+                    <div class="inpB">
+                        <input type="password" id="inp-repass" placeholder="확인을 위해 한번 더 입력해주세요" class="form-control"
+                               required="required">
+                    </div>
+                    <div class="repass-success"></div>
                 </div>
-            </div>
-            <div class="inp-frm">
-                <label for="inp-email" class="titLab">이름</label>
-                <div class="inpb">
-                    <input type="email" id="inp-name" placeholder="이름을 입력해주세요" class="form-control"
-                           required="required">
+                <div class="inp-frm">
+                    <label for="inp-name" class="titLab">이름</label>
+                    <div class="inpB">
+                        <input type="text" id="inp-name" placeholder="이름을 입력해주세요" class="form-control"
+                               required="required" name="userName">
+                    </div>
                 </div>
-            </div>
-            <div class="inp-frm">
-                <label for="inp-phone" class="titLab">휴대전화번호</label>
-                <div class="inpA">
-                    <input type="text" id="inp-phone" placeholder="010-0000-0000" class="form-control"
-                           required="required">
-                    <button type="button" id="btn-phone-chk" class="btn btn-outline-info btnA">본인확인</button>
+                <div class="inp-frm">
+                    <label for="inp-nick" class="titLab">닉네임</label>
+                    <div class="inpA">
+                        <input type="text" id="inp-nick" placeholder="닉네임을 입력해주세요" class="form-control"
+                               required="required" name="userNick">
+                        <button type="button" id="btn-nick-chk" class="btn btn-outline-info btnA">중복확인</button>
+                    </div>
+                    <div class="nick-success"></div>
                 </div>
-            </div>
-            <div class="inp-frm">
-                <label for="sel-gender" class="titLab">성별</label>
-                <div class="inpA" id="sel-gender">
-                    <button type="button" class="btn btn-outline-info btnB" value="men">남성</button>
-                    <button type="button" class="btn btn-outline-info btnB" value="women">여성</button>
+                <hr>
+                <div class="inp-frm">
+                    <label for="inp-nick" class="titLab">선호지역</label>
+                    <div class="inpB">
+                        <select id="sel-si" class="form-select" name='locSi'>
+                            <option disabled selected>- 지역 선택 -</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+                <hr>
+                <div class="inp-frm">
+                    <label for="chk-useRole" class="titLab">이용약관 / 개인정보 수집 및 이용 동의</label>
+                    <div class="role-box" id="chk-useRole">
+                        <input type="checkbox" class="allchk-col" id="role-allchk">
+                        전체 동의
+                        <a style="visibility: hidden;"></a>
+                        <input type="checkbox" class="role-chk" required>
+                        (필수) 만 14세 이상입니다.
+                        <a style="visibility: hidden;"></a>
+                        <input type="checkbox" class="role-chk" required>
+                        (필수) 이용약관 동의
+                        <a href="#">내용보기</a>
+                        <input type="checkbox" class="role-chk" required>
+                        (필수) 개인정보 수집 및 이용 동의
+                        <a href="#">내용보기</a>
 
-        </fieldset>
+                    </div>
+                </div>
+                <button type="submit" id="inp-btn" class="btn btn-info btnB">회원가입</button>
+            </fieldset>
+        </div>
     </div>
-</div>
+</form>
 <script>
+    $(document).ready(function () {
+        selCity();
+    })
+
+    //선호지역 옵션 구현(DB(지역추출)-> Controller -> ajax(출력))
+    function selCity() {
+        //중복 출력 되지 않도록 기존출력값(selected는 제외한) remove
+        $("#sel-si").children('option:not(:first)').remove();
+        //ajax가 실행되기전까지 선택되지않도록 세팅
+        $("#sel-si").attr("disabled", true);
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "select_si",
+            success: function (res) {
+                //ajax가 실행되기전까지 선택되지않도록 세팅
+                $("#sel-si").attr("disabled", false);
+                $.each(res, function (idx, val) {
+                    if (val != "") {
+                        var cityOption = "<option value='" + val + "'>" + val + "</option>";
+                        $("#sel-si").append(cityOption);
+                    }
+                })
+            }
+        })
+    }
+
+    //이메일 아이디 변경 시 체크
+    $("#inp-email").change(function () {
+        $("div.id-success").text("입력하신 이메일 아이디를 중복 확인해주세요.").attr("value", "");
+    })//$("#inp-email")
+
+    //이메일 아이디 중복 조회
     $("#btn-id-chk").click(function () {
-        /*alert($("#inp-email").val());*/
+        const inpEmail = $("#inp-email").val();
+        $("#inp-email").attr("disabled", true);
         $.ajax({
             type: "get",
             dataType: "json",
             url: "id_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
-            data: {"email_id": $("#inp-email").val()},
+            data: {"emailId": inpEmail},
             success: function (res) {
+                $("#inp-email").attr("disabled", false);
                 if (res.countId == 0) {
-                    $("div.id-success").text("ok");
+                    // console.log(res.countId)
+                    $("div.id-success").text("해당 이메일 아이디로 가입하실 수 있습니다.").attr("value", "Y");
                 } else {
-                    $("div.id-success").text("fail");
+                    $("div.id-success").text("해당 이메일 아이디는 가입이 불가능합니다.").attr("value", "N");
                 }
             }//success
+        })//$.ajax
+    })//$("#btn-id-chk")
+
+    //닉네임 중복 조회
+    $("#btn-nick-chk").click(function () {
+        const inpNick = $("#inp-nick").val();
+        $("#inp-nick").attr("disabled", true);
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "nick_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
+            data: {"userNick": inpNick},
+            success: function (res) {
+                $("#inp-nick").attr("disabled", false);
+                if (res.countNick == 0) {
+                    console.log(res.countNick)
+                    $("div.nick-success").text("해당 닉네임으로 사용가능합니다.").attr("value", "Y");
+                } else {
+                    $("div.nick-success").text("입력하신 닉네임은 현재 사용중입니다.").attr("value", "N");
+                }
+            }
         })
-    })
+    })//$("#btn-nick-chk")
+
+    //비밀번호 유효성 검사
+    $("#inp-pass").keyup(function () {
+        const inpPass = $(this).val();
+        $("#inp-repass").val("");
+        $("div.repass-success").text("").attr("value", "");
+        // console.log(inpPass);
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "pass_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
+            data: {"userPass": inpPass},
+            success: function (res) {
+                if (res == true) {
+                    $("div.pass-success").text("입력한 비밀번호는 사용이 가능합니다.");
+                } else {
+                    $("div.pass-success").text("영문,숫자,특수문자 구성으로 8~16자 이내로 입력해주세요.");
+                }
+            },
+            error: function (request, status) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        })
+    })// $("#inp-pass")
+
+    //비밀번호 일치 확인
+    $("#inp-repass").keyup(function () {
+        var p1 = $("#inp-pass").val();
+        var p2 = $(this).val();
+        if (p1 == p2) {
+            $("div.repass-success").text("입력한 비밀번호를 사용 가능합니다.").attr("value", "Y");
+        } else if (p2 == "") {
+            $("div.repass-success").text("").attr("value", "");
+        } else {
+            $("div.repass-success").text("입력한 비밀번호가 일치하지 않습니다.").attr("value", "N");
+        }
+        //else
+    })//$("#inp-repass")
+
+    //이용약관 전체 체크
+    $("#role-allchk").click(function () {
+        var allchk = $(this).prop("checked");
+        // console.log(allchk);
+        if (allchk == true) {
+            $(".role-chk").prop("checked", true);
+        } else {
+            $(".role-chk").prop("checked", false);
+        }
+    })// $("#role-allchk")
 
     function check() {
 
-        //중복체크
-        if ($("div.idsuccess").text() != 'ok') {
-            alert("아이디 중복체크를 해주세요");
-            return false; //false를 해야 return이 호출되지 않음.
+        if ($("#inp-name").val().length <= 1) {
+            alert("이름을 정확히 입력해주세요");
+            return false;
         }
-        //비밀번호
-        if ($("div.passsuccess").text() != 'ok') {
-            alert("비밀번호가 서로 다릅니다");
-            return false; //false를 해야 return이 호출되지 않음.
+
+        if ($("#inp-nick").val().length <= 2) {
+            alert("닉네임을 3글자 이상 입력해주세요");
+            return false;
+        }
+        var idChk = $(".id-success").attr("value");
+        var passChk = $(".repass-success").attr("value");
+        if (idChk != 'Y') {
+            alert("동일한 이메일 아이디가 존재합니다. 수정 후 회원가입해주세요.");
+            return false;
+        }
+
+        if (passChk != 'Y') {
+            alert("입력한 비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+            return false;
         }
     }//check()
 </script>
-</form>
 </body>
 </html>

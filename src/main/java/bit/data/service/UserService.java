@@ -1,20 +1,47 @@
 package bit.data.service;
 
 import bit.data.dao.UserDaoInter;
+import bit.data.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService implements UserServiceInter {
 
     @Autowired
-    UserDaoInter userDao;
+    UserDaoInter UserDao;
 
     @Override
-    public int selectSearchId(String email_id) {
-        System.out.println(email_id);
-        return userDao.selectSearchId(email_id);
+    public int selectSearchId(String emailId) {
+//        System.out.println(emailId);
+        return UserDao.selectSearchId(emailId);
     }
+
+    @Override
+    public int selectSearchNick(String userNick) {
+        return UserDao.selectSearchNick(userNick);
+    }
+
+    @Override
+    public void insertUser(UserDto dto) {
+//        System.out.println("ser " + dto.getEmailId());
+        UserDao.insertUser(dto);
+    }
+
+    @Override
+    public List<String> selectSubstrSi() {
+        return UserDao.selectSubstrSi();
+    }
+
+    @Override
+    public UserDto selectDataById(int userId) {
+        System.out.println(userId);
+        return UserDao.selectDataById(userId);
+    }
+
+
 
     /* @Override
     public int getIdPassCheck(String id, String pass) {
