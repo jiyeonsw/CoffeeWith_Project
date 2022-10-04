@@ -91,7 +91,6 @@
 <%--            <p class="message_find" id="msg_cert_num" style="display:none;">입력시간이 만료되었습니다. 인증번호를 다시 발송해주세요.</p>--%>
 <%--            <p class="message_find ok" style="display:none;">인증 성공. 잠시만 기다려주세요.</p>--%>
 <%--        </div>--%>
-
         <button type="submit" id="inp-btn" class="btn btn-primary btnB">본인 인증 완료</button>
     </fieldset>
 </div>
