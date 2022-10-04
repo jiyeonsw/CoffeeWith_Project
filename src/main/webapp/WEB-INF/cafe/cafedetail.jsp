@@ -36,14 +36,94 @@
     <script>
         $(function () {
             cf_id=${dto.cf_id};
-            y=${dto.loc_y};
-            x=${dto.loc_x};
+
+            cfInfo(cf_id);
+
+            $("div#btn-cm-link").click(function (){
+                console.log(cf_id);
+
+                $.ajax({
+                    type: "get",
+                    url: "cmlist",
+                    dataType: "json",
+                    data: {"cf_id": cf_id},
+                    success: function (res) {
+                        var s="";
+                        $.each(res, function (i, elt) {
+                            console.dir(elt);
+                            s+='<div>'+elt.ur_id+'</div>';
+                            s+='<div><span>'+elt.star+'</span>';
+                            s+='<span>'+elt.w_date+'</span></div>';
+                            s+='<div>'+elt.cm_txt+'</div>';
+                        });//each
+                        $("div.cf-bottom").html(s);
+
+                    }//succ
+                });//ajax
+            });//사진 클릭
+
+            $("div#btn-ci-link").click(function (){
+                //console.log(cf_id);
+                $.ajax({
+                    type: "get",
+                    url: "img",
+                    dataType: "json",
+                    data: {"cf_id": cf_id},
+                    success: function (res) {
+                        var s="";
+                        $.each(res, function (i, elt) {
+                            s += '<img src="../images/cafeimg/' + elt.ci_nm + '" style="width: 300px; height: 300px;">';
+                        });//each
+                        $("div.cf-bottom").html(s);
+
+                    }//succ
+                });//ajax
+            });//사진 클릭
+
+            $("div#btn-cf-info").click(function (){
+                var s="";
+                $.ajax({
+                    type: "get",
+                    url: "info",
+                    dataType: "json",
+                    data: {"cf_id": cf_id},
+                    success: function (res) {
+                        //console.log(res.loc_y);
+                        s+='<div id="map" y="'+res.loc_y+'" x="'+res.loc_x+'" style="width:300px;height:400px;"></div>';
+                        s+='<div style="margin-left: 30px;">';
+                        s+='<div><span>영업시간</span> <span>'+ res.open_time+'</span></div>';
+                        s+= '<div><span>휴무일</span> <span>'+res.off_day+'</span></div>';
+                        s+='<div><span>전화번호</span> <span>'+res.cf_tel+'</span></div>';
+                        s+='<div><span>주소</span> <span>'+res.loc_addr+'</span></div>';
+                        s+='<div><span>대표메뉴</span> <span>'+res.menu+'</span></div>';
+                        s+='</div>';
+                        $("div.cf-bottom").html(s);
+                        cfInfo(cf_id);
+                    }//succ
+
+                });//ajax
+            });//cafeinfo
+
 
         });//fun
 
-      /*  function cfInfo(cf_id){
-
-        }*!/*/
+       function cfInfo(cf_id){
+           y= $("div#map").attr("y");
+           x=$("div#map").attr("x");
+           console.log(y);
+           position = new naver.maps.LatLng(y, x);
+           //console.log(position);
+           var mapOptions = {
+               center:position,
+               zoom: 18
+           };
+           var map =new naver.maps.Map('map', mapOptions);
+           console.log(map);
+           var marker = new naver.maps.Marker({
+               position: position,
+               map: map
+           });
+       }//cfInfo
     </script>
 
 </head>
@@ -99,7 +179,7 @@
        <hr>
        <br>
         <div class="cf-bottom">
-       <div id="map" style="width:300px;height:400px;"></div>
+       <div id="map" y="${dto.loc_y}" x="${dto.loc_x}" style="width:300px;height:400px;"></div>
             <div style="margin-left: 30px;" class="cf-info">
                 <div><span>영업시간</span> <span>${dto.open_time}</span></div>
                 <div><span>휴무일</span> <span>${dto.off_day}</span></div>
@@ -109,100 +189,7 @@
             </div>
         </div>
         <script>
-            position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
-            //console.log(position);
-            var mapOptions = {
-                center:position,
-                zoom: 18
-            };
-            var map =new naver.maps.Map('map', mapOptions);
-            //console.log(map);
-            var marker = new naver.maps.Marker({
-                position: position,
-                map: map
-            });
 
-            $("div#btn-cm-link").click(function (){
-                console.log(cf_id);
-
-                $.ajax({
-                    type: "get",
-                    url: "cmlist",
-                    dataType: "json",
-                    data: {"cf_id": cf_id},
-                    success: function (res) {
-                        var s="";
-                        $.each(res, function (i, elt) {
-                            console.dir(elt);
-                            s+='<div>'+elt.ur_id+'</div>';
-                            s+='<div><span>'+elt.star+'</span>';
-                            s+='<span>'+elt.w_date+'</span></div>';
-                            s+='<div>'+elt.cm_txt+'</div>';
-                        });//each
-                        $("div.cf-bottom").html(s);
-
-                    }//succ
-                });//ajax
-            });//사진 클릭
-
-            $("div#btn-ci-link").click(function (){
-                //console.log(cf_id);
-                $.ajax({
-                    type: "get",
-                    url: "img",
-                    dataType: "json",
-                    data: {"cf_id": cf_id},
-                    success: function (res) {
-                        var s="";
-                        $.each(res, function (i, elt) {
-                            s += '<img src="../images/cafeimg/' + elt.ci_nm + '" style="width: 300px; height: 300px;">';
-                        });//each
-                        $("div.cf-bottom").html(s);
-
-                    }//succ
-                });//ajax
-            });//사진 클릭
-
-            $("div#btn-cf-info").click(function (){
-                var s="";
-                $.ajax({
-                    type: "get",
-                    url: "info",
-                    dataType: "json",
-                    data: {"cf_id": cf_id},
-                    success: function (res) {
-                        //console.log(res.loc_y);
-                        var y= res.loc_y;
-                        var x= res.loc_x;
-                        //alert(typeof y);
-                        //console.log(y);
-                        //console.log(x);
-                        position = new naver.maps.LatLng(y, x);
-                        //console.log(position);
-                        var mapOptions = {
-                            center: position,
-                            zoom: 18
-                        };
-                        var map =new naver.maps.Map('map2', mapOptions);
-
-                        var marker = new naver.maps.Marker({
-                            position: position,
-                            map : map
-                        });
-                        console.log(map);
-                        s+='<div id="map2" style="width:300px;height:400px;"></div>';
-                        s+='<div style="margin-left: 30px;">';
-                        s+='<div><span>영업시간</span> <span>'+ res.open_time+'</span></div>';
-                        s+= '<div><span>휴무일</span> <span>'+res.off_day+'</span></div>';
-                        s+='<div><span>전화번호</span> <span>'+res.cf_tel+'</span></div>';
-                        s+='<div><span>주소</span> <span>'+res.loc_addr+'</span></div>';
-                        s+='<div><span>대표메뉴</span> <span>'+res.menu+'</span></div>';
-                        s+='</div>';
-                        $("div.cf-bottom").html(s);
-                    }//succ
-
-                });//ajax
-            });//cafeinfo
         </script>
    </div>
 </body>
