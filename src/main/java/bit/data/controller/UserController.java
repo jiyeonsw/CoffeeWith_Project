@@ -4,30 +4,119 @@ import bit.data.dto.UserDto;
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import util.ChangeName;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
-//앞에 공통적으로 들어가는 매핑 설정 
-/*@RequestMapping("/")*/
+//앞에 공통적으로 들어가는 매핑 설정
+@RequestMapping("/")
 public class UserController {
 
     @Autowired
     UserServiceInter userService;
 
-    @GetMapping("/list")
+    @GetMapping("/user_form")
+    public String userform() {
+
+        return "/bit/user/user_form";
+    }
+
+    @GetMapping("/login_main")
+    public String loginForm() {
+
+        return "/bit/login/login_form";
+    }
+
+    //email_id check
+    @GetMapping("/id_check")
+    @ResponseBody
+    public Map<String, Integer> selectSearchId(String emailId) {
+        System.out.println(emailId);
+        Map<String, Integer> map = new HashMap<>();
+        // 아이디가 있을 경우 1, 없을 경우 0 반환
+        int countId = userService.selectSearchId(emailId);
+//        System.out.println(countId);
+        map.put("countId", countId);
+
+        return map;
+    }
+
+    //nickname check
+    @GetMapping("/nick_check")
+    @ResponseBody
+    public Map<String, Integer> selectSearchNick(String userNick) {
+        System.out.println(userNick);
+        Map<String, Integer> map = new HashMap<>();
+        // 닉네임이 있을 경우 1, 없을 경우 0 반환
+        int countNick = userService.selectSearchNick(userNick);
+        System.out.println(countNick);
+        map.put("countNick", countNick);
+
+        return map;
+    }
+
+    @PostMapping("/pass_check")
+    @ResponseBody
+    public boolean PassCheck(String userPass) {
+
+        boolean check = false;
+
+        String pwChk = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*?&`~'\"+=])[A-Za-z[0-9]$@$!%*?&`~'\"+=]{7,16}$";
+
+        Pattern pattern_symbol = Pattern.compile(pwChk);
+        Matcher matcher_symbol = pattern_symbol.matcher(userPass);
+
+        if (matcher_symbol.find()) {
+            check = true;
+        }
+        return check;
+    }
+
+    @GetMapping("/select_si")
+    @ResponseBody
+    public List<String> selectSi() {
+        List<String> list = userService.selectSubstrSi();
+        return list;
+    }
+
+    @PostMapping("/insert_user")
+    public String insert(UserDto dto) {
+        System.out.println(dto.getEmailId());
+        System.out.println(dto.getLocSi());
+
+        try {
+            //db.insert
+            userService.insertUser(dto);
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "redirect:/login_main";
+    }
+
+
+
+   /* @GetMapping("/id_check")
+    @ResponseBody//json을 반환한다는 뜻. REST 컨트롤러를 따로 주지 않기 위해 ResponseBody를 줌
+    public Map<String, Integer> getSearchId(String id) {
+
+        Map<String, Integer> map = new HashMap<>();
+        int count = userService.getSearchId(id);// 아이디가 있을 경우 1, 없을 경우 0 반환
+        map.put("count", count);
+
+        return map;
+    }*/
+
+
+   /* @GetMapping("/list")
     public String user(Model model) {
 
         //총 멤버 인원수를 db에서 얻는다
@@ -41,12 +130,6 @@ public class UserController {
         model.addAttribute("list", list);
 
         return "/bit2/user/userlist";
-    }
-
-    @GetMapping("/user_form")
-    public String userform() {
-
-        return "/bit/user/userform";
     }
 
     @PostMapping("/insert")
@@ -73,18 +156,7 @@ public class UserController {
         return "redirect:list";// /user/list 매핑 주소 호출 - 컨트롤러 메서드 호출
     }
 
-    //아이디 체크하는 메서드
-    @GetMapping("/idcheck")
-    //REST 컨트롤러를 따로 주지 않기 위해 ResponseBody를 줌
-    @ResponseBody//json을 반환한다는 뜻
-    public Map<String, Integer> getSearchId(String id) {
 
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        int count = userService.getSearchId(id);// 아이디가 있을 경우 1, 없을 경우 0 반환
-        map.put("count", count);
-
-        return map;
-    }
 
     @PostMapping("/updatephoto")
     @ResponseBody//json형태로 들어온 데이터를 변환
@@ -135,5 +207,5 @@ public class UserController {
         userService.updateuser(dto);
         //세션에 저장된 이름도 변경하기
         session.setAttribute("loginname", dto.getName());
-    }
+    }*/
 }

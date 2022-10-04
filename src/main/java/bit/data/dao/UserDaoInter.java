@@ -3,10 +3,19 @@ package bit.data.dao;
 import bit.data.dto.UserDto;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserDaoInter {
-    public int getTotalCount();
+    public int selectSearchId(String emaiId);
+
+    public int selectSearchNick(String userNick);
+
+    public void insertUser(UserDto dto);
+
+    public List<String> selectSubstrSi();
+
+    public UserDto selectDataById(int userId);
+
+/*    public int getTotalCount();
 
     public List<UserDto> getAllusers();
 
@@ -26,5 +35,5 @@ public interface UserDaoInter {
 
     public void updateuser(UserDto dto);
 
-    public void deleteuser(int num);
+    public void deleteuser(int num);*/
 }

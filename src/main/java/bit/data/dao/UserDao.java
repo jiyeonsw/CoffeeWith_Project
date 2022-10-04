@@ -1,21 +1,54 @@
 package bit.data.dao;
 
-import java.util.List;
-import java.util.Map;
-
+import bit.data.dto.UserDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import bit.data.dto.UserDto;
+import java.util.List;
 
 @Repository
 public class UserDao implements UserDaoInter {
-	@Autowired
-	SqlSession session;
-	//namespace를 짧게 만들어 편의성을 줌.
-	String ns = "bit.data.dao.userDao.";
-	
+    @Autowired
+    SqlSession session;
+    //namespace를 짧게 만들어 편의성을 줌.
+    String ns = "bit.data.dao.UserDao.";
+
+    @Override
+    public int selectSearchId(String emailId) {
+//        System.out.println("Dao_email: " + emailId);
+        return session.selectOne(ns + "selectSearchId", emailId);
+    }
+
+    @Override
+    public int selectSearchNick(String userNick) {
+//        System.out.println("Dao_userNick: " + userNick);
+        return session.selectOne(ns + "selectSearchNick", userNick);
+    }
+
+    @Override
+    public void insertUser(UserDto dto) {
+        System.out.println("Dao : " + dto.getEmailId());
+        System.out.println("Dao : " + dto.getUserNick());
+        System.out.println("Dao : " + dto.getUserName());
+        System.out.println("Dao : " + dto.getLocSi());
+        session.insert(ns + "insertUser", dto);
+
+    }
+
+    @Override
+    public List<String> selectSubstrSi() {
+        return session.selectList(ns + "selectSubstrSi");
+    }
+
+    @Override
+    public UserDto selectDataById(int userId) {
+        System.out.println(userId);
+        return session.selectOne(ns + "selectDataById", userId);
+    }
+
+
+	/*
 	@Override
 	public int getIdPassCheck(Map<String, String> map) {
 		return session.selectOne(ns+"loginIdPassCheck", map);
@@ -71,6 +104,6 @@ public class UserDao implements UserDaoInter {
 	@Override
 	public String getName(String id) {
 		return session.selectOne(ns+"getName",id);
-	}
+	}*/
 
 }

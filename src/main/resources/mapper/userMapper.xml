@@ -2,38 +2,79 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.UserDao">
-	<select id="selectTotalCount" resultType="int">
-	select count(*) from ur
-</select>
-	<select id="selectIdSearch" parameterType="String" resultType="int">
-		select count(*) from ur where ur_id=#{id}
-	</select>
+    <select id="selectSearchId" parameterType="String" resultType="int">
+        SELECT count(*)
+        FROM ur
+        WHERE email_id = #{emailId}
+    </select>
+    <select id="selectSearchNick" parameterType="String" resultType="int">
+        SELECT count(*)
+        FROM ur
+        WHERE ur_nk = #{userNick}
+    </select>
+    <insert id="insertUser" parameterType="UserDto">
+        INSERT INTO ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
+                        loc_gu, status, report, ur_phnum)
+        VALUES (null, #{userNick}, #{userName}, #{userPass}, null, null, #{emailId}, null,
+                null, null, #{locSi}, null, '정상', 0, #{userPhnum})
+    </insert>
+    <!--시/도명 추출 명령문-->
+    <select id="selectSubstrSi" resultType="String">
+        SELECT substr(loc_addr, 1, instr(loc_addr, ' ') - 1) AS 'city'
+        FROM cf
+        GROUP BY city;
+    </select>
+    <select id="selectDataById" parameterType="int" resultType="UserDto">
+        SELECT *
+        FROM ur
+        WHERE ur_id = #{userId};
+    </select>
 
-	<insert id="insertuser" parameterType="userDto">
-		insert into ur (ur_id,ur_pw,ur_nm,ur_img,email_id,gaipday)
-		values (#{loginid},#{pass},#{name},#{photo},#{hp},#{email},#{address},now())
-	</insert>
+    <!--    <select id="selectTotalCount" resultType="int">-->
+    <!--        select count(*)-->
+    <!--        from ur-->
+    <!--    </select>-->
 
-	<select id="selectAllusers" resultType="userDto">
-		select * from user order by ur_id asc
-	</select>
+    <!--    <insert id="insertuser" parameterType="userDto">-->
+    <!--        insert into ur (ur_id, ur_pw, ur_nm, ur_img, email_id, gaipday)-->
+    <!--        values (#{loginid}, #{pass}, #{name}, #{photo}, #{hp}, #{email}, #{address}, now())-->
+    <!--    </insert>-->
 
-	<select id="selectName" parameterType="String" resultType="String">
-		select name from user where ur_id=#{id}
-	</select>
-	<select id="loginIdPassCheck" parameterType="Map" resultType="int">
-		select count(*) from user where ur_id =#{loginid} and pass=#{loginpass}
-	</select>
-	<select id="selectDateById" parameterType="String" resultType="userDto">
-		select * from user where ur_id=#{id}
-	</select>
-	<select id="selectDateByNum" parameterType="int" resultType="userDto">
-		select * from user where num=#{num}
-	</select>
-	<update id="updatePhoto" parameterType="Map">
-		update user set ur_img=#{photo} where num=#{num}
-	</update>
-	<delete id="deleteuser" parameterType="int">
-		delete from user where ur_id=#{id}
-	</delete>
+    <!--    <select id="selectAllusers" resultType="userDto">-->
+    <!--        select *-->
+    <!--        from user-->
+    <!--        order by ur_id asc-->
+    <!--    </select>-->
+
+    <!--    <select id="selectName" parameterType="String" resultType="String">-->
+    <!--        select name-->
+    <!--        from user-->
+    <!--        where ur_id = #{id}-->
+    <!--    </select>-->
+    <!--    <select id="loginIdPassCheck" parameterType="Map" resultType="int">-->
+    <!--        select count(*)-->
+    <!--        from user-->
+    <!--        where ur_id = #{loginid}-->
+    <!--          and pass = #{loginpass}-->
+    <!--    </select>-->
+    <!--    <select id="selectDateById" parameterType="String" resultType="userDto">-->
+    <!--        select *-->
+    <!--        from user-->
+    <!--        where ur_id = #{id}-->
+    <!--    </select>-->
+    <!--    <select id="selectDateByNum" parameterType="int" resultType="userDto">-->
+    <!--        select *-->
+    <!--        from user-->
+    <!--        where num = #{num}-->
+    <!--    </select>-->
+    <!--    <update id="updatePhoto" parameterType="Map">-->
+    <!--        update user-->
+    <!--        set ur_img=#{photo}-->
+    <!--        where num = #{num}-->
+    <!--    </update>-->
+    <!--    <delete id="deleteuser" parameterType="int">-->
+    <!--        delete-->
+    <!--        from user-->
+    <!--        where ur_id = #{id}-->
+    <!--    </delete>-->
 </mapper>

@@ -1,10 +1,6 @@
 package bit.data.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import bit.data.dto.UserDto;
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import bit.data.dto.UserDto;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
 public class LoginController {
-   
-   @Autowired
-   UserServiceInter userService;
-   
+
+    @Autowired
+    UserServiceInter userService;
+   /*
    @GetMapping("/login")
    @ResponseBody
    public Map<String, String> loginprocess(String id, String pass, HttpSession session)
@@ -41,14 +37,27 @@ public class LoginController {
       
       map.put("result", result==1?"success":"fail");
       return map;
-   }
+   }*/
 
-   @GetMapping("/logout")
-   @ResponseBody
-   public void logout(HttpSession session) {
-	   //로그아웃시 제거되어야할 세션
-	   session.removeAttribute("loginok");
-	   session.removeAttribute("loginid");
-   }
+    @GetMapping("/logout")
+    @ResponseBody
+    public void logout(HttpSession session) {
+        //로그아웃시 제거되어야할 세션
+        session.removeAttribute("login_ok");
+        session.removeAttribute("login_id");
+        session.removeAttribute("login_nick");
+    }
+
+    //[임시] 세션 저장
+    @GetMapping("/del_session")
+    @ResponseBody
+    public void delSession(HttpSession session) {
+
+        session.removeAttribute("login_ok");
+        session.removeAttribute("login_id");
+        session.removeAttribute("login_nick");
+        session.removeAttribute("cfCmtCnt");
+        session.removeAttribute("cfLkCnt'");
+    }
 }
 
