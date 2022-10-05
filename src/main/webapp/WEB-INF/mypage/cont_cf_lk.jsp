@@ -58,21 +58,22 @@
             font-size: 13px;
         }
 
-        
     </style>
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
 <%--bookmark == bk--%>
 <div class="bk_container">
-    <div class="bk-card">
-        <div class="bk-ci-nm" style="background-image:url('${root}/images/cafeimg/2카페_1.jpg')">
+    <c:forEach var="dto" items="${list}">
+        <div class="bk-card">
+            <div class="bk-ci-nm" style="background-image:url('${root}/images/cafeimg/2카페_1.jpg')">
+            </div>
+            <div class="bk-txt-area">
+                <h5 class="bk-cf-nm">${dto.cf_nm}</h5>
+                <span class="bk-cf-addr">${dto.loc_addr}</span>
+            </div>
         </div>
-        <div class="bk-txt-area">
-            <h5 class="bk-cf-nm">2카페</h5>
-            <span class="bk-cf-addr">서울특별시</span>
-        </div>
-    </div>
+    </c:forEach>
 </div>
 </body>
 </html>

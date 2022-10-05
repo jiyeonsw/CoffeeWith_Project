@@ -81,11 +81,20 @@ public class UserController {
     }
 
 
-    //선호지역 추출
+    //선호지역 시/도 출력
     @GetMapping("/select_si")
     @ResponseBody
     public List<String> selectSi() {
         List<String> list = userService.selectSubstrSi();
+        return list;
+    }
+
+    //선호지역 구 출력
+    @GetMapping("/select_gu")
+    @ResponseBody
+    public List<String> selectGu(String selGu) {
+//        System.out.println("ctr:" + selGu);
+        List<String> list = userService.selectSubstrGu(selGu);
         return list;
     }
 
@@ -104,5 +113,5 @@ public class UserController {
         }
         return "redirect:/login_main";
     }
-    
+
 }

@@ -41,6 +41,11 @@ public class UserDao implements UserDaoInter {
     }
 
     @Override
+    public List<String> selectSubstrGu(String selGu) {
+        return session.selectList(ns + "selectSubstrGu", selGu);
+    }
+
+    @Override
     public UserDto selectDataById(int ur_id) {
 //        System.out.println("DAO:" + ur_id);
         return session.selectOne(ns + "selectDataById", ur_id);
