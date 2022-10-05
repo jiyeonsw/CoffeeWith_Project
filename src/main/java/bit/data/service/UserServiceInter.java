@@ -14,6 +14,8 @@ public interface UserServiceInter {
 
     public List<String> selectSubstrSi();
 
+    public List<String> selectSubstrGu(String selGu);
+
     public UserDto selectDataById(int ur_id);
-    
+
 }

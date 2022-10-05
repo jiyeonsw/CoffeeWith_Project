@@ -16,11 +16,12 @@
         INSERT INTO ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
                         loc_gu, status, report, ur_phnum)
         VALUES (null, #{ur_nk}, #{ur_nm}, #{ur_pw}, null, null, #{email_id}, null,
-                null, null, #{loc_si}, null, '정상', 0, #{ur_phnum})
+                null, null, #{loc_si}, #{loc_gu}, '정상', 0, #{ur_phnum})
     </insert>
     <!--시/도명 추출 명령문-->
     <select id="selectSubstrSi" resultType="String">
-        SELECT substr(loc_addr, 1, instr(loc_addr, ' ') - 1) AS 'city'
+        SELECT substring_index(loc_addr, ' ', '1')
+                   AS city
         FROM cf
         GROUP BY city;
     </select>
@@ -28,6 +29,15 @@
         SELECT *
         FROM ur
         WHERE ur_id = #{ur_id};
+    </select>
+
+    <select id="selectSubstrGu" parameterType="String" resultType="String">
+        SELECT substring_index(substring_index(loc_addr, ' ', '2'), ' ', -1)
+                   AS loc_gu
+        FROM cf
+        WHERE loc_addr
+                  LIKE concat(#{selSi}, '%')
+        GROUP BY loc_gu;
     </select>
 
 </mapper>

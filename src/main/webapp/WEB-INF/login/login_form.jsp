@@ -50,7 +50,6 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
-
 <div id="loginmain" class="loginmain">
     <p class="titlogin">로그인</p>
     <p>♥ 로그인 하시고 카페지도부터 투어모집까지 커피위드를 즐겨보세요 ♥</p>
@@ -72,7 +71,6 @@
                        required="required" name="ur_pw">
             </div>
             <div class="pass-success"></div>
-
                   <!-- 등록되지 않은 아이디 or 아이디/비밀번호 불일치 시 -->
                   <p tabindex="0" id="pwErrorArea" class="input-error"></p>
         </div>
@@ -80,13 +78,8 @@
         <!-- 로그인 및 간편로그인 -->
         <div class="loginbutton">
             <button type="submit" class="btn btn-secondary">로그인</button> <br><br>
-
 <%--            로그인에 실패하면, 로그인 페이지 제자리 --%>
-
 <%--            로그인에 성공하면, 메인 페이지로 이동--%>
-
-
-
             <a href="${root}/" id="kakaoLogin">
                 <img src="${root}/images/kakao_login.png" alt="카카오계정 로그인"/></a>
 
@@ -117,11 +110,9 @@
                         }
                     });
                 };
-
                 const login = document.querySelector('#kakaoLogin');
                 login.addEventListener('click', kakaoLogin);
             </script>
-
             <br>
             <button type="button" class="loginnaver" data-action="snsNaverLogin"><span class="button-text">네이버 간편로그인 버튼</span>
             </button>
@@ -129,7 +120,6 @@
         </div>
     </fieldset>
     <hr>
-
     <!-- 회원가입 및 아이디 비밀번호 찾기 -->
     <c:set var="root" value="<%=request.getContextPath() %>"/>
     <div class="findlink">
@@ -137,7 +127,6 @@
         <a href="${root}/user/find_id">아이디 찾기</a><br> <!-- Find ID page -->
         <a href="${root}/user/find_pw">비밀번호 찾기</a> <!-- Find PW page -->
     </div>
-
 </div>
 </body>
 </html>

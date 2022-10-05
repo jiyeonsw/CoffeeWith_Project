@@ -122,10 +122,15 @@
                 </div>
                 <hr>
                 <div class="inp-frm">
-                    <label for="inp-nick" class="titLab">선호지역</label>
+                    <label for="sel-si" class="titLab">선호지역</label>
                     <div class="inpB">
                         <select id="sel-si" class="form-select" name='loc_si'>
-                            <option disabled selected>- 지역 선택 -</option>
+                            <option disabled selected>선택</option>
+                        </select>
+                    </div>
+                    <div class="inpB">
+                        <select id="sel-gu" class="form-select" name='loc_gu'>
+                            <option disabled selected>선택</option>
                         </select>
                     </div>
                 </div>
@@ -180,6 +185,35 @@
             }
         })
     }
+
+    $("#sel-si").change(function () {
+        // alert($("#sel-si option:selected").text());
+        var selGu = $("#sel-si option:selected").text();
+        console.log(selGu);
+
+        $("#sel-gu").children('option:not(:first)').remove();
+        //ajax가 실행되기전까지 선택되지않도록 세팅
+        $("#sel-gu").attr("disabled", true);
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            data: {"selGu": selGu},
+            url: "select_gu",
+            success: function (res) {
+                //ajax가 실행되기전까지 선택되지않도록 세팅
+                $("#sel-gu").attr("disabled", false);
+                // alert("yes");
+                $.each(res, function (idx, val) {
+                    if (val != "") {
+                        console.log(val);
+                        var guOption = "<option value='" + val + "'>" + val + "</option>";
+                        $("#sel-gu").append(guOption);
+                    }
+                })
+            }
+        })
+    })
+
 
     //이메일 아이디 변경 시 체크
     $("#inp-email").change(function () {

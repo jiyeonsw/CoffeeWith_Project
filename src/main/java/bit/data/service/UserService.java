@@ -36,6 +36,11 @@ public class UserService implements UserServiceInter {
     }
 
     @Override
+    public List<String> selectSubstrGu(String selGu) {
+        return UserDao.selectSubstrGu(selGu);
+    }
+
+    @Override
     public UserDto selectDataById(int ur_id) {
 //        System.out.println(ur_id);
         return UserDao.selectDataById(ur_id);
