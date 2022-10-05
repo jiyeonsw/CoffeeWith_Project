@@ -1,6 +1,8 @@
 package bit.data.controller;
 
 import bit.data.dto.CafeDto;
+import bit.data.dto.CafeImgDto;
+import bit.data.dto.SearchResultDto;
 import bit.data.service.CafeServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,10 +36,60 @@ public class MapController {
         return "/bit/map/mainmap";
     }
 
-    @GetMapping("/searchword")
+    @GetMapping("/search")
     @ResponseBody
-    public List<CafeDto> searchcafe(@RequestParam(value = "searchword", required = false) String sw) {
-        List<CafeDto> list =cafeService.selectSearchCafe(sw);
-        return list;
+    public Map<String,Object> searchcafe(@RequestParam(defaultValue = "1") int currentPage,
+                                         @RequestParam(value = "searchword", required = false) String sw) {
+        //페이징 처리에 필요한 변수들
+        //전체 갯수
+        int totalCount=cafeService.selectTotalCount(sw);
+        int perPage=5;//한페이지당 보여질 글의 갯수
+        int perBlock=5;//한블럭당 보여질 페이지의 갯수
+        int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
+        int startPage;//각블럭당 보여질 시작페이지
+        int endPage;//각 블럭당 보여질 끝페이지
+        int totalPage;//총 페이지수
+        int no;//각 페이지당 출력할 시작번호
+
+        //총 페이지수를 구한다
+        //총글의갯수/한페이지당보여질갯수로 나눔(7/5=1)
+        //나머지가 1이라도 있으면 무조건 1페이지 추가(1+1=2페이지가 필요)
+        totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
+
+        //각 블럭당 보여질 시작페이지
+        //perBlock=5 일경우 현재페이지가 1~5 일경우는 시작페이지가 1, 끝페이지가 5
+        //만약 현재페이지가 13 일경우는 시작페이지가 11, 끝페이지가 15
+        startPage=(currentPage-1)/perBlock*perBlock+1;
+        endPage=startPage+perBlock-1;
+        //총페이지수가 23개일경우 마지막 블럭은 끝페이지가 25가 아니라 23이라야한다
+        if(endPage>totalPage)
+            endPage=totalPage;
+
+        //각 페이지에서 보여질 시작번호
+        //예: 1페이지->0, 2페이지:5, 3페이지 : 10...
+        startNum=(currentPage-1)*perPage;
+
+        //각페이지당 출력할 시작번호 구하기
+        //예: 총글갯수가 23이라면  1페이지는 23,2페이지는 18,3페이지는 13...
+        no=totalCount-(currentPage-1)*perPage;
+
+        //검색결과
+        List<CafeDto> cafelist = cafeService.selectSearchCafe(sw,startNum,perPage);
+        for(CafeDto dto:cafelist)
+        {
+            dto.setImg(cafeService.selectCafeImg(dto.getCf_id()));
+        }
+        //return 담을 공간
+        Map<String,Object> map=new HashMap<>();
+        map.put("list",cafelist);
+        map.put("perPage",perPage);
+        map.put("perBlock",perBlock);
+        map.put("totalCount",totalCount);
+        map.put("currentPage",currentPage);
+        map.put("startPage",startPage);
+        map.put("endPage",endPage);
+        map.put("no",no);
+        map.put("totalPage",totalPage);
+        return map;
     }
 }

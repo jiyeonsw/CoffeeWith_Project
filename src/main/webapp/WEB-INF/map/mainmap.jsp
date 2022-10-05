@@ -42,28 +42,33 @@
             <input type="text" class="form-control cafesearch" placeholder="검색어를 입력하세요">
             <button type="button" class="btn btn-success searchbtn">검색</button>
         </div>
-        <div class="searchlist"></div>
+        <ul id="pagingul">
+        </ul>
     </div>
     <div id="map"></div>
 </div>
 <script>
     $("button.searchbtn").click(function (){
         var searchword=$("input.cafesearch").val();
-        console.log(searchword);
+        var s="";
+        //검색하기
         $.ajax({
             type: "get",
-            url: "searchword",
+            url: "search",
             dataType: "json",
-            data:{"searchword":searchword},
+            data:{"searchword":searchword,"currentPage":2},
             success: function(res) {
-                console.log(res);
-                var s="";
-                $.each(res,function(i,elt){
-                    s+="<div>"+elt.cf_nm+"</div><br>";
-                });
+                alert(res.perPage);
+                for(var i=0;i<res.perPage;i++) {
+                    s += "<div>" + res.list[i].cf_nm + "</div>";
+                    s += "<div>리뷰 수:" + res.list[i].cm_cnt + " 좋아요 수:" + res.list.get(i).ck_cnt + "</div>";
+                    s += "<img src='../images/cafeimg/" + res.list[i].img[0].ci_nm+ "' style='width:30px;height:30px;'>";
+                    //방법2
+                    //s+="<img src='../images/cafeimg/"+res.cf_nm+"_1.jpg' onerror='../images/cafeimg/"+res.cf_nm+"_1.png' style='width:30px; height:30px;'>"
+                }//for문
                 $("div.searchlist").html(s);
-            }
-        });
+            }//success
+        });//$ajax"searchword"
     });
     //지도 옵션
     var mapOptions = {
