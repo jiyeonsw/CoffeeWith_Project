@@ -15,6 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <title>CofeeWith</title>
 
+
     <style type="text/css">
         body * {
             font-family: 'Jua';
@@ -31,7 +32,6 @@
             margin: 0 auto;
             text-align: left;
             overflow: hidden;
-            min-height: 100vh;
             padding-bottom: 164px;
         }
 
@@ -60,7 +60,6 @@
         a:hover {
             cursor: pointer;
         }
-
 
         .main-mypage > div {
             border: 1px solid gray;
