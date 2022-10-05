@@ -43,19 +43,20 @@ public class CafeService implements CafeServiceInter {
     }
 
     @Override
-    public void insertCafeCmt(CafeCmtDto dto){
+    public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCf_id());
         cafeDao.insertCafeCmt(dto);
+    }
 
     @Override
     public List<CafeDto> selectSearchCafe(String searchword, int startnum, int perpage) {
-        Map <String,Object> map=new HashMap<>();
-        map.put("searchword",searchword);
+        Map<String, Object> map = new HashMap<>();
+        map.put("searchword", searchword);
         map.put("startnum", startnum);
         map.put("perpage", perpage);
         return cafeDao.selectSearchCafe(map);
     }
-    
+
     @Override
     public int selectTotalCount(String searchword) {
         // TODO Auto-generated method stub
