@@ -31,6 +31,7 @@
         button.maketour{
             float: right;
         }
+
     </style>
 </head>
 <body>
@@ -42,34 +43,67 @@
             <input type="text" class="form-control cafesearch" placeholder="검색어를 입력하세요">
             <button type="button" class="btn btn-success searchbtn">검색</button>
         </div>
-        <ul id="pagingul">
-        </ul>
+        <div class="searchlist">
+        </div>
+        <div class="paging">
+        </div>
     </div>
     <div id="map"></div>
 </div>
 <script>
+    var currentPage = 1;
     $("button.searchbtn").click(function (){
+        //검색어
         var searchword=$("input.cafesearch").val();
+        //검색결과 string
         var s="";
+        //paging 버튼 string
+        var p="";
         //검색하기
         $.ajax({
             type: "get",
             url: "search",
             dataType: "json",
-            data:{"searchword":searchword,"currentPage":2},
+            data:{"searchword":searchword,"currentPage":currentPage},
             success: function(res) {
-                alert(res.perPage);
-                for(var i=0;i<res.perPage;i++) {
-                    s += "<div>" + res.list[i].cf_nm + "</div>";
-                    s += "<div>리뷰 수:" + res.list[i].cm_cnt + " 좋아요 수:" + res.list.get(i).ck_cnt + "</div>";
-                    s += "<img src='../images/cafeimg/" + res.list[i].img[0].ci_nm+ "' style='width:30px;height:30px;'>";
-                    //방법2
-                    //s+="<img src='../images/cafeimg/"+res.cf_nm+"_1.jpg' onerror='../images/cafeimg/"+res.cf_nm+"_1.png' style='width:30px; height:30px;'>"
-                }//for문
+                $.each(res.list,function(i,ele){
+                    console.log(ele.cf_nm);
+                    s+="<div>"+ele.cf_nm+"</div>";
+                    s+="<div>리뷰 수: "+ele.cm_cnt+" 좋아요 수: "+ele.ck_cnt+"</div>"
+                    $.each(ele.img,function (j,elet){
+                        if(j<3) {
+                            s += "<img src='../images/cafeimg/" + elet.ci_nm + "' style='width:50px;height:50px;'>";
+                        }
+                    })
+                });
+
+                //페이징 시작
+                p+="<ul class=‘pagination’>";
+                console.log("paging");
+                //이전버튼
+                if(res.startPage>1) {
+                    console.log("이전버튼");
+                    p += "<li class=‘page-item’><button type='button' id='btnback' class=‘page-link’>이전</button></li>";
+                }
+                //중간 숫자 버튼
+                for(var idx=res.startPage; idx<=res.endPage; idx++){
+                    console.log(idx);
+                    p+="<li class=‘page-item’><button type='button' class='page-link btnnum'>"+idx+"</button></li>";
+                }
+                //다음버튼
+                if(res.endPage<res.totalPage) {
+                    p += "<li class=‘page-item’><button type='button' id='btnnext' class=‘page-link’>다음</button></li>";
+                    p += "</ul>";
+                }
+
                 $("div.searchlist").html(s);
+                $("div.paging").html(p);
             }//success
         });//$ajax"searchword"
     });
+
+
+
     //지도 옵션
     var mapOptions = {
         center:new naver.maps.LatLng(37.4993705, 127.0290175),

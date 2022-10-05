@@ -48,7 +48,8 @@ public class CafeDao implements CafeDaoInter {
     @Override
     public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCm_txt());
-        session.insert(nsm+"insertCafeCmt", dto);
+        session.insert(nsm + "insertCafeCmt", dto);
+    }
 
     @Override
     public List<CafeDto> selectSearchCafe(Map<String,Object> map) {
