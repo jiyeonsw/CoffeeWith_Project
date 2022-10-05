@@ -14,4 +14,5 @@ public interface CafeServiceInter {
     public List<CafeImgDto> selectCafeImgAll(int cf_id);
     public List<CafeCmtDto> selectCafeCmt(int cf_id);
     public List<CafeDto> selectSearchCafe(String searchword);
+    public void insertCafeCmt(CafeCmtDto dto);
 }

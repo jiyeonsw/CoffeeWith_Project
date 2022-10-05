@@ -47,4 +47,10 @@ public class CafeDao implements CafeDaoInter {
     public List<CafeDto> selectSearchCafe(String searchword) {
         return session.selectList(ns + "selectSearchCafe", searchword);
     }
+
+    @Override
+    public void insertCafeCmt(CafeCmtDto dto) {
+        //System.out.println(dto.getCm_txt());
+        session.insert(nsm+"insertCafeCmt", dto);
+    }
 }
