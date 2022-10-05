@@ -2,36 +2,70 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.MypageDao">
-    <!--마이페이지 : 카페 북마크 수-->
+    <!--MyPage top : 카페 북마크 수-->
     <select id="selectCfLkCnt" parameterType="int" resultType="int">
         SELECT count(*)
         FROM ur u
                  INNER JOIN cf_lk c ON (u.ur_id = c.ur_id)
         WHERE u.ur_id = #{loginId};
     </select>
-    <!--마이페이지 : 작성한 리뷰 수-->
+    <!--MyPage top : 작성한 리뷰 수-->
     <select id="selectCfCmtCnt" parameterType="int" resultType="int">
         SELECT count(*)
         FROM ur u
                  INNER JOIN cf_cmt c ON (u.ur_id = c.ur_id)
         WHERE u.ur_id = #{loginId};
     </select>
-    <!--북마크 카페 리스트(카페아이디,카페명,카페주소)-->
-    <select id="selectCfIdNm" parameterType="int" resultType="cfdto">
-        SELECT c.cf_id, c.cf_nm, c.loc_addr
-        FROM cf_lk cl
-                 LEFT JOIN cf c
-                           ON cl.cf_id = c.cf_id
-                 LEFT JOIN ur u
-                           ON cl.ur_id = u.ur_id
-        WHERE u.ur_id = #{userId};
-    </select>
-    <!--북마크 카페 리스트(카페사진)-->
-    <select id="selectCfLkCi" parameterType="int" resultType="cidto">
-        SELECT ci.ci_nm
-        FROM cf_img ci
-                 LEFT JOIN cf c
-                           ON ci.cf_id = c.cf_id
-        WHERE c.cf_id = #{cfId};
+
+    <!--MyPage contents : 북마크 카페id,카페이름,카페이미지(첫번째)-->
+    <select id="selectLikeCfInfo" parameterType="int" resultType="mpcldto">
+        select cl.cf_id,
+               c.cf_nm,
+               ci.ci_nm,
+               substring_index(c.loc_addr, ' ', '1')                         as loc_si,
+               substring_index(substring_index(loc_addr, ' ', '2'), ' ', -1) as loc_gu
+        from cf_lk cl
+                 JOIN cf c
+                      ON cl.cf_id = c.cf_id
+                 left join cf_img ci
+                           on cl.cf_id = ci.cf_id
+        where cl.ur_id = #{urId}
+        group by c.cf_nm;
     </select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

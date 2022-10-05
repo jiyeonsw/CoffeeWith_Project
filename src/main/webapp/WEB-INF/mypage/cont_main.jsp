@@ -22,12 +22,12 @@
     <style>
         .main-container {
         }
-        
+
     </style>
 </head>
 <body>
 <div class="main-container">
-    <div></div>
+    <div>메인은 아직 없어용 메뉴 클릭바람</div>
 </div>
 </body>
 </html>
