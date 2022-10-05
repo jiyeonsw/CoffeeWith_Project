@@ -58,13 +58,14 @@
             dataType: "json",
             data:{"searchword":searchword,"currentPage":2},
             success: function(res) {
-                $.each(res, function (i, elt) {
-                    s += "<div>" + elt.cf_id + "</div>";
-                    s += "<div>리뷰 수:" + elt.cm_cnt + " 좋아요 수:" + elt.ck_cnt + "</div>";
-                    s += "<img src='../images/cafeimg/" + elt.img + "' style='width:30px;height:30px;'>";
+                alert(res.perPage);
+                for(var i=0;i<res.perPage;i++) {
+                    s += "<div>" + res.list[i].cf_nm + "</div>";
+                    s += "<div>리뷰 수:" + res.list[i].cm_cnt + " 좋아요 수:" + res.list.get(i).ck_cnt + "</div>";
+                    s += "<img src='../images/cafeimg/" + res.list[i].img[0].ci_nm+ "' style='width:30px;height:30px;'>";
                     //방법2
-                    //s+="<img src='../images/cafeimg/"+elt.cf_nm+"_1.jpg' onerror='../images/cafeimg/"+elt.cf_nm+"_1.png' style='width:30px; height:30px;'>"
-                });//$each
+                    //s+="<img src='../images/cafeimg/"+res.cf_nm+"_1.jpg' onerror='../images/cafeimg/"+res.cf_nm+"_1.png' style='width:30px; height:30px;'>"
+                }//for문
                 $("div.searchlist").html(s);
             }//success
         });//$ajax"searchword"

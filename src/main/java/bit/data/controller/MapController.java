@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/map")
@@ -36,19 +38,18 @@ public class MapController {
 
     @GetMapping("/search")
     @ResponseBody
-    public List<SearchResultDto>searchcafe(@RequestParam(defaultValue = "1") int currentPage,
-                                           @RequestParam(value = "searchword", required = false) String sw) {
+    public Map<String,Object> searchcafe(@RequestParam(defaultValue = "1") int currentPage,
+                                         @RequestParam(value = "searchword", required = false) String sw) {
         //페이징 처리에 필요한 변수들
         //전체 갯수
-        int totalCount=cafeService.getTotalCount(sw);
-        int perPage=10;//한페이지당 보여질 글의 갯수
+        int totalCount=cafeService.selectTotalCount(sw);
+        int perPage=5;//한페이지당 보여질 글의 갯수
         int perBlock=5;//한블럭당 보여질 페이지의 갯수
         int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
         int startPage;//각블럭당 보여질 시작페이지
         int endPage;//각 블럭당 보여질 끝페이지
         int totalPage;//총 페이지수
         int no;//각 페이지당 출력할 시작번호
-
 
         //총 페이지수를 구한다
         //총글의갯수/한페이지당보여질갯수로 나눔(7/5=1)
@@ -71,28 +72,24 @@ public class MapController {
         //각페이지당 출력할 시작번호 구하기
         //예: 총글갯수가 23이라면  1페이지는 23,2페이지는 18,3페이지는 13...
         no=totalCount-(currentPage-1)*perPage;
+
+        //검색결과
         List<CafeDto> cafelist = cafeService.selectSearchCafe(sw,startNum,perPage);
-        List<SearchResultDto> searchlist=new ArrayList<>();
         for(CafeDto dto:cafelist)
         {
-            SearchResultDto sdto=new SearchResultDto();
-            sdto.setCf_nm(dto.getCf_nm());
-            sdto.setCf_id(dto.getCf_id());
-            sdto.setCk_cnt(dto.getCk_cnt());
-            sdto.setCm_cnt(dto.getCm_cnt());
-            sdto.setNo(no);
-            sdto.setCurrentPage(currentPage);
-            sdto.setStartPage(startPage);
-            sdto.setEndPage(endPage);
-            sdto.setTotalCount(totalCount);
-            sdto.setTotalPage(totalPage);
-            List<CafeImgDto> imglist=cafeService.selectCafeImg(dto.getCf_id());
-            if(imglist.size()!=0) {
-                String img = imglist.get(0).getCi_nm();
-                sdto.setImg(img);
-            }
-            searchlist.add(sdto);
+            dto.setImg(cafeService.selectCafeImg(dto.getCf_id()));
         }
-        return searchlist;
+        //return 담을 공간
+        Map<String,Object> map=new HashMap<>();
+        map.put("list",cafelist);
+        map.put("perPage",perPage);
+        map.put("perBlock",perBlock);
+        map.put("totalCount",totalCount);
+        map.put("currentPage",currentPage);
+        map.put("startPage",startPage);
+        map.put("endPage",endPage);
+        map.put("no",no);
+        map.put("totalPage",totalPage);
+        return map;
     }
 }

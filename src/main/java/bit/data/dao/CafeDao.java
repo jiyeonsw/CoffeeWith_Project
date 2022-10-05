@@ -47,8 +47,8 @@ public class CafeDao implements CafeDaoInter {
         return session.selectList(ns+"selectSearchCafe", map);
     }
     @Override
-    public int getTotalCount(String searchword) {
+    public int selectTotalCount(String searchword) {
         // TODO Auto-generated method stub
-        return session.selectOne(ns+"getTotalCount",searchword);
+        return session.selectOne(ns+"selectTotalCount",searchword);
     }
 }

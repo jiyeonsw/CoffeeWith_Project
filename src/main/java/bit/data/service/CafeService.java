@@ -50,8 +50,8 @@ public class CafeService implements CafeServiceInter {
         return cafeDao.selectSearchCafe(map);
     }
     @Override
-    public int getTotalCount(String searchword) {
+    public int selectTotalCount(String searchword) {
         // TODO Auto-generated method stub
-        return cafeDao.getTotalCount(searchword);
+        return cafeDao.selectTotalCount(searchword);
     }
 }
