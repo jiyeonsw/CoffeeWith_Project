@@ -23,6 +23,7 @@
             font-size: 20px;
             color: #664400;
             padding-top: 30px;
+            padding-left: 50px;
         }
 
     </style>
@@ -30,7 +31,7 @@
 
 <body>
 <div id="main">
-    메인 홈 페이지 부분dddd
+    메인 홈페이지 부분
 
 </div>
 </body>
