@@ -15,6 +15,13 @@
     <title>Find ID</title>
 
     <style>
+        @font-face {
+            font-family: 'GangwonEdu_OTFBoldA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         .container {
             width: 450px;
             margin: 0 auto;
@@ -32,8 +39,6 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
-
-<%--<form action="  " method="post" onsubmit="return check()">--%>
 
 <div id="container" class="container">
     <p class="titid">아이디 찾기</p>
@@ -73,29 +78,23 @@
             <div class="inpA">
                 <input type="email" id="inp-email" placeholder="example@coffewith.com" class="form-control"
                        required="required" name="email_id">
-                <br>
-                <button type="button" id="btn-id-chk" class="btn btn-outline-info btnA">
-                    본인 확인 이메일 전송</button>
             </div>
             <div class="id-success"></div>
         </div>
+        <br>
+<%--        인증번호 입력폼 1--%>
+        <div class="inp-frm">
+            <button type="button" id="btn-id-chk" class="btn btn-outline-info">
+                본인 확인 이메일 전송</button>
 
-    <hr>
-
-<%--        <div class="findpw_ok"><label>인증번호 입력</label></div>--%>
-<%--        <div class="wrap_input">--%>
-<%--                                <span class="box_input">--%>
-<%--                                   <input type="text" name="findCite" id="findCite" class="inp_find">--%>
-<%--                                    <span class="message_find time_find" style="display:none;">남은 시간 (3:00)</span>--%>
-<%--                                </span>--%>
-<%--            <p class="message_find" id="msg_cert_num" style="display:none;">입력시간이 만료되었습니다. 인증번호를 다시 발송해주세요.</p>--%>
-<%--            <p class="message_find ok" style="display:none;">인증 성공. 잠시만 기다려주세요.</p>--%>
-<%--        </div>--%>
-        <button type="submit" id="inp-btn" class="btn btn-primary btnB">본인 인증 완료</button>
+                <input type="password" id="oknum" placeholder="이메일에 전송된 인증번호를 5분 이내로 입력해주세요" class="form-control"
+                       required="required">
+        </div>
+        <br>
+        <button type="submit" id="inp-btn" class="btn btn-primary btnB">본인 인증이 완료되었습니다</button>
     </fieldset>
 </div>
 </div>
-</form>
 
 </body>
 </html>
