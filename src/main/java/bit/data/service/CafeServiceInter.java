@@ -16,4 +16,9 @@ public interface CafeServiceInter {
     public void insertCafeCmt(CafeCmtDto dto);
     public List<CafeDto> selectSearchCafe(String searchword, int startnum, int perpage);
     public int selectTotalCount(String searchword);
+
+    public int selectCkCntbyCfid(int cf_id);
+    public void insertCafeLike(int ur_id, int cf_id);
+    public int selectCKCntbyUridNCfid(int ur_id, int cf_id);
+    public void deleteCafeLike(int ur_id, int cf_id);
 }

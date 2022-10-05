@@ -16,4 +16,8 @@ public interface CafeDaoInter {
     public List<CafeCmtDto> selectCafeCmt(int cf_id);
     public void insertCafeCmt(CafeCmtDto dto);
     public int selectTotalCount(String searchword);
+    public int selectCkCntbyCfid(int cf_id);
+    public void insertCafeLike(Map<String,Integer> map);
+    public int selectCKCntbyUridNCfid(Map<String,Integer> map);
+    public void deleteCafeLike(Map<String,Integer> map);
 }

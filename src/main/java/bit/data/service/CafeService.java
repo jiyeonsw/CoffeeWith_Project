@@ -43,9 +43,10 @@ public class CafeService implements CafeServiceInter {
     }
 
     @Override
-    public void insertCafeCmt(CafeCmtDto dto){
+    public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCf_id());
         cafeDao.insertCafeCmt(dto);
+    }
 
     @Override
     public List<CafeDto> selectSearchCafe(String searchword, int startnum, int perpage) {
@@ -60,5 +61,33 @@ public class CafeService implements CafeServiceInter {
     public int selectTotalCount(String searchword) {
         // TODO Auto-generated method stub
         return cafeDao.selectTotalCount(searchword);
+    }
+
+    @Override
+    public int selectCkCntbyCfid(int cf_id) {
+        return cafeDao.selectCkCntbyCfid(cf_id);
+    }
+
+    @Override
+    public void insertCafeLike(int ur_id, int cf_id) {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("ur_id", ur_id);
+        map.put("cf_id",cf_id);
+        cafeDao.insertCafeLike(map);
+    }
+    @Override
+    public int selectCKCntbyUridNCfid(int ur_id, int cf_id) {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("ur_id", ur_id);
+        map.put("cf_id",cf_id);
+        return cafeDao.selectCKCntbyUridNCfid(map);
+    }
+
+    @Override
+    public void deleteCafeLike(int ur_id, int cf_id) {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("ur_id", ur_id);
+        map.put("cf_id",cf_id);
+        cafeDao.deleteCafeLike(map);
     }
 }

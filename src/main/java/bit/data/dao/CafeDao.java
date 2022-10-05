@@ -48,7 +48,8 @@ public class CafeDao implements CafeDaoInter {
     @Override
     public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCm_txt());
-        session.insert(nsm+"insertCafeCmt", dto);
+        session.insert(nsm + "insertCafeCmt", dto);
+    }
 
     @Override
     public List<CafeDto> selectSearchCafe(Map<String,Object> map) {
@@ -59,5 +60,24 @@ public class CafeDao implements CafeDaoInter {
         // TODO Auto-generated method stub
         return session.selectOne(ns+"selectTotalCount",searchword);
 
+    }
+    @Override
+    public int selectCkCntbyCfid(int cf_id) {
+        return session.selectOne(ns+"selectCkCntbyCfid",cf_id);
+    }
+
+    @Override
+    public void insertCafeLike(Map<String, Integer> map) {
+        session.insert(ns+"insertCafeLike", map);
+    }
+
+    @Override
+    public int selectCKCntbyUridNCfid(Map<String, Integer> map) {
+        return session.selectOne(ns+"selectCKCntbyUridNCfid", map);
+    }
+
+    @Override
+    public void deleteCafeLike(Map<String, Integer> map) {
+        session.delete(ns+"deleteCafeLike", map);
     }
 }

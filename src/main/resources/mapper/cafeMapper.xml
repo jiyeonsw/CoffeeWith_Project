@@ -21,4 +21,16 @@
 			WHERE cf_nm like concat ('%',#{searchword},'%')	OR loc_addr LIKE concat ('%',#{searchword},'%')
 		</if>
 	</select>
+	<select id="selectCkCntbyCfid" parameterType="int" resultType="int">
+		SELECT count(*) FROM cf_lk WHERE cf_id=#{cf_id}
+	</select>
+	<insert id="insertCafeLike" parameterType="Map">
+		INSERT INTO cf_lk VALUES (#{ur_id},#{cf_id})
+	</insert>
+	<select id="selectCKCntbyUridNCfid" parameterType="map" resultType="int">
+		SELECT count(*) FROM cf_lk WHERE ur_id=#{ur_id} AND cf_id=#{cf_id}
+	</select>
+	<delete id="deleteCafeLike" parameterType="Map">
+		DELETE FROM cf_lk WHERE ur_id=#{ur_id} AND cf_id=#{cf_id}
+	</delete>
 </mapper>
