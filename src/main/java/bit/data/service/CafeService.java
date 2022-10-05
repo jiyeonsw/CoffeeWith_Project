@@ -7,7 +7,9 @@ import bit.data.dto.CafeImgDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CafeService implements CafeServiceInter {
@@ -41,8 +43,22 @@ public class CafeService implements CafeServiceInter {
     }
 
     @Override
-    public List<CafeDto> selectSearchCafe(String searchword) {
-        return cafeDao.selectSearchCafe(searchword);
+    public void insertCafeCmt(CafeCmtDto dto){
+        //System.out.println(dto.getCf_id());
+        cafeDao.insertCafeCmt(dto);
 
+    @Override
+    public List<CafeDto> selectSearchCafe(String searchword, int startnum, int perpage) {
+        Map <String,Object> map=new HashMap<>();
+        map.put("searchword",searchword);
+        map.put("startnum", startnum);
+        map.put("perpage", perpage);
+        return cafeDao.selectSearchCafe(map);
+    }
+    
+    @Override
+    public int selectTotalCount(String searchword) {
+        // TODO Auto-generated method stub
+        return cafeDao.selectTotalCount(searchword);
     }
 }

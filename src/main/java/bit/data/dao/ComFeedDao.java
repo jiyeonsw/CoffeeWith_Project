@@ -53,4 +53,5 @@ public class ComFeedDao implements ComFeedDaoInter{
     public void updateLikes(int num) {
         session.update(ns+"updateLikes",num);
     }
+
 }
