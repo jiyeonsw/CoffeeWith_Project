@@ -8,8 +8,17 @@
 	<select id="selectAllCafe" resultType="cfdto">
 		SELECT * FROM cf ORDER BY cf_id ASC
 	</select>
-	<select id="selectSearchCafe" parameterType="String" resultType="cfdto">
-		SELECT * FROM cf where cf_nm like concat ('%',#{searchword},'%')
-			or loc_addr like concat ('%',#{searchword},'%')
+	<select id="selectSearchCafe" parameterType="Map" resultType="cfdto">
+		SELECT * FROM cf
+			<if test="searchword!=null">
+				WHERE cf_nm like concat ('%',#{searchword},'%')	OR loc_addr LIKE concat ('%',#{searchword},'%')
+			</if>
+		order by cf_id ASC LIMIT #{startnum},#{perpage}
+	</select>
+	<select id="getTotalCount" parameterType='String' resultType="int">
+		SELECT count(*) FROM cf
+		<if test="searchword!=null">
+			WHERE cf_nm like concat ('%',#{searchword},'%')	OR loc_addr LIKE concat ('%',#{searchword},'%')
+		</if>
 	</select>
 </mapper>

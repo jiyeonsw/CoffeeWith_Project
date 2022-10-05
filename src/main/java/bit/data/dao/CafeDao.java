@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class CafeDao implements CafeDaoInter {
@@ -15,7 +16,6 @@ public class CafeDao implements CafeDaoInter {
     SqlSession session;
     String ns="bit.data.dao.CafeDao."; //namespace
     String nsi="bit.data.dao.CafeImgDao.";
-
     String nsm="bit.data.dao.CafeCmtDao.";
 
     @Override
@@ -40,10 +40,15 @@ public class CafeDao implements CafeDaoInter {
 
     @Override
     public List<CafeCmtDto> selectCafeCmt(int cf_id) {
-        return session.selectList(nsm+"selectCafeCmt", cf_id);
-
+        return session.selectList(nsm + "selectCafeCmt", cf_id);
+    }
     @Override
-    public List<CafeDto> selectSearchCafe(String searchword) {
-        return session.selectList(ns+"selectSearchCafe", searchword);
+    public List<CafeDto> selectSearchCafe(Map<String,Object> map) {
+        return session.selectList(ns+"selectSearchCafe", map);
+    }
+    @Override
+    public int getTotalCount(String searchword) {
+        // TODO Auto-generated method stub
+        return session.selectOne(ns+"getTotalCount",searchword);
     }
 }
