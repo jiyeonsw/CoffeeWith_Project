@@ -93,7 +93,7 @@
 
         <!--4번째 메뉴 -->
         <li class="main">
-            <a>커뮤니티</a>
+            <a href="${root}/comfeed/main">커뮤니티</a>
         </li>
     </ul>
 </div>

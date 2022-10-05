@@ -11,20 +11,20 @@
             where ${searchcolumn} like concat ('%',#{searchword},'%')
         </if>
     </select>
-    <select id="selectFeed" parameterType="int" resultType="cfDto">
+    <select id="selectFeed" parameterType="int" resultType="fddto">
         select * from fd where num=#{num}
     </select>
-    <select id="searchFeedByTag" parameterType="Map" resultType="cfDto">
+    <select id="searchFeedByTag" parameterType="Map" resultType="fddto">
         select * from fd
         <if test="searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat ('%',#{searchword},'%')
         </if>
         order by w_date desc;
     </select>
-    <insert id="insertFeed" parameterType="cfDto">
+    <insert id="insertFeed" parameterType="fddto">
         insert into fd values (null, , ,#{fd_txt},#{fd_photo},now(),null,0)
     </insert>
-    <update id="updateFeed" parameterType="cfDto">
+    <update id="updateFeed" parameterType="fddto">
         update fd set fd_txt=#{fd_txt},fd_photo=#{fd_photo},w_date=null,u_date=now() where num=#{num}
     </update>
     <delete id="deleteFeed" parameterType="int">
