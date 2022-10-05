@@ -71,7 +71,7 @@
                 <span class="num">${sessionScope.cfLkCnt}</span>
             </div>
         </a>
-        <a href="#" class="inner">
+        <a href="${root}/mypage/review" class="inner">
             <div class="txt cf-tr">
                 작성한 리뷰
                 <span class="num">${sessionScope.cfCmtCnt}</span>

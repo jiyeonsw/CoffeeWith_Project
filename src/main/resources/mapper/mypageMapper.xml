@@ -16,4 +16,22 @@
                  INNER JOIN cf_cmt c ON (u.ur_id = c.ur_id)
         WHERE u.ur_id = #{loginId};
     </select>
+    <!--북마크 카페 리스트(카페아이디,카페명,카페주소)-->
+    <select id="selectCfIdNm" parameterType="int" resultType="cfdto">
+        SELECT c.cf_id, c.cf_nm, c.loc_addr
+        FROM cf_lk cl
+                 LEFT JOIN cf c
+                           ON cl.cf_id = c.cf_id
+                 LEFT JOIN ur u
+                           ON cl.ur_id = u.ur_id
+        WHERE u.ur_id = #{userId};
+    </select>
+    <!--북마크 카페 리스트(카페사진)-->
+    <select id="selectCfLkCi" parameterType="int" resultType="cidto">
+        SELECT ci.ci_nm
+        FROM cf_img ci
+                 LEFT JOIN cf c
+                           ON ci.cf_id = c.cf_id
+        WHERE c.cf_id = #{cfId};
+    </select>
 </mapper>
