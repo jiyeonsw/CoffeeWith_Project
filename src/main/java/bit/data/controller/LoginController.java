@@ -17,24 +17,18 @@ public class LoginController {
     @Autowired
     UserServiceInter userService;
 
-
+    // 아이디 찾기
     @GetMapping("/find_id")
     public String findid(){
         return "/bit/login/find_id";
     }
 
+    // 비밀번호 찾기
     @GetMapping("/find_pw")
     public String findpw(){
         return "/bit/login/find_pw";
     }
 
-//    //이메일 본인 인증 API 추가 ?
-//    @GetMapping("/mailCheck")
-//    @ResponseBody
-//    public String mailCheck(String email) {
-//        System.out.println("이메일 인증 요청이 갔습니다");
-//        System.out.println("이메일 인증 이메일 : " + email);
-//    }
 
     @GetMapping("/logout")
     @ResponseBody
