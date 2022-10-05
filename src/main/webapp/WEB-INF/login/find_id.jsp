@@ -2,65 +2,98 @@
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <title>Find ID</title>
 
     <style>
-        .findid{padding-left: 300px; padding-top: 30px;}
+        @font-face {
+            font-family: 'GangwonEdu_OTFBoldA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
+        .container {
+            width: 450px;
+            margin: 0 auto;
+            padding-top: 64px;
+            text-align: left;
+        }
+        .titid {
+            margin-bottom: 32px;
+            font-size: 2.6rem;
+            line-height: 1.3;
+            font-weight: 900;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
 
-
-<div class="findid">
-    <h2>아이디 찾기</h2>
+<div id="container" class="container">
+    <p class="titid">아이디 찾기</p>
     <p>회원정보에 등록된 정보로 아이디를 찾을 수 있습니다.</p>
-
-    <ul class="findid_form">
-        <li>
-            <div class="findid_nm"><label>이름</label></div>
-            <span class="box_input">
-                    <input type="text"  placeholder="특수문자 없이 입력">
-                </span>
-        </li>
-        <br>
-        <li>
-            <div class="findid_ml"><label>이메일 주소</label></div>
-            <span class="box_input">
-                    <input type="text" placeholder="     @    ">
-                </span>
-            <button type="button">인증번호 발송</button>
-            <p>이메일 주소를 정확하게 입력해주세요.</p>
-        </li>
-
-        <li>
-            <div class="findid_ph"><label>휴대폰 번호</label></div>
-            <span class="box_input">
-                    <input type="text" placeholder="‘-’ 없이 숫자만 입력">
-                </span>
-            <button type="button">인증번호 발송</button>
-            <p>휴대폰 번호를 정확하게 입력해주세요.</p>
-        </li>
-
-        <li>
-            <div class="findid_ok"><label>인증번호 입력</label></div>
-            <div class="wrap_input">
-                                <span class="box_input">
-                                   <input type="text" name="findCite" id="findCite" class="inp_find">
-                                    <span class="message_find time_find" style="display:none;">남은 시간 (3:00)</span>
-                                </span>
-                <p class="message_find" id="msg_cert_num" style="display:none;">입력시간이 만료되었습니다. 인증번호를 다시 발송해주세요.</p>
-                <p class="message_find ok" style="display:none;">인증 성공. 잠시만 기다려주세요.</p>
+    <br>
+    <fieldset>
+        <div class="inp-frm">
+            <label for="inp-name" class="titLab">이름</label>
+            <div class="inpA">
+                <input type="email" id="inp-name" placeholder="특수문자 없이 입력해주세요" class="form-control"
+                       required="required" name="email_id">
             </div>
-        </li>
+            <div class="id-success"></div>
+        </div>
         <br>
+        <div class="inp-frm">
+            <label for="inp-pass" class="titLab">비밀번호</label>
+            <div class="inpB">
+                <input type="password" id="inp-pass" placeholder="영문,숫자,특수문자 8~16자이내" class="form-control"
+                       required="required" name="ur_pw">
+            </div>
+            <div class="pass-success"></div>
+        </div>
         <br>
-        <button type="button" id="btn_cert_complete">본인인증완료</button>
-    </ul>
+        <div class="inp-frm">
+            <label for="inp-repass" class="titLab">비밀번호 확인</label>
+            <div class="inpB">
+                <input type="password" id="inp-repass" placeholder="확인을 위해 한번 더 입력해주세요" class="form-control"
+                       required="required">
+            </div>
+            <div class="repass-success"></div>
+        </div>
+        <br>
+
+        <div class="inp-frm">
+            <label for="inp-email" class="titLab">이메일</label>
+            <div class="inpA">
+                <input type="email" id="inp-email" placeholder="example@coffewith.com" class="form-control"
+                       required="required" name="email_id">
+            </div>
+            <div class="id-success"></div>
+        </div>
+        <br>
+<%--        인증번호 입력폼 1--%>
+        <div class="inp-frm">
+            <button type="button" id="btn-id-chk" class="btn btn-outline-info">
+                본인 확인 이메일 전송</button>
+
+                <input type="password" id="oknum" placeholder="이메일에 전송된 인증번호를 5분 이내로 입력해주세요" class="form-control"
+                       required="required">
+        </div>
+        <br>
+        <button type="submit" id="inp-btn" class="btn btn-primary btnB">본인 인증이 완료되었습니다</button>
+    </fieldset>
 </div>
 </div>
+
 </body>
 </html>
