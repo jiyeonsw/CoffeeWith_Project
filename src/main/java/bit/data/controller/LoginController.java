@@ -16,28 +16,17 @@ public class LoginController {
 
     @Autowired
     UserServiceInter userService;
-   /*
-   @GetMapping("/login")
-   @ResponseBody
-   public Map<String, String> loginprocess(String id, String pass, HttpSession session)
-   {
-      Map<String, String> map=new HashMap<String, String>();
-      int result=userService.getIdPassCheck(id, pass);
-      if(result==1)
-      {
-         //유지시간
-         session.setMaxInactiveInterval(60*60*4);//4시간
-         //로그인한 아이디에 대한 정보를 얻어서 세션에 저장
-         UserDto userDto=userService.getDataById(id);
-         session.setAttribute("loginok", "yes");
-         session.setAttribute("loginid", id);
-         session.setAttribute("loginname", userDto.getName());
-         session.setAttribute("loginphoto", userDto.getPhoto());
-      }
-      
-      map.put("result", result==1?"success":"fail");
-      return map;
-   }*/
+
+
+    @GetMapping("/find_id")
+    public String findid(){
+        return "/bit/login/find_id";
+    }
+
+    @GetMapping("/find_pw")
+    public String findpw(){
+        return "/bit/login/find_pw";
+    }
 
     @GetMapping("/logout")
     @ResponseBody
@@ -48,21 +37,33 @@ public class LoginController {
         session.removeAttribute("login_nick");
     }
 
-    //임시 세션 저장
+    //[임시] 세션 저장
     @GetMapping("/call_session")
     @ResponseBody
     public void callSession(HttpSession session) {
         session.setMaxInactiveInterval(60 * 60 * 12);
-        
-        UserDto dto = userService.selectDataById(2);
 
-        System.out.println(dto.getUserId());
-        System.out.println(dto.getEmailId());
-        System.out.println(dto.getUserNick());
+        UserDto dto = userService.selectDataById(2);
+//        System.out.println(dto.getUr_id());
+//        System.out.println(dto.getEmail_id());
+//        System.out.println(dto.getUr_nk());
 
         session.setAttribute("login_ok", "yes");
-        session.setAttribute("login_id", dto.getEmailId());
-        session.setAttribute("login_nick", dto.getUserNick());
+        session.setAttribute("login_id", dto.getUr_id());
+        session.setAttribute("login_nick", dto.getUr_nk());
+    }
+
+
+    //[임시] 세션 제거
+    @GetMapping("/del_session")
+    @ResponseBody
+    public void delSession(HttpSession session) {
+
+        session.removeAttribute("login_ok");
+        session.removeAttribute("login_id");
+        session.removeAttribute("login_nick");
+        session.removeAttribute("cfCmtCnt");
+        session.removeAttribute("cfLkCnt'");
     }
 }
 

@@ -26,16 +26,29 @@
             display: flex;
             text-align: center;
         }
-        div.cf-middle a{
+        div.cf-middle div{
             font-size: 30px;
             width: 300px;
             text-align: center;
             cursor: pointer;
         }
     </style>
+    <script>
+        $(function () {
+            cf_id=${dto.cf_id};
+            y=${dto.loc_y};
+            x=${dto.loc_x};
+
+        });//fun
+
+      /*  function cfInfo(cf_id){
+
+        }*!/*/
+    </script>
 
 </head>
 <body>
+
    <div style="margin: 50px 50px;">
        <div class="cf-top">
            <!-- Carousel -->
@@ -76,50 +89,121 @@
                <div><span>위치</span>  <span>나중에 </span></div>
                <div><span>리뷰</span>  <span>${dto.cm_cnt}</span></div>
                <hr>
-                <div><i class="fa-regular fa-heart"></i>${dto.ck_cnt}</div>
+                <div><i class="fa-regular fa-heart"></i>&nbsp;${dto.ck_cnt}</div>
            </div>
        </div> <!--cf_top-->
            <br>
        <div class="cf-middle">
-           <a>카페정보</a><a>리뷰(${dto.ck_cnt})</a><a>사진</a>
+           <div id="btn-cf-info">카페정보</div><div id="btn-cm-link">리뷰(${dto.ck_cnt})</div><div id="btn-ci-link">사진</div>
        </div>
        <hr>
        <br>
         <div class="cf-bottom">
        <div id="map" style="width:300px;height:400px;"></div>
-        <div style="margin-left: 30px;">
-            <div><span>영업시간</span> <span>${dto.open_time}</span></div>
-            <div><span>휴무일</span> <span>${dto.off_day}</span></div>
-            <div><span>전화번호</span> <span>${dto.cf_tel}</span></div>
-            <div><span>주소</span> <span>${dto.loc_addr}</span></div>
-            <div><span>대표메뉴</span> <span>${dto.menu}</span></div>
+            <div style="margin-left: 30px;" class="cf-info">
+                <div><span>영업시간</span> <span>${dto.open_time}</span></div>
+                <div><span>휴무일</span> <span>${dto.off_day}</span></div>
+                <div><span>전화번호</span> <span>${dto.cf_tel}</span></div>
+                <div><span>주소</span> <span>${dto.loc_addr}</span></div>
+                <div><span>대표메뉴</span> <span>${dto.menu}</span></div>
+            </div>
         </div>
-        </div>
-       <script>
-           var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
-           var mapOptions = {
-               center:position,
-               zoom: 18
-           };
-           var map =new naver.maps.Map('map', mapOptions);
+        <script>
+            position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
+            //console.log(position);
+            var mapOptions = {
+                center:position,
+                zoom: 18
+            };
+            var map =new naver.maps.Map('map', mapOptions);
+            //console.log(map);
+            var marker = new naver.maps.Marker({
+                position: position,
+                map: map
+            });
 
-           var markerOptions = {
-               position: position,
-               map: map,
-               icon: {
-                   url: '../images/cafemarker.png',
-                   size: new naver.maps.Size(22, 35),
-                   origin: new naver.maps.Point(0, 0),
-                   anchor: new naver.maps.Point(11, 35)
-               }
-           };
-           var marker = new naver.maps.Marker({
-               position: position,
-               map: map,
-               markerOptions : markerOptions
-           });
-       </script>
+            $("div#btn-cm-link").click(function (){
+                console.log(cf_id);
 
+                $.ajax({
+                    type: "get",
+                    url: "cmlist",
+                    dataType: "json",
+                    data: {"cf_id": cf_id},
+                    success: function (res) {
+                        var s="";
+                        $.each(res, function (i, elt) {
+                            console.dir(elt);
+                            s+='<div>'+elt.ur_id+'</div>';
+                            s+='<div><span>'+elt.star+'</span>';
+                            s+='<span>'+elt.w_date+'</span></div>';
+                            s+='<div>'+elt.cm_txt+'</div>';
+                        });//each
+                        $("div.cf-bottom").html(s);
+
+                    }//succ
+                });//ajax
+            });//사진 클릭
+
+            $("div#btn-ci-link").click(function (){
+                //console.log(cf_id);
+                $.ajax({
+                    type: "get",
+                    url: "img",
+                    dataType: "json",
+                    data: {"cf_id": cf_id},
+                    success: function (res) {
+                        var s="";
+                        $.each(res, function (i, elt) {
+                            s += '<img src="../images/cafeimg/' + elt.ci_nm + '" style="width: 300px; height: 300px;">';
+                        });//each
+                        $("div.cf-bottom").html(s);
+
+                    }//succ
+                });//ajax
+            });//사진 클릭
+
+            $("div#btn-cf-info").click(function (){
+                var s="";
+                $.ajax({
+                    type: "get",
+                    url: "info",
+                    dataType: "json",
+                    data: {"cf_id": cf_id},
+                    success: function (res) {
+                        //console.log(res.loc_y);
+                        var y= res.loc_y;
+                        var x= res.loc_x;
+                        //alert(typeof y);
+                        //console.log(y);
+                        //console.log(x);
+                        position = new naver.maps.LatLng(y, x);
+                        //console.log(position);
+                        var mapOptions = {
+                            center: position,
+                            zoom: 18
+                        };
+                        var map =new naver.maps.Map('map2', mapOptions);
+
+                        var marker = new naver.maps.Marker({
+                            position: position,
+                            map : map
+                        });
+                        console.log(map);
+                        s+='<div id="map2" style="width:300px;height:400px;"></div>';
+                        s+='<div style="margin-left: 30px;">';
+                        s+='<div><span>영업시간</span> <span>'+ res.open_time+'</span></div>';
+                        s+= '<div><span>휴무일</span> <span>'+res.off_day+'</span></div>';
+                        s+='<div><span>전화번호</span> <span>'+res.cf_tel+'</span></div>';
+                        s+='<div><span>주소</span> <span>'+res.loc_addr+'</span></div>';
+                        s+='<div><span>대표메뉴</span> <span>'+res.menu+'</span></div>';
+                        s+='</div>';
+                        $("div.cf-bottom").html(s);
+                    }//succ
+
+                });//ajax
+            });//cafeinfo
+        </script>
    </div>
 </body>
 </html>

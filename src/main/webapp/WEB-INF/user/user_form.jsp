@@ -83,7 +83,7 @@
                     <label for="inp-email" class="titLab">이메일</label>
                     <div class="inpA">
                         <input type="email" id="inp-email" placeholder="example@coffewith.com" class="form-control"
-                               required="required" name="emailId">
+                               required="required" name="email_id">
                         <button type="button" id="btn-id-chk" class="btn btn-outline-info btnA">중복확인</button>
                     </div>
                     <div class="id-success"></div>
@@ -92,7 +92,7 @@
                     <label for="inp-pass" class="titLab">비밀번호</label>
                     <div class="inpB">
                         <input type="password" id="inp-pass" placeholder="영문,숫자,특수문자 8~16자이내" class="form-control"
-                               required="required" name="userPass">
+                               required="required" name="ur_pw">
                     </div>
                     <div class="pass-success"></div>
                 </div>
@@ -108,14 +108,14 @@
                     <label for="inp-name" class="titLab">이름</label>
                     <div class="inpB">
                         <input type="text" id="inp-name" placeholder="이름을 입력해주세요" class="form-control"
-                               required="required" name="userName">
+                               required="required" name="ur_nm">
                     </div>
                 </div>
                 <div class="inp-frm">
                     <label for="inp-nick" class="titLab">닉네임</label>
                     <div class="inpA">
                         <input type="text" id="inp-nick" placeholder="닉네임을 입력해주세요" class="form-control"
-                               required="required" name="userNick">
+                               required="required" name="ur_nk">
                         <button type="button" id="btn-nick-chk" class="btn btn-outline-info btnA">중복확인</button>
                     </div>
                     <div class="nick-success"></div>
@@ -124,7 +124,7 @@
                 <div class="inp-frm">
                     <label for="inp-nick" class="titLab">선호지역</label>
                     <div class="inpB">
-                        <select id="sel-si" class="form-select" name='locSi'>
+                        <select id="sel-si" class="form-select" name='loc_si'>
                             <option disabled selected>- 지역 선택 -</option>
                         </select>
                     </div>

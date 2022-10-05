@@ -3,6 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.CafeImgDao">
 	<select id="selectCafeImg" parameterType="int" resultType="cidto">
+		SELECT * FROM cf_img where cf_id=#{cf_id} and fd_id is null and cm_id is null
+	</select>
+	<select id="selectCafeImgAll" parameterType="int" resultType="cidto">
 		SELECT * FROM cf_img where cf_id=#{cf_id}
 	</select>
 </mapper>

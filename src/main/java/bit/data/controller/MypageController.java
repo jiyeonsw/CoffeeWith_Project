@@ -30,4 +30,14 @@ public class MypageController {
         return "/cwith/mypage/mypage";
     }
 
+    @GetMapping("/mypage/bookmarks")
+    public String MyPagebookmarks() {
+        return "/cmain/mypage/cont_cf_lk";
+    }
+
+    @GetMapping("/mypage/review")
+    public String MyPageComment() {
+        return "/cmain/mypage/cont_cf_cmt";
+    }
+    
 }

@@ -5,7 +5,7 @@
     <select id="selectSearchId" parameterType="String" resultType="int">
         SELECT count(*)
         FROM ur
-        WHERE email_id = #{emailId}
+        WHERE email_id = #{email_id}
     </select>
     <select id="selectSearchNick" parameterType="String" resultType="int">
         SELECT count(*)
@@ -15,8 +15,8 @@
     <insert id="insertUser" parameterType="UserDto">
         INSERT INTO ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
                         loc_gu, status, report, ur_phnum)
-        VALUES (null, #{userNick}, #{userName}, #{userPass}, null, null, #{emailId}, null,
-                null, null, #{locSi}, null, '정상', 0, #{userPhnum})
+        VALUES (null, #{ur_nk}, #{ur_nm}, #{ur_pw}, null, null, #{email_id}, null,
+                null, null, #{loc_si}, null, '정상', 0, #{ur_phnum})
     </insert>
     <!--시/도명 추출 명령문-->
     <select id="selectSubstrSi" resultType="String">
@@ -27,54 +27,7 @@
     <select id="selectDataById" parameterType="int" resultType="UserDto">
         SELECT *
         FROM ur
-        WHERE ur_id = #{userId};
+        WHERE ur_id = #{ur_id};
     </select>
 
-    <!--    <select id="selectTotalCount" resultType="int">-->
-    <!--        select count(*)-->
-    <!--        from ur-->
-    <!--    </select>-->
-
-    <!--    <insert id="insertuser" parameterType="userDto">-->
-    <!--        insert into ur (ur_id, ur_pw, ur_nm, ur_img, email_id, gaipday)-->
-    <!--        values (#{loginid}, #{pass}, #{name}, #{photo}, #{hp}, #{email}, #{address}, now())-->
-    <!--    </insert>-->
-
-    <!--    <select id="selectAllusers" resultType="userDto">-->
-    <!--        select *-->
-    <!--        from user-->
-    <!--        order by ur_id asc-->
-    <!--    </select>-->
-
-    <!--    <select id="selectName" parameterType="String" resultType="String">-->
-    <!--        select name-->
-    <!--        from user-->
-    <!--        where ur_id = #{id}-->
-    <!--    </select>-->
-    <!--    <select id="loginIdPassCheck" parameterType="Map" resultType="int">-->
-    <!--        select count(*)-->
-    <!--        from user-->
-    <!--        where ur_id = #{loginid}-->
-    <!--          and pass = #{loginpass}-->
-    <!--    </select>-->
-    <!--    <select id="selectDateById" parameterType="String" resultType="userDto">-->
-    <!--        select *-->
-    <!--        from user-->
-    <!--        where ur_id = #{id}-->
-    <!--    </select>-->
-    <!--    <select id="selectDateByNum" parameterType="int" resultType="userDto">-->
-    <!--        select *-->
-    <!--        from user-->
-    <!--        where num = #{num}-->
-    <!--    </select>-->
-    <!--    <update id="updatePhoto" parameterType="Map">-->
-    <!--        update user-->
-    <!--        set ur_img=#{photo}-->
-    <!--        where num = #{num}-->
-    <!--    </update>-->
-    <!--    <delete id="deleteuser" parameterType="int">-->
-    <!--        delete-->
-    <!--        from user-->
-    <!--        where ur_id = #{id}-->
-    <!--    </delete>-->
 </mapper>

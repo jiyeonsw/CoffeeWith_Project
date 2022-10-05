@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.data.dao.CafeCmtDao">
+	<select id="selectCafeCmt" parameterType="int" resultType="cmdto">
+		SELECT * FROM cf_cmt where cf_id=#{cf_id}
+	</select>
+</mapper>

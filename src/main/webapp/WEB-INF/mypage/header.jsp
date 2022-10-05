@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Header</title>
+    <title>CofeeWith</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
@@ -98,9 +98,9 @@
 <span id="loginstate" style="text-align: right;">
     <c:if test="${sessionScope.login_ok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
-                onclick="location.href='login_main'">Login</button>
+                onclick="location.href='${root}/login_main'">Login</button>
         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
-                onclick="location.href='user_form'">Sign Up</button>
+                onclick="location.href='${root}/user_form'">Sign Up</button>
         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
                 세션주기</button>
     </c:if>
@@ -112,7 +112,6 @@
                 세션제거</button>
     </c:if>
     </span>
-
 
 <!-- 스크립트 이벤트 -->
 <script type="text/javascript">
@@ -182,6 +181,7 @@
             }
         })
     })
+
 </script>
 </body>
 </html>

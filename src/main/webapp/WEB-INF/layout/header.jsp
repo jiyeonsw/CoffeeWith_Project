@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Header</title>
+    <title>CofeeWith</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
@@ -39,11 +39,6 @@
         #loginstate {
             font-size: 15px;
             text-align: right;
-        }
-
-        div.menu {
-            color: #1a0d00;
-            background-color: #cccccc
         }
 
         ul li {
@@ -93,7 +88,7 @@
 
         <!--4번째 메뉴 -->
         <li class="main">
-            <a href="${root}/comfeed/main">커뮤니티</a>
+            <a>커뮤니티</a>
         </li>
     </ul>
 </div>
@@ -102,20 +97,23 @@
 <span id="loginstate" style="text-align: right;">
     <c:if test="${sessionScope.login_ok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
-                onclick="location.href='login_main'">Login</button>
+                onclick="location.href='${root}/login_main'">Login</button>
         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
-                onclick="location.href='user_form'">Sign Up</button>
+                onclick="location.href='${root}/user_form'">Sign Up</button>
         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
                 세션주기</button>
     </c:if>
 
     <c:if test="${sessionScope.login_ok!=null}">
-        <b>${sessionScope.login_nick}님</b> &nbsp;
+        <b>${sessionScope.login_nick}님</b>
         <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
-                onclick="location.href='mypage'">My Page</button>
+                onclick="location.href='${root}/mypage'">My Page</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
+        <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
+                세션제거</button>
     </c:if>
-</span>
+    </span>
+
 
 <!-- 스크립트 이벤트 -->
 <script type="text/javascript">
@@ -161,11 +159,24 @@
     //세션주기
     $("#call-session-btn").click(function () {
         var root = '${root}';
-        
+
         $.ajax({
             type: "get",
             url: root + "/user/call_session",
-            dataType: "json",
+            dataType: "text",
+            success: function (res) {
+                location.reload();
+            }
+        })
+    })
+
+    //세션제거
+    $("#del-session-btn").click(function () {
+        var root = '${root}';
+        $.ajax({
+            type: "get",
+            url: root + "/user/del_session",
+            dataType: "text",
             success: function (res) {
                 location.reload();
             }
