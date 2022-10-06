@@ -61,4 +61,23 @@ public class CafeDao implements CafeDaoInter {
         return session.selectOne(ns+"selectTotalCount",searchword);
 
     }
+    @Override
+    public int selectCkCntbyCfid(int cf_id) {
+        return session.selectOne(ns+"selectCkCntbyCfid",cf_id);
+    }
+
+    @Override
+    public void insertCafeLike(Map<String, Integer> map) {
+        session.insert(ns+"insertCafeLike", map);
+    }
+
+    @Override
+    public int selectCKCntbyUridNCfid(Map<String, Integer> map) {
+        return session.selectOne(ns+"selectCKCntbyUridNCfid", map);
+    }
+
+    @Override
+    public void deleteCafeLike(Map<String, Integer> map) {
+        session.delete(ns+"deleteCafeLike", map);
+    }
 }
