@@ -73,7 +73,7 @@
             success: function(res) {
                 $.each(res.list,function(i,ele){
                     console.log(ele.cf_nm);
-                    s+="<div>"+ele.cf_nm+"</div>";
+                    s+="<div><a href='../cafe/detail?cf_id="+ele.cf_id+"'>"+ele.cf_nm+"</a></div>";
                     s+="<div>리뷰 수: "+ele.cm_cnt+" 좋아요 수: "+ele.ck_cnt+"</div>"
                     $.each(ele.img,function (j,elet){
                         if(j<3) {
