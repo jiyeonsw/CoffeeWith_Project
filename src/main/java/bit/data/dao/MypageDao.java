@@ -1,7 +1,6 @@
 package bit.data.dao;
 
-import bit.data.dto.CafeDto;
-import bit.data.dto.CafeImgDto;
+import bit.data.dto.MyPageCafeLikeDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,14 +24,8 @@ public class MypageDao implements MypageDaoInter {
 //        System.out.println(loginId);
         return session.selectOne(ns + "selectCfCmtCnt", loginId);
     }
-
-    @Override
-    public List<CafeDto> selectCfIdNm(int loginId) {
-        return session.selectList(ns + "selectCfIdNm", loginId);
-    }
-
-    @Override
-    public List<CafeImgDto> selectCfLkCi(int cfId) {
-        return session.selectList(ns + "selectCfLkCi", cfId);
+    
+    public List<MyPageCafeLikeDto> selectLikeCfInfo(int urId) {
+        return session.selectList(ns + "selectLikeCfInfo", urId);
     }
 }

@@ -40,14 +40,22 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             margin: 24px 0;
-            padding: 30px 0;
             border-radius: 8px;
-            background: #f4f9ff;
-            justify-items: center;
+            background: snow;
         }
 
         .top-container div {
             border: 1px solid gray;
+        }
+
+        .link-area {
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+        }
+
+        div.txt:hover {
+            font-size: 20px;
         }
 
     </style>
@@ -65,30 +73,38 @@
         </div>
     </div>
     <div class="box-type-01">
-        <a href="${root}/mypage/bookmarks" class="inner">
-            <div class="txt book-marks">
-                북마크
-                <span class="num">${sessionScope.cfLkCnt}</span>
-            </div>
-        </a>
-        <a href="${root}/mypage/review" class="inner">
-            <div class="txt cf-tr">
-                작성한 리뷰
-                <span class="num">${sessionScope.cfCmtCnt}</span>
-            </div>
-        </a>
-        <a href="#" class="inner">
-            <div class="txt join-tr">
-                참여중인 투어
-                <span class="num"></span>
-            </div>
-        </a>
-        <a href="#" class="inner">
-            <div class="txt before-tr">
-                지난 투어내역
-                <span class="num"></span>
-            </div>
-        </a>
+        <div class="link-area">
+            <a href="${root}/mypage/bookmarks" class="inner">
+                <div class="txt book-marks">
+                    북마크
+                    <span class="num">${sessionScope.cfLkCnt}</span>
+                </div>
+            </a>
+        </div>
+        <div class="link-area">
+            <a href="${root}/mypage/review" class="inner">
+                <div class="txt cf-tr">
+                    작성한 리뷰
+                    <span class="num">${sessionScope.cfCmtCnt}</span>
+                </div>
+            </a>
+        </div>
+        <div class="link-area">
+            <a href="#" class="inner">
+                <div class="txt join-tr">
+                    참여중인 투어
+                    <span class="num"></span>
+                </div>
+            </a>
+        </div>
+        <div class="link-area">
+            <a href="#" class="inner">
+                <div class="txt before-tr">
+                    지난 투어내역
+                    <span class="num"></span>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 </body>

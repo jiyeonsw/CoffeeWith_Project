@@ -16,22 +16,59 @@
 
     table{
         height: 700px;
-        width: 500px;
     }
 
-    table .photo{
+    .fddata {
+        text-align: center;
+        margin: auto;
+    }
+
+    .fddata .fdtitle {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .fddata .fdtitle .btn-close {
+        margin-right: 5px;
+        float: right;
+    }
+
+    table .photo {
         width: 70%;
         vertical-align: middle;
         text-align: center;
     }
 
-    table .profile{
-        height: 10%;
-        vertical-align: middle;
+    table .profile {
+        height: 5%;
+        text-align: left;
     }
 
-    #preview{
+    table .fdcontent {
+        height: 85%;
+        vertical-align: top;
+    }
 
+    table .inputtext {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        border: none;
+        outline: none;
+    }
+
+    table .fdcafe {
+        height: 5%;
+    }
+
+    table .fdtag {
+        height: 5%;
+    }
+
+    .fddata .fdbot {
+        padding-bottom: 10px;
+        float: right;
+        padding-right: 15px;
     }
 
 
@@ -39,44 +76,40 @@
 </head>
 <body>
 <form action="insert" method="post" enctype="multipart/form-data">
-    <div>
-        <b>새 피드 작성</b>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="fddata">
+        <div class="fdtitle">
+            <b>새 피드 작성</b>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
         <table class="table table-bordered" >
             <tr>
                 <td rowspan="4" class="photo">
                     <a><i class='fas fa-photo-video' style='font-size:24px'></i>사진 선택</a>
-                    <input class="selectphoto" type="file" multiple="multiple" style="display: none">
-                    <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-interval="false">
-                        <div class="carousel-inner" id="carousel-inner">
-
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    </div>
+                    <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="fd_photo">
                 </td>
                 <td class="profile">
-                    <img src="${sessionScope.login_photo}">
                     ${sessionScope.login_nick}
                 </td>
             </tr>
             <tr>
-                <td>내용</td>
+                <td class="fdcontent">
+                    <textarea class="inputtext" required="required" name="fd_txt" placeholder="내용 입력"></textarea>
+                </td>
             </tr>
             <tr>
-                <td>카페</td>
+                <td class="fdcafe">
+                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_id" placeholder="카페 추가">
+                </td>
             </tr>
             <tr>
-                <td>태그</td>
+                <td class="fdtag">
+                    <input onkeyup="filter()" type="text" class="inputtext" name="fg_nm" placeholder="태그 입력">
+                </td>
             </tr>
         </table>
-        <a>공유하기</a>
+        <div class="fdbot">
+            <a type="submit" data-bs-dismiss="modal">공유하기</a>
+        </div>
     </div>
 </form>
 </body>
@@ -86,70 +119,6 @@
         $(".photo .selectphoto").click();
     })
 
-    // $(".selectphoto").on("change",function (event){
-    //     var file=event.target.files;
-    //     var reader=new FileReader();
-    //
-    //     for(var f in file){
-    //
-    //         reader.onload=function (e) {
-    //             $(".carousel-inner").add(
-    //                 '<div class="carousel-item"></div>'
-    //             )
-    //             $(".carousel-item").attr("background-image","f");
-    //         }
-    //         reader.readAsDataURL(f);
-    //     }
-    // })
-    function readMultipleImage(input) {
-        const multipleContainer = document.getElementById('multipleContainer')
-
-        if(input.files) {
-            const fileArr = Array.from(input.files)
-            const $colDiv1 = document.createElement('div')
-            const $colDiv2 = document.createElement('div')
-            $colDiv1.classList.add('column')
-            $colDiv2.classList.add('column')
-            fileArr.forEach((file, index) => {
-                const reader = new FileReader()
-                const $imgDiv = document.createElement('div')
-                const $img = document.createElement('img')
-                $img.classList.add('image')
-                const $label = document.createElement('label')
-                $label.classList.add('image-label')
-                $label.textContent = file.name
-                $imgDiv.appendChild($img)
-                $imgDiv.appendChild($label)
-                reader.onload = e => {
-                    $img.src = e.target.result
-
-                    //$imgDiv.style.width = ($img.naturalWidth) * 0.2 + "px"
-                    //$imgDiv.style.height = ($img.naturalHeight) * 0.2 + "px"
-                }
-
-                console.log(file.name)
-                if(index % 2 == 0) {
-                    $colDiv1.appendChild($imgDiv)
-                } else {
-                    $colDiv2.appendChild($imgDiv)
-                }
-
-                reader.readAsDataURL(file)
-            })
-            multipleContainer.appendChild($colDiv1)
-            multipleContainer.appendChild($colDiv2)
-        }
-    }
-    // 이벤트 리스너
-    document.getElementById('carousel-inner').addEventListener('change', (e) => {
-        readMultipleImage(e.target);
-    })
-
 
 </script>
 </html>
-
-
-<%--        <div class="carousel-item">--%>
-<%--            <img src="..." class="d-block w-100" alt="...">--%>
-<%--        </div>--%>

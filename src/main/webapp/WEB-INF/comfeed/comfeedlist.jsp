@@ -112,7 +112,7 @@
 <script>
     $(".idv img").click(function (){
         $("#modaldetail").modal("toggle");
-        $("#modaldetail .modal-content").load("form");
+        $("#modaldetail .modal-content").load("detail");
     })
 
     $("#btnform").click(function (){
