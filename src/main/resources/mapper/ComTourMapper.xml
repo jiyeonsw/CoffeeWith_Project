@@ -5,6 +5,13 @@
     <insert id="insertTour" parameterType="ctdto">
         INSERT INTO tr values (null,#{ur_id},#{tr_nm},#{tr_txt},#{tr_pw},#{tr_loc},#{tw_max},
                                #{s_date},#{e_date},now(),now())
-   </insert>
+    </insert>
+
+    <select id="getTotalCount" parameterType="Map" resultType="int">
+        select count(*) from tr
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+    </select>
 </mapper>
 

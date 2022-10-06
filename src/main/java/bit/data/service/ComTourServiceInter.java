@@ -10,5 +10,5 @@ public interface ComTourServiceInter {
     public void updateComTour(ComTourDto dto);
     public void deleteComTour(int num);
     public int getMaxNum();
-    public int getTotalCount(Map<String, String> map);
+    public int getTotalCount(String sc, String sw);
 }

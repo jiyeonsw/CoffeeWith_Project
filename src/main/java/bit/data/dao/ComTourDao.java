@@ -20,6 +20,12 @@ public class ComTourDao implements ComTourDaoInter{
     }
 
     @Override
+    public int getTotalCount(Map<String, String> map) {
+
+        return session.selectOne(ns+"getTotalCount",map);
+    }
+
+    @Override
     public void updateComTour(ComTourDto dto) {
 
     }
@@ -34,8 +40,5 @@ public class ComTourDao implements ComTourDaoInter{
         return 0;
     }
 
-    @Override
-    public int getTotalCount(Map<String, String> map) {
-        return 0;
-    }
+
 }

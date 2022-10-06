@@ -5,6 +5,7 @@ import bit.data.dto.ComTourDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -15,7 +16,17 @@ public class ComTourService implements ComTourServiceInter{
     @Override
     public void insertComTour(ComTourDto dto) {
         daoInter.insertComTour(dto);
+
     }
+
+    @Override
+    public int getTotalCount(String searchcolumn, String searchword) {
+        Map<String,String> map = new HashMap<>();
+        map.put("searchcolumn",searchcolumn);
+        map.put("searchword", searchword);
+        return daoInter.getTotalCount(map);
+    }
+
 
     @Override
     public void updateComTour(ComTourDto dto) {
@@ -32,8 +43,7 @@ public class ComTourService implements ComTourServiceInter{
         return 0;
     }
 
-    @Override
-    public int getTotalCount(Map<String, String> map) {
-        return 0;
-    }
+
+
+
 }

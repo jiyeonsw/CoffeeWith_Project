@@ -17,15 +17,20 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<div style="margin: 30px;width:1000px;">
-    <div class="input-group">
-
-        <input type="text" class="form-control" style="width: 750px;">
-        <input type="text" class="form-control" style="width: 150px;">
-        <button type="button" class="btn btn-warning" id="btn1">검색</button>
-
-        <i class='fas fa-plus addform' style='font-size:38px;color:red;margin-left: 10px;'></i>
+<form action="list">
+    <div style="margin: 30px;width:1000px;">
+        <div class="input-group">
+            <input type="text" name="searchword" class="form-control" style="width: 750px;"
+                   placeholder="여행친구를 만날 도시를 입력하고 출발일을 지정해 주세요!">
+            <input type="date" name="searchcolumn" class="form-control" style="width: 150px;">
+            <button type="submit" class="btn btn-warning" id="btn1">검색</button>
+            <i class='fas fa-plus addform' style='font-size:38px;color:red;margin-left: 10px;'></i>
+        </div>
     </div>
+</form>
+
+${totalCount}
+    
 
     <div id="result" style="margin-top: 30px;">
         <table>

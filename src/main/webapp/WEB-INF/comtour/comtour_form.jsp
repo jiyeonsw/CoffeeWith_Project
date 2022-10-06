@@ -23,42 +23,70 @@
       </script>
   </c:if>
   <form action="insert" method="post">
-      <input type="hidden" name="currentPage" value="${currentPage}">
-      <input type="hidden" name="ur_id" value="${ur_id}">
+      <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
 
-      <table class="table table-bordered" style="width: 800px">
+      <table class="table table-bordered" style="width: 1000px">
           <tr>
-                <th>뒤로가기</th>
-                <th style="width: 500px;">새 게시물 만들기</th>
-                <th><button type="submit" class="btn bnt-outline">공유하기</button></th>
+              <th colspan="3" style="width: 1000px; text-align: center">새 게시물 만들기</th>
           </tr>
           <tr>
-              <td>title</td>
-              <td>
-                  <input type="text" name="tr_nm" class="form-control">
+              <td style="width: 150px;">title</td>
+              <td style="width: 630px;">
+                  <input type="text" name="tr_nm" class="form-control" required="required">
               </td>
+              <td style="width: 220px;">
+                모임관련 정보
+              </td>
+          </tr>
+
+          <tr>
+              <td rowspan="5">Content</td>
               <td rowspan="5">
+                  <textarea name="tr_txt" class="form-control" style="height: 300px;" required="required"></textarea>
+              </td>
+              <td>
                   <div class="input-group">
-                      출발날짜 <input type="date" name="s_date" class="form-control">
+                      출발날짜&nbsp;&nbsp;<input type="date" name="s_date" class="form-control" required="required">
                   </div>
+              </td>
+          </tr>
+
+          <tr>
+              <td>
                   <div class="input-group">
-                    도착날짜<input type="date" name="e_date" class="form-control">
+                      도착날짜&nbsp;&nbsp;<input type="date" name="e_date" class="form-control" required="required">
                   </div>
+              </td>
+          </tr>
+
+          <tr>
+              <td>
                   <div class="input-group">
-                      모집인원<input type="text" name="tw_max" class="form-control">
+                      모임장소&nbsp;&nbsp;<input type="text" name="tr_loc" class="form-control" required="required">
                   </div>
+              </td>
+          </tr>
+
+          <tr>
+              <td>
                   <div class="input-group">
-                      비밀번호<input type="text" name="tw_max" class="form-control">
+                      모집인원&nbsp;&nbsp;<input type="number" min='2' max='30' name="tw_max" class="form-control" required="required">
                   </div>
 
               </td>
+          </tr>
 
+          <tr>
+              <td>
+                  <div class="input-group">
+                      비밀번호&nbsp;&nbsp;<input type="text" name="tr_pw" class="form-control" required="required">
+                  </div>
+              </td>
           </tr>
           <tr>
-              <td>Content</td>
-              <td>
-                  <textarea name="tr_txt" class="form-control"></textarea>
-              </td>
+              <th colspan="3" style="width: 250px; text-align: center">
+                  <button type="submit" class="btn bnt-outline">공유하기</button>
+              </th>
           </tr>
       </table>
 
