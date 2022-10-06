@@ -21,5 +21,5 @@ public class CafeDto {
     private String menu;
     private String cf_txt;
     private List<CafeImgDto> img;
-    private double cm_start;
+    private double cm_star;
 }

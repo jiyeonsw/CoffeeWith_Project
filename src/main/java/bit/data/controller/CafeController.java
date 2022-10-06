@@ -35,14 +35,22 @@ public class CafeController {
         CafeDto dto=cafeService.selectCafe(cf_id);
         //댓글수 댓글별점평균
         List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
-        int cm_cnt=0;
+        //리뷰수
+        int cm_cnt=cafeService.selectCafeCmt(cf_id).size();
+        dto.setCm_cnt(cm_cnt);
+        //리뷰별점 평균
+        int star_cnt=0;
         double sum=0;
         for (CafeCmtDto dtom : listm){
+            if(dtom.getStar()==0){continue;}
             sum+=dtom.getStar();
-            cm_cnt++;
+            star_cnt++;
         }
-        dto.setCm_start(sum/cm_cnt);
-        dto.setCm_cnt(cm_cnt);
+        if(star_cnt==0){
+            dto.setCm_star(-1);
+        }else {
+        dto.setCm_star(sum/star_cnt);}
+        
         //좋아요 수
         int ck_cnt=cafeService.selectCkCntbyCfid(cf_id);
         dto.setCk_cnt(ck_cnt);
