@@ -39,6 +39,11 @@ public class ComFeedController {
         model.addAttribute("list", list);
         model.addAttribute("totalCount", totalCount);
 
+        /*for (ComFeedDto dto : list) {
+            int acount = answerService.getAllAnswerList(dto.getNum()).size();
+            dto.setAcount(acount);
+        }*/
+
         return "/bit/comfeed/comfeedlist";
     }
 
@@ -73,7 +78,7 @@ public class ComFeedController {
     }
 
     @GetMapping("/detail")
-    public ModelAndView detail(int num, int currentPage) {
+    public ModelAndView detail(int num) {
         ModelAndView mview = new ModelAndView();
 
         ComFeedDto dto = comFeedService.selectFeed(num);
@@ -89,7 +94,7 @@ public class ComFeedController {
     public Map<String, Integer> likes(int num) {
         comFeedService.updateLikes(num);
         int likes = comFeedService.selectFeed(num).getLikes();
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new HashMap<>();
         map.put("likes", likes);
         return map;
     }

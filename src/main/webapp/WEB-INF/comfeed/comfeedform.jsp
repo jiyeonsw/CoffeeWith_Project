@@ -14,23 +14,61 @@
 <link rel="stylesheet" href="../res/css/style.css" type="text/css">
 <style type="text/css">
 
-    .photo{
+    table{
+        height: 700px;
+    }
+
+    .fddata {
+        text-align: center;
+        margin: auto;
+    }
+
+    .fddata .fdtitle {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .fddata .fdtitle .btn-close {
+        margin-right: 5px;
+        float: right;
+    }
+
+    table .photo {
+        width: 70%;
         vertical-align: middle;
         text-align: center;
     }
 
-    table{
-        height: 700px;
-        min-width: 500px;
+    table .profile {
+        height: 5%;
+        text-align: left;
     }
 
-    table .photo{
-        width: 70%;
+    table .fdcontent {
+        height: 85%;
+        vertical-align: top;
     }
 
-    table .profile{
-        height: 10%;
-        vertical-align: middle;
+    table .inputtext {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        border: none;
+        outline: none;
+    }
+
+    table .fdcafe {
+        height: 5%;
+    }
+
+    table .fdtag {
+        height: 5%;
+    }
+
+    .fddata .fdbot {
+        padding-bottom: 10px;
+        float: right;
+        padding-right: 15px;
     }
 
 
@@ -38,27 +76,40 @@
 </head>
 <body>
 <form action="insert" method="post" enctype="multipart/form-data">
-    <div>
-        <b>새 피드 작성</b>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="fddata">
+        <div class="fdtitle">
+            <b>새 피드 작성</b>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
         <table class="table table-bordered" >
             <tr>
-                <td rowspan="4" class="photo"><a><i class='fas fa-photo-video' style='font-size:24px'></i>사진 선택</a>
-                    <input class="selectphoto" type="file" multiple="multiple" style="display: none">
+                <td rowspan="4" class="photo">
+                    <a><i class='fas fa-photo-video' style='font-size:24px'></i>사진 선택</a>
+                    <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="fd_photo">
                 </td>
-                <td class="profile">프로필 사진+닉네임</td>
+                <td class="profile">
+                    ${sessionScope.login_nick}
+                </td>
             </tr>
             <tr>
-                <td>내용</td>
+                <td class="fdcontent">
+                    <textarea class="inputtext" required="required" name="fd_txt" placeholder="내용 입력"></textarea>
+                </td>
             </tr>
             <tr>
-                <td>카페</td>
+                <td class="fdcafe">
+                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_id" placeholder="카페 추가">
+                </td>
             </tr>
             <tr>
-                <td>태그</td>
+                <td class="fdtag">
+                    <input onkeyup="filter()" type="text" class="inputtext" name="fg_nm" placeholder="태그 입력">
+                </td>
             </tr>
         </table>
-        <a>공유하기</a>
+        <div class="fdbot">
+            <a type="submit" data-bs-dismiss="modal">공유하기</a>
+        </div>
     </div>
 </form>
 </body>
@@ -67,6 +118,7 @@
     $(".photo a").click(function (){
         $(".photo .selectphoto").click();
     })
+
 
 </script>
 </html>
