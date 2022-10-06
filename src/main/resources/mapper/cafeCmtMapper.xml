@@ -8,4 +8,13 @@
 	<insert id="insertCafeCmt" parameterType="cmdto">
 		INSERT INTO cf_cmt VALUES (null, #{cf_id}, #{ur_id}, #{cm_txt}, now(),0,0,0, #{star})
 	</insert>
+	<delete id="deleteCafeCmt" parameterType="int">
+		DELETE FROM cf_cmt WHERE cm_id=#{cm_id}
+	</delete>
+	<update id="updateCafeCmt" parameterType="cmdto" >
+		UPDATE cf_cmt SET cm_txt=#{cm_txt}, star=#{star} , w_date=now() WHERE cm_id=#{cm_id};
+	</update>
+	<select id="selectCafeCmtByCmid" parameterType="int" resultType="cmdto" >
+		SELECT * FROM cf_cmt WHERE cm_id=#{cm_id}
+	</select>
 </mapper>

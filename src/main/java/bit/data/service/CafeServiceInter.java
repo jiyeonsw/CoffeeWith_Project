@@ -21,4 +21,7 @@ public interface CafeServiceInter {
     public void insertCafeLike(int ur_id, int cf_id);
     public int selectCKCntbyUridNCfid(int ur_id, int cf_id);
     public void deleteCafeLike(int ur_id, int cf_id);
+    public void deleteCafeCmt(int cm_id);
+    public void updateCafeCmt(CafeCmtDto dto);
+    public CafeCmtDto selectCafeCmtByCmid(int cm_id);
 }
