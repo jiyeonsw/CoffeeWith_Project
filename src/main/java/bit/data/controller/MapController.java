@@ -1,8 +1,7 @@
 package bit.data.controller;
 
+import bit.data.dto.CafeCmtDto;
 import bit.data.dto.CafeDto;
-import bit.data.dto.CafeImgDto;
-import bit.data.dto.SearchResultDto;
 import bit.data.service.CafeServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +41,7 @@ public class MapController {
         //페이징 처리에 필요한 변수들
         //전체 갯수
         int totalCount=cafeService.selectTotalCount(sw);
-        int perPage=5;//한페이지당 보여질 글의 갯수
+        int perPage=4;//한페이지당 보여질 글의 갯수
         int perBlock=5;//한블럭당 보여질 페이지의 갯수
         int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
         int startPage;//각블럭당 보여질 시작페이지
@@ -77,7 +75,33 @@ public class MapController {
         List<CafeDto> cafelist = cafeService.selectSearchCafe(sw,startNum,perPage);
         for(CafeDto dto:cafelist)
         {
-            dto.setImg(cafeService.selectCafeImg(dto.getCf_id()));
+            int cf_id=dto.getCf_id();
+            //이미지 추가
+            dto.setImg(cafeService.selectCafeImg(cf_id));
+            //좋아요 추가
+            //댓글수 댓글별점평균
+            List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
+            //리뷰수
+            int cm_cnt=cafeService.selectCafeCmt(cf_id).size();
+            dto.setCm_cnt(cm_cnt);
+            //리뷰별점 평균
+            int star_cnt=0;
+            double sum=0;
+            for (CafeCmtDto dtom : listm){
+                if(dtom.getStar()==0){continue;}
+                sum+=dtom.getStar();
+                star_cnt++;
+            }
+            if(star_cnt==0){
+                dto.setCm_star(0);
+            }else {
+                double avg=Math.round(sum/star_cnt*10)/10.0;
+                dto.setCm_star(avg);
+            };
+
+            //좋아요 수
+            int ck_cnt=cafeService.selectCkCntbyCfid(cf_id);
+            dto.setCk_cnt(ck_cnt);
         }
         //return 담을 공간
         Map<String,Object> map=new HashMap<>();

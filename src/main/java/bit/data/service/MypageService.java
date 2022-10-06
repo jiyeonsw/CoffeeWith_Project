@@ -1,8 +1,8 @@
 package bit.data.service;
 
 import bit.data.dao.MypageDao;
-import bit.data.dto.CafeDto;
-import bit.data.dto.CafeImgDto;
+import bit.data.dto.CafeCmtDto;
+import bit.data.dto.MyPageCafeLikeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +25,12 @@ public class MypageService implements MypageServiceInter {
     }
 
     @Override
-    public List<CafeDto> selectCfIdNm(int loginId) {
-        return mypageDao.selectCfIdNm(loginId);
+    public List<MyPageCafeLikeDto> selectLikeCfInfo(int urId) {
+        return mypageDao.selectLikeCfInfo(urId);
     }
 
-
-    public List<CafeImgDto> selectCfLkCi(int cfId) {
-        return mypageDao.selectCfLkCi(cfId);
+    @Override
+    public List<CafeCmtDto> selectMyCmt(int urId) {
+        return mypageDao.selectMyCmt(urId);
     }
-
 }

@@ -20,14 +20,32 @@
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <style>
-        .main-container {
-        }
-        
     </style>
 </head>
 <body>
-<div class="main-container">
-    <div>리뷰</div>
+<div class="cmt-container">
+    <c:forEach var="dto" items="${list}">
+        <c:set var="i" value="0"/>
+        <c:if test="${i<dto.star}">
+            <div>
+                    <span class="cm-star" style="color: yellow">
+            <c:forEach var="starfor" begin="${i+1}" end="${dto.star}">
+                ★
+            </c:forEach>
+                    </span>
+            </div>
+        </c:if>
+        <c:if test="${dto.star==0}">
+            <div>
+                <span class="cm-star" style="color: lightgray">
+                    ★ ★ ★ ★ ★
+                </span>
+            </div>
+        </c:if>
+    </c:forEach>
 </div>
+<script>
+
+</script>
 </body>
 </html>
