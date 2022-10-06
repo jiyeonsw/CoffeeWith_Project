@@ -17,16 +17,18 @@ public class LoginController {
     @Autowired
     UserServiceInter userService;
 
-
+    // 아이디 찾기
     @GetMapping("/find_id")
     public String findid(){
         return "/bit/login/find_id";
     }
 
+    // 비밀번호 찾기
     @GetMapping("/find_pw")
     public String findpw(){
         return "/bit/login/find_pw";
     }
+
 
     @GetMapping("/logout")
     @ResponseBody
