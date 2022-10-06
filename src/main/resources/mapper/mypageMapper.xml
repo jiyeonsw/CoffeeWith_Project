@@ -32,6 +32,14 @@
         where cl.ur_id = #{urId}
         group by c.cf_nm;
     </select>
+
+    <!--MyPage review : userid에 해당하는 리뷰 데이터-->
+    <select id="selectMyCmt" parameterType="int" resultType="cmdto">
+        SELECT *
+        FROM cf_cmt cc
+        WHERE cc.ur_id = ${ur_id}
+        ORDER BY w_date DESC
+    </select>
 </mapper>
 
 
