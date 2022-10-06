@@ -279,8 +279,8 @@
                <div><h1>${dto.cf_nm}</h1></div>
                <div>${dto.cf_txt}</div>
                <br>
-               <div><span>위치</span>  <span>나중에 </span></div>
-               <div><span>리뷰</span>  <span>${dto.cm_cnt}</span></div>
+               <div><span>위치</span>  <span>${dto.loc_addr} </span></div>
+               <div><span>리뷰</span>  <span>${dto.cm_cnt} (<span class="cm-star">★</span>${dto.cm_start})</span></div>
                <hr>
                 <div id="btn-ck" >
                     <c:if test="${dto.ck_cnt==0}"><i class="fa-regular fa-heart"></i>&nbsp;</c:if>
