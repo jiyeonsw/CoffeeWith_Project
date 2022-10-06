@@ -10,8 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>메인지도</title>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8mlhxamjq5"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <style>
+        body{
+            overflow: hidden;
+        }
+
+
         #container{
             display: flex;
             height: 50%;
@@ -29,7 +38,7 @@
             hight: 590px;
         }
 
-        button.maketour{
+        button.btnmaketour{
             float: right;
         }
 
@@ -55,12 +64,34 @@
             font-size: 12px;
         }
 
+        #maketour{
+            display: none;
+            position: fixed;
+            opacity: 80%;
+            background-color: white;
+            width: 300px;
+            height: 590px;
+            right: 0;
+            z-index: 1;
+        }
+
+        .tour_input_title{
+            text-align: center;
+        }
+
+        #tourdatewords{
+            text-align: center;
+        }
+
+        #tourdate{
+            width:300px;
+        }
     </style>
 </head>
 <body>
 <div id="container">
     <div id="sidebar">
-        <button type="button" class="maketour">투어 만들기</button>
+        <button type="button" class="btnmaketour">투어 만들기</button>
         <%--검색바--%>
         <div class="input-group">
             <input type="text" class="form-control cafesearchbar" placeholder="검색어를 입력하세요">
@@ -72,11 +103,36 @@
         </div>
     </div>
     <div id="map"></div>
+    <div id="maketour">
+        <form action="maketour">
+            <div class="tour_input">
+                <div for="tourname" class="tour_input_title">투어명</div>
+                <input type="text" id="tourname" placeholder="투어명" class="form-control"
+                       required="required" name="tourname">
+            </div>
+            <hr>
+            <div class="tour_input">
+                <div for="tourinfo" class="tour_input_title">투어소개</div>
+                <input type="text" id="tourinfo" placeholder="간단한투어소개" class="form-control"
+                       required="required" name="tourinfo">
+            </div>
+            <hr>
+            <div class="tour_input">
+                <div for="tourdate" class="tour_input_title">투어날짜</div>
+                <input type="text" id="tourdate" name="tourdate"/>
+                <div id="tourdatewords"></div>
+            </div>
+            <hr>
+
+        </form>
+    </div>
 </div>
 <script>
+    //전역변수 선언
     var currentPage = parseInt(1);
     var perPage = parseInt(4);
     var perBlock= parseInt(5);
+
     //검색바 엔터키 입력
     $("input.cafesearchbar").keydown(function(e){
         if(e.keyCode === 13)
@@ -103,13 +159,19 @@
                 $.each(res.list,function(i,ele){
                     s+="<div class='searchresult'>";
                     s+="<div class='result_name'><a href='../cafe/detail?cf_id="+ele.cf_id+"'>"+ele.cf_nm+"</a><i class='fa-solid fa-map-pin mapicon' cf_id='"+ele.cf_id+"'></i></div>";
-                    s+="<div class='result_cnt'>리뷰 수: "+ele.cm_cnt+" &nbsp;&nbsp; 좋아요 수: "+ele.ck_cnt+"</div>";
-                    $.each(ele.img,function (j,elet){
-                        //보여질 사진 갯수
-                        if(j<4) {
-                            s += "<img src='../images/cafeimg/" + elet.ci_nm + "' style='width:70px;height:70px;'>";
-                        }
-                    });
+                    s+="<div class='result_cnt'>리뷰 수: "+ele.cm_cnt+" &nbsp;&nbsp; 좋아요 수: "+ele.ck_cnt+" ★ "+ele.cm_star+"</div>";
+                    //사진 없으면
+                    if (ele.img.length == 0)
+                    {
+                        s += "<img src='../images/noimage.png' style='width:70px;height:70px;'>";
+                    }else {
+                        $.each(ele.img, function (j, elet) {
+                            //보여질 사진 갯수
+                            if (j < 4) {
+                                s += "<img src='../images/cafeimg/" + elet.ci_nm + "' style='width:70px;height:70px;'>";
+                            }
+                        });
+                    }
                     s+="</div>";
                 });
 
@@ -152,6 +214,46 @@
         currentPage+=parseInt(perBlock);
         $("button.searchbtn").trigger('click');
     });
+
+    //투어 만들기 버튼
+    $(document).on('click','button.btnmaketour',function (){
+        if($("#maketour").css("display") == ("none"))
+        {
+            $(this).text("투어닫기");
+            $("#maketour").show();
+        }else {
+            $(this).text("투어만들기");
+            $("#maketour").hide();
+        }
+    });
+
+    //datepicker 함수
+    $('#tourdate').daterangepicker({
+        "locale": {
+            "format": "YYYY-MM-DD",
+            "separator": " ~ ",
+            "applyLabel": "확인",
+            "cancelLabel": "취소",
+            "fromLabel": "From",
+            "toLabel": "To",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+        },
+        "minDate": moment(),
+        "startDate": moment(),
+        "endDate": moment().add(2,"d"),
+        "drops": "auto"
+    },function (start, end, label) {
+        //날짜를 고르면 밑에 며칠인지 표시하기
+        $("#tourdatewords").text();
+    });
+
+    //선택한 날짜 기간 계산
+    function get_tour_days(){
+        var startdate=$("#tourdate").val();
+    };
 
     //지도 옵션
     var mapOptions = {
@@ -197,6 +299,7 @@
     markerList.push(marker);
     </c:forEach>
 
+    //지도 이동 일반함수
     function moveMap(cf_id)
     {
         map.setZoom(18);
