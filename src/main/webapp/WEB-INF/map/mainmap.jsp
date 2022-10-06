@@ -13,23 +13,28 @@
     <style>
         #container{
             display: flex;
-            flex-wrap: nowrap;
+            height: 50%;
         }
 
         #map{
             float:right;
             width:80%;
-            height:590px;
+            height: 590px;
         }
 
         #sidebar{
             width:20%;
-            height:590px;
             background-color: white;
+            hight: 590px;
         }
 
         button.maketour{
             float: right;
+        }
+
+        div.paging{
+            display: flex;
+            flex-direction: row;
         }
 
     </style>
@@ -78,22 +83,20 @@
                 });
 
                 //페이징 시작
-                p+="<ul class=‘pagination’>";
                 console.log("paging");
                 //이전버튼
                 if(res.startPage>1) {
                     console.log("이전버튼");
-                    p += "<li class=‘page-item’><button type='button' id='btnback' class=‘page-link’>이전</button></li>";
+                    p += "<button type='button' id='btnback' class=‘page-link’>이전</button>";
                 }
                 //중간 숫자 버튼
                 for(var idx=res.startPage; idx<=res.endPage; idx++){
                     console.log(idx);
-                    p+="<li class=‘page-item’><button type='button' class='page-link btnnum'>"+idx+"</button></li>";
+                    p += "<button type='button' class='page-link btnnum'>"+idx+"</button>";
                 }
                 //다음버튼
                 if(res.endPage<res.totalPage) {
-                    p += "<li class=‘page-item’><button type='button' id='btnnext' class=‘page-link’>다음</button></li>";
-                    p += "</ul>";
+                    p += "<button type='button' id='btnnext' class=‘page-link’>다음</button>";
                 }
 
                 $("div.searchlist").html(s);
@@ -102,6 +105,9 @@
         });//$ajax"searchword"
     });
 
+
+    //페이징 버튼 함수
+    $(document).on("click",$("#btnback"))
 
 
     //지도 옵션
