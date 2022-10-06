@@ -15,9 +15,9 @@ public class CafeDao implements CafeDaoInter {
     @Autowired //자동으로 똑같은 이름의 빈을 찾아서 주입해줌
     SqlSession session;
 
-    String ns="bit.data.dao.CafeDao."; //namespace
-    String nsi="bit.data.dao.CafeImgDao.";
-    String nsm="bit.data.dao.CafeCmtDao.";
+    String ns = "bit.data.dao.CafeDao."; //namespace
+    String nsi = "bit.data.dao.CafeImgDao.";
+    String nsm = "bit.data.dao.CafeCmtDao.";
 
 
     @Override
@@ -48,16 +48,18 @@ public class CafeDao implements CafeDaoInter {
     @Override
     public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCm_txt());
-        session.insert(nsm+"insertCafeCmt", dto);
+        session.insert(nsm + "insertCafeCmt", dto);
+    }
 
     @Override
-    public List<CafeDto> selectSearchCafe(Map<String,Object> map) {
-        return session.selectList(ns+"selectSearchCafe", map);
+    public List<CafeDto> selectSearchCafe(Map<String, Object> map) {
+        return session.selectList(ns + "selectSearchCafe", map);
     }
+
     @Override
     public int selectTotalCount(String searchword) {
         // TODO Auto-generated method stub
-        return session.selectOne(ns+"selectTotalCount",searchword);
+        return session.selectOne(ns + "selectTotalCount", searchword);
 
     }
 }
