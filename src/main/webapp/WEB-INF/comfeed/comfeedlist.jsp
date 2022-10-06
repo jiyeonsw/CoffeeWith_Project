@@ -110,14 +110,16 @@
     </div>
 </div>
 <script>
+    var login_ok="<%=(String)session.getAttribute("login_ok")%>"
+
     $(".idv img").click(function (){
         $("#modaldetail").modal("toggle");
         $("#modaldetail .modal-content").load("detail");
     })
 
     $("#btnform").click(function (){
-        if(sessionStorage.getItem("loginid")!=null){
-            alert("먼저 로그인후 글을 써주세요");
+        if(login_ok!=="yes"){
+            alert("로그인을 먼저 해주세요")
         }
         else {
             $("#modalform").modal("toggle");

@@ -75,7 +75,9 @@
 </style>
 </head>
 <body>
-<form action="insert" method="post" enctype="multipart/form-data">
+<form action="insert" id="fdsubmit" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
+
     <div class="fddata">
         <div class="fdtitle">
             <b>새 피드 작성</b>
@@ -85,7 +87,7 @@
             <tr>
                 <td rowspan="4" class="photo">
                     <a><i class='fas fa-photo-video' style='font-size:24px'></i>사진 선택</a>
-                    <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="fd_photo">
+                    <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="upload">
                 </td>
                 <td class="profile">
                     ${sessionScope.login_nick}
@@ -108,7 +110,7 @@
             </tr>
         </table>
         <div class="fdbot">
-            <a type="submit" data-bs-dismiss="modal">공유하기</a>
+            <a type="submit" data-bs-dismiss="modal" onclick="document.getElementById('fdsubmit').submit();">공유하기</a>
         </div>
     </div>
 </form>
@@ -118,6 +120,10 @@
     $(".photo a").click(function (){
         $(".photo .selectphoto").click();
     })
+
+    function filter(){
+        console.log("1");
+    }
 
 
 </script>
