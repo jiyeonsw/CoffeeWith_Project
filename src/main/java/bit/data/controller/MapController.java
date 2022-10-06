@@ -1,5 +1,6 @@
 package bit.data.controller;
 
+import bit.data.dto.CafeCmtDto;
 import bit.data.dto.CafeDto;
 import bit.data.service.CafeServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +75,33 @@ public class MapController {
         List<CafeDto> cafelist = cafeService.selectSearchCafe(sw,startNum,perPage);
         for(CafeDto dto:cafelist)
         {
-            dto.setImg(cafeService.selectCafeImg(dto.getCf_id()));
+            int cf_id=dto.getCf_id();
+            //이미지 추가
+            dto.setImg(cafeService.selectCafeImg(cf_id));
+            //좋아요 추가
+            //댓글수 댓글별점평균
+            List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
+            //리뷰수
+            int cm_cnt=cafeService.selectCafeCmt(cf_id).size();
+            dto.setCm_cnt(cm_cnt);
+            //리뷰별점 평균
+            int star_cnt=0;
+            double sum=0;
+            for (CafeCmtDto dtom : listm){
+                if(dtom.getStar()==0){continue;}
+                sum+=dtom.getStar();
+                star_cnt++;
+            }
+            if(star_cnt==0){
+                dto.setCm_star(0);
+            }else {
+                double avg=Math.round(sum/star_cnt*10)/10.0;
+                dto.setCm_star(avg);
+            };
+
+            //좋아요 수
+            int ck_cnt=cafeService.selectCkCntbyCfid(cf_id);
+            dto.setCk_cnt(ck_cnt);
         }
         //return 담을 공간
         Map<String,Object> map=new HashMap<>();
