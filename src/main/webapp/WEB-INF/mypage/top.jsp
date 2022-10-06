@@ -41,8 +41,13 @@
             grid-template-columns: 1fr 1fr 1fr 1fr;
             margin: 24px 0;
             border-radius: 8px;
-            background: snow;
+            background: #6B4804;
         }
+
+        .txt, .num {
+            color: #f0f0f0;
+        }
+
 
         .top-container div {
             border: 1px solid gray;

@@ -34,11 +34,16 @@
     </select>
 
     <!--MyPage review : userid에 해당하는 리뷰 데이터-->
-    <select id="selectMyCmt" parameterType="int" resultType="cmdto">
-        SELECT *
-        FROM cf_cmt cc
-        WHERE cc.ur_id = ${ur_id}
-        ORDER BY w_date DESC
+    <select id="selectMyCmtCf" parameterType="int" resultType="mpccdto">
+        select cc.cm_id, cc.cf_id, ci.ci_nm, c.cf_nm, cc.w_date, cc.star, cc.cm_txt
+        from cf_cmt cc
+                 join cf c
+                      on cc.cf_id = c.cf_id
+                 left join cf_img ci
+                           on cc.cf_id = ci.cf_id
+        where cc.ur_id = #{urId}
+        group by cm_id
+        order by cc.w_date;
     </select>
 </mapper>
 

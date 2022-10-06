@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -93,8 +95,17 @@ public class MypageController {
     @GetMapping("/mypage/review")
     public String selectMyCmt(HttpSession session, Model model) {
         int loginId = (int) session.getAttribute("login_id");
-        List<CafeCmtDto> list = mypageService.selectMyCmt(loginId);
-        model.addAttribute("list", list);
+        List<CafeCmtDto> cmtList = mypageService.selectMyCmt(loginId);
+
+        Map<Object, String> map = new HashMap<>();
+        map.put(0, "☆☆☆☆☆");
+        map.put(1, "★☆☆☆☆");
+        map.put(3, "★★★☆☆");
+        map.put(4, "★★★★☆");
+        map.put(5, "★★★★★");
+
+        model.addAttribute("cmtList", cmtList);
+        model.addAttribute("map", map);
         return "/cmain/mypage/cont_cf_cmt";
     }
 }

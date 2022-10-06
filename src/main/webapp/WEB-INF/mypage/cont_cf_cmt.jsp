@@ -25,27 +25,29 @@
 <body>
 <div class="cmt-container">
     <c:forEach var="dto" items="${list}">
+    <div>
         <c:set var="i" value="0"/>
         <c:if test="${i<dto.star}">
-            <div>
-                    <span class="cm-star" style="color: yellow">
-            <c:forEach var="starfor" begin="${i+1}" end="${dto.star}">
-                ★
-            </c:forEach>
-                    </span>
-            </div>
+                <span class="cm-star" style="color: rgba(250, 208, 0, 0.99);">
+                        ${map.get(dto.star)}
+                </span>
         </c:if>
         <c:if test="${dto.star==0}">
-            <div>
-                <span class="cm-star" style="color: lightgray">
-                    ★ ★ ★ ★ ★
+                <span class="cm-star" style="color: rgba(250, 208, 0, 0.99)">
+                    ☆☆☆☆☆
                 </span>
-            </div>
         </c:if>
-    </c:forEach>
-</div>
-<script>
+        <span>
+                ${dto.w_date}
+        </span>
+        </dvi>
+        <div>
+                ${dto.cm_txt}
+        </div>
+        </c:forEach>
+    </div>
+    <script>
 
-</script>
+    </script>
 </body>
 </html>
