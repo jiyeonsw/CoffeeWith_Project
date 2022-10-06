@@ -90,4 +90,19 @@ public class CafeService implements CafeServiceInter {
         map.put("cf_id",cf_id);
         cafeDao.deleteCafeLike(map);
     }
+
+    @Override
+    public void deleteCafeCmt(int cm_id) {
+        cafeDao.deleteCafeCmt(cm_id);
+    }
+
+    @Override
+    public void updateCafeCmt(CafeCmtDto dto) {
+        cafeDao.updateCafeCmt(dto);
+    }
+
+    @Override
+    public CafeCmtDto selectCafeCmtByCmid(int cm_id) {
+        return cafeDao.selectCafeCmtByCmid(cm_id);
+    }
 }

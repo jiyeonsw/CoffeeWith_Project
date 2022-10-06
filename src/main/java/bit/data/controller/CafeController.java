@@ -49,7 +49,9 @@ public class CafeController {
         if(star_cnt==0){
             dto.setCm_star(-1);
         }else {
-        dto.setCm_star(sum/star_cnt);}
+            double avg=Math.round(sum/star_cnt*10)/10.0;
+            dto.setCm_star(avg);
+        }
         
         //좋아요 수
         int ck_cnt=cafeService.selectCkCntbyCfid(cf_id);
@@ -111,5 +113,23 @@ public class CafeController {
     @ResponseBody
     public void deleteCafeLike(int ur_id, int cf_id){
         cafeService.deleteCafeLike(ur_id,cf_id);
+    }
+
+    @GetMapping("/delete_cmt")
+    @ResponseBody
+    public void deleteCafeCmt(int cm_id){
+        cafeService.deleteCafeCmt(cm_id);
+    }
+
+    @PostMapping("/update_cmt")
+    @ResponseBody
+    public void updateCafeCmt(CafeCmtDto dto){
+        cafeService.updateCafeCmt(dto);
+    }
+
+    @GetMapping("/select_cmt_by_cmid")
+    @ResponseBody
+    public CafeCmtDto selectCafeCmtByCmid(int cm_id){
+        return cafeService.selectCafeCmtByCmid(cm_id);
     }
 }

@@ -81,4 +81,19 @@ public class CafeDao implements CafeDaoInter {
     public void deleteCafeLike(Map<String, Integer> map) {
         session.delete(ns+"deleteCafeLike", map);
     }
+
+    @Override
+    public void deleteCafeCmt(int cm_id) {
+        session.delete(nsm+"deleteCafeCmt", cm_id);
+    }
+
+    @Override
+    public void updateCafeCmt(CafeCmtDto dto) {
+        session.update(nsm+"updateCafeCmt", dto);
+    }
+
+    @Override
+    public CafeCmtDto selectCafeCmtByCmid(int cm_id) {
+        return session.selectOne(nsm+"selectCafeCmtByCmid", cm_id);
+    }
 }

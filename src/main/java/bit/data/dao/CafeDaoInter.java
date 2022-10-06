@@ -20,4 +20,7 @@ public interface CafeDaoInter {
     public void insertCafeLike(Map<String,Integer> map);
     public int selectCKCntbyUridNCfid(Map<String,Integer> map);
     public void deleteCafeLike(Map<String,Integer> map);
+    public void deleteCafeCmt(int cm_id);
+    public void updateCafeCmt(CafeCmtDto dto);
+    public CafeCmtDto selectCafeCmtByCmid(int cm_id);
 }
