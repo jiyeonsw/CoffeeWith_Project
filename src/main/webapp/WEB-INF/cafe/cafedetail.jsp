@@ -92,11 +92,18 @@
         span.cm-star{
             color: rgba(250, 208, 0, 0.99);
         }
+        span.cm-star-n{
+            color: lightgray;
+        }
         div#btn-ck{cursor: pointer;}
         span.cm-edit-del{
             float:right;
         }
-
+        pre{
+            color: inherit;
+            font-family: inherit;
+            font-size:inherit ;
+        }
     </style>
     <script>
         $(function () {
@@ -251,6 +258,8 @@
                 });//ajax
             });//cafeinfo
 
+            //카페 리뷰
+            //리뷰클릭
             $("div#btn-cm-link").click(function (){
                 //console.log(cf_id);
                 cmList();
@@ -319,10 +328,33 @@
                     data: {"cm_id": cm_id},
                     dataType: "json",
                     success: function (res) {
+                        var cm_txt=res.cm_txt;
+                        var star=6-res.star;
+                        $("#cm_txt").val(cm_txt);
+                        var cm_input='<input type="hidden" name="cm_id" value="'+cm_id+'">';
+                        $("#cm_txt").after(cm_input);
+                        $("#btnmsave").text("리뷰수정");
+                        $("#btnmsave").attr("id","btnmedit");
+                        $("#rate"+star).trigger("click");
 
                     }//succ
                 });//ajax
             });//리뷰수정클릭시 내용 넣기
+
+            //리뷰수정버튼클릭
+            $(document).on("click","#btnmedit",function (){
+                var udata=$("#mform").serialize();
+                //console.log(cm_id);
+                $.ajax({
+                    type: "post",
+                    url: "update_cmt",
+                    data: udata,
+                    dataType: "text",
+                    success: function (res) {
+                        cmList();
+                    }//succ
+                });//ajax
+            });//리뷰수정버튼클릭
 
             //사진클릭
             $("div#btn-ci-link").click(function (){
@@ -351,10 +383,11 @@
             //일반함수
             // 리뷰리스트
             function cmList(){
-                var s="";
-
+                var s="<div>";
+                var cm_cnt=${dto.cm_cnt};
+                if(cm_cnt==0){s+='<div>아직 리뷰가 없습니다. 첫번재 리뷰를 남겨주세요!</div><br>';}
                 if(login_ok=="yes"){
-                    s+='<div><div class="mform">';
+                    s+='<div class="mform">';
                     s+='<form id="mform">';
                     s+='<input type="hidden" name="cf_id" value="${dto.cf_id }">';
                     s+='<input type="hidden" name="ur_id" value="${sessionScope.login_id }">';
@@ -388,15 +421,21 @@
                             s+='<div>';
                             s+='<img src="../images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
-                                s+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" data-bs-toggle="modal" data-bs-target="#myUpdateModal"></i>&nbsp;&nbsp;';
+                                s+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 s+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'"></i></span>';}
                             s+='</div>';
                             s+='<div><span class="cm-star">';
                             var i=0;
                             while(i<elt.star){s+='★'; i++;}
                             s+='</span>';
-                            s+='&nbsp;<span>'+elt.w_date+'</span></div>';
-                            s+='<div>'+elt.cm_txt+'</div>';
+                            if(elt.star==0){s+="-"}
+                            else{
+                            s+='<span class="cm-star-n">';
+                            var i=0;
+                            while(i<5-elt.star){s+='★'; i++;}
+                            s+='</span>';}
+                            s+='&nbsp;&nbsp;&nbsp;<span>'+elt.w_date+'</span></div>';
+                            s+='<pre>'+elt.cm_txt+'</pre>';
                         });//each
                         s+='</div>';
                         $("div.cf-bottom").html(s);
