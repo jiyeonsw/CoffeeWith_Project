@@ -1,5 +1,6 @@
 package bit.data.controller;
 
+import bit.data.dto.CafeCmtDto;
 import bit.data.dto.MyPageCafeLikeDto;
 import bit.data.service.MypageServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,8 +91,10 @@ public class MypageController {
 
     //MyPage contents - Review View
     @GetMapping("/mypage/review")
-    public String MyPageComment() {
+    public String selectMyCmt(HttpSession session, Model model) {
+        int loginId = (int) session.getAttribute("login_id");
+        List<CafeCmtDto> list = mypageService.selectMyCmt(loginId);
+        model.addAttribute("list", list);
         return "/cmain/mypage/cont_cf_cmt";
     }
-
 }

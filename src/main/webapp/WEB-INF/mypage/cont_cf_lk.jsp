@@ -26,8 +26,9 @@
 
         .bk_container {
             display: grid;
-            padding: 40px 20px 20px;
+            padding: 30px 20px 20px;
             grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 280px 280px 280px 280px 280px;
             gap: 20px 0px;
             justify-items: center;
             min-height: 1600px;
@@ -35,7 +36,7 @@
 
         div.bk-card {
             width: 270px;
-            height: 260px;
+            height: 270px;
             overflow: hidden;
         }
 
@@ -76,6 +77,11 @@
 
         .pagination {
             justify-content: center;
+        }
+
+        div.un-bk svg {
+            color: black;
+            background-color: rgba(255, 255, 255, .2);
         }
     </style>
 </head>
@@ -139,6 +145,7 @@
     </ul>
 </div>
 <script>
+    //북마크 제거 버튼(-) 클릭시 db data delete
     $(".un-bk").click(function () {
         var ur_id = '${sessionScope.login_id }';
         var cf_id = $(this).attr("value");
@@ -152,8 +159,8 @@
                 // alert("yes");
                 location.reload();
             }//suc
-        })
-    })
+        })//ajax
+    })//$(".un-bk")
 </script>
 </body>
 </html>
