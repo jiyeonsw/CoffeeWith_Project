@@ -17,8 +17,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+
     <style>
         /*  .bk_container div, .bk_container img {
               border: 1px solid gray;
@@ -39,7 +39,7 @@
             overflow: hidden;
         }
 
-        div.bk-card:hover {
+        div.bk-txt-area:hover {
             cursor: pointer;
         }
 
@@ -54,6 +54,16 @@
             border: 1px solid #f1f1f1;
             margin-bottom: 10px;
 
+        }
+
+        .bk-ci-nm svg {
+            font-size: 24px;
+            float: right;
+            margin: 10px;
+        }
+
+        .bk-ci-nm svg {
+            cursor: pointer;
         }
 
         .bk_container h5 {
@@ -81,15 +91,18 @@
     <c:if test="${totalCount>0}">
         <c:forEach var="dto" items="${list}">
             <c:set var="no" value="${no-1}"/>
-            <div class="bk-card"
-                 onclick="location.href='${root}/cafe/detail?cf_id=${dto.cf_id}'">
+            <div class="bk-card">
                 <div class="bk-ci-nm"
                      style="background-image:url('${root}/images/cafeimg/${dto.ci_nm}'),url('${root}/images/noimage.png')">
+                    <div class="un-bk" value="${dto.cf_id}">
+                        <i class="fa-regular fa-square-minus"></i>
+                    </div>
                 </div>
-                <div class=" bk-txt-area">
+                <div class=" bk-txt-area" onclick="location.href='${root}/cafe/detail?cf_id=${dto.cf_id}'">
                     <h5 class="bk-cf-nm">${dto.cf_nm}</h5>
                     <span class="bk-cf-addr">${dto.loc_si} ${dto.loc_gu}</span>
                 </div>
+
             </div>
         </c:forEach>
     </c:if>
@@ -125,5 +138,22 @@
         </c:if>
     </ul>
 </div>
+<script>
+    $(".un-bk").click(function () {
+        var ur_id = '${sessionScope.login_id }';
+        var cf_id = $(this).attr("value");
+        console.log(cf_id);
+        $.ajax({
+            type: "get",
+            url: "${root}/cafe/delete_like",
+            dataType: "text",
+            data: {"ur_id": ur_id, "cf_id": cf_id},
+            success: function (res) {
+                // alert("yes");
+                location.reload();
+            }//suc
+        })
+    })
+</script>
 </body>
 </html>
