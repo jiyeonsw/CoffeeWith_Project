@@ -92,6 +92,7 @@
         span.cm-star{
             color: rgba(250, 208, 0, 0.99);
         }
+        div#btn-ck{cursor: pointer;}
     </style>
     <script>
         $(function () {
@@ -152,7 +153,7 @@
                 //console.log(fdata);
                 $.ajax({
                     type: "post",
-                    url: "insertcmt",
+                    url: "insert_cmt",
                     data: fdata,
                     dataType: "text",
                     success: function (res) {
@@ -213,7 +214,7 @@
 
             $.ajax({
                 type: "get",
-                url: "selectcmt",
+                url: "select_cmt",
                 dataType: "json",
                 data: {"cf_id": cf_id},
                 success: function (res) {
@@ -278,15 +279,18 @@
                <div><h1>${dto.cf_nm}</h1></div>
                <div>${dto.cf_txt}</div>
                <br>
-               <div><span>위치</span>  <span>나중에 </span></div>
-               <div><span>리뷰</span>  <span>${dto.cm_cnt}</span></div>
+               <div><span>위치</span>  <span>${dto.loc_addr} </span></div>
+               <div><span>리뷰</span>  <span>${dto.cm_cnt} (<span class="cm-star">★</span>${dto.cm_start})</span></div>
                <hr>
-                <div><i class="fa-regular fa-heart"></i>&nbsp;${dto.ck_cnt}</div>
+                <div id="btn-ck" >
+                    <c:if test="${dto.ck_cnt==0}"><i class="fa-regular fa-heart"></i>&nbsp;</c:if>
+                    <c:if test="${dto.ck_cnt>0}"><i class="fa-solid fa-heart"></i>&nbsp;</c:if>
+                    ${dto.ck_cnt}</div>
            </div>
        </div> <!--cf_top-->
            <br>
        <div class="cf-middle">
-           <div id="btn-cf-info">카페정보</div><div id="btn-cm-link">리뷰(${dto.ck_cnt})</div><div id="btn-ci-link">사진</div>
+           <div id="btn-cf-info">카페정보</div><div id="btn-cm-link">리뷰(${dto.cm_cnt})</div><div id="btn-ci-link">사진</div>
        </div>
        <hr>
        <br>
@@ -326,6 +330,41 @@
                     }//succ
                 });//ajax
             });//사진 클릭
+
+            //하트클릭
+            $("div#btn-ck").click(function (){
+                var ur_id='${sessionScope.login_id }';
+                $.ajax({
+                    type: "get",
+                    url: "select_like",
+                    dataType: "json",
+                    data: {"ur_id":ur_id, "cf_id": cf_id},
+                    success: function (res) {
+                        var ck_chk=res.ck_chk;
+                        if(ck_chk==0) {
+                            $.ajax({
+                                type: "get",
+                                url: "insert_like",
+                                dataType: "text",
+                                data: {"ur_id": ur_id, "cf_id": cf_id},
+                                success: function (res) {
+                                    location.reload();
+                                }//suc
+                            });//ajax insert
+                        }else {
+                            $.ajax({
+                                type: "get",
+                                url: "delete_like",
+                                dataType: "text",
+                                data: {"ur_id": ur_id, "cf_id": cf_id},
+                                success: function (res) {
+                                    location.reload();
+                                }//suc
+                            });//aj del
+                        }
+                    }//suc
+                });//ajax
+                });//하트클릭
         </script>
    </div>
 </body>
