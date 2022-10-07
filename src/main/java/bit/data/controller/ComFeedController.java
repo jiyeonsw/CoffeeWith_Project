@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import util.ChangeName;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,9 @@ public class ComFeedController {
 
     @Autowired
     ComFeedServiceInter comFeedService;
+
+    @Autowired
+    private ServletContext sct;
 
     @GetMapping("/main")
     public String list(@RequestParam(value = "searchcolumn", required = false) String sc,
@@ -47,7 +51,7 @@ public class ComFeedController {
     @PostMapping("/insert")
     public String insert(ComFeedDto dto, List<MultipartFile> upload, HttpServletRequest request) {
 
-        String path = request.getSession().getServletContext().getRealPath("/resources/images/cafeimg");
+        String path = "D:\\Project\\CoffeeWith\\src\\main\\webapp\\resources\\images\\upload";
 
         String photo = "";
 
@@ -69,7 +73,7 @@ public class ComFeedController {
 
         dto.setFd_photo(photo);
 
-        comFeedService.insertFeed(dto);
+//        comFeedService.insertFeed(dto);
 
         return "redirect:main";
     }
