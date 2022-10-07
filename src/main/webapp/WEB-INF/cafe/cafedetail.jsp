@@ -104,23 +104,23 @@
             font-family: inherit;
             font-size:inherit ;
         }
+        img.cmt-img{
+            display : inline-block;
+        }
     </style>
     <script>
         $(function () {
             cf_id=${dto.cf_id};
             login_ok='${sessionScope.login_ok}';
             ur_id="${sessionScope.login_id }";
-
             cfMap(cf_id);
-
-
-
         });//fun
 
     </script>
 
 </head>
 <body>
+<c:set var="root" value="<%=request.getContextPath()%>"/>
    <div style="margin: 50px 50px;">
        <div>&nbsp<a class="back" href="javascript:back();"><i class="fa-solid fa-map-location-dot"></i>&nbsp;맵으로 돌아가기</a></div><br>
        <div class="cf-top">
@@ -141,7 +141,7 @@
                    <c:if test="${i.count==1}"><div class="carousel-item active"></c:if>
                    <c:if test="${i.count>1}"><div class="carousel-item"> </c:if>
                        <div class="ci-card">
-                           <c:set var="ci_path" value="url('../images/cafeimg/${dtoi.ci_nm}')"/>
+                           <c:set var="ci_path" value="url('${root}/images/cafeimg/${dtoi.ci_nm}')"/>
                            <div class="ci-st" style="background-image:${ci_path}">
                            </div></div>
                    </div>
@@ -195,6 +195,7 @@
             </div>
         </div>
         <script>
+            ////////////////////////////////////////////////////////////////// 카페메인정보 관련 함수 //////////////////////////////////////////////////////////////////
             //하트클릭
             $("div#btn-ck").click(function (){
 
@@ -233,6 +234,7 @@
                 }//else
             });//하트클릭
 
+            ////////////////////////////////////////////////////////////////// 카페상세정보 관련 함수 //////////////////////////////////////////////////////////////////
             //카페정보 클릭
             $("div#btn-cf-info").click(function (){
                 var s="";
@@ -258,7 +260,7 @@
                 });//ajax
             });//cafeinfo
 
-            //카페 리뷰
+            ////////////////////////////////////////////////////////////////// 카페리뷰 관련 함수 //////////////////////////////////////////////////////////////////
             //리뷰클릭
             $("div#btn-cm-link").click(function (){
                 //console.log(cf_id);
@@ -267,23 +269,33 @@
 
             //리뷰 사진 클릭
             $(document).on("click","#btn-img",function (){
-                $("#upload").trigger("click");
+                $(".upload").trigger("click");
             });///on 리뷰사진클릭
 
             //file 변경
-            $(document).on("change","#upload",function (){
-                var form=new FormData();
-                form.append("ci_nm",$("#upload")[0].files[0]);
+            $(document).on("change",".upload",function (){
+                var formData = new FormData();
+                var inputFile=$('.upload');
+                var files=inputFile[0].files;
+                for(var i = 0; i < files.length; i++){
+                    //console.log(files[i]);
+                    formData.append("uploadFiles", files[i]);
+                }
+                var img_tag="";
                 $.ajax({
-                    type:"post", //file 태그포함되어 있으면 get이 아니라 post 방식이어야함
-                    dataType:"json", //return type 없을 때,
-                    url:"uploadimg", //매핑주소
+                    type:"post",
+                    dataType:"json",
+                    url:"upload_cmt_img",
                     processData:false,
                     contentType:false,
-                    data:form,
+                    data:formData,
                     success:function(res){
-                        $("#mphoto").attr("src","../images/"+res.ci_nm);
-                        $("#mphoto").css("display","inline-block");
+                        $.each(res.ci_list,function(i,elt){
+                            img_tag += '<img src="${root}/images/upload/'+elt+'" class="cmt-img" width="50">';
+                        });//each;
+                        setTimeout(function(){
+                            $("#btn-img").after(img_tag);
+                        },60*1000);
                     }//suc
                 });//ajax
             }); //on file 변경
@@ -336,7 +348,6 @@
                         $("#btnmsave").text("리뷰수정");
                         $("#btnmsave").attr("id","btnmedit");
                         $("#rate"+star).trigger("click");
-
                     }//succ
                 });//ajax
             });//리뷰수정클릭시 내용 넣기
@@ -356,6 +367,7 @@
                 });//ajax
             });//리뷰수정버튼클릭
 
+            ////////////////////////////////////////////////////////////////// 카페사진모음 관련 함수 //////////////////////////////////////////////////////////////////
             //사진클릭
             $("div#btn-ci-link").click(function (){
                 //console.log(cf_id);
@@ -368,10 +380,9 @@
                         var s="";
                         $.each(res, function (i, elt) {
                             s+='<div class="ci-mini-card">';
-                            var ci_path="url('../images/cafeimg/" + elt.ci_nm+"')";
+                            var ci_path="url('${root}/images/cafeimg/" + elt.ci_nm+"')";
                             s+='<div class="ci-mini-st" style="background-image:'+ci_path+'">';
                             s+='</div></div>';
-                            //s += '<img src="../images/cafeimg/' + elt.ci_nm + '" style="width: 300px; height: 300px;">';
                         });//each
                         $("div.cf-bottom").html(s);
                     }//succ
@@ -379,13 +390,12 @@
             });//사진 클릭
 
 
-
-            //일반함수
+            ////////////////////////////////////////////////////////////////// 일반 함수 //////////////////////////////////////////////////////////////////
             // 리뷰리스트
             function cmList(){
                 var s="<div>";
                 var cm_cnt=${dto.cm_cnt};
-                if(cm_cnt==0){s+='<div>아직 리뷰가 없습니다. 첫번재 리뷰를 남겨주세요!</div><br>';}
+                if(cm_cnt==0){s+='<div>아직 리뷰가 없습니다. 첫번째 리뷰를 남겨주세요!</div><br>';}
                 if(login_ok=="yes"){
                     s+='<div class="mform">';
                     s+='<form id="mform">';
@@ -398,10 +408,9 @@
                     s+='<input type="radio" name="star" value="2" id="rate4"><label for="rate4">★</label>';
                     s+='<input type="radio" name="star" value="1" id="rate5"><label for="rate5">★</label>';
                     s+='</fieldset>';
-                    s+='<input type="file" id="upload" style="display: none">';
+                    s+='<input type="file" class="upload" style="display: none" multiple="multiple">';
                     s+='<button type="button" id="btn-img">';
                     s+='<i class="fa-solid fa-camera"></i></button>';
-                    //s+='<img src="" id="mphoto" width="50" onerror="this.style.display=none">';
                     s+='<br><div class="input-group">';
                     s+='<textarea name="cm_txt" id="cm_txt" style="width: 500px;height: 60px;" class="form-control"></textarea>';
                     s+='<button type="button"  id="btnmsave">리뷰등록</button>';
@@ -419,7 +428,7 @@
                         $.each(res, function (i, elt) {
                             //console.dir(elt);
                             s+='<div>';
-                            s+='<img src="../images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
+                            s+='<img src="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 s+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 s+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'"></i></span>';}
@@ -471,7 +480,7 @@
                 if(pre_url=="mainmap"){
                     history.back();
                 }else{
-                    location.href  ="../map/mainmap";
+                    location.href  ="${root}/map/mainmap";
                 }
             }
         </script>
