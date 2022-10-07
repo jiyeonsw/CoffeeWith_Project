@@ -19,11 +19,6 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <style>
-
-        .top-container div {
-            /*border: 1px solid gray;*/
-        }
-
         .user-profil-box {
             height: 100px;
             display: grid;
@@ -58,7 +53,7 @@
             bottom: 0;
             width: 24px;
             height: 24px;
-            background: url("/resources/images/pen.png") no-repeat;
+            background: url("https://github.com/bitcamp-team4/CoffeeWith/blob/mypage/src/main/webapp/resources/images/pen.png") no-repeat;
         }
 
         .img-area img {

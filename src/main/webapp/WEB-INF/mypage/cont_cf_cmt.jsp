@@ -93,7 +93,8 @@
     <c:forEach var="dto" items="${list}">
         <div class="cmt-box">
             <div class="cf-cmt-img">
-                <img src="${root}/images/cafeimg/${dto.ci_nm}">
+                <img src="${root}/images/cafeimg/${dto.ci_nm}"
+                     onError="this.onerror=null; this.src='${root}/images/noimage.png'">
             </div>
             <div class="cmt-cf-nm">
                     ${dto.cf_nm}
