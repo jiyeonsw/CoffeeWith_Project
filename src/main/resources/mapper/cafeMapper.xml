@@ -13,7 +13,7 @@
 			<if test="searchword!=null">
 				WHERE cf_nm like concat ('%',#{searchword},'%')	OR loc_addr LIKE concat ('%',#{searchword},'%')
 			</if>
-		order by cf_id ASC LIMIT #{startnum},#{perpage}
+		order by cf_nm ASC LIMIT #{startnum},#{perpage}
 	</select>
 	<select id="selectTotalCount" parameterType='String' resultType="int">
 		SELECT count(*) FROM cf

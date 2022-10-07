@@ -6,11 +6,9 @@ import bit.data.service.CafeServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +25,18 @@ public class MapController {
         List<CafeDto> list = cafeService.selectAllCafe();
         model.addAttribute("list", list);
         return "/bit/map/mainmap";
+    }
+
+    @PostMapping("/maketour")
+    public String maketour(HttpServletRequest request,
+                           @RequestParam List<Map<String, Object>> tourlist,
+                           @RequestParam String tourname,
+                           @RequestParam String tourdate,
+                           @RequestParam String tourinfo)
+    {
+
+        String referer = request.getHeader("Referer");
+        return "redirect:"+ referer;
     }
 
     @GetMapping("/getcafedata")
