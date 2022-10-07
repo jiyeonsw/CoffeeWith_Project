@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class BoardDto {
 	private int num;
-	private int readcount;
+	private int readCount;
 	private int likes;	
 	private int regroup;
 	private int restep;
@@ -17,6 +17,6 @@ public class BoardDto {
 	private String subject;
 	private String content;
 	private String photo;
-	private Timestamp writeday;
+	private Timestamp writeDay;
 	private int acount;
 }

@@ -8,23 +8,24 @@ import java.util.Map;
 public interface UserDaoInter {
     public int getTotalCount();
 
-    public List<UserDto> getAllusers();
+    public List<UserDto> getAllUser();
 
-    public void insertuser(UserDto dto);
+    public void insertUsers(UserDto dto);
 
-    public int getSearchId(String id);
+    public int selectSearchId(String email_id);
 
-    public String getName(String id);
+    public int selectSearchNick(String ur_nk);
 
-    public int getIdPassCheck(Map<String, String> map);
+    public void insertUser(UserDto dto);
 
-    public UserDto getDataById(String id);
+    public List<String> selectSubstrSi();
 
-    public UserDto getDataByNum(int num);
+    public List<String> selectSubstrGu(String selGu);
 
-    public void updatePhoto(Map<String, Object> map);
+    public UserDto selectDataById(int ur_id);
 
-    public void updateuser(UserDto dto);
+    public int getIdPassCheck(Map<String,String> map);
 
-    public void deleteuser(int num);
+
 }
+

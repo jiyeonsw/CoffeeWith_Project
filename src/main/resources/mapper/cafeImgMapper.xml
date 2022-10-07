@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.data.dao.CafeImgDao">
+	<select id="selectCafeImg" parameterType="int" resultType="cidto">
+		SELECT * FROM cf_img WHERE cf_id=#{cf_id} AND fd_id IS NULL AND cm_id IS NULL
+	</select>
+	<select id="selectCafeImgAll" parameterType="int" resultType="cidto">
+		SELECT * FROM cf_img WHERE cf_id=#{cf_id}
+	</select>
+	<insert id="insertCmtImg" parameterType="cidto">
+		INSERT INTO cf_img (cf_id, ci_nm, ci_id, w_date) VALUES (#{cf_id}, #{ci_nm}, #{ci_id}, now())
+	</insert>
+</mapper>

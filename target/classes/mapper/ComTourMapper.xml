@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.data.dao.ComTourDao">
+    <insert id="insertTour" parameterType="ctdto">
+        INSERT INTO tr values (null,#{ur_id},#{tr_nm},#{tr_txt},#{tr_pw},#{tr_loc},#{tw_max},
+                               #{s_date},#{e_date},now(),now())
+    </insert>
+
+    <select id="getTotalCount" parameterType="Map" resultType="int">
+        select count(*) from tr
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+    </select>
+
+    <select id="getPagingList" parameterType="Map" resultType="ctdto">
+        select * from tr
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+    </select>
+    <select id="getUserData" parameterType="int" resultType="ctdto">
+        select * from ur where ur_id=#{ur_id}
+    </select>
+</mapper>
+

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.data.dao.MypageDao">
+    <!--MyPage top : 카페 북마크 수-->
+    <select id="selectCfLkCnt" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM ur u
+                 INNER JOIN cf_lk c ON (u.ur_id = c.ur_id)
+        WHERE u.ur_id = #{loginId};
+    </select>
+    <!--MyPage top : 작성한 리뷰 수-->
+    <select id="selectCfCmtCnt" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM ur u
+                 INNER JOIN cf_cmt c ON (u.ur_id = c.ur_id)
+        WHERE u.ur_id = #{loginId};
+    </select>
+
+    <!--MyPage contents : 북마크 카페id,카페이름,카페이미지(첫번째)-->
+    <select id="selectLikeCfInfo" parameterType="int" resultType="mpcldto">
+        select cl.cf_id,
+               c.cf_nm,
+               ci.ci_nm,
+               substring_index(c.loc_addr, ' ', '1')                         as loc_si,
+               substring_index(substring_index(loc_addr, ' ', '2'), ' ', -1) as loc_gu
+        from cf_lk cl
+                 JOIN cf c
+                      ON cl.cf_id = c.cf_id
+                 left join cf_img ci
+                           on cl.cf_id = ci.cf_id
+        where cl.ur_id = #{urId}
+        group by c.cf_nm;
+    </select>
+
+    <!--MyPage review : userid에 해당하는 리뷰 데이터-->
+    <select id="selectMyCmtCf" parameterType="int" resultType="mpccdto">
+        select cc.cm_id, cc.cf_id, ci.ci_nm, c.cf_nm, cc.w_date, cc.star, cc.cm_txt
+        from cf_cmt cc
+                 join cf c
+                      on cc.cf_id = c.cf_id
+                 left join cf_img ci
+                           on cc.cf_id = ci.cf_id
+        where cc.ur_id = #{loginId}
+        group by cm_id
+        order by cc.w_date;
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

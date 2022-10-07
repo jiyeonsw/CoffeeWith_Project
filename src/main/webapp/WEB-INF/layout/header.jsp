@@ -5,16 +5,31 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Header</title>
+    <title>CofeeWith</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
+          rel="stylesheet">
     <style type="text/css">
+        @font-face {
+            font-family: 'GangwonEdu_OTFBoldA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body * {
-            font-family: 'Jua';
+            font-family: 'GangwonEdu_OTFBoldA';
             color: #664400;
+        }
+
+        .logotitle {
+            font-family: 'GangwonEdu_OTFBoldA';
+            font-style: oblique;
+            font-weight: bolder;
         }
 
         #btnlogin {
@@ -43,41 +58,13 @@
         li.main > a:hover {
             cursor: pointer;
         }
-
-        ul.submenu {
-            margin-left: 0px;
-            font-size: 14px;
-            font-family: 'Jua';
-            padding-left: 0px;
-            margin-top: 15px;
-        }
-
-        ul.submenu > li > a {
-            display: block;
-            width: 180px;
-            height: 20px;
-        }
-
-        ul.submenu > li:hover {
-            cursor: pointer;
-        }
-
-        div.menu {
-            color: #1a0d00;
-            background-color: #cccccc
-        }
-
-        div.submenu {
-            color: #1a0d00;
-        }
-
     </style>
 </head>
 <body>
 <!-- 로고 버튼 누르면 홈으로 -->
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<a href="${root}/" class="logo" style="font-size: 30px;">
-    <img src="${root}/images/logo1.png" class="rounded-circle" width="40" height="40" align="top">
+<a href="${root}/" class="logotitle" style="font-size: 30px;">
+    <img src="${root}/images/logo1.png" class="rounded-circle" width="40" height="40">
     <b> Coffee With </b></a>
 
 <!-- 메뉴 구성 -->
@@ -86,99 +73,52 @@
     <ul>
         <!-- 1번째 메뉴 -->
         <li class="main">
-            <a>메인페이지</a>
-            <ul class="submenu">
-                <li><a href="${root}/">홈페이지</a></li>
-            </ul>
+            <a>홈페이지</a>
         </li>
 
         <!-- 2번째 메뉴 -->
         <li class="main">
-            <a>카페지도</a>
-            <ul class="submenu">
-                <li>전체 카페 지도</li>
-                <li>찜한 카페 지도</li>
-            </ul>
+            <a href="${root}/map/mainmap">카페지도</a>
         </li>
 
         <!-- 3번째 메뉴 -->
         <li class="main">
-            <a>투어모집글</a>
-            <ul class="submenu">
-                <li>모임글 쓰기</li>
-                <li>모임글 목록</li>
-            </ul>
+            <a href="${root}/comtour/list">투어모집</a>
         </li>
 
         <!--4번째 메뉴 -->
         <li class="main">
-            <a>정보공유글</a>
-            <ul class="submenu">
-                <li>정보글 쓰기</li>
-                <li>정보글 목록</li>
-            </ul>
+            <a href="${root}/comfeed/main">커뮤니티</a>
         </li>
     </ul>
 </div>
 
-
 <!-- 로그인 로그아웃 -->
-<span id="loginstate" ; style="text-align: right;">
-    <c:if test="${sessionScope.loginok==null}">
+<span id="loginstate" style="text-align: right;">
+    <c:if test="${sessionScope.login_ok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
-                data-bs-toggle="modal" data-bs-target="#myModal">Login</button>
+                onclick="location.href='${root}/login_main'">Login</button>
         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
-                onclick="location.href='user_form'">Sign Up</button>
+                onclick="location.href='${root}/user_form'">Sign Up</button>
+        <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
+                세션주기</button>
     </c:if>
 
-    <c:if test="${sessionScope.loginok!=null}">
-        <b>${sessionScope.loginname}님</b> &nbsp;
-        <button type="button" class="btn btn-info btn-sm" id="btnlogout">Logout</button>
+    <c:if test="${sessionScope.login_ok!=null}">
+        <b>${sessionScope.login_nick}님</b>
+        <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
+                onclick="location.href='${root}/mypage'">My Page</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
+        <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
+                세션제거</button>
     </c:if>
-</span>
+    </span>
 
-
-<!-- 로그인창 -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">회원 로그인 해주세요</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="input-group mb-3 input-group-sm">
-                    <span class="input-group-text">LoginId</span> <input type="text"
-                                                                         class="form-control" id="loginid">
-                </div>
-                <div class="input-group mb-3 input-group-sm">
-                    <span class="input-group-text">LoginPass</span> <input
-                        type="password" class="form-control" id="loginpass">
-                </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success"
-                        data-bs-dismiss="modal" id="btnloginok">Login
-                </button>
-                <button type="button" class="btn btn-danger"
-                        data-bs-dismiss="modal">Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- 스크립트 이벤트 -->
 <script type="text/javascript">
 
-    // 팝업창에 있는 로그인 버튼
+    //로그인 버튼
     $("#btnloginok").click(function () {
         // 아이디와 비번 읽기
         var id = $("#loginid").val();
@@ -207,14 +147,41 @@
 
         $.ajax({
             type: "get",
-            url: root + "/member/logout",
+            url: root + "user/logout",
             dataType: "text",
 
             success: function (res) {
                 location.reload();
             }
-        });
-    });
+        })
+    })
+
+    //세션주기
+    $("#call-session-btn").click(function () {
+        var root = '${root}';
+
+        $.ajax({
+            type: "get",
+            url: root + "/user/call_session",
+            dataType: "text",
+            success: function (res) {
+                location.reload();
+            }
+        })
+    })
+
+    //세션제거
+    $("#del-session-btn").click(function () {
+        var root = '${root}';
+        $.ajax({
+            type: "get",
+            url: root + "/user/del_session",
+            dataType: "text",
+            success: function (res) {
+                location.reload();
+            }
+        })
+    })
 </script>
 </body>
 </html>
