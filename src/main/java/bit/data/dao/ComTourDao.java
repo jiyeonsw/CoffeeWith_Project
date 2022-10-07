@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -23,6 +24,17 @@ public class ComTourDao implements ComTourDaoInter{
     public int getTotalCount(Map<String, String> map) {
 
         return session.selectOne(ns+"getTotalCount",map);
+    }
+
+    @Override
+    public List<ComTourDto> getPagingList(Map<String, Object> map) {
+
+        return session.selectList(ns+"getPagingList",map);
+    }
+
+    @Override
+    public ComTourDto getUserData(int num) {
+        return session.selectOne(ns+"getUserData", num);
     }
 
     @Override
