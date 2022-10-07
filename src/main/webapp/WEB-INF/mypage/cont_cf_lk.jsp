@@ -59,7 +59,6 @@
             box-sizing: border-box;
             border: 1px solid #f1f1f1;
             margin-bottom: 10px;
-
         }
 
         .bk-ci-nm svg {
@@ -104,7 +103,6 @@
                     <h5 class="bk-cf-nm">${dto.cf_nm}</h5>
                     <span class="bk-cf-addr">${dto.loc_si} ${dto.loc_gu}</span>
                 </div>
-
             </div>
         </c:forEach>
     </c:if>

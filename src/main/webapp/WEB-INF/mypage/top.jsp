@@ -10,7 +10,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<c:set var="root" value="<%=request.getContextPath() %>"/>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -20,23 +19,51 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <style>
-        .user-profill-box {
+
+        .top-container div {
+            /*border: 1px solid gray;*/
+        }
+
+        .user-profil-box {
+            height: 100px;
             display: grid;
             position: relative;
-            grid-template-columns: 80px 1.5fr;
+            grid-template-columns: 60px 1.5fr;
             gap: 0px 10px;
             align-items: center;
         }
 
-        .user-profill-box h2 {
+        .user-profil-box h2 {
             margin-bottom: -0.5rem;
         }
 
+
         .img-area {
+            width: 60px;
+            height: 60px;
             display: block;
             position: relative;
-            width: 80px;
-            height: 80px;
+        }
+
+        .img-area > div {
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: 1px 1px 1px gray;
+        }
+
+        .img-area:after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 24px;
+            height: 24px;
+            background: url("/resources/images/pen.png") no-repeat;
+        }
+
+        .img-area img {
+            width: 100%;
+            height: 100%;
         }
 
         .box-type-01 {
@@ -51,9 +78,6 @@
             color: #f0f0f0;
         }
 
-        .top-container div {
-            border: 1px solid gray;
-        }
 
         .link-area {
             height: 60px;
@@ -69,18 +93,20 @@
     </style>
 </head>
 <body>
-
+<c:set var="root" value="<%=request.getContextPath() %>"/>
 <div class="top-container">
-    <div class="user-profill-box">
+    <div class="user-profil-box">
         <%--이미지 클릭하면 회원정보 변경으로 이동(예정)--%>
         <a href="#" class="img-area">
-            <c:if test="${sessionScope.login_img != null}">
-                <img src="${root}/resources/prfimg/${sessionScope.login_img}"
-                     onerror="this.src='${root}/resources/images/noprofile.png'">
-            </c:if>
-            <c:if test="${sessionScope.login_img != null}">
-                <img src="${root}/resources/images/noprofile.png">
-            </c:if>
+            <div>
+                <c:if test="${sessionScope.login_img != null}">
+                    <img src="${root}/resources/prfimg/${sessionScope.login_img}"
+                         onerror="this.src='${root}/resources/images/noprofile.jpg'">
+                </c:if>
+                <c:if test="${sessionScope.login_img == null}">
+                    <img src="${root}/images/noprofile.jpg">
+                </c:if>
+            </div>
         </a>
         <div class=" txt-area">
             <h2 class="tit-dep2 nick">&nbsp;${sessionScope.login_nick} 님 환영합니다!</h2>
