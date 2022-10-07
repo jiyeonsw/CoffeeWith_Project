@@ -10,6 +10,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
+<c:set var="root" value="<%=request.getContextPath() %>"/>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,15 +19,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
-    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <style>
-
         .user-profill-box {
             display: grid;
             position: relative;
             grid-template-columns: 80px 1.5fr;
             gap: 0px 10px;
             align-items: center;
+        }
+
+        .user-profill-box h2 {
+            margin-bottom: -0.5rem;
         }
 
         .img-area {
@@ -48,7 +51,6 @@
             color: #f0f0f0;
         }
 
-
         .top-container div {
             border: 1px solid gray;
         }
@@ -63,17 +65,24 @@
             font-size: 20px;
         }
 
+
     </style>
 </head>
 <body>
-<c:set var="root" value="<%=request.getContextPath() %>"/>
+
 <div class="top-container">
     <div class="user-profill-box">
         <%--이미지 클릭하면 회원정보 변경으로 이동(예정)--%>
         <a href="#" class="img-area">
-            <img src="" alt>
+            <c:if test="${sessionScope.login_img != null}">
+                <img src="${root}/resources/prfimg/${sessionScope.login_img}"
+                     onerror="this.src='${root}/resources/images/noprofile.png'">
+            </c:if>
+            <c:if test="${sessionScope.login_img != null}">
+                <img src="${root}/resources/images/noprofile.png">
+            </c:if>
         </a>
-        <div class="txt-area">
+        <div class=" txt-area">
             <h2 class="tit-dep2 nick">&nbsp;${sessionScope.login_nick} 님 환영합니다!</h2>
         </div>
     </div>

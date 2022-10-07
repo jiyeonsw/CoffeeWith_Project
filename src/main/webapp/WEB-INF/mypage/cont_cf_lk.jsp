@@ -17,7 +17,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
     <style>
         /*  .bk_container div, .bk_container img {
@@ -26,7 +25,7 @@
 
         .bk_container {
             display: grid;
-            padding: 30px 20px 20px;
+            padding: 40px 20px 20px;
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-rows: 280px 280px 280px 280px 280px;
             gap: 20px 0px;
@@ -53,18 +52,20 @@
             object-fit: cover;
             box-sizing: border-box;
             border: 1px solid #f1f1f1;
+            border-radius: 4px;
+            background: 50% 50% no-repeat;
+            background-size: cover;
+            object-fit: cover;
+            box-sizing: border-box;
+            border: 1px solid #f1f1f1;
             margin-bottom: 10px;
 
         }
 
         .bk-ci-nm svg {
-            font-size: 24px;
-            float: right;
-            margin: 10px;
-        }
-
-        .bk-ci-nm svg {
             cursor: pointer;
+            float: right;
+            margin: 15px;
         }
 
         .bk_container h5 {
@@ -77,11 +78,6 @@
 
         .pagination {
             justify-content: center;
-        }
-
-        div.un-bk svg {
-            color: black;
-            background-color: rgba(255, 255, 255, .2);
         }
     </style>
 </head>
@@ -101,7 +97,7 @@
                 <div class="bk-ci-nm"
                      style="background-image:url('${root}/images/cafeimg/${dto.ci_nm}'),url('${root}/images/noimage.png')">
                     <div class="un-bk" value="${dto.cf_id}">
-                        <i class="fa-regular fa-square-minus"></i>
+                        <i class="fa-solid fa-trash"></i>
                     </div>
                 </div>
                 <div class=" bk-txt-area" onclick="location.href='${root}/cafe/detail?cf_id=${dto.cf_id}'">

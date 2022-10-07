@@ -1,6 +1,6 @@
 package bit.data.controller;
 
-import bit.data.dto.CafeCmtDto;
+import bit.data.dto.MyPageCafeCmtDto;
 import bit.data.dto.MyPageCafeLikeDto;
 import bit.data.service.MypageServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,8 +95,9 @@ public class MypageController {
     @GetMapping("/mypage/review")
     public String selectMyCmt(HttpSession session, Model model) {
         int loginId = (int) session.getAttribute("login_id");
-        List<CafeCmtDto> cmtList = mypageService.selectMyCmt(loginId);
+        List<MyPageCafeCmtDto> list = mypageService.selectMyCmtCf(loginId);
 
+        //System.out.println(list.get(0).);
         Map<Object, String> map = new HashMap<>();
         map.put(0, "☆☆☆☆☆");
         map.put(1, "★☆☆☆☆");
@@ -104,7 +105,7 @@ public class MypageController {
         map.put(4, "★★★★☆");
         map.put(5, "★★★★★");
 
-        model.addAttribute("cmtList", cmtList);
+        model.addAttribute("list", list);
         model.addAttribute("map", map);
         return "/cmain/mypage/cont_cf_cmt";
     }
