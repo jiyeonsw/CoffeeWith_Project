@@ -2,6 +2,8 @@ package bit.data.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CafeDto {
     private int cf_id;
@@ -18,4 +20,6 @@ public class CafeDto {
     private int ck_cnt;
     private String menu;
     private String cf_txt;
+    private List<CafeImgDto> img;
+    private double cm_star;
 }

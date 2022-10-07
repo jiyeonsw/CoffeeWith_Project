@@ -75,7 +75,7 @@
         <div class="inp-frm">
             <label for="inp-email" class="titLab">이메일</label>
             <div class="inpA">
-                <input type="email" id="inp-email" placeholder="example@coffewith.com" class="form-control"
+                <input type="email" id="inp-email" placeholder="ex) coffeewith@gmail.com" class="form-control"
                        required="required" name="email_id">
             </div>
             <div class="id-success"></div>
