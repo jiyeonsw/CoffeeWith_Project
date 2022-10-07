@@ -8,4 +8,7 @@
 	<select id="selectCafeImgAll" parameterType="int" resultType="cidto">
 		SELECT * FROM cf_img WHERE cf_id=#{cf_id}
 	</select>
+	<insert id="insertCmtImg" parameterType="cidto">
+		INSERT INTO cf_img (cf_id, ci_nm, ci_id, w_date) VALUES (#{cf_id}, #{ci_nm}, #{ci_id}, now())
+	</insert>
 </mapper>
