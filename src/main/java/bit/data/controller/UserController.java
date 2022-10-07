@@ -1,5 +1,6 @@
 package bit.data.controller;
 
+import bit.data.dto.LoginDto;
 import bit.data.dto.UserDto;
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,4 +116,5 @@ public class UserController {
         return "redirect:/login_main";
     }
 
+    // 회원 삭제 탈퇴
 }
