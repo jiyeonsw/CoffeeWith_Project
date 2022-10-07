@@ -96,4 +96,9 @@ public class CafeDao implements CafeDaoInter {
     public CafeCmtDto selectCafeCmtByCmid(int cm_id) {
         return session.selectOne(nsm+"selectCafeCmtByCmid", cm_id);
     }
+
+    @Override
+    public void insertCmtImg(CafeImgDto dto) {
+        session.insert(nsi+"insertCmImg", dto);
+    }
 }

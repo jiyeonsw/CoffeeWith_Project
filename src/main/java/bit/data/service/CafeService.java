@@ -105,4 +105,9 @@ public class CafeService implements CafeServiceInter {
     public CafeCmtDto selectCafeCmtByCmid(int cm_id) {
         return cafeDao.selectCafeCmtByCmid(cm_id);
     }
+
+    @Override
+    public void insertCmtImg(CafeImgDto dto) {
+        cafeDao.insertCmtImg(dto);
+    }
 }

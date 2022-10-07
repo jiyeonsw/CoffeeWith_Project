@@ -13,8 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import util.ChangeName;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +27,7 @@ import java.util.Map;
 @RequestMapping("/cafe")
 @Controller
 public class CafeController {
-
+    String upload_img;
     @Autowired
     CafeServiceInter cafeService;
 
@@ -131,5 +136,31 @@ public class CafeController {
     @ResponseBody
     public CafeCmtDto selectCafeCmtByCmid(int cm_id){
         return cafeService.selectCafeCmtByCmid(cm_id);
+    }
+
+    @PostMapping("/upload_cmt_img")
+    @ResponseBody
+    public Map<String,Object> uploadCmtImg(List<MultipartFile> uploadFiles){
+        String path= "E://Java0711//semiproject//CoffeeWith//src//main//webapp//resources//images//upload";
+        System.out.println(path);
+        Map<String, Object> map=new HashMap<>();
+        List list=new ArrayList();
+        //저장할 파일명 구하기
+        int idx=1;
+        for(MultipartFile multi:uploadFiles) {
+            String upload_img = idx + "_"+ChangeName.getChangeFileName(multi.getOriginalFilename());
+            //System.out.println(upload_img);
+            //업로드
+            try {
+                multi.transferTo(new File(path+"/"+upload_img));
+                list.add(upload_img);
+                idx++;
+            } catch (IllegalStateException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        map.put("ci_list",list);
+        return map;
     }
 }
