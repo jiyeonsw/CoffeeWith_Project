@@ -29,9 +29,18 @@ public class MapController {
         return "/bit/map/mainmap";
     }
 
-    @GetMapping("/list")
-    public String list(Model model) {
-        return "/bit/map/mainmap";
+    @GetMapping("/getcafedata")
+    @ResponseBody
+    public Map<String,Object> getcafedata(@RequestParam int cf_id)
+    {
+        CafeDto dto=cafeService.selectCafe(cf_id);
+        Map<String,Object> map=new HashMap<>();
+        map.put("cf_id",dto.getCf_id());
+        map.put("cf_nm",dto.getCf_nm());
+        map.put("loc_addr",dto.getLoc_addr());
+        map.put("loc_x",dto.getLoc_x());
+        map.put("loc_y",dto.getLoc_y());
+        return map;
     }
 
     @GetMapping("/search")
