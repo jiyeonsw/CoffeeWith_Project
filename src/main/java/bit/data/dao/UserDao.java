@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class UserDao implements UserDaoInter {
@@ -16,22 +17,20 @@ public class UserDao implements UserDaoInter {
     @Override  // UserDaoInter에 해당 method 추가함
     public int getTotalCount() {
         // TODO Auto-generated method stub
-        // 다른 파일에 같은 아이디가 있을 수도 있으므로, 붙이는게 좋음
         return session.selectOne(ns+"getTotalCount");
     }
 
-    @Override // UserDaoInter에 해당 method 추가함
+    @Override
     public List<UserDto> getAllUser() {
         // TODO Auto-generated method stub
         return session.selectList(ns+"getAllUsers"); // select List : 모든
     }
 
-    @Override // UserDaoInter에 해당 method 추가함
+    @Override
     public void insertUsers(UserDto dto) {
         // TODO Auto-generated method stub
         session.insert(ns+"insertUser",dto);
     }
-
 
     @Override
     public int selectSearchId(String email_id) {
@@ -68,5 +67,10 @@ public class UserDao implements UserDaoInter {
     public UserDto selectDataById(int ur_id) {
 //        System.out.println("DAO:" + ur_id);
         return session.selectOne(ns + "selectDataById", ur_id);
+    }
+
+    @Override
+    public int getIdPassCheck(Map<String, String> map) {
+        return session.selectOne(ns+"loginIdPassCheck", map);
     }
 }

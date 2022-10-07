@@ -18,6 +18,10 @@
         VALUES (null, #{ur_nk}, #{ur_nm}, #{ur_pw}, null, null, #{email_id}, null,
                 null, null, #{loc_si}, #{loc_gu}, '정상', 0, #{ur_phnum})
     </insert>
+
+    <select id="loginIdPassCheck" parameterType="Map" resultType="int">
+        select count(*) from user where email_id=#{email_id} and ur_pw=#{ur_pw}
+    </select>
     <!--시/도명 추출 명령문-->
     <select id="selectSubstrSi" resultType="String">
         SELECT substring_index(loc_addr, ' ', '1')

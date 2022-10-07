@@ -3,13 +3,14 @@ package bit.data.dao;
 import bit.data.dto.UserDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDaoInter {
-    int getTotalCount();
+    public int getTotalCount();
 
-    List<UserDto> getAllUser();
+    public List<UserDto> getAllUser();
 
-    void insertUsers(UserDto dto);
+    public void insertUsers(UserDto dto);
 
     public int selectSearchId(String email_id);
 
@@ -22,6 +23,9 @@ public interface UserDaoInter {
     public List<String> selectSubstrGu(String selGu);
 
     public UserDto selectDataById(int ur_id);
+
+    public int getIdPassCheck(Map<String,String> map);
+
 
 }
 

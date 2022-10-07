@@ -19,13 +19,14 @@ public interface UserServiceInter {
     public UserDto selectDataById(int ur_id);
 
 
-    UserDto getDataById(String id);
+    public UserDto getDataById(String id);
 
-    int getIdPassCheck(String id, String pass);
+    public int getIdPassCheck(String email_id, String ur_pw);
 
-    void deleteUser(int num);
+    public void deleteUser(int num);
 
-    UserDto getDataByNum(int num);
+    public UserDto getDataByNum(int num);
 
-    void updateUser(UserDto dto);
+    public void updateUser(UserDto dto);
+
 }
