@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -16,6 +18,30 @@ public class LoginController {
 
     @Autowired
     UserServiceInter userService;
+
+    // 로그인 하기
+    @GetMapping("/login")
+    @ResponseBody
+    public Map<String, String> loginprocess(String id, String pass, HttpSession session)
+    {
+        Map<String, String> map=new HashMap<String, String>();
+        int result=userService.getIdPassCheck(id,pass);        // UserServiceInter에 해당 method 추가함
+        if(result==1) // 아이디와 패스워드 모두 일치하는 경우 pass
+        {
+            // 로그인 유지는 4시간으로 설정
+            session.setMaxInactiveInterval(60*60*4);
+
+            // 로그인한 아이디에 대한 정보를 얻어서 세션에 저장
+            UserDto mdto=userService.getDataById(id);    // UserServiceInter에 해당 method 추가함
+            session.setAttribute("loginok", "yes");
+            session.setAttribute("loginid", id);
+            session.setAttribute("loginname", mdto.getUr_nk());
+
+        }
+        map.put("result", result==1?"success":"fail");
+        return map;
+    }
+
 
     // 아이디 찾기
     @GetMapping("/find_id")

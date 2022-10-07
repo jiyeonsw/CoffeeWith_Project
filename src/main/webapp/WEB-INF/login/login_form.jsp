@@ -50,6 +50,7 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
+<form>
 <div id="loginmain" class="loginmain">
     <p class="titlogin">로그인</p>
     <p>♥ 로그인 하시고 카페지도부터 투어모집까지 커피위드를 즐겨보세요 ♥</p>
@@ -119,6 +120,7 @@
             <br><br>
         </div>
     </fieldset>
+
     <hr>
     <!-- 회원가입 및 아이디 비밀번호 찾기 -->
     <c:set var="root" value="<%=request.getContextPath() %>"/>
@@ -127,6 +129,7 @@
         <a href="${root}/user/find_id">아이디 찾기</a><br> <!-- Find ID page -->
         <a href="${root}/user/find_pw">비밀번호 찾기</a> <!-- Find PW page -->
     </div>
+</form>
 </div>
 </body>
 </html>

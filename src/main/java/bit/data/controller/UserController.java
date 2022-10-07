@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,4 +115,35 @@ public class UserController {
         return "redirect:/login_main";
     }
 
+    ///////////////////////////////
+//    //  회원 탈퇴 User 삭제
+//    @GetMapping("/delete")
+//    @ResponseBody
+//    public void delete(int num, HttpSession session)
+//    {
+//        userService.deleteUser(num);    // UserServiceInter에 해당 method 추가함
+//        // 로그인한 본인 삭제후 모든 세션 지우기
+//        session.removeAttribute("loginok");
+//        session.removeAttribute("loginid");
+//        session.removeAttribute("loginname");
+//        session.removeAttribute("loginphoto");
+//    }
+//
+//    // 수정폼에 출력할 데이터 반환
+//    @GetMapping("/updateform")
+//    @ResponseBody
+//    public UserDto getData(int num)
+//    {
+//        return userService.getDataByNum(num);
+//    }  // UserServiceInter에 해당 method 추가함
+//
+//    // 수정
+//    @PostMapping("/update")
+//    @ResponseBody
+//    public void update(UserDto dto,HttpSession session)
+//    {
+//        userService.updateUser(dto);  // UserServiceInter에 해당 method 추가함
+//        // 세션에 저장된 이름도 변경하기
+//        session.setAttribute("loginname", dto.getUr_nk());
+//    }
 }

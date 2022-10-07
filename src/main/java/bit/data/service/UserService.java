@@ -46,6 +46,31 @@ public class UserService implements UserServiceInter {
         return UserDao.selectDataById(ur_id);
     }
 
+    @Override
+    public UserDto getDataById(String id) {
+        return null;
+    }
+
+    @Override
+    public int getIdPassCheck(String id, String pass) {
+        return 0;
+    }
+
+    @Override
+    public void deleteUser(int num) {
+
+    }
+
+    @Override
+    public UserDto getDataByNum(int num) {
+        return null;
+    }
+
+    @Override
+    public void updateUser(UserDto dto) {
+
+    }
+
 
 
     /* @Override
