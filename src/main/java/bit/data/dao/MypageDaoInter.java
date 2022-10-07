@@ -1,6 +1,6 @@
 package bit.data.dao;
 
-import bit.data.dto.CafeCmtDto;
+import bit.data.dto.MyPageCafeCmtDto;
 import bit.data.dto.MyPageCafeLikeDto;
 
 import java.util.List;
@@ -13,5 +13,5 @@ public interface MypageDaoInter {
 
     public List<MyPageCafeLikeDto> selectLikeCfInfo(int urId);
 
-    public List<CafeCmtDto> selectMyCmt(int urId);
+    public List<MyPageCafeCmtDto> selectMyCmtCf(int loginId);
 }

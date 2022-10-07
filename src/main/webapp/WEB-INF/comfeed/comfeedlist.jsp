@@ -51,7 +51,7 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-총 ${totalCount} 개의 게시물이 검색되었습니다
+${totalCount}
 
 <div>
     <div class="search">

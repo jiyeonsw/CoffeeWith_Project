@@ -23,4 +23,5 @@ public interface CafeDaoInter {
     public void deleteCafeCmt(int cm_id);
     public void updateCafeCmt(CafeCmtDto dto);
     public CafeCmtDto selectCafeCmtByCmid(int cm_id);
+    public void insertCmtImg(CafeImgDto dto);
 }

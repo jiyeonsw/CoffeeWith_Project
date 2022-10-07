@@ -50,7 +50,9 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
-<div id="loginmain" class="loginmain">
+<!-- Form 연결 -->
+<form action="login" method="post" onsubmit="return check()">
+    <div id="loginmain" class="loginmain">
     <p class="titlogin">로그인</p>
     <p>♥ 로그인 하시고 카페지도부터 투어모집까지 커피위드를 즐겨보세요 ♥</p>
     <br>
@@ -119,6 +121,7 @@
             <br><br>
         </div>
     </fieldset>
+
     <hr>
     <!-- 회원가입 및 아이디 비밀번호 찾기 -->
     <c:set var="root" value="<%=request.getContextPath() %>"/>
@@ -127,6 +130,49 @@
         <a href="${root}/user/find_id">아이디 찾기</a><br> <!-- Find ID page -->
         <a href="${root}/user/find_pw">비밀번호 찾기</a> <!-- Find PW page -->
     </div>
-</div>
+    </div>
+
+    <!-- 로그인 스크립트 이벤트 -->
+    <script type="text/javascript">
+
+        // 팝업창에 있는 로그인 버튼
+        $("#loginbutton").click(function(){
+            // 아이디와 비번 읽기
+            var id=$("#email_id").val();
+            var pass=$("#ur_pw").val();
+            var root='${root}';
+            console.log("root"+root);
+
+            $.ajax({
+                type:"post",
+                url:root+"/user/login",
+                dataType:"json",
+                data:{"email_id":email_id, "ur_pw":ur_pw},
+                success:function(res){
+                    if(res.result=='fail'){
+                        alert("아이디나 비번이 맞지 않습니다");
+                    }else{
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+        // 로그아웃
+        $("#logoutbutton").click(function(){
+            var root='${root}';
+
+            $.ajax({
+                type:"get",
+                url:root+"/user/logout",
+                dataType:"text",
+
+                success:function(res){
+                    location.reload();
+                }
+            });
+        });
+    </script>
+</form>
 </body>
 </html>
