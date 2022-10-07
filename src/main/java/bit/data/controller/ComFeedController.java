@@ -5,10 +5,7 @@ import bit.data.service.ComFeedServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import util.ChangeName;
@@ -39,13 +36,18 @@ public class ComFeedController {
         model.addAttribute("list", list);
         model.addAttribute("totalCount", totalCount);
 
+        /*for (ComFeedDto dto : list) {
+            int acount = answerService.getAllAnswerList(dto.getNum()).size();
+            dto.setAcount(acount);
+        }*/
+
         return "/bit/comfeed/comfeedlist";
     }
 
-    @GetMapping("/insert")
+    @PostMapping("/insert")
     public String insert(ComFeedDto dto, List<MultipartFile> upload, HttpServletRequest request) {
 
-        String path = request.getSession().getServletContext().getRealPath("/images/cafeimg");
+        String path = request.getSession().getServletContext().getRealPath("/resources/images/cafeimg");
 
         String photo = "";
 
@@ -73,7 +75,7 @@ public class ComFeedController {
     }
 
     @GetMapping("/detail")
-    public ModelAndView detail(int num, int currentPage) {
+    public ModelAndView detail(int num) {
         ModelAndView mview = new ModelAndView();
 
         ComFeedDto dto = comFeedService.selectFeed(num);
@@ -89,7 +91,7 @@ public class ComFeedController {
     public Map<String, Integer> likes(int num) {
         comFeedService.updateLikes(num);
         int likes = comFeedService.selectFeed(num).getLikes();
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new HashMap<>();
         map.put("likes", likes);
         return map;
     }

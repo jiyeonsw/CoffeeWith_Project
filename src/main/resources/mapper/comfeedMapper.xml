@@ -22,7 +22,7 @@
         order by w_date desc;
     </select>
     <insert id="insertFeed" parameterType="fddto">
-        insert into fd values (null, , ,#{fd_txt},#{fd_photo},now(),null,0)
+        insert into fd values (null,${cf_id},${ur_id},#{fd_txt},#{fd_photo},now(),null,0)
     </insert>
     <update id="updateFeed" parameterType="fddto">
         update fd set fd_txt=#{fd_txt},fd_photo=#{fd_photo},w_date=null,u_date=now() where num=#{num}

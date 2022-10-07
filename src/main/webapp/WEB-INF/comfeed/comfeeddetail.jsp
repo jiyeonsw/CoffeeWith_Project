@@ -16,26 +16,36 @@
 </style>
 </head>
 <body>
-<div class="modal-body">
-    새 피드 작성
-    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-    <table class="table table-bordered" >
-        <tr>
-            <td rowspan="4" class="photo"></td>
-            <td>프로필</td>
-        </tr>
-        <tr>
-            <td>내용</td>
-        </tr>
-        <tr>
-            <td>카페</td>
-        </tr>
-        <tr>
-            <td>태그</td>
-        </tr>
-    </table>
-    <a data-bs-dismiss="modal">공유하기</a>
-</div>
+<form action="insert" method="post" enctype="multipart/form-data">
+    <div class="fddata">
+        <table class="table table-bordered" >
+            <tr>
+                <td rowspan="4" class="photo">
+                    <a><i class='fas fa-photo-video' style='font-size:24px'></i>사진 선택</a>
+                    <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="fd_photo">
+                </td>
+                <td class="profile">
+                    ${sessionScope.login_nick}
+                </td>
+            </tr>
+            <tr>
+                <td class="fdcontent">
+                    <textarea class="inputtext" required="required" name="fd_txt" placeholder="내용 입력"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="fdcafe">
+                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_id" placeholder="카페 추가">
+                </td>
+            </tr>
+            <tr>
+                <td class="fdtag">
+                    <input onkeyup="filter()" type="text" class="inputtext" name="fg_nm" placeholder="태그 입력">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
 </body>
 
 </html>

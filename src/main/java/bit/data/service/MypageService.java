@@ -1,6 +1,7 @@
 package bit.data.service;
 
 import bit.data.dao.MypageDao;
+import bit.data.dto.CafeCmtDto;
 import bit.data.dto.MyPageCafeLikeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,4 +29,8 @@ public class MypageService implements MypageServiceInter {
         return mypageDao.selectLikeCfInfo(urId);
     }
 
+    @Override
+    public List<CafeCmtDto> selectMyCmt(int urId) {
+        return mypageDao.selectMyCmt(urId);
+    }
 }
