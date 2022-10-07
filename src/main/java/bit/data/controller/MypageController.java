@@ -1,6 +1,6 @@
 package bit.data.controller;
 
-import bit.data.dto.CafeCmtDto;
+import bit.data.dto.MyPageCafeCmtDto;
 import bit.data.dto.MyPageCafeLikeDto;
 import bit.data.service.MypageServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -93,8 +95,18 @@ public class MypageController {
     @GetMapping("/mypage/review")
     public String selectMyCmt(HttpSession session, Model model) {
         int loginId = (int) session.getAttribute("login_id");
-        List<CafeCmtDto> list = mypageService.selectMyCmt(loginId);
+        List<MyPageCafeCmtDto> list = mypageService.selectMyCmtCf(loginId);
+
+        //System.out.println(list.get(0).);
+        Map<Object, String> map = new HashMap<>();
+        map.put(0, "☆☆☆☆☆");
+        map.put(1, "★☆☆☆☆");
+        map.put(3, "★★★☆☆");
+        map.put(4, "★★★★☆");
+        map.put(5, "★★★★★");
+
         model.addAttribute("list", list);
+        model.addAttribute("map", map);
         return "/cmain/mypage/cont_cf_cmt";
     }
 }

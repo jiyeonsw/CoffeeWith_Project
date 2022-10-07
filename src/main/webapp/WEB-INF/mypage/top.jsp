@@ -18,22 +18,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
-    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <style>
-
-        .user-profill-box {
+        .user-profil-box {
+            height: 100px;
             display: grid;
             position: relative;
-            grid-template-columns: 80px 1.5fr;
+            grid-template-columns: 60px 1.5fr;
             gap: 0px 10px;
             align-items: center;
         }
 
+        .user-profil-box h2 {
+            margin-bottom: -0.5rem;
+        }
+
+
         .img-area {
+            width: 60px;
+            height: 60px;
             display: block;
             position: relative;
-            width: 80px;
-            height: 80px;
+        }
+
+        .img-area > div {
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: 1px 1px 1px gray;
+        }
+
+        .img-area:after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 24px;
+            height: 24px;
+            background: url("https://github.com/bitcamp-team4/CoffeeWith/blob/mypage/src/main/webapp/resources/images/pen.png") no-repeat;
+        }
+
+        .img-area img {
+            width: 100%;
+            height: 100%;
         }
 
         .box-type-01 {
@@ -41,12 +66,13 @@
             grid-template-columns: 1fr 1fr 1fr 1fr;
             margin: 24px 0;
             border-radius: 8px;
-            background: snow;
+            background: #6B4804;
         }
 
-        .top-container div {
-            border: 1px solid gray;
+        .txt, .num {
+            color: #f0f0f0;
         }
+
 
         .link-area {
             height: 60px;
@@ -58,17 +84,26 @@
             font-size: 20px;
         }
 
+
     </style>
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
 <div class="top-container">
-    <div class="user-profill-box">
+    <div class="user-profil-box">
         <%--이미지 클릭하면 회원정보 변경으로 이동(예정)--%>
         <a href="#" class="img-area">
-            <img src="" alt>
+            <div>
+                <c:if test="${sessionScope.login_img != null}">
+                    <img src="${root}/resources/prfimg/${sessionScope.login_img}"
+                         onerror="this.src='${root}/resources/images/noprofile.jpg'">
+                </c:if>
+                <c:if test="${sessionScope.login_img == null}">
+                    <img src="${root}/images/noprofile.jpg">
+                </c:if>
+            </div>
         </a>
-        <div class="txt-area">
+        <div class=" txt-area">
             <h2 class="tit-dep2 nick">&nbsp;${sessionScope.login_nick} 님 환영합니다!</h2>
         </div>
     </div>

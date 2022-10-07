@@ -19,13 +19,13 @@ public class LoginController {
 
     // 아이디 찾기
     @GetMapping("/find_id")
-    public String findid(){
+    public String findid() {
         return "/bit/login/find_id";
     }
 
     // 비밀번호 찾기
     @GetMapping("/find_pw")
-    public String findpw(){
+    public String findpw() {
         return "/bit/login/find_pw";
     }
 
@@ -53,6 +53,7 @@ public class LoginController {
         session.setAttribute("login_ok", "yes");
         session.setAttribute("login_id", dto.getUr_id());
         session.setAttribute("login_nick", dto.getUr_nk());
+        session.setAttribute("login_img", dto.getUr_img());
     }
 
 
