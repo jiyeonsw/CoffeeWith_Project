@@ -6,11 +6,9 @@ import bit.data.service.CafeServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +27,30 @@ public class MapController {
         return "/bit/map/mainmap";
     }
 
-    @GetMapping("/list")
-    public String list(Model model) {
-        return "/bit/map/mainmap";
+    @PostMapping("/maketour")
+    public String maketour(HttpServletRequest request,
+                           @RequestParam List<Map<String, Object>> tourlist,
+                           @RequestParam String tourname,
+                           @RequestParam String tourdate,
+                           @RequestParam String tourinfo)
+    {
+
+        String referer = request.getHeader("Referer");
+        return "redirect:"+ referer;
+    }
+
+    @GetMapping("/getcafedata")
+    @ResponseBody
+    public Map<String,Object> getcafedata(@RequestParam int cf_id)
+    {
+        CafeDto dto=cafeService.selectCafe(cf_id);
+        Map<String,Object> map=new HashMap<>();
+        map.put("cf_id",dto.getCf_id());
+        map.put("cf_nm",dto.getCf_nm());
+        map.put("loc_addr",dto.getLoc_addr());
+        map.put("loc_x",dto.getLoc_x());
+        map.put("loc_y",dto.getLoc_y());
+        return map;
     }
 
     @GetMapping("/search")
