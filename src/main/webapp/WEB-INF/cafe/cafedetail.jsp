@@ -104,8 +104,25 @@
             font-family: inherit;
             font-size:inherit ;
         }
+        #cm-i-box{
+            margin-top: 5px;
+            vertical-align: middle;
+        }
+        #btn-img{
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            border: 1px solid gray;
+            border-radius: 4px;
+            line-height: 60px;
+
+        }
+
         img.cmt-img{
-            display : inline-block;
+            border-radius: 4px;
+            height: 60px;
+            border: 1px solid gray;
+            margin-right: 4px;
         }
     </style>
     <script>
@@ -269,36 +286,23 @@
 
             //리뷰 사진 클릭
             $(document).on("click","#btn-img",function (){
-                $(".upload").trigger("click");
+                $("#cm-i-upload").trigger("click");
             });///on 리뷰사진클릭
 
-            //file 변경
-            $(document).on("change",".upload",function (){
-                var formData = new FormData();
-                var inputFile=$('.upload');
-                var files=inputFile[0].files;
-                for(var i = 0; i < files.length; i++){
-                    //console.log(files[i]);
-                    formData.append("uploadFiles", files[i]);
+            //file 선택
+            $(document).on("change","#cm-i-upload",function (e){
+                //console.log("사진클릭함");
+                var files=e.target.files;
+                var arr=Array.prototype.slice.call(files);
+
+                for(var i=0;i<files.length;i++){
+                    if(!checkExtension(files[i].name,files[i].size)){
+                        return false;
+                    }
                 }
-                var img_tag="";
-                $.ajax({
-                    type:"post",
-                    dataType:"json",
-                    url:"upload_cmt_img",
-                    processData:false,
-                    contentType:false,
-                    data:formData,
-                    success:function(res){
-                        $.each(res.ci_list,function(i,elt){
-                            img_tag += '<img src="${root}/images/upload/'+elt+'" class="cmt-img" width="50">';
-                        });//each;
-                        setTimeout(function(){
-                            $("#btn-img").after(img_tag);
-                        },60*1000);
-                    }//suc
-                });//ajax
-            }); //on file 변경
+                $("#cm-i-preview").empty();
+                preview(arr)
+            }); //on file 선택
 
             //리뷰 등록
             $(document).on("click","#btnmsave",function (){
@@ -389,8 +393,40 @@
                 });//ajax
             });//사진 클릭
 
-
             ////////////////////////////////////////////////////////////////// 일반 함수 //////////////////////////////////////////////////////////////////
+            //파일 사진 확인
+            function checkExtension(fileName,fileSize){
+                var regex = new RegExp("(.*?)\.(jpg|png|jpeg)$");
+                var maxSize = 20971520;  //20MB
+
+                if(fileSize >= maxSize){
+                    alert('파일 사이즈 초과');
+                    $("input[type='file']").val("");  //파일 초기화
+                    return false;
+                }
+
+                if(!regex.test(fileName)){
+                    alert('업로드 불가능한 파일이 있습니다.');
+                    $("input[type='file']").val("");  //파일 초기화
+                    return false;
+                }
+                return true;
+            }
+            //리뷰사진미리보기
+            function preview(arr){
+                arr.forEach(function(f, i){
+                    //이미지 파일 미리보기
+                    var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
+                    reader.onload = function (e) { //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+                        var str = '<img src="'+e.target.result+'" class="cmt-img" >';
+                        $(str).appendTo("#cm-i-preview");
+                    }
+                    reader.readAsDataURL(f);
+
+                });//each;
+
+            }//미리보기
+
             // 리뷰리스트
             function cmList(){
                 var s="<div>";
@@ -408,13 +444,14 @@
                     s+='<input type="radio" name="star" value="2" id="rate4"><label for="rate4">★</label>';
                     s+='<input type="radio" name="star" value="1" id="rate5"><label for="rate5">★</label>';
                     s+='</fieldset>';
-                    s+='<input type="file" class="upload" style="display: none" multiple="multiple">';
-                    s+='<button type="button" id="btn-img">';
-                    s+='<i class="fa-solid fa-camera"></i></button>';
+                    s+='<input type="file" id="cm-i-upload" style="display: none" multiple="multiple">';
                     s+='<br><div class="input-group">';
                     s+='<textarea name="cm_txt" id="cm_txt" style="width: 500px;height: 60px;" class="form-control"></textarea>';
                     s+='<button type="button"  id="btnmsave">리뷰등록</button>';
-                    s+='</div></form></div><br><br>';
+                    s+='</div> <div id="cm-i-box"><button type="button" id="btn-img">';
+                    s+='<i class="fa-solid fa-camera"></i></button>';
+                    s+='&nbsp;&nbsp;<span id="cm-i-preview"></span></div>'
+                    s+='</form></div><br><br>';
                 }else {
                     s+='<div>';
                 }
