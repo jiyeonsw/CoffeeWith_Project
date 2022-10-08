@@ -99,6 +99,11 @@ public class CafeDao implements CafeDaoInter {
 
     @Override
     public void insertCmtImg(CafeImgDto dto) {
-        session.insert(nsi+"insertCmImg", dto);
+        session.insert(nsi+"insertCmtImg", dto);
+    }
+
+    @Override
+    public List<CafeImgDto> selectCmtImg(Map<String, Integer> map) {
+        return session.selectList(nsi+"selectCmtImg", map);
     }
 }

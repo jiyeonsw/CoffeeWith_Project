@@ -84,18 +84,39 @@ public class CafeController {
     @GetMapping("/select_cmt")
     @ResponseBody
     public List<CafeCmtDto> selectCafeCmt(int cf_id){
-        List<CafeCmtDto> list=cafeService.selectCafeCmt(cf_id);
-        for (CafeCmtDto dto : list){
-            String ur_nk=userService.selectDataById(dto.getUr_id()).getUr_nk();
-            //System.out.println(ur_nk);
-            dto.setUr_nk(ur_nk);
+        List<CafeCmtDto> list_cm=cafeService.selectCafeCmt(cf_id);
+        for(CafeCmtDto dto:list_cm){
+            dto.setImg(cafeService.selectCmtImg(dto.getCf_id(),dto.getCm_id()));
         }
-        return list;
+        return list_cm;
     }
     @PostMapping("/insert_cmt")
     @ResponseBody
-    public void insertCafeCmt(CafeCmtDto dto){
+    public void insertCafeCmt(CafeCmtDto dto, List<MultipartFile> uploadFiles){
+        //cm_id를 위해 먼저 cmt table에 insert
         cafeService.insertCafeCmt(dto);
+        String path= "E://Java0711//semiproject//CoffeeWith//src//main//webapp//resources//images//upload";
+        System.out.println(path);
+        //이미지 dto에 정보 넣기
+        //System.out.println("cm_id:"+dto.getCm_id());
+        //System.out.println("cf_id:"+dto.getCf_id());
+        CafeImgDto cidto=new CafeImgDto();
+        cidto.setCf_id(dto.getCf_id());
+        cidto.setCm_id(dto.getCm_id());
+        int idx=1;
+        for(MultipartFile multi:uploadFiles) {
+            String upload_img = idx++ + "_"+ChangeName.getChangeFileName(multi.getOriginalFilename());
+            //System.out.println("파일명:"+upload_img);
+            //업로드
+            try {
+                multi.transferTo(new File(path+"/"+upload_img));
+                cidto.setCi_nm(upload_img);
+                cafeService.insertCmtImg(cidto);
+            } catch (IllegalStateException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
     @GetMapping("/insert_like")
@@ -138,29 +159,4 @@ public class CafeController {
         return cafeService.selectCafeCmtByCmid(cm_id);
     }
 
-    @PostMapping("/upload_cmt_img")
-    @ResponseBody
-    public Map<String,Object> uploadCmtImg(List<MultipartFile> uploadFiles){
-        String path= "E://Java0711//semiproject//CoffeeWith//src//main//webapp//resources//images//upload";
-        System.out.println(path);
-        Map<String, Object> map=new HashMap<>();
-        List list=new ArrayList();
-        //저장할 파일명 구하기
-        int idx=1;
-        for(MultipartFile multi:uploadFiles) {
-            String upload_img = idx + "_"+ChangeName.getChangeFileName(multi.getOriginalFilename());
-            //System.out.println(upload_img);
-            //업로드
-            try {
-                multi.transferTo(new File(path+"/"+upload_img));
-                list.add(upload_img);
-                idx++;
-            } catch (IllegalStateException | IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        map.put("ci_list",list);
-        return map;
-    }
 }

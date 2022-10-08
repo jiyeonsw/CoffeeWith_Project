@@ -5,6 +5,7 @@ import bit.data.dto.CafeDto;
 import bit.data.dto.CafeImgDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CafeServiceInter {
     public CafeDto selectCafe(int cf_id);
@@ -23,4 +24,5 @@ public interface CafeServiceInter {
     public void updateCafeCmt(CafeCmtDto dto);
     public CafeCmtDto selectCafeCmtByCmid(int cm_id);
     public void insertCmtImg(CafeImgDto dto);
+    public List<CafeImgDto> selectCmtImg(int cf_id, int cm_id);
 }

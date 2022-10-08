@@ -110,4 +110,12 @@ public class CafeService implements CafeServiceInter {
     public void insertCmtImg(CafeImgDto dto) {
         cafeDao.insertCmtImg(dto);
     }
+
+    @Override
+    public List<CafeImgDto> selectCmtImg(int cf_id, int cm_id) {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("cf_id", cf_id);
+        map.put("cm_id",cm_id);
+        return cafeDao.selectCmtImg(map);
+    }
 }
