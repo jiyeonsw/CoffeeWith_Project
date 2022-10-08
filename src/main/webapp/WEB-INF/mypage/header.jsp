@@ -6,30 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <title>CofeeWith</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
-          rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
-          rel="stylesheet">
     <style type="text/css">
-        @font-face {
-            font-family: 'GangwonEdu_OTFBoldA';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        body * {
-            font-family: 'GangwonEdu_OTFBoldA';
-            color: #664400;
-        }
 
         .logotitle {
             font-family: 'GangwonEdu_OTFBoldA';
             font-style: oblique;
             font-weight: bolder;
+            font-size: 30px;
         }
 
         #btnlogin {
@@ -181,7 +164,6 @@
             }
         })
     })
-
 </script>
 </body>
 </html>

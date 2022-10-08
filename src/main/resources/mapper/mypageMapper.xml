@@ -43,7 +43,7 @@
                            on cc.cf_id = ci.cf_id
         where cc.ur_id = #{loginId}
         group by cm_id
-        order by cc.w_date;
+        order by cc.w_date desc;
     </select>
 </mapper>
 

@@ -12,18 +12,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Coffeewith</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <c:set var="root" value="<%=request.getContextPath() %>"/>
     <style>
         .user-profil-box {
+            margin-left: 40px;
             height: 100px;
             display: grid;
             position: relative;
-            grid-template-columns: 60px 1.5fr;
+            grid-template-columns: 60px 2fr 1fr;
             gap: 0px 10px;
             align-items: center;
         }
@@ -31,7 +27,6 @@
         .user-profil-box h2 {
             margin-bottom: -0.5rem;
         }
-
 
         .img-area {
             width: 60px;
@@ -53,7 +48,7 @@
             bottom: 0;
             width: 24px;
             height: 24px;
-            background: url("https://github.com/bitcamp-team4/CoffeeWith/blob/mypage/src/main/webapp/resources/images/pen.png") no-repeat;
+            background: url('${root}/images/pen.png') no-repeat;
         }
 
         .img-area img {
@@ -84,15 +79,39 @@
             font-size: 20px;
         }
 
+        .btn-d {
+            width: 120px;
+            margin: 0 4px;
+            color: #404040;
+            background: #fff;
+            min-width: 72px;
+            height: 40px;
+            padding: 0 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #664400;
+            line-height: 33px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .btn-d:hover {
+            background: #664400;
+            color: #fff;
+            box-shadow: 2px 2px 2px 2px lightgray;
+        }
 
     </style>
 </head>
 <body>
-<c:set var="root" value="<%=request.getContextPath() %>"/>
+
 <div class="top-container">
     <div class="user-profil-box">
         <%--이미지 클릭하면 회원정보 변경으로 이동(예정)--%>
-        <a href="#" class="img-area">
+        <a href="${root}/mypage/edit_info" class="img-area">
             <div>
                 <c:if test="${sessionScope.login_img != null}">
                     <img src="${root}/resources/prfimg/${sessionScope.login_img}"
@@ -105,6 +124,9 @@
         </a>
         <div class=" txt-area">
             <h2 class="tit-dep2 nick">&nbsp;${sessionScope.login_nick} 님 환영합니다!</h2>
+        </div>
+        <div>
+            <button class="btn-d" onclick="location.href='${root}/mypage/edit_info'">회원정보관리</button>
         </div>
     </div>
     <div class="box-type-01">
