@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>CofeeWith</title>
     <style type="text/css">
 
         .logotitle {

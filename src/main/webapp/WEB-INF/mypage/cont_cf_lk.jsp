@@ -12,8 +12,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Coffeewith</title>
     <style>
 
         .bk_container {
