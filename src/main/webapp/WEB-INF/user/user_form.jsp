@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
     <style>
-        .titDep {
+        .titbox {
             margin-bottom: 32px;
             font-size: 2.6rem;
             line-height: 1.3;
@@ -30,7 +30,7 @@
             text-align: left;
         }
 
-        .inp-frm {
+        .input-form {
             display: flex;
             flex-direction: column;
             margin-bottom: 15px;
@@ -75,11 +75,11 @@
     <div id="container" class="container">
         <div id="contents" class="contents">
             <%--컨텐츠영역--%>
-            <p class="titDep">
+            <p class="titbox">
                 회원가입
             </p>
             <fieldset>
-                <div class="inp-frm">
+                <div class="input-form">
                     <label for="inp-email" class="titLab">이메일</label>
                     <div class="inpA">
                         <input type="email" id="inp-email" placeholder="ex) coffeewith@gmail.com" class="form-control"
@@ -88,7 +88,7 @@
                     </div>
                     <div class="id-success"></div>
                 </div>
-                <div class="inp-frm">
+                <div class="input-form">
                     <label for="inp-pass" class="titLab">비밀번호</label>
                     <div class="inpB">
                         <input type="password" id="inp-pass" placeholder="영문,숫자,특수문자 8~16자이내" class="form-control"
@@ -96,7 +96,7 @@
                     </div>
                     <div class="pass-success"></div>
                 </div>
-                <div class="inp-frm">
+                <div class="input-form">
                     <label for="inp-repass" class="titLab">비밀번호 확인</label>
                     <div class="inpB">
                         <input type="password" id="inp-repass" placeholder="확인을 위해 한번 더 입력해주세요" class="form-control"
@@ -104,14 +104,14 @@
                     </div>
                     <div class="repass-success"></div>
                 </div>
-                <div class="inp-frm">
+                <div class="input-form">
                     <label for="inp-name" class="titLab">이름</label>
                     <div class="inpB">
                         <input type="text" id="inp-name" placeholder="이름을 입력해주세요" class="form-control"
                                required="required" name="ur_nm">
                     </div>
                 </div>
-                <div class="inp-frm">
+                <div class="input-form">
                     <label for="inp-nick" class="titLab">닉네임</label>
                     <div class="inpA">
                         <input type="text" id="inp-nick" placeholder="닉네임을 입력해주세요" class="form-control"
@@ -121,7 +121,7 @@
                     <div class="nick-success"></div>
                 </div>
                 <hr>
-                <div class="inp-frm">
+                <div class="input-form">
                     <label for="sel-si" class="titLab">선호지역</label>
                     <div class="inpB">
                         <select id="sel-si" class="form-select" name='loc_si'>
@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="inp-frm">
+                <div class="input-form">
                     <label for="chk-useRole" class="titLab">이용약관 / 개인정보 수집 및 이용 동의</label>
                     <div class="role-box" id="chk-useRole">
                         <input type="checkbox" class="allchk-col" id="role-allchk">
@@ -150,7 +150,6 @@
                         <input type="checkbox" class="role-chk" required>
                         (필수) 개인정보 수집 및 이용 동의
                         <a href="#">내용보기</a>
-
                     </div>
                 </div>
                 <button type="submit" id="inp-btn" class="btn btn-info btnB">회원가입</button>
@@ -217,7 +216,7 @@
 
     //이메일 아이디 변경 시 체크
     $("#inp-email").change(function () {
-        $("div.id-success").text("입력하신 이메일 아이디를 중복 확인해주세요.").attr("value", "");
+        $("div.id-success").text("입력하신 이메일 아이디를 중복 조회해주세요.").attr("value", "");
     })//$("#inp-email")
 
     //이메일 아이디 중복 조회

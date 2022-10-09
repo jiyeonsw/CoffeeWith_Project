@@ -115,7 +115,7 @@
             <div>
                 <c:if test="${sessionScope.login_img != null}">
                     <img src="${root}/resources/prfimg/${sessionScope.login_img}"
-                         onerror="this.src='${root}/resources/images/noprofile.jpg'">
+                         onerror="this.src='${root}/images/noprofile.jpg'">
                 </c:if>
                 <c:if test="${sessionScope.login_img == null}">
                     <img src="${root}/images/noprofile.jpg">

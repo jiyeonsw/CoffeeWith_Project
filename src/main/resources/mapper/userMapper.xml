@@ -20,7 +20,10 @@
     </insert>
 
     <select id="loginIdPassCheck" parameterType="Map" resultType="int">
-        select count(*) from user where email_id=#{email_id} and ur_pw=#{ur_pw}
+        select count(*)
+        from user
+        where email_id = #{email_id}
+          and ur_pw = #{ur_pw}
     </select>
     <!--시/도명 추출 명령문-->
     <select id="selectSubstrSi" resultType="String">
@@ -43,5 +46,9 @@
                   LIKE concat(#{selSi}, '%')
         GROUP BY loc_gu;
     </select>
+
+    <update id="updateUser" parameterType="int">
+
+    </update>
 
 </mapper>

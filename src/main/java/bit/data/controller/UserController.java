@@ -1,6 +1,5 @@
 package bit.data.controller;
 
-import bit.data.dto.LoginDto;
 import bit.data.dto.UserDto;
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +81,6 @@ public class UserController {
         return check;
     }
 
-
     //선호지역 시/도 출력
     @GetMapping("/select_si")
     @ResponseBody
@@ -102,7 +100,7 @@ public class UserController {
 
     //회원가입 정보 DB insert
     @PostMapping("/insert_user")
-    public String insert(UserDto dto) {
+    public String insertUser(UserDto dto) {
         System.out.println(dto.getEmail_id());
         System.out.println(dto.getLoc_si());
 
@@ -116,5 +114,10 @@ public class UserController {
         return "redirect:/login_main";
     }
 
-    // 회원 삭제 탈퇴
+    // 회원 정보 수정
+    @GetMapping("/update_user")
+    public String updateUser(HttpSession session) {
+
+        return "redirect:/mypage/main";
+    }
 }

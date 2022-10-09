@@ -3,8 +3,10 @@ package bit.data.controller;
 import bit.data.dto.CafeCmtDto;
 import bit.data.dto.MyPageCafeCmtDto;
 import bit.data.dto.MyPageCafeLikeDto;
+import bit.data.dto.UserDto;
 import bit.data.service.CafeServiceInter;
 import bit.data.service.MypageServiceInter;
+import bit.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,9 @@ public class MypageController {
 
     @Autowired
     CafeServiceInter cafeService;
+
+    @Autowired
+    UserService userService;
 
     //MyPage top View
     @GetMapping("/main")
@@ -133,7 +138,20 @@ public class MypageController {
     }
 
     @GetMapping("/edit_info")
-    public String editUserInfo() {
-        return "/bit/mypage/edit_ur_info";
+    public String editUserInfo(HttpSession session, Model model) {
+        int loginId = (int) session.getAttribute("login_id");
+        UserDto dto = userService.selectDataById(loginId);
+
+//        System.out.println(dto.getLoc_si());
+//        System.out.println(dto.getLoc_gu());
+        model.addAttribute("email_id", dto.getEmail_id());
+        model.addAttribute("ur_nm", dto.getUr_nm());
+        model.addAttribute("ur_nk", dto.getUr_nk());
+        model.addAttribute("ur_img", (dto.getUr_img() == null ? "noprofile.jpg" : dto.getUr_img()));
+        model.addAttribute("loc_si", dto.getLoc_si());
+        model.addAttribute("loc_gu", dto.getLoc_gu());
+
+
+        return "/bit/user/update_user_form";
     }
 }
