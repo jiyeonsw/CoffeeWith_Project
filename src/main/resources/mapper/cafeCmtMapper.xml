@@ -8,7 +8,7 @@
 				 left join ur
 						   on cm.ur_id=ur.ur_id
 		where cm.cf_id = #{cf_id}
-		order by cm.w_date desc;
+		order by cm.w_date desc
 	</select>
 	<select id="selectCMOrder" parameterType="map" resultType="cmdto">
 		select cm.cm_id, cm.cf_id, cm.w_date, cm.star, cm.cm_txt, ur.ur_nk, ur.ur_id
@@ -22,10 +22,9 @@
 			<when test="cm_order == 'star_desc'">cm.star desc</when>
 			<when test="cm_order == 'star_asc'">cm.star asc</when>
 		</choose>
-
 	</select>
 	<insert id="insertCafeCmt" parameterType="cmdto" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO cf_cmt VALUES (null, #{cf_id}, #{ur_id}, #{cm_txt}, now(),0,0,0, #{star})
+		INSERT INTO cf_cmt VALUES (null, #{cf_id}, #{ur_id}, #{cm_txt}, now(),#{rg},#{rs},#{rl}, #{star})
 		<selectKey keyProperty="cm_id" resultType="Integer" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
@@ -34,10 +33,16 @@
 		DELETE FROM cf_cmt WHERE cm_id=#{cm_id}
 	</delete>
 	<update id="updateCafeCmt" parameterType="cmdto" >
-		UPDATE cf_cmt SET cm_txt=#{cm_txt}, star=#{star} , w_date=now() WHERE cm_id=#{cm_id};
+		UPDATE cf_cmt SET cm_txt=#{cm_txt}, star=#{star} , w_date=now() WHERE cm_id=#{cm_id}
 	</update>
 	<select id="selectCafeCmtByCmid" parameterType="int" resultType="cmdto" >
 		SELECT * FROM cf_cmt WHERE cm_id=#{cm_id}
 	</select>
+	<select id="selectMaxNum" resultType="int">
+		SELECT ifnull(max(cm_id),0) FROM cf_cmt
+	</select>
+	<update id="updateRs" parameterType="map">
+		UPDATE cf_cmt SET rs=rs+1 WHERE rg=#{rg} and rs>#{rs}
+	</update>
 </mapper>
 

@@ -27,4 +27,6 @@ public interface CafeDaoInter {
     public CafeCmtDto selectCafeCmtByCmid(int cm_id);
     public void insertCmtImg(CafeImgDto dto);
     public List<CafeImgDto>  selectCmtImg(Map<String,Integer> map);
+    public int selectMaxNum();
+    public void updateRs(Map<String,Integer> map);
 }

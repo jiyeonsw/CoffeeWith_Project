@@ -411,6 +411,28 @@
             });//ajax
         });//리뷰수정버튼클릭
 
+        //리뷰댓글보기
+        $(document).on("click","a.view-cm-cm",function (){
+            var ccf='';
+            if(login_ok=="yes"){
+                ccf+='<div class="ccform-div">';
+                ccf+='<form class="ccform">';
+                ccf+='<input type="hidden" name="cf_id" value="${dto.cf_id }">';
+                ccf+='<input type="hidden" name="ur_id" value="${sessionScope.login_id }">';
+                ccf+='<input type="hidden" name="rg" value="0">';
+                ccf+='<input type="hidden" name="rs" value="0">';
+                ccf+='<input type="hidden" name="rl" value="0">';
+                ccf+='<br><div class="input-group">';
+                ccf+='<textarea name="cm_txt" style=" height: 30px;" class="form-control cm-cm-txt"></textarea>';
+                ccf+='<button type="button" class="btn-cc-save">댓글등록</button>';
+                ccf+='</form></div>';
+            }
+            $(this).next().toggle();
+            $(this).next().html(ccf);
+            $(this).find("svg").toggleClass("fa-caret-down");
+            $(this).find("svg").toggleClass("fa-caret-up");
+        });//리뷰댓글보기
+
         ////////////////////////////////////////////////////////////////// 카페사진모음 관련 함수 //////////////////////////////////////////////////////////////////
         //사진클릭
         $("div#btn-ci-link").click(function (){
@@ -482,9 +504,7 @@
                     $(str).appendTo("#cm-i-preview");
                 }
                 reader.readAsDataURL(f);
-
             });//each;
-
         }//미리보기
 
         // 리뷰리스트
@@ -497,6 +517,8 @@
                 s+='<form id="mform" enctype="multipart/form-data">';
                 s+='<input type="hidden" name="cf_id" value="${dto.cf_id }">';
                 s+='<input type="hidden" name="ur_id" value="${sessionScope.login_id }">';
+                s+='<input type="hidden" name="rs" value="0">';
+                s+='<input type="hidden" name="rl" value="0">';
                 s+='<fieldset><span>&nbsp;별점을 선택해주세요</span>';
                 s+='<input type="radio" name="star" value="5" id="rate1"><label for="rate1">★</label>';
                 s+='<input type="radio" name="star" value="4" id="rate2"><label for="rate2">★</label>';
@@ -570,7 +592,9 @@
                             cl+='<button class="carousel-control-next" type="button" data-bs-target="#cmt-img-car" data-bs-slide="next">';
                             cl+='<span class="carousel-control-next-icon"></span></button></div>';
                         }
-                        cl+='<pre>'+elt.cm_txt+'</pre><hr>';
+                        cl+='<pre>'+elt.cm_txt+'</pre>';
+                        cl+='<a href="javascript:;" class="view-cm-cm">댓글보기 <i class="fa-solid fa-caret-down"></i></a>';
+                        cl+='<div class="cm-cm-form" style="display: none"></div><hr>';
                     });//each
                     cl+='</div>';
                     $("div.cf-bottom-cmlist").html(cl);

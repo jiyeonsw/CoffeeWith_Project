@@ -26,4 +26,6 @@ public interface CafeServiceInter {
     public CafeCmtDto selectCafeCmtByCmid(int cm_id);
     public void insertCmtImg(CafeImgDto dto);
     public List<CafeImgDto> selectCmtImg(int cf_id, int cm_id);
+    public int selectMaxNum();
+    public void updateRs(int rg, int rs);
 }

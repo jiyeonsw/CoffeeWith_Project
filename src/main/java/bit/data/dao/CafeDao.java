@@ -109,4 +109,12 @@ public class CafeDao implements CafeDaoInter {
     public List<CafeImgDto> selectCmtImg(Map<String, Integer> map) {
         return session.selectList(nsi+"selectCmtImg", map);
     }
+    @Override
+    public int selectMaxNum() {
+        return session.selectOne(nsm+"selectMaxNum");
+    }
+    @Override
+    public void updateRs(Map<String, Integer> map) {
+        session.update(nsm+"updateRs", map);
+    }
 }
