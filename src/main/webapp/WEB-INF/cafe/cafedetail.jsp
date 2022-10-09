@@ -122,9 +122,7 @@
             border: 1px solid gray;
             border-radius: 4px;
             line-height: 60px;
-
         }
-
         img.cmt-img{
             border-radius: 4px;
             height: 60px;
@@ -135,6 +133,10 @@
             width: 400px;
             text-align: right;
         }
+        #ciModal{
+            background-color: rgba(0,0,0,0.5);
+        }
+
     </style>
     <script>
         $(function () {
@@ -149,6 +151,9 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
+<!-- The Modal -->
+
+
 <div style="margin: 50px 50px;">
     <div>&nbsp<a class="back" href="javascript:back();"><i class="fa-solid fa-map-location-dot"></i>&nbsp;맵으로 돌아가기</a></div><br>
     <div class="cf-top">
@@ -419,14 +424,34 @@
                     var s="";
                     $.each(res, function (i, elt) {
                         s+='<div class="ci-mini-card">';
-                        var ci_path="url('${root}"+elt.ci_path + elt.ci_nm+"')";
-                        s+='<div class="ci-mini-st" style="background-image:'+ci_path+'">';
+                        var ci_path = '${root}'+elt.ci_path + elt.ci_nm ;
+                        var ci_path_url="url('"+ci_path+"')";
+                        s+='<div class="ci-mini-st" style="background-image:'+ci_path_url+'" ';
+                        s+='data-bs-toggle="modal" data-bs-target="#ciModal" ';
+                        s+='modal-ci='+ci_path+' modal-cm-txt='+elt.cm_txt+'>';
                         s+='</div></div>';
                     });//each
                     $("div.cf-bottom").html(s);
                 }//succ
             });//ajax
         });//사진 클릭
+
+        //사진각각클릭
+        $(document).on("click",".ci-mini-st",function (){
+            var modal_img=$(this).attr("modal-ci");
+            //console.log(modal_img);
+            var modal_img_tag='<img src="'+modal_img+'" width="500px;">';
+           $(".modal-body").html(modal_img_tag);
+            var modal_txt=$(this).attr("modal-cm-txt");
+            //console.log(modal_txt);
+            if(modal_txt!='null'){
+                var modal_txt_tag='<div style="text-align: center">'+modal_txt+'</div>';
+                $(".modal-footer").html(modal_txt_tag);
+            }else {
+                $(".modal-footer").html("");
+            }
+
+        });//사진각각클릭
 
         ////////////////////////////////////////////////////////////////// 일반 함수 //////////////////////////////////////////////////////////////////
         //파일 사진 확인
@@ -586,6 +611,24 @@
         }
     </script>
 
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="ciModal">
+    <div class="modal-dialog modal-xl modal-dialog-centered" id="ciModal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="text-align: center">
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer justify-content-center">
+            </div>
+
+        </div>
+    </div>
 </div>
 </body>
 </html>

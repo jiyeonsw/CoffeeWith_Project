@@ -6,7 +6,12 @@
 		SELECT * FROM cf_img WHERE cf_id=#{cf_id} AND fd_id IS NULL AND cm_id IS NULL
 	</select>
 	<select id="selectCafeImgAll" parameterType="int" resultType="cidto">
-		SELECT * FROM cf_img WHERE cf_id=#{cf_id}
+		SELECT ci.ci_id, ci.cf_id, ci.ci_nm, ci.ci_path, cm.cm_txt
+		FROM cf_img ci
+		    left join cf_cmt cm
+		        on ci.cm_id = cm.cm_id
+		WHERE ci.cf_id=#{cf_id}
+		ORDER BY ci.ci_id desc;
 	</select>
 	<insert id="insertCmtImg" parameterType="cidto">
 		INSERT INTO cf_img (cf_id, ci_nm, ci_path, w_date, cm_id) VALUES (#{cf_id}, #{ci_nm}, '/images/upload/',now(), #{cm_id} )
