@@ -92,8 +92,8 @@ public class CafeController {
     }
     @GetMapping("/select_cmt_order")
     @ResponseBody
-    public List<CafeCmtDto> selectCMOrder(int cf_id, String cm_order){
-        List<CafeCmtDto> list_cm=cafeService.selectCMOrder(cf_id, cm_order);
+    public List<CafeCmtDto> selectCMOrder(int cf_id, String cm_order, int rg){
+        List<CafeCmtDto> list_cm=cafeService.selectCMOrder(cf_id, cm_order, rg);
         for(CafeCmtDto dto:list_cm){
             dto.setImg(cafeService.selectCmtImg(dto.getCf_id(),dto.getCm_id()));
         }

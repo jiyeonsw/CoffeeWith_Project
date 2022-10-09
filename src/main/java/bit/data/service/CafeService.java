@@ -43,10 +43,11 @@ public class CafeService implements CafeServiceInter {
     }
 
     @Override
-    public List<CafeCmtDto> selectCMOrder(int cf_id,String cm_order) {
+    public List<CafeCmtDto> selectCMOrder(int cf_id,String cm_order, int rg) {
         Map<String, Object> map = new HashMap<>();
         map.put("cf_id",cf_id);
         map.put("cm_order",cm_order);
+        map.put("rg",rg);
         return cafeDao.selectCMOrder(map);
     }
 

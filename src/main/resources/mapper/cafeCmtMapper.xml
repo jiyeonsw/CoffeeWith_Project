@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.CafeCmtDao">
 	<select id="selectCafeCmt" parameterType="int" resultType="cmdto">
-		select cm.cm_id, cm.cf_id, cm.w_date, cm.star, cm.cm_txt, ur.ur_nk, ur.ur_id
+		select cm.cm_id, cm.cf_id, cm.w_date, cm.star, cm.cm_txt, cm.rg, cm.rs, cm.rl, ur.ur_nk, ur.ur_id
 		from cf_cmt cm
 				 left join ur
 						   on cm.ur_id=ur.ur_id
@@ -11,14 +11,19 @@
 		order by cm.w_date desc
 	</select>
 	<select id="selectCMOrder" parameterType="map" resultType="cmdto">
-		select cm.cm_id, cm.cf_id, cm.w_date, cm.star, cm.cm_txt, ur.ur_nk, ur.ur_id
+		select cm.cm_id, cm.cf_id, cm.w_date, cm.star, cm.cm_txt, cm.rg, cm.rs, cm.rl,ur.ur_nk, ur.ur_id
 		from cf_cmt cm
 				 left join ur
 						   on cm.ur_id=ur.ur_id
 		where cm.cf_id = #{cf_id}
+		<choose>
+			<when test="rg == 0"></when>
+			<otherwise> and cm.rg = #{rg}</otherwise>
+		</choose>
 		order by
 		<choose>
 			<when test="cm_order == 'date_desc'">cm.w_date desc</when>
+			<when test="cm_order == 'date_asc'">cm.w_date asc</when>
 			<when test="cm_order == 'star_desc'">cm.star desc</when>
 			<when test="cm_order == 'star_asc'">cm.star asc</when>
 		</choose>
