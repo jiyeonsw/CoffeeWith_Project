@@ -8,7 +8,21 @@
 				 left join ur
 						   on cm.ur_id=ur.ur_id
 		where cm.cf_id = #{cf_id}
-		order by cm.cm_id desc
+		order by cm.w_date desc;
+	</select>
+	<select id="selectCMOrder" parameterType="map" resultType="cmdto">
+		select cm.cm_id, cm.cf_id, cm.w_date, cm.star, cm.cm_txt, ur.ur_nk, ur.ur_id
+		from cf_cmt cm
+				 left join ur
+						   on cm.ur_id=ur.ur_id
+		where cm.cf_id = #{cf_id}
+		order by
+		<choose>
+			<when test="cm_order == 'date_desc'">cm.w_date desc</when>
+			<when test="cm_order == 'star_desc'">cm.star desc</when>
+			<when test="cm_order == 'star_asc'">cm.star asc</when>
+		</choose>
+
 	</select>
 	<insert id="insertCafeCmt" parameterType="cmdto" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO cf_cmt VALUES (null, #{cf_id}, #{ur_id}, #{cm_txt}, now(),0,0,0, #{star})

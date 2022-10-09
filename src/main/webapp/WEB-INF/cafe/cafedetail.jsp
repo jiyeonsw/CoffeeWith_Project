@@ -67,6 +67,9 @@
             border: 1px solid #f1f1f1;
             margin-bottom: 10px;
         }
+        div.mform{
+            width: 500px;
+        }
         #mform fieldset{
             display: inline-block;
             direction: rtl;
@@ -128,7 +131,10 @@
             border: 1px solid gray;
             margin-right: 4px;
         }
-
+        #cm-order{
+            width: 400px;
+            text-align: right;
+        }
     </style>
     <script>
         $(function () {
@@ -287,6 +293,13 @@
             //console.log(cf_id);
             cmList();
         });//리뷰
+
+        //리뷰 정렬
+        $(document).on("click","a.cm-order",function (){
+                var cm_order=$(this).attr("cm_order");
+                //console.log(cm_order);
+                cmListOnly(cm_order);
+        });//정렬each
 
         //리뷰 사진 클릭
         $(document).on("click","#btn-img",function (){
@@ -468,68 +481,78 @@
                 s+='</fieldset>';
                 s+='<input type="file" id="cm-i-upload" style="display: none" multiple="multiple">';
                 s+='<br><div class="input-group">';
-                s+='<textarea name="cm_txt" id="cm_txt" style="width: 350px;height: 60px;" class="form-control"></textarea>';
+                s+='<textarea name="cm_txt" id="cm_txt" style=" height: 60px;" class="form-control"></textarea>';
                 s+='<button type="button"  id="btnmsave">리뷰등록</button>';
                 s+='</div> <div id="cm-i-box"><button type="button" id="btn-img">';
                 s+='<i class="fa-solid fa-camera"></i></button>';
                 s+='&nbsp;&nbsp;<span id="cm-i-preview"></span></div>'
-                s+='</form></div><br><br>';
+                s+='</form></div>';
             }else {
                 s+='<div>';
             }
+            s+='<div class="cf-bottom-cmlist"></div></div>';
+            $("div.cf-bottom").html(s);
 
+            cmListOnly("date_desc");
+        }//리뷰리스트
+
+        //리뷰리스트출력
+        function cmListOnly(cm_order){
+            var cl="";
             $.ajax({
                 type: "get",
-                url: "select_cmt",
+                url: "select_cmt_order",
                 dataType: "json",
-                data: {"cf_id": cf_id},
+                data: {"cf_id": cf_id,"cm_order":cm_order},
                 success: function (res) {
+                    cl+='<div id="cm-order" style="width: 500px;"><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
+                    cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></div><br><br>';
                     $.each(res, function (i, elt) {
                         //console.dir(elt);
-                        s+='<div>';
-                        s+='<img src="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
+                        cl+='<div>';
+                        cl+='<img src="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                         if(elt.ur_id=='${sessionScope.login_id }'){
-                            s+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
-                            s+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'"></i></span>';}
-                        s+='</div>';
-                        s+='<div><span class="cm-star">';
+                            cl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
+                            cl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'"></i></span>';}
+                        cl+='</div>';
+                        cl+='<div><span class="cm-star">';
                         var i=0;
-                        while(i<elt.star){s+='★'; i++;}
-                        s+='</span>';
-                        if(elt.star==0){s+="-"}
+                        while(i<elt.star){cl+='★'; i++;}
+                        cl+='</span>';
+                        if(elt.star==0){cl+="-"}
                         else{
-                            s+='<span class="cm-star-n">';
+                            cl+='<span class="cm-star-n">';
                             var i=0;
-                            while(i<5-elt.star){s+='★'; i++;}
-                            s+='</span>';}
-                        s+='&nbsp;&nbsp;&nbsp;<span>'+elt.w_date+'</span></div>';
+                            while(i<5-elt.star){cl+='★'; i++;}
+                            cl+='</span>';}
+                        cl+='&nbsp;&nbsp;&nbsp;<span>'+elt.w_date+'</span></div>';
                         if(!(elt.img.length==0)){
                             <!-- Carousel -->
-                            s+='<div id="cmt-img-car" class="carousel slide" data-bs-ride="carousel" style="width: 350px; height: 350px;">';
+                            cl+='<div id="cmt-img-car" class="carousel slide" data-bs-ride="carousel" style="width: 350px; height: 350px;">';
                             <!-- The slideshow/carousel -->
-                            s+='<div class="carousel-inner">';
+                            cl+='<div class="carousel-inner">';
                             $.each(elt.img, function (idx, eimg) {
-                                s+='<div class="carousel-item '+(idx==0?"active":"")+'">';
-                                s+='<div class="ci-card">';
+                                cl+='<div class="carousel-item '+(idx==0?"active":"")+'">';
+                                cl+='<div class="ci-card">';
                                 var cmi_path ="url('${root}"+eimg.ci_path+eimg.ci_nm+"'), url('${root}/images/loading.gif')";
-                                s+='<div class="ci-st" style="background-image:'+cmi_path+'">';
-                                s+='</div></div></div>';
+                                cl+='<div class="ci-st" style="background-image:'+cmi_path+'">';
+                                cl+='</div></div></div>';
                             })//img each
-                            s+='</div>';
+                            cl+='</div>';
                             <!-- Left and right controls/icons -->
-                            s+='<button class="carousel-control-prev" type="button" data-bs-target="#cmt-img-car" data-bs-slide="prev">';
-                            s+='<span class="carousel-control-prev-icon"></span></button>';
-                            s+='<button class="carousel-control-next" type="button" data-bs-target="#cmt-img-car" data-bs-slide="next">';
-                            s+='<span class="carousel-control-next-icon"></span></button></div>';
+                            cl+='<button class="carousel-control-prev" type="button" data-bs-target="#cmt-img-car" data-bs-slide="prev">';
+                            cl+='<span class="carousel-control-prev-icon"></span></button>';
+                            cl+='<button class="carousel-control-next" type="button" data-bs-target="#cmt-img-car" data-bs-slide="next">';
+                            cl+='<span class="carousel-control-next-icon"></span></button></div>';
                         }
-                        s+='<pre>'+elt.cm_txt+'</pre><hr>';
+                        cl+='<pre>'+elt.cm_txt+'</pre><hr>';
                     });//each
-                    s+='</div>';
-                    $("div.cf-bottom").html(s);
+                    cl+='</div>';
+                    $("div.cf-bottom-cmlist").html(cl);
 
                 }//succ
             });//ajax
-        }//리뷰리스트
+        }
 
         //지도 그리기
         function cfMap(cf_id){

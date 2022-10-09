@@ -39,12 +39,15 @@ public class CafeDao implements CafeDaoInter {
     public List<CafeImgDto> selectCafeImgAll(int cf_id) {
         return session.selectList(nsi + "selectCafeImgAll", cf_id);
     }
-
     @Override
     public List<CafeCmtDto> selectCafeCmt(int cf_id) {
         return session.selectList(nsm + "selectCafeCmt", cf_id);
     }
 
+    @Override
+    public List<CafeCmtDto> selectCMOrder(Map<String,Object> map) {
+        return session.selectList(nsm + "selectCMOrder", map);
+    }
     @Override
     public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCm_txt());
