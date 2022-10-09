@@ -10,9 +10,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<c:set var="root" value="<%=request.getContextPath()%>"/>
 <html>
 <head>
+    <c:set var="root" value="<%=request.getContextPath()%>"/>
     <meta charset="UTF-8">
 
     <style>

@@ -117,7 +117,6 @@ public class UserController {
     // 회원 정보 수정
     @GetMapping("/update_user")
     public String updateUser(HttpSession session) {
-
         return "redirect:/mypage/main";
     }
 }

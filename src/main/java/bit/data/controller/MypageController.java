@@ -151,7 +151,6 @@ public class MypageController {
         model.addAttribute("loc_si", dto.getLoc_si());
         model.addAttribute("loc_gu", dto.getLoc_gu());
 
-
         return "/bit/user/update_user_form";
     }
 }

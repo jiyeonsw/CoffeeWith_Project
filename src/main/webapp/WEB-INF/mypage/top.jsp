@@ -107,7 +107,6 @@
     </style>
 </head>
 <body>
-
 <div class="top-container">
     <div class="user-profil-box">
         <%--이미지 클릭하면 회원정보 변경으로 이동(예정)--%>

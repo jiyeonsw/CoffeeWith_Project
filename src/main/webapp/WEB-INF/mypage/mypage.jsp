@@ -71,6 +71,7 @@
         .main-mypage > div {
             border: 1px solid gray;
         }
+
     </style>
 </head>
 <body>

@@ -48,7 +48,6 @@
     </select>
 
     <update id="updateUser" parameterType="int">
-
     </update>
 
 </mapper>

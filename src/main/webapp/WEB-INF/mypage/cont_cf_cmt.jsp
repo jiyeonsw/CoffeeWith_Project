@@ -217,7 +217,6 @@
         $("#md-body").modal("toggle");
     })//$(".my-cmt-update")
 
-
     /* 리뷰 수정 완료 버튼 클릭시 알림 */
     $(".update-cmt-btn").click(function () {
         // alert("yes");

@@ -53,7 +53,6 @@ public class LoginController {
         return "/bit/login/find_pw";
     }
 
-
     @GetMapping("/logout")
     @ResponseBody
     public void logout(HttpSession session) {
