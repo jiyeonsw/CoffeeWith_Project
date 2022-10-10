@@ -59,7 +59,7 @@ public class CafeService implements CafeServiceInter {
         int rl=dto.getRl();
         if(rg==-1){
             rg=this.selectMaxNum()+1;
-            System.out.println(rg);
+            //System.out.println(rg);
             rs=0;
             rl=0;
         }else {
@@ -71,6 +71,13 @@ public class CafeService implements CafeServiceInter {
         dto.setRg(rg);
         dto.setRs(rs);
         dto.setRl(rl);
+        //System.out.println("service cf_id:"+dto.getCf_id());
+        //System.out.println("ur_id:"+dto.getUr_id());
+        //System.out.println("rg:"+dto.getRg());
+        //System.out.println("rs:"+dto.getRs());
+        //System.out.println("rl:"+dto.getRl());
+        //System.out.println("star:"+dto.getStar());
+        //System.out.println("cm_txt:"+dto.getCm_txt());
         cafeDao.insertCafeCmt(dto);
     }
 

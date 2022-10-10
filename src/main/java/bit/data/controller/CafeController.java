@@ -17,6 +17,7 @@ import util.ChangeName;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -107,24 +108,37 @@ public class CafeController {
         cafeService.insertCafeCmt(dto);
         String path= "E://Java0711//semiproject//CoffeeWith//src//main//webapp//resources//images//upload";
         System.out.println(path);
+        //System.out.println("controller cf_id:"+dto.getCf_id());
+        //System.out.println("ur_id:"+dto.getUr_id());
+        //System.out.println("rg:"+dto.getRg());
+        //System.out.println("rs:"+dto.getRs());
+        //System.out.println("rl:"+dto.getRl());
+        //System.out.println("star:"+dto.getStar());
+       // System.out.println("cm_txt:"+dto.getCm_txt());
         //이미지 dto에 정보 넣기
         //System.out.println("cm_id:"+dto.getCm_id());
         //System.out.println("cf_id:"+dto.getCf_id());
-        CafeImgDto cidto=new CafeImgDto();
-        cidto.setCf_id(dto.getCf_id());
-        cidto.setCm_id(dto.getCm_id());
+
         int idx=1;
-        for(MultipartFile multi:uploadFiles) {
-            String upload_img = idx++ + "_"+ChangeName.getChangeFileName(multi.getOriginalFilename());
+        if(uploadFiles.get(0).getOriginalFilename().equals("")){
+            System.out.println("파일없음");
+        }
+        else {
+            CafeImgDto cidto=new CafeImgDto();
+            cidto.setCf_id(dto.getCf_id());
+            cidto.setCm_id(dto.getCm_id());
+            for (MultipartFile multi : uploadFiles) {
+            String upload_img = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
             //System.out.println("파일명:"+upload_img);
             //업로드
-            try {
-                multi.transferTo(new File(path+"/"+upload_img));
-                cidto.setCi_nm(upload_img);
-                cafeService.insertCmtImg(cidto);
-            } catch (IllegalStateException | IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                try {
+                    multi.transferTo(new File(path + "/" + upload_img));
+                    cidto.setCi_nm(upload_img);
+                    cafeService.insertCmtImg(cidto);
+                } catch (IllegalStateException | IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }

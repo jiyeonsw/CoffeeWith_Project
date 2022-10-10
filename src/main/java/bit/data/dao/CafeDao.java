@@ -51,6 +51,13 @@ public class CafeDao implements CafeDaoInter {
     @Override
     public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCm_txt());
+       // System.out.println("dao cf_id:"+dto.getCf_id());
+        //System.out.println("ur_id:"+dto.getUr_id());
+        //System.out.println("rg:"+dto.getRg());
+        //System.out.println("rs:"+dto.getRs());
+        //System.out.println("rl:"+dto.getRl());
+        //System.out.println("star:"+dto.getStar());
+        //System.out.println("cm_txt:"+dto.getCm_txt());
         session.insert(nsm + "insertCafeCmt", dto);
     }
 
