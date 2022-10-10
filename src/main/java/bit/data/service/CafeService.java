@@ -43,27 +43,28 @@ public class CafeService implements CafeServiceInter {
     }
 
     @Override
-    public List<CafeCmtDto> selectCMOrder(int cf_id,String cm_order, int rg) {
+    public List<CafeCmtDto> selectCMOrder(int cf_id,String cm_order, int rl) {
         Map<String, Object> map = new HashMap<>();
         map.put("cf_id",cf_id);
         map.put("cm_order",cm_order);
-        map.put("rg",rg);
+        map.put("rl",rl);
         return cafeDao.selectCMOrder(map);
     }
 
     @Override
     public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCf_id());
-        int num=cafeDao.selectCafeCmt(dto.getCf_id()).size();
         int rg=dto.getRg();
         int rs=dto.getRs();
         int rl=dto.getRl();
-        if(num==0){
+        if(rg==-1){
             rg=this.selectMaxNum()+1;
+            System.out.println(rg);
             rs=0;
             rl=0;
         }else {
             this.updateRs(rg,rs);
+            System.out.println(rg);
             rs++;
             rl++;
         }

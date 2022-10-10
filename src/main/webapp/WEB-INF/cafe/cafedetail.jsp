@@ -539,6 +539,7 @@
                 s+='<form id="mform" enctype="multipart/form-data">';
                 s+='<input type="hidden" name="cf_id" value="${dto.cf_id }">';
                 s+='<input type="hidden" name="ur_id" value="${sessionScope.login_id }">';
+                s+='<input type="hidden" name="rg" value="-1">';
                 s+='<input type="hidden" name="rs" value="0">';
                 s+='<input type="hidden" name="rl" value="0">';
                 s+='<fieldset><span>&nbsp;별점을 선택해주세요</span>';
@@ -572,7 +573,7 @@
                 type: "get",
                 url: "select_cmt_order",
                 dataType: "json",
-                data: {"cf_id": cf_id,"cm_order":cm_order,"rg":0},
+                data: {"cf_id": cf_id,"cm_order":cm_order,"rl":0},
                 success: function (res) {
                     cl+='<div id="cm-order" style="width: 500px;"><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
                     cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></div><br><br>';
@@ -617,7 +618,7 @@
                             }
                             cl+='<pre>'+elt.cm_txt+'</pre>';
                             cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'>댓글보기 <i class="fa-solid fa-caret-down"></i></a>';
-                            cl+='<div style="display: none"><div class="cm-cm-form" ></div>';
+                            cl+='<div style="display: none; margin: 10px 10px; background-color: lightgray" ><div class="cm-cm-form" ></div>';
                             cl+='<div class="cm-cm-list" ></div></div><hr>';
                         }
                     });//each
@@ -638,24 +639,24 @@
                 type: "get",
                 url: "select_cmt_order",
                 dataType: "json",
-                data: {"cf_id": cf_id,"cm_order":"date_asc","rg":rg},
+                data: {"cf_id": cf_id,"cm_order":"date_asc","rl":1},
                 success: function (res) {
                     $.each(res, function (i, elt) {
-                        if(elt.rl>0){
+                        if(elt.rg==rg){
                             ccl+='<div>';
                             ccl+='<img src="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 ccl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 ccl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'"></i></span>';}
                             ccl+='</div>';
-                            ccl+='<div>&nbsp;&nbsp;&nbsp;<span>'+elt.w_date+'</span></div>';
+                            ccl+='<div><span>'+elt.w_date+'</span></div>';
                             ccl+='<pre>'+elt.cm_txt+'</pre><hr>';
                         }
                     });//each
                     $("div.cm-cm-list").html(ccl);
                 }
             });//ajax
-        }//댓글리스트
+        }//리뷰댓글리스트
 
         //지도 그리기
         function cfMap(cf_id){

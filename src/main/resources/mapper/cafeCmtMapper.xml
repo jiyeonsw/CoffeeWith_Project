@@ -15,11 +15,7 @@
 		from cf_cmt cm
 				 left join ur
 						   on cm.ur_id=ur.ur_id
-		where cm.cf_id = #{cf_id}
-		<choose>
-			<when test="rg == 0"></when>
-			<otherwise> and cm.rg = #{rg}</otherwise>
-		</choose>
+		where cm.cf_id = #{cf_id} and cm.rl = #{rl}
 		order by
 		<choose>
 			<when test="cm_order == 'date_desc'">cm.w_date desc</when>
