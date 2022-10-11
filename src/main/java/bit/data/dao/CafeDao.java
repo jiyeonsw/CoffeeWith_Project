@@ -39,15 +39,25 @@ public class CafeDao implements CafeDaoInter {
     public List<CafeImgDto> selectCafeImgAll(int cf_id) {
         return session.selectList(nsi + "selectCafeImgAll", cf_id);
     }
-
     @Override
     public List<CafeCmtDto> selectCafeCmt(int cf_id) {
         return session.selectList(nsm + "selectCafeCmt", cf_id);
     }
 
     @Override
+    public List<CafeCmtDto> selectCMOrder(Map<String,Object> map) {
+        return session.selectList(nsm + "selectCMOrder", map);
+    }
+    @Override
     public void insertCafeCmt(CafeCmtDto dto) {
         //System.out.println(dto.getCm_txt());
+       // System.out.println("dao cf_id:"+dto.getCf_id());
+        //System.out.println("ur_id:"+dto.getUr_id());
+        //System.out.println("rg:"+dto.getRg());
+        //System.out.println("rs:"+dto.getRs());
+        //System.out.println("rl:"+dto.getRl());
+        //System.out.println("star:"+dto.getStar());
+        //System.out.println("cm_txt:"+dto.getCm_txt());
         session.insert(nsm + "insertCafeCmt", dto);
     }
 
@@ -99,6 +109,19 @@ public class CafeDao implements CafeDaoInter {
 
     @Override
     public void insertCmtImg(CafeImgDto dto) {
-        session.insert(nsi+"insertCmImg", dto);
+        session.insert(nsi+"insertCmtImg", dto);
+    }
+
+    @Override
+    public List<CafeImgDto> selectCmtImg(Map<String, Integer> map) {
+        return session.selectList(nsi+"selectCmtImg", map);
+    }
+    @Override
+    public int selectMaxNum() {
+        return session.selectOne(nsm+"selectMaxNum");
+    }
+    @Override
+    public void updateRs(Map<String, Integer> map) {
+        session.update(nsm+"updateRs", map);
     }
 }

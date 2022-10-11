@@ -13,4 +13,5 @@ public class CafeImgDto {
     private Timestamp w_date;
     private int fd_id;
     private int cm_id;
+    private String cm_txt;
 }

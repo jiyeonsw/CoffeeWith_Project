@@ -13,19 +13,14 @@
           rel="stylesheet">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <title>CofeeWith</title>
-
-
+    <title>CoffeeWith</title>
     <style type="text/css">
-        body * {
-            font-family: 'Jua';
-        }
 
         .main-mypage {
             display: grid;
             width: 1136px;
             grid-template-columns: 0.4fr 1.6fr;
-            grid-auto-rows: 0.3fr 1.7fr;
+            grid-auto-rows: 0fr 1fr;
             grid-template-areas:
                     "  sub   top  "
                     "  sub  cmain ";
