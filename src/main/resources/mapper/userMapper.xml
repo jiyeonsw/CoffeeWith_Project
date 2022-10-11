@@ -44,4 +44,8 @@
         GROUP BY loc_gu;
     </select>
 
+    <select id="selectEmailId" parameterType="String" resultType="userDto">
+        SELECT * FROM coffewith.ur where email_id = #{email_id}
+    </select>
+
 </mapper>

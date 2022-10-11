@@ -69,8 +69,15 @@ public class UserDao implements UserDaoInter {
         return session.selectOne(ns + "selectDataById", ur_id);
     }
 
+
+
     @Override
     public int getIdPassCheck(Map<String, String> map) {
         return session.selectOne(ns+"loginIdPassCheck", map);
+    }
+
+    @Override
+    public UserDto selectEmailId(String id) {
+        return null;
     }
 }
