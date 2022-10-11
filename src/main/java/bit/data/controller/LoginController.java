@@ -68,7 +68,7 @@ public class LoginController {
     public void callSession(HttpSession session) {
         session.setMaxInactiveInterval(60 * 60 * 12);
 
-        UserDto dto = userService.selectDataById(3);
+        UserDto dto = userService.selectDataById(2);
 //        System.out.println(dto.getUr_id());
 //        System.out.println(dto.getEmail_id());
 //        System.out.println(dto.getUr_nk());

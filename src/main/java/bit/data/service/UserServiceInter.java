@@ -29,4 +29,9 @@ public interface UserServiceInter {
 
     public void updateUser(UserDto dto);
 
+    public String selectUserPass(int ur_id);
+
+    public void updateUserPass(String new_pass, int login_id);
+
+    public void updateUserData(UserDto dto);
 }

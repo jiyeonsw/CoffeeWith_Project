@@ -12,6 +12,11 @@
         FROM ur
         WHERE ur_nk = #{userNick}
     </select>
+    <select id="selectUserPass" parameterType="int" resultType="String">
+        SELECT ur.ur_pw
+        FROM ur
+        WHERE ur_id = #{ur_id};
+    </select>
     <insert id="insertUser" parameterType="UserDto">
         INSERT INTO ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
                         loc_gu, status, report, ur_phnum)
@@ -20,10 +25,10 @@
     </insert>
 
     <select id="loginIdPassCheck" parameterType="Map" resultType="int">
-        select count(*)
-        from user
-        where email_id = #{email_id}
-          and ur_pw = #{ur_pw}
+        SELECT count(*)
+        FROM user
+        WHERE email_id = #{email_id}
+          AND ur_pw = #{ur_pw}
     </select>
     <!--시/도명 추출 명령문-->
     <select id="selectSubstrSi" resultType="String">
@@ -47,7 +52,17 @@
         GROUP BY loc_gu;
     </select>
 
-    <update id="updateUser" parameterType="int">
+    <update id="updateUserData" parameterType="UserDto">
+        UPDATE ur
+        SET ur_nk  = #{ur_nk},
+            loc_si = #{loc_si},
+            loc_gu = #{loc_gu}
+        WHERE ur_id = #{ur_id};
     </update>
 
+    <update id="updateUserPass" parameterType="Map">
+        UPDATE ur
+        SET ur_pw = #{new_pass}
+        WHERE ur_id = #{login_id};
+    </update>
 </mapper>

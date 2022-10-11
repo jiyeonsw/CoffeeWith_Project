@@ -63,7 +63,6 @@ public class UserService implements UserServiceInter {
 
     @Override
     public void deleteUser(int num) {
-
     }
 
     @Override
@@ -73,8 +72,24 @@ public class UserService implements UserServiceInter {
 
     @Override
     public void updateUser(UserDto dto) {
-
     }
 
+    @Override
+    public String selectUserPass(int ur_id) {
+        return userDao.selectUserPass(ur_id);
+    }
 
+    @Override
+    public void updateUserPass(String new_pass, int login_id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("new_pass", new_pass);
+        map.put("login_id", login_id);
+
+        userDao.updateUserPass(map);
+    }
+
+    @Override
+    public void updateUserData(UserDto dto) {
+        userDao.updateUserData(dto);
+    }
 }

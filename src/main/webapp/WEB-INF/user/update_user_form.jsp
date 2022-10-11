@@ -24,22 +24,26 @@
         }
 
         .titbox {
-            margin-bottom: 32px;
+            margin-bottom: 30px;
             font-size: 2.6rem;
             line-height: 1.3;
             font-weight: 900;
             text-align: center;
         }
 
+        .profil-img-box {
+            display: flex;
+            justify-content: center;
+        }
+
+
         .img-area {
             display: block;
             position: relative;
-            margin-bottom: 20px;
-        }
-
-        .img-area > div {
-            width: 120px;
-            height: 120px;
+            margin-bottom: 30px;
+            width: 90px;
+            height: 90px;
+            cursor: pointer;
         }
 
         .img-area img {
@@ -48,7 +52,7 @@
             border: 1px solid #dee2e6;
             border-radius: 50%;
             box-shadow: 1px 1px 1px gray;
-            max-width: 100%;
+            width: 100%;
             height: 100%;
         }
 
@@ -93,31 +97,32 @@
     </style>
 </head>
 <body>
-<form action="update_user" method="post" onsubmit="return check()">
+<form action="${root}/update_user" method="post" onsubmit="return check()">
+    <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
     <div id="container" class="container">
         <div id="contents" class="contents">
             <%--컨텐츠영역--%>
             <p class="titbox">
                 회원정보관리
             </p>
-            <a class="img-area">
-                <div>
-                    <img src="${root}/images/${ur_img}"
+            <div class="profil-img-box">
+                <a class="img-area" id="profil-img-area">
+                    <input type="file" id="new-photo" style="display: none;">
+                    <img src="${root}/images/profil_img/${ur_img}" id="profil-img"
                          onerror="this.src='${root}/images/noprofile.jpg'"/>
-                </div>
-            </a>
-
+                </a>
+            </div>
             <div class=" input-form">
                 <label for="inp-email" class="titLab">이메일</label>
                 <div class="inpA">
-                    <input type="email" id="inp-email" class="form-control" name="email_id" value="${email_id}"
+                    <input type="email" id="inp-email" class="form-control" value="${email_id}"
                            disabled>
                 </div>
             </div>
             <div class="input-form">
                 <label for="inp-name" class="titLab">이름</label>
                 <div class="inpB">
-                    <input type="text" id="inp-name" class="form-control" name="ur_nm" value="${ur_nm}"
+                    <input type="text" id="inp-name" class="form-control" value="${ur_nm}"
                            disabled>
                 </div>
             </div>
@@ -153,11 +158,80 @@
     </div>
 </form>
 <script>
+    var img_chk = false;
+    var path = $("#profil-img").attr("src");
+    var param = {};
+    var sel_files = [];
+    var index = 0;
+
+    $(function () {
+        $("#new-photo").on("change", editImgFileSelect);
+    })
+
+    function editImgFileSelect(e) {
+        img_chk = true;
+        sel_files = [];
+        //초기화
+        var files = e.target.files;
+        sel_files.push(files);
+
+        var files_arr = Array.prototype.slice.call(files);
+        files_arr.forEach(function (f) {
+            sel_files.push(f);
+        })
+
+        if (files.length > 0) {
+            $("#profil-img").show();
+        }
+
+        $("#profil-img").attr("src", URL.createObjectURL(e.target.files[0]));
+    }
+
+    $("#profil-img").click(function () {
+        $("#new-photo").trigger("click");
+    })
+
     $(document).ready(function () {
         selCity();
     })
 
-    //선호지역 옵션 구현(DB(지역추출)-> Controller -> ajax(출력))
+    $("#sel-si").change(function () {
+        selGu();
+    })
+
+    /* 닉네임 중복 조회 */
+    $("#btn-nick-chk").click(function () {
+        const inpNick = $("#inp-nick").val();
+        const exiNick = $("#existing-nick").val();
+        $("#inp-nick").attr("disabled", true);
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "${root}/nick_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
+            data: {"userNick": inpNick},
+            success: function (res) {
+                $("#inp-nick").attr("disabled", false);
+                if (res.countNick == 0) {
+                    // console.log(res.countNick)
+                    $("div.nick-success").text("해당 닉네임으로 사용가능합니다.").attr("value", "Y");
+                } else if (inpNick == exiNick) {
+                    $("div.nick-success").text("해당 닉네임으로 사용가능합니다.").attr("value", "Y");
+                } else {
+                    $("div.nick-success").text("해당 닉네임으로는 사용이 불가능 합니다.").attr("value", "N");
+                }
+            }
+        })
+    })//닉네임 중복 조회
+
+    /* 닉네임 imput이 변경될 경우 다시 안내 및 value 초기화*/
+    $("#inp-nick").change(function () {
+        $("div.nick-success").text("입력하신 닉네임을 중복 조회해주세요.").attr("value", "");
+    })
+
+
+    /* -------------------- function ------------------- */
+
+    /* 선호지역(시/도) 옵션 구현(DB(지역추출)-> Controller -> ajax(출력)) */
     function selCity() {
         //중복 출력 되지 않도록 기존출력값(selected는 제외한) remove
         $("#sel-si").children('option:not(:first)').remove();
@@ -180,7 +254,7 @@
                     }
                 })
 
-                /* 기존 등록된 선호지역(시/도) selected */
+                /* 기존 등록된 선호지역(시/도) DBdata selected */
                 let arr = $('option[name=sel-si-nm]');
                 $.each(arr, function (i) {
                     // console.log(arr[i].value);
@@ -195,10 +269,7 @@
         })
     }
 
-    $("#sel-si").change(function () {
-        selGu();
-    })
-
+    /* 선호지역(구) 옵션 구현 */
     function selGu() {
         // alert($("#sel-si option:selected").text());
         var sel_gu = $("#sel-si option:selected").text();
@@ -225,7 +296,7 @@
                     }
                 })
 
-                /* 기존 등록된 선호지역(구) selected */
+                /* 기존 선호지역(구) DBdata selected */
                 let arr = $('option[name=sel-gu-nm]');
                 $.each(arr, function (i) {
                     // console.log(arr[i].value);
@@ -239,34 +310,7 @@
         })
     }
 
-    $("#inp-nick").change(function () {
-        $("div.nick-success").text("입력하신 닉네임을 중복 조회해주세요.").attr("value", "");
-    })//$("#inp-email")
-
-    //닉네임 중복 조회
-    $("#btn-nick-chk").click(function () {
-        const inpNick = $("#inp-nick").val();
-        const exiNick = $("#existing-nick").val();
-        $("#inp-nick").attr("disabled", true);
-        $.ajax({
-            type: "get",
-            dataType: "json",
-            url: "${root}/nick_check",//상대주소임으로 달라지는 부분만 작성하면됨.(만약 앞도 다를경우 ../ 하고 올라가야함)
-            data: {"userNick": inpNick},
-            success: function (res) {
-                $("#inp-nick").attr("disabled", false);
-                if (res.countNick == 0) {
-                    // console.log(res.countNick)
-                    $("div.nick-success").text("해당 닉네임으로 사용가능합니다.").attr("value", "Y");
-                } else if (inpNick == exiNick) {
-                    $("div.nick-success").text("해당 닉네임으로 사용가능합니다.").attr("value", "Y");
-                } else {
-                    $("div.nick-success").text("해당 닉네임으로는 사용이 불가능 합니다.").attr("value", "N");
-                }
-            }
-        })
-    })//$("#btn-nick-chk"),
-
+    /* onsubmit return check */
     function check() {
         let nickSuccess = $("div.nick-success").attr("value");
         // console.log(nickSuccess)
@@ -274,6 +318,7 @@
             alert("닉네임을 다시 중복 조회 해주세요.");
             return false;
         }
+        alert("회원정보가 정상적으로 수정되었습니다.");
         return true;
     }//check()
 </script>

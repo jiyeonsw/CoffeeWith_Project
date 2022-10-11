@@ -157,7 +157,7 @@
 
 <!----------------------------- Update Modal -------------------------------------------------->
 <!----------------------------- modal == md  -------------------------------------------------->
-<div class="modal fade" id="md-body" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="pass-pass-md-body" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -168,7 +168,7 @@
                 </button>
             </div>
             <form action="${root}/mypage/update_cmt" method="post" id="cmt-update-form">
-                <div class="modal-body mx-3">
+                <div class="cmt-modal-body mx-3">
                     <input type="hidden" id="md-cm-id" name="cm_id">
                     <div class="update-star-box">
                         <fieldset>
@@ -214,7 +214,7 @@
 
         // console.log(cmId);
         $("#md-cm-id").attr("value", cm_id);
-        $("#md-body").modal("toggle");
+        $("#pass-pass-md-body").modal("toggle");
     })//$(".my-cmt-update")
 
     /* 리뷰 수정 완료 버튼 클릭시 알림 */
