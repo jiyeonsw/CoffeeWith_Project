@@ -56,7 +56,7 @@
     <p>♥ 로그인 하시고 카페지도부터 투어모집까지 커피위드를 즐겨보세요 ♥</p>
     <br>
 
-    <form name="mForm" method="post" action="../layout/main.jsp" > <!-- Form 연결 : main -->
+    <form name="mForm" method="post" action="user/login" > <!-- Form 연결 : main -->
 
         <label for="email_id" class="titLab">아이디</label>
         <input type="text" name="email_id" id="email_id" placeholder="공백 없이 입력해주세요" class="form-control" required="required">

@@ -22,8 +22,7 @@ public class LoginController {
 
     // 로그인 하기
     @PostMapping("/login")
-    @ResponseBody
-    public Map<String, String> loginprocess(String email_id, String ur_pw, HttpSession session)
+    public String loginprocess(String email_id, String ur_pw, HttpSession session)
     {
         System.out.println("hello" + email_id + " " + ur_pw);
         Map<String, String> map = new HashMap<String, String>();
@@ -38,9 +37,11 @@ public class LoginController {
             session.setAttribute("loginok", "yes");
             session.setAttribute("loginid", dto.getUr_nm());
              session.setAttribute("loginname", dto.getUr_nk());
-        }
-        map.put("result", result==1?"success":"fail"); // 불일치하는 경우 fail
-        return map;
+            return "redirect:../";
+        }else{
+            return "redirect:../login_main";
+         }
+
     }
 
     // 아이디 찾기
