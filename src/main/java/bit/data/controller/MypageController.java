@@ -1,12 +1,17 @@
 package bit.data.controller;
 
+import bit.data.dto.CafeCmtDto;
 import bit.data.dto.MyPageCafeCmtDto;
 import bit.data.dto.MyPageCafeLikeDto;
+import bit.data.dto.UserDto;
+import bit.data.service.CafeServiceInter;
 import bit.data.service.MypageServiceInter;
+import bit.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,28 +21,38 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/mypage")
 public class MypageController {
     @Autowired
     MypageServiceInter mypageService;
 
+    @Autowired
+    CafeServiceInter cafeService;
+
+    @Autowired
+    UserService userService;
+
     //MyPage top View
-    @GetMapping("/mypage")
+    @GetMapping("/main")
     public String MyPage(HttpSession session, Model model) {
-        int loginId = (int) session.getAttribute("login_id");
+        if (session.getAttribute("login_id") == null) {
+            return "redirect:/login_main";
+        } else {
+            int loginId = (int) session.getAttribute("login_id");
 //        System.out.println("mypage logId:" + loginId);
-        int cfLkCnt = mypageService.selectCfLkCnt(loginId);
-        int cfCmtCnt = mypageService.selectCfCmtCnt(loginId);
+            int cfLkCnt = mypageService.selectCfLkCnt(loginId);
+            int cfCmtCnt = mypageService.selectCfCmtCnt(loginId);
 //        System.out.println("cflk :" + cfLkCnt);
 //        System.out.println("cfCmt :" + cfCmtCnt);
-        session.setAttribute("cfLkCnt", cfLkCnt);
-        session.setAttribute("cfCmtCnt", cfCmtCnt);
+            session.setAttribute("cfLkCnt", cfLkCnt);
+            session.setAttribute("cfCmtCnt", cfCmtCnt);
 
-        return "/cwith/mypage/mypage";
+            return "/cwith/mypage/mypage";
+        }
     }
 
     //MyPage contents - Bookmarks View
-    @GetMapping("/mypage/bookmarks")
+    @GetMapping("/bookmarks")
     public String bookmarkList(
             @RequestParam(defaultValue = "1") int currentPage,
             @RequestParam(value = "searchColumn", required = false) String sc,
@@ -92,7 +107,7 @@ public class MypageController {
     }
 
     //MyPage contents - Review View
-    @GetMapping("/mypage/review")
+    @GetMapping("/review")
     public String selectMyCmt(HttpSession session, Model model) {
         int loginId = (int) session.getAttribute("login_id");
         List<MyPageCafeCmtDto> list = mypageService.selectMyCmtCf(loginId);
@@ -108,5 +123,34 @@ public class MypageController {
         model.addAttribute("list", list);
         model.addAttribute("map", map);
         return "/cmain/mypage/cont_cf_cmt";
+    }
+
+    //MyPage contents - Review update
+    @PostMapping("/update_cmt")
+    public String updateMyPageCmt(int cm_id, String cm_txt, int star) {
+        CafeCmtDto dto = new CafeCmtDto();
+        dto.setCm_id(cm_id);
+        dto.setCm_txt(cm_txt);
+        dto.setStar(star);
+
+        cafeService.updateCafeCmt(dto);
+        return "redirect:/mypage/review";
+    }
+
+    @GetMapping("/edit_info")
+    public String editUserInfo(HttpSession session, Model model) {
+        int loginId = (int) session.getAttribute("login_id");
+        UserDto dto = userService.selectDataById(loginId);
+
+//        System.out.println(dto.getLoc_si());
+//        System.out.println(dto.getLoc_gu());
+        model.addAttribute("email_id", dto.getEmail_id());
+        model.addAttribute("ur_nm", dto.getUr_nm());
+        model.addAttribute("ur_nk", dto.getUr_nk());
+        model.addAttribute("ur_img", (dto.getUr_img() == null ? "noprofile.jpg" : dto.getUr_img()));
+        model.addAttribute("loc_si", dto.getLoc_si());
+        model.addAttribute("loc_gu", dto.getLoc_gu());
+
+        return "/bit/user/update_user_form";
     }
 }

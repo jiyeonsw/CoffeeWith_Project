@@ -73,7 +73,22 @@ public class UserDao implements UserDaoInter {
 
     @Override
     public int getIdPassCheck(Map<String, String> map) {
-        return session.selectOne(ns+"loginIdPassCheck", map);
+        return session.selectOne(ns + "loginIdPassCheck", map);
+    }
+
+    @Override
+    public String selectUserPass(int ur_id) {
+        return session.selectOne(ns + "selectUserPass", ur_id);
+    }
+
+    @Override
+    public void updateUserPass(Map map) {
+        session.update(ns + "updateUserPass", map);
+    }
+
+    @Override
+    public void updateUserData(UserDto dto) {
+        session.update(ns + "updateUserData", dto);
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,27 +22,26 @@ public class MapController {
     CafeServiceInter cafeService;
 
     @GetMapping("/mainmap")
-    public String mainmap(Model model) {
+    public String mainMap(Model model) {
         List<CafeDto> list = cafeService.selectAllCafe();
         model.addAttribute("list", list);
         return "/bit/map/mainmap";
     }
 
     @PostMapping("/maketour")
-    public String maketour(HttpServletRequest request,
+    public String makeTour(HttpSession session,
                            @RequestParam List<Map<String, Object>> tourlist,
                            @RequestParam String tourname,
                            @RequestParam String tourdate,
                            @RequestParam String tourinfo)
     {
-
-        String referer = request.getHeader("Referer");
-        return "redirect:"+ referer;
+        int loginId = (int) session.getAttribute("login_id");
+        return "";
     }
 
     @GetMapping("/getcafedata")
     @ResponseBody
-    public Map<String,Object> getcafedata(@RequestParam int cf_id)
+    public Map<String,Object> getCafeData(@RequestParam int cf_id)
     {
         CafeDto dto=cafeService.selectCafe(cf_id);
         Map<String,Object> map=new HashMap<>();
@@ -55,7 +55,7 @@ public class MapController {
 
     @GetMapping("/search")
     @ResponseBody
-    public Map<String,Object> searchcafe(@RequestParam(defaultValue = "1") int currentPage,
+    public Map<String,Object> searchCafe(@RequestParam(defaultValue = "1") int currentPage,
                                          @RequestParam(value = "searchword", required = false) String sw) {
         //페이징 처리에 필요한 변수들
         //전체 갯수

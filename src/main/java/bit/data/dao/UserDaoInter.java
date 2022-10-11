@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDaoInter {
-
     public int getTotalCount();
 
     public List<UserDto> getAllUser();
@@ -28,5 +27,10 @@ public interface UserDaoInter {
     public int getIdPassCheck(Map<String,String> map);
 
     public UserDto selectEmailId(String id);
+    public String selectUserPass(int ur_id);
+
+    public void updateUserPass(Map map);
+
+    public void updateUserData(UserDto dto);
 }
 
