@@ -25,7 +25,7 @@
     </insert>
 
     <select id="loginIdPassCheck" parameterType="Map" resultType="int">
-        select count(*) from user where email_id=#{email_id} and ur_pw=#{ur_pw}
+        select count(*) from ur where email_id=#{email_id} and ur_pw=#{ur_pw}
     </select>
     <!--시/도명 추출 명령문-->
     <select id="selectSubstrSi" resultType="String">
@@ -50,7 +50,8 @@
     </select>
 
     <select id="selectEmailId" parameterType="String" resultType="userDto">
-        SELECT * FROM coffewith.ur where email_id = #{email_id}
+        SELECT * FROM coffeewith.ur
+        where email_id = #{email_id}
     </select>
 
     <update id="updateUserData" parameterType="UserDto">
@@ -67,4 +68,9 @@
         SET ur_pw = #{new_pass}
         WHERE ur_id = #{login_id};
     </update>
+
+<!--    <select id="getTotalCount" parameterType="UserDao" resultType="userDao">-->
+<!--        select count(*)-->
+<!--        from user-->
+<!--    </select>-->
 </mapper>

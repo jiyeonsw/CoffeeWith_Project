@@ -57,6 +57,7 @@
     <div class="main" id="main">
         <tiles:insertAttribute name="main"/>
     </div>
+
 </div>
 </body>
 </html>
