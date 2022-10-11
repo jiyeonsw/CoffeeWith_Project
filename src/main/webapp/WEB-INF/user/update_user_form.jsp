@@ -318,7 +318,7 @@
             alert("닉네임을 다시 중복 조회 해주세요.");
             return false;
         }
-        alert("회원정보가 정상적으로 수정되었습니다.");
+        
         return true;
     }//check()
 </script>
