@@ -14,4 +14,5 @@ public interface ComTourServiceInter {
     public int getTotalCount(String searchcolumn, String searchword);
     public List<ComTourDto> getPagingList(String searchcolumn, String searchword);
     public ComTourDto getUserData(int num);
+    public ComTourDto getData(int num);
 }
