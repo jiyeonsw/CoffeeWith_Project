@@ -101,7 +101,7 @@
         span.cm-star-n{
             color: lightgray;
         }
-        div#btn-ck{cursor: pointer;}
+        div#btn-ck{cursor: pointer; width: 300px;}
         span.cm-edit-del{
             float:right;
             cursor: pointer;
@@ -192,10 +192,15 @@
         <!--메인정보-->
         <div style="margin-left: 30px;">
             <div><h1>${dto.cf_nm}</h1></div>
+            <div style="margin-bottom: 10px;">
+                <c:forEach items="${listctg}" var="ctg">
+                    <b class="ctg-box">#${ctg.cg_nm}</b>&nbsp;
+                </c:forEach>
+            </div>
             <div>${dto.cf_txt}</div>
             <br>
             <div><span>위치</span>  <span>${dto.loc_addr} </span></div>
-            <div><span>리뷰</span>  <span>${dto.cm_cnt}
+            <div><span>리뷰</span>  <span><span class="cm-cnt">${dto.cm_cnt}</span>
                    <c:if test="${dto.cm_star==-1}">
                        (<span class="cm-star" style="color: gray">★</span>-)
                    </c:if>
@@ -204,15 +209,15 @@
                    </c:if>
                </span></div>
             <hr>
-            <div id="btn-ck" >
+            <div id="btn-ck">
                 <c:if test="${dto.ck_cnt==0}"><i class="fa-regular fa-heart"></i>&nbsp;</c:if>
                 <c:if test="${dto.ck_cnt>0}"><i class="fa-solid fa-heart"></i>&nbsp;</c:if>
-                ${dto.ck_cnt}</div>
+                <span id="ck-cnt">${dto.ck_cnt}</span></div>
         </div>
     </div> <!--cf_top-->
     <br>
     <div class="cf-middle">
-        <div id="btn-cf-info">카페정보</div><div id="btn-cm-link">리뷰(${dto.cm_cnt})</div><div id="btn-ci-link">사진</div>
+        <div id="btn-cf-info">카페정보</div><div id="btn-cm-link">리뷰(<span class="cm-cnt">${dto.cm_cnt}</span>)</div><div id="btn-ci-link">사진</div>
     </div>
     <hr>
     <br>
@@ -244,20 +249,33 @@
                             $.ajax({
                                 type: "get",
                                 url: "insert_like",
-                                dataType: "text",
+                                dataType: "json",
                                 data: {"ur_id": ur_id, "cf_id": cf_id},
                                 success: function (res) {
-                                    location.reload();
+                                    var ck_cnt= res.ck_cnt;
+                                    //console.log(ck_cnt);
+                                    var pre_ck_cnt=$("#ck-cnt").text();
+                                    if (pre_ck_cnt==0){
+                                        $("#btn-ck").find("svg").removeClass("fa-regular");
+                                        $("#btn-ck").find("svg").addClass("fa-solid");
+                                    }
+                                    $("#ck-cnt").html(ck_cnt);
                                 }//suc
                             });//ajax insert
                         } else {
                             $.ajax({
                                 type: "get",
                                 url: "delete_like",
-                                dataType: "text",
+                                dataType: "json",
                                 data: {"ur_id": ur_id, "cf_id": cf_id},
                                 success: function (res) {
-                                    location.reload();
+                                    var ck_cnt= res.ck_cnt;
+                                    var pre_ck_cnt=$("#ck-cnt").text();
+                                    if (pre_ck_cnt==1){
+                                        $("#btn-ck").find("svg").removeClass("fa-solid");
+                                        $("#btn-ck").find("svg").addClass("fa-regular");
+                                    }
+                                    $("#ck-cnt").text(ck_cnt);
                                 }//suc
                             });//aj del
                         }
@@ -352,9 +370,12 @@
                 data: formData,
                 processData:false,
                 contentType:false,
-                dataType: "text",
+                dataType: "json",
                 success: function (res) {
                     cmList();
+                    var cm_cnt = res.cm_cnt;
+                    $("span.cm-cnt").text(cm_cnt);
+
                 }//succ
             });//ajax
         });//리뷰등록
@@ -362,14 +383,17 @@
         // 리뷰삭제
         $(document).on("click",".cm-del",function (){
             var cm_id=$(this).attr("cm_id");
+            var cf_id=$(this).attr("cf_id");
             //console.log(cm_id);
             $.ajax({
                 type: "get",
                 url: "delete_cmt",
-                data: {"cm_id": cm_id},
-                dataType: "text",
+                data: {"cm_id": cm_id, "cf_id": cf_id},
+                dataType: "json",
                 success: function (res) {
                     $("div#btn-cm-link").trigger('click');
+                    var cm_cnt = res.cm_cnt;
+                    $("span.cm-cnt").text(cm_cnt);
                 }//succ
             });//ajax
         });//리뷰삭제
@@ -435,13 +459,14 @@
                 ccf+='</form></div>';
             }
             $(this).next().find("div.cm-cm-form").html(ccf);
-            ccList(${dto.cf_id},rg);
             $(this).siblings("a.view-cm-cm").next().hide();
             $(this).siblings("a.view-cm-cm").find("svg").addClass("fa-caret-down");
             $(this).siblings("a.view-cm-cm").find("svg").removeClass("fa-caret-up");
-            $(this).next().toggle();
+            ccList(${dto.cf_id},rg);
+            $(this).next().slideToggle(500);
             $(this).find("svg").toggleClass("fa-caret-down");
             $(this).find("svg").toggleClass("fa-caret-up");
+
         });//리뷰댓글보기
 
         //리뷰댓글등록
@@ -456,6 +481,7 @@
             ccdata.forEach(function(data) {
                 formData.append(data["name"], data["value"]);
             });
+            $(".cm-cm-txt").val('');
             //console.log(formData);
             $.ajax({
                 type: "post",
@@ -463,9 +489,11 @@
                 processData:false,
                 contentType:false,
                 data: formData,
-                dataType: "text",
+                dataType: "json",
                 success: function (res) {
                     ccList(cf_id,rg);
+                    var cm_cnt = res.cm_cnt;
+                    $("span.cm-cnt").text(cm_cnt);
                 }//succ
             });//ajax
         });//리뷰댓글등록
@@ -489,8 +517,6 @@
                     $(".btn-cc-save").attr("rg",rg);
                     $(".btn-cc-save").addClass("btn-cc-edit");
                     $(".btn-cc-edit").removeClass("btn-cc-save");
-
-
                 }//succ
             });//ajax
         });//리뷰댓글수정클릭시 내용 넣기
@@ -645,7 +671,7 @@
                             cl+='<img src="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 cl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
-                                cl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'"></i></span>';}
+                                cl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'" cf_id="'+cf_id+'"></i></span>';}
                             cl+='</div>';
                             cl+='<div><span class="cm-star">';
                             var i=0;
@@ -707,7 +733,7 @@
                             ccl+='<img src="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 ccl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cc-edit" rg='+elt.rg+' cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
-                                ccl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'"></i></span>';}
+                                ccl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'" cf_id="'+cf_id+'"></i></span>';}
                             ccl+='</div>';
                             ccl+='<div><span>'+elt.w_date+'</span></div>';
                             ccl+='<pre>'+elt.cm_txt+'</pre><hr>';
@@ -753,9 +779,9 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal" id="ciModal">
+<div class="modal" id="ciModal" >
     <div class="modal-dialog modal-xl modal-dialog-centered" id="ciModal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 550px;">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>

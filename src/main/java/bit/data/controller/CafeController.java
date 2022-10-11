@@ -1,6 +1,7 @@
 package bit.data.controller;
 
 import bit.data.dto.CafeCmtDto;
+import bit.data.dto.CafeCtgDto;
 import bit.data.dto.CafeDto;
 import bit.data.dto.CafeImgDto;
 import bit.data.service.CafeServiceInter;
@@ -61,9 +62,12 @@ public class CafeController {
         dto.setCk_cnt(ck_cnt);
         //카페이미지
         List<CafeImgDto> list=cafeService.selectCafeImg(cf_id);
+        //카페 카테고리
+        List<CafeCtgDto> listctg=cafeService.selectCtgByCfid(cf_id);
         //모델 추가
         mview.addObject("dto",dto);
         mview.addObject("list",list);
+        mview.addObject("listctg",listctg);
         mview.setViewName("/bit/cafe/cafedetail");
         return mview;
     }
@@ -100,22 +104,15 @@ public class CafeController {
 
     @PostMapping("/insert_cmt")
     @ResponseBody
-    public void insertCafeCmt(CafeCmtDto dto, @RequestParam(required = false) List<MultipartFile> uploadFiles){
+    public Map<String,Integer> insertCafeCmt(CafeCmtDto dto, @RequestParam(required = false) List<MultipartFile> uploadFiles){
         //cm_id를 위해 먼저 cmt table에 insert
         cafeService.insertCafeCmt(dto);
         String path= "E://Java0711//semiproject//CoffeeWith//src//main//webapp//resources//images//upload";
         System.out.println(path);
-        //System.out.println("controller cf_id:"+dto.getCf_id());
-        //System.out.println("ur_id:"+dto.getUr_id());
-        //System.out.println("rg:"+dto.getRg());
-        //System.out.println("rs:"+dto.getRs());
-        //System.out.println("rl:"+dto.getRl());
-        //System.out.println("star:"+dto.getStar());
-       // System.out.println("cm_txt:"+dto.getCm_txt());
+
         //이미지 dto에 정보 넣기
         //System.out.println("cm_id:"+dto.getCm_id());
         //System.out.println("cf_id:"+dto.getCf_id());
-
 
         CafeImgDto cidto=new CafeImgDto();
         cidto.setCf_id(dto.getCf_id());
@@ -138,12 +135,20 @@ public class CafeController {
                 }//catch
             }
         }
+        Map<String,Integer> map=new HashMap<>();
+        int cm_cnt=cafeService.selectCMCntByCfid(dto.getCf_id());
+        map.put("cm_cnt",cm_cnt);
+        return map;
     }
 
     @GetMapping("/insert_like")
     @ResponseBody
-    public void insertCafeLike(int ur_id, int cf_id){
+    public Map<String,Integer> insertCafeLike(int ur_id, int cf_id){
         cafeService.insertCafeLike(ur_id,cf_id);
+        Map<String,Integer> map=new HashMap<>();
+        int ck_cnt = cafeService.selectCkCntbyCfid(cf_id);
+        map.put("ck_cnt",ck_cnt);
+        return map;
     }
 
     @GetMapping("/select_like")
@@ -158,14 +163,22 @@ public class CafeController {
 
     @GetMapping("/delete_like")
     @ResponseBody
-    public void deleteCafeLike(int ur_id, int cf_id){
+    public Map<String,Integer>  deleteCafeLike(int ur_id, int cf_id){
         cafeService.deleteCafeLike(ur_id,cf_id);
+        Map<String,Integer> map=new HashMap<>();
+        int ck_cnt = cafeService.selectCkCntbyCfid(cf_id);
+        map.put("ck_cnt",ck_cnt);
+        return map;
     }
 
     @GetMapping("/delete_cmt")
     @ResponseBody
-    public void deleteCafeCmt(int cm_id){
+    public Map<String,Integer> deleteCafeCmt(int cm_id, int cf_id){
         cafeService.deleteCafeCmt(cm_id);
+        Map<String,Integer> map=new HashMap<>();
+        int cm_cnt=cafeService.selectCMCntByCfid(cf_id);
+        map.put("cm_cnt",cm_cnt);
+        return map;
     }
 
     @PostMapping("/update_cmt")

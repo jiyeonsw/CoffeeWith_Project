@@ -1,8 +1,10 @@
 package bit.data.dao;
 
 import bit.data.dto.CafeCmtDto;
+import bit.data.dto.CafeCtgDto;
 import bit.data.dto.CafeDto;
 import bit.data.dto.CafeImgDto;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -124,4 +126,10 @@ public class CafeDao implements CafeDaoInter {
     public void updateRs(Map<String, Integer> map) {
         session.update(nsm+"updateRs", map);
     }
+    @Override
+    public List<CafeCtgDto> selectCtgByCfid(int cf_id) {
+        return session.selectList(ns+"selectCtgByCfid", cf_id);
+    }
+    @Override
+    public int selectCMCntByCfid(int cf_id){return session.selectOne(nsm+"selectCMCntByCfid",cf_id);}
 }
