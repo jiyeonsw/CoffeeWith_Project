@@ -115,13 +115,15 @@
             margin-left: 30px;
         }
 
+        .visit_time{
+            float: right;
+        }
+
         .rm-tour-icon{
             float: right;
         }
 
-        .visit_time{
-            float: right;
-        }
+
 
     </style>
 </head>
@@ -185,7 +187,7 @@
     //전역변수 선언
     var isMakingTour= false;
     var currentPage = parseInt(1);
-    var perPage = parseInt(4);
+    var perPage = parseInt(3);
     var perBlock= parseInt(5);
     var startDate="";
     var endDate="";

@@ -36,6 +36,7 @@ public class MapController {
                            @RequestParam String tourinfo)
     {
         int loginId = (int) session.getAttribute("login_id");
+
         return "";
     }
 
@@ -60,7 +61,7 @@ public class MapController {
         //페이징 처리에 필요한 변수들
         //전체 갯수
         int totalCount=cafeService.selectTotalCount(sw);
-        int perPage=4;//한페이지당 보여질 글의 갯수
+        int perPage=3;//한페이지당 보여질 글의 갯수
         int perBlock=5;//한블럭당 보여질 페이지의 갯수
         int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
         int startPage;//각블럭당 보여질 시작페이지
