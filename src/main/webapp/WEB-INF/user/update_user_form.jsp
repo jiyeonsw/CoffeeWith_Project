@@ -97,7 +97,7 @@
     </style>
 </head>
 <body>
-<form action="${root}/update_user" method="post" onsubmit="return check()">
+<form action="${root}/update_user" method="post" onsubmit="return check()" enctype="multipart/form-data">
     <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
     <div id="container" class="container">
         <div id="contents" class="contents">
@@ -106,9 +106,9 @@
                 회원정보관리
             </p>
             <div class="profil-img-box">
+                <input type="file" id="new-photo" name="profile_img" style="display: none;">
                 <a class="img-area" id="profil-img-area">
-                    <input type="file" id="new-photo" style="display: none;">
-                    <img src="${root}/images/profil_img/${ur_img}" id="profil-img"
+                    <img src="${root}/res/prfimg/${ur_img}" id="profile-img"
                          onerror="this.src='${root}/images/noprofile.jpg'"/>
                 </a>
             </div>
@@ -158,38 +158,32 @@
     </div>
 </form>
 <script>
-    var img_chk = false;
-    var path = $("#profil-img").attr("src");
-    var param = {};
-    var sel_files = [];
-    var index = 0;
+
+    $("#profil-img-area").click(function () {
+        $("#new-photo").trigger("click");
+    })
 
     $(function () {
         $("#new-photo").on("change", editImgFileSelect);
     })
 
     function editImgFileSelect(e) {
-        img_chk = true;
-        sel_files = [];
-        //초기화
-        var files = e.target.files;
-        sel_files.push(files);
-
-        var files_arr = Array.prototype.slice.call(files);
-        files_arr.forEach(function (f) {
-            sel_files.push(f);
-        })
-
-        if (files.length > 0) {
-            $("#profil-img").show();
+        //정규표현식
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp|gif)$/;
+        var f = $(this)[0].files[0];//현재 선택한 파일
+        if (!f.type.match(reg)) {
+            alert("확장자가 이미지파일이 아닙니다");
+            return;
         }
-
-        $("#profil-img").attr("src", URL.createObjectURL(e.target.files[0]));
+        if ($(this)[0].files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#profile-img").attr("src", e.target.result);
+            }
+            reader.readAsDataURL($(this)[0].files[0]);
+        }
     }
 
-    $("#profil-img").click(function () {
-        $("#new-photo").trigger("click");
-    })
 
     $(document).ready(function () {
         selCity();
@@ -313,12 +307,13 @@
     /* onsubmit return check */
     function check() {
         let nickSuccess = $("div.nick-success").attr("value");
+        console.log($("#new-photo").val())
         // console.log(nickSuccess)
         if (nickSuccess != "Y") {
             alert("닉네임을 다시 중복 조회 해주세요.");
             return false;
         }
-        
+
         return true;
     }//check()
 </script>
