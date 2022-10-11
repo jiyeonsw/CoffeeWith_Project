@@ -37,6 +37,25 @@ public class MapController {
     @GetMapping("/mainmap")
     public String mainMap(Model model) {
         List<CafeDto> list = cafeService.selectAllCafe();
+       /* for(CafeDto dto:list){
+            int cf_id=dto.getCf_id();
+            //댓글수 댓글별점평균
+            List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
+            //리뷰별점 평균
+            int star_cnt=0;
+            double sum=0;
+            for (CafeCmtDto dtom : listm){
+                if(dtom.getStar()==0){continue;}
+                sum+=dtom.getStar();
+                star_cnt++;
+            }
+            if(star_cnt==0){
+                dto.setCm_star(0);
+            }else {
+                double avg=Math.round(sum/star_cnt*10)/10.0;
+                dto.setCm_star(avg);
+            };
+        }*/
         model.addAttribute("list", list);
         return "/bit/map/mainmap";
     }

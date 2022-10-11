@@ -150,7 +150,7 @@
             <hr>
             <div class="tour-input">
                 <div for="tourdate" class="tour-input-title">투어일정</div>
-                <input type="text" id="tourdate" name="tourdate"/>
+                <input type="text" id="tourdate" name="tourdate" required="required"/>
                 <br>
                 <div id="tourdatewords"></div>
             </div>
@@ -374,24 +374,31 @@
             data: {"cf_id":id},
             success: function(res){
                 s += "<div class='cafe-in-tour' value='" + id + "'>" + res.cf_nm;
-                s += "<input type='time' class='visit_time'>"
+                s += "<input type='time' class='visit_time' required='required'>"
                 s += "<i class='fa-solid fa-xmark rm-tour-icon'></i>";
-                s += "</div>"
+                s += "</div>";
                 $("div.active-bar").children(".detail-bar-cafe").append(s);
             }
         });
     });
 
+
     //시간 설정시 시간별로 정렬
     $(document).on('change','input.visit_time',function(){
-        $(this).parent().parent().children().each(function(i,day){
-            console.log(day);
-        });
+        $(this).parent().parent().children().each(function (i,day){
+            $(day).parent().children().each(function (j,cafes){
+                if($(cafes).children("input.visit_time").val()>$(cafes).next().children("input.visit_time").val()){
+                    $(cafes).insertAfter($(cafes).next());
+                }
+            })
+        })
     });
 
     // 아이콘 클릭시 일정에서 삭제
     $(document).on('click','.rm-tour-icon',function(){
         $(this).parent().remove();
+        var rmpoly = polyLinePath.find()
+        console.log(polyLinePath);
     });
 
     //투어 추가시 submit전 일정 정보를 json형태로 변환
@@ -474,7 +481,6 @@
             content: `<div class="info-window">
                          <span style="display:none">${dto.cf_id}</span>
                          <div>${dto.cf_nm}</div>
-                         <div>★</div>
                       </div>`
         });
         //마커를 마커 배열에 넣기
