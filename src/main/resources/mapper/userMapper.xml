@@ -50,7 +50,8 @@
     </select>
 
     <select id="selectEmailId" parameterType="String" resultType="userDto">
-        SELECT * FROM coffewith.ur where email_id = #{email_id}
+        SELECT * FROM coffewith.ur
+        where email_id = #{email_id}
     </select>
 
     <update id="updateUserData" parameterType="UserDto">
@@ -66,4 +67,9 @@
         SET ur_pw = #{new_pass}
         WHERE ur_id = #{login_id};
     </update>
+
+    <select id="getTotalCount" parameterType="UserDao" resultType="userDao">
+        select count(*)
+        from user
+    </select>
 </mapper>
