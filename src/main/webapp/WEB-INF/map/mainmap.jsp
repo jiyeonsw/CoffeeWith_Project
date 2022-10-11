@@ -119,6 +119,10 @@
             float: right;
         }
 
+        .visit_time{
+            float: right;
+        }
+
     </style>
 </head>
 <body>
@@ -159,8 +163,7 @@
             <hr>
             <input type="text" name="tourlist" id="tourlist" hidden>
             <div class="tour-detail">
-                1oierf;ljg;iㅈ루ㅑㅕ누파ㅓㄴㅅ구히ㅏㅓㅜㄷㅈㅁ;래ㅑ[ㄷ재ㅑ루;ㅐㅑ듛;ㅕㄱㄴ;햐;ㄹ웊미ㅏㅓ깋라ㅓ듄;패ㅑ뮹;ㅐㅑㄷㅈㄹ;ㅏㅓㅠㅁ;나ㅓ윺;ㅕㄷㄱㅁ['ㅎ몰개ㅑㅈㅂ;ㄻㄱ;힐야ㅠ히ㅑㅅㄱ녀ㅗ햐ㅗ;ㅐ랴;ㅈ둘;ㅓ:ㅇㄴ러ㅠ;ㅁ냥ㄹ;ㅐㅑ뮫개ㅑ루;ㄷㅈ버ㅠ;라ㅓㅜㅇㄴ;ㅓㅠㅍ;ㅐㅑㄷ개ㅑㄼ;ㄷ개ㅑㄹ;ㅈ듁;ㄷㅈ뷱;ㅏㅓㅠㅇㄴ.프ㅜ날두;ㄷ쟈ㅗㄱ'ㅐㅑㅗㅇㄴ매ㅑ롣재'ㅑㅗ개ㅑㅈㅄ;ㄷ거ㅜㄹ;<ㅣㅏㅇㄴ머ㅠ라ㅓㅇ뉴ㅏ류>ㅣㅏㅓ규;ㅑㅗㅊ['ㅑㅇ놀'매ㅑㅈ것;ㅣㅏ부ㅠ라ㅓㅠㄷㅈ ㅓㅇ;냐ㅗㄹ'ㅑㄴㄱ' ㅏㅜㄱ/ㅣㅏㄷ주ㅠㄹ/ㅣㅏㅠ러ㅠ                 1oierf;ljg;iㅈ루ㅑㅕ누파ㅓㄴㅅ구히ㅏㅓㅜㄷㅈㅁ;래ㅑ[ㄷ재ㅑ루;ㅐㅑ듛;ㅕㄱㄴ;햐;ㄹ웊미ㅏㅓ깋라ㅓ듄;패ㅑ뮹;ㅐㅑㄷㅈㄹ;ㅏㅓㅠㅁ;나ㅓ윺;ㅕㄷㄱㅁ['ㅎ몰개ㅑㅈㅂ;ㄻㄱ;힐야ㅠ히ㅑㅅㄱ녀ㅗ햐ㅗ;ㅐ랴;ㅈ둘;ㅓ:ㅇㄴ러ㅠ;ㅁ냥ㄹ;ㅐㅑ뮫개ㅑ루;ㄷㅈ버ㅠ;라ㅓㅜㅇㄴ;ㅓㅠㅍ;ㅐㅑㄷ개ㅑㄼ;ㄷ개ㅑㄹ;ㅈ듁;ㄷㅈ뷱;ㅏㅓㅠㅇㄴ.프ㅜ날두;ㄷ쟈ㅗㄱ'ㅐㅑㅗㅇㄴ매ㅑ롣재'ㅑㅗ개ㅑㅈㅄ;ㄷ거ㅜㄹ;<ㅣㅏㅇㄴ머ㅠ라ㅓㅇ뉴ㅏ류>ㅣㅏㅓ규;ㅑㅗㅊ['ㅑㅇ놀'매ㅑㅈ것;ㅣㅏ부ㅠ라ㅓㅠㄷㅈ ㅓㅇ;냐ㅗㄹ'ㅑㄴㄱ' ㅏㅜㄱ/ㅣㅏㄷ주ㅠㄹ/ㅣㅏㅠ러ㅠ    ㅇ'ㅗㄹ'ㅇㄴㄹ'ㅏㅣㄷ</ㅣㅏㅇㄴ머ㅠ라ㅓㅇ뉴ㅏ류>
-                ㅇ'ㅗㄹ'ㅇㄴㄹ'ㅏㅣㄷ</ㅣㅏㅇㄴ머ㅠ라ㅓㅇ뉴ㅏ류>
+                투어일정을 입력해주세요
             </div>
 <%--        </form>--%>
     </div>
@@ -209,6 +212,7 @@
 
     //검색
     $("button.search-btn").click(function (){
+        console.log(markerList);
         //검색어
         var searchword=$("input.cafe-search-bar").val();
         //검색결과 string
@@ -224,6 +228,7 @@
             success: function(res) {
                 //검색 결과가 있을때
                 if (res.list.length != 0) {
+                    console.log(res.list);
                     $.each(res.list, function (i, ele) {
                         s += "<div class='search-result'>";
                         s += "<div class='result-name'><a href='../cafe/detail?cf_id=" + ele.cf_id + "'>" + ele.cf_nm +"</a>";
@@ -377,7 +382,8 @@
             dataType: "json",
             data: {"cf_id":id},
             success: function(res){
-                s += "<div class='cafe-in-tour' value='" + id + "'  >" + res.cf_nm;
+                s += "<div class='cafe-in-tour' value='" + id + "'>" + res.cf_nm;
+                s += "<input type='time' class='visit_time'>"
                 s += "<i class='fa-solid fa-xmark rm-tour-icon'></i>";
                 s += "</div>"
                 $("div.active-bar").children(".detail-bar-cafe").append(s);
@@ -408,7 +414,7 @@
                 //카페 데이터 담을 공간
                 var cafeData = {};
                 //카페 순서
-                cafeData.index = j + 1;
+                cafeData.visit_time =$(cafe).children(".visit_time").val();
                 //카페 id
                 cafeData.cf_id = $(cafe).attr("value");
                 tourPerDay.push(cafeData);
@@ -473,16 +479,6 @@
                          <div>★</div>
                       </div>`
         });
-        //투어만들기중 정보창
-        /*var newIW = new naver.maps.InfoWindow({
-            content: `<div class="infowindow">
-                         <span style="display:none">${dto.cf_id}</span>
-                         <div>${dto.cf_nm}</div>
-                         <button type="button" class="btnaddtour"><i class="fa-solid fa-plus"></i></button>
-                         <button type="button" class="btnrmtour"><i class="fa-solid fa-xmark"></i></button>
-                      </div>`
-        });*/
-
         //마커를 마커 배열에 넣기
         markerList.push(marker);
         //정보창을 정보창 배열에 넣기
