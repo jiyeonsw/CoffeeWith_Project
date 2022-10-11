@@ -15,6 +15,6 @@
         <typeAlias type="bit.data.dto.MyPageCafeLikeDto" alias="mpcldto"/>
         <typeAlias type="bit.data.dto.MyPageCafeCmtDto" alias="mpccdto"/>
         <typeAlias type="bit.data.dto.ComTourDto" alias="ctdto"/>
-
+        <typeAlias type="bit.data.dto.ComTourAnsDto" alias="ctadto"/>
     </typeAliases>
 </configuration>

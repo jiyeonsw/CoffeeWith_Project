@@ -21,7 +21,7 @@ public class LoginController {
     UserServiceInter userService;
 
     // 로그인 하기
-   @PostMapping("/login")
+    @PostMapping("/login")
     @ResponseBody
     public Map<String, String> loginprocess(String email_id, String ur_pw, HttpSession session)
     {
@@ -33,11 +33,11 @@ public class LoginController {
             // 로그인 유지는 4시간으로 설정
             session.setMaxInactiveInterval(60*60*4);
 
-//             로그인한 아이디에 대한 정보를 얻어서 세션에 저장
-//            UserDto dto=userService.getDataById(email_id);    // UserServiceInter에 해당 method 추가함
-//            session.setAttribute("loginok", "yes");
-//            session.setAttribute("loginid", dto.getUr_nm());
-//             session.setAttribute("loginname", dto.getUr_nk());
+//            로그인한 아이디에 대한 정보를 얻어서 세션에 저장
+            UserDto dto=userService.getDataById(email_id);    // UserServiceInter
+            session.setAttribute("loginok", "yes");
+            session.setAttribute("loginid", dto.getUr_nm());
+             session.setAttribute("loginname", dto.getUr_nk());
         }
         map.put("result", result==1?"success":"fail"); // 불일치하는 경우 fail
         return map;

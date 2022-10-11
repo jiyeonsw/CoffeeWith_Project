@@ -34,4 +34,6 @@ public interface UserServiceInter {
     public void updateUserPass(String new_pass, int login_id);
 
     public void updateUserData(UserDto dto);
+
+    public UserDto getDataById(String email_id);
 }
