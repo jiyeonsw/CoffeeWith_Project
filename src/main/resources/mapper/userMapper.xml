@@ -50,8 +50,8 @@
     </select>
 
     <select id="selectEmailId" parameterType="String" resultType="userDto">
-        SELECT * FROM coffeewith.ur
-        where email_id = #{email_id}
+        SELECT * FROM ur
+        WHERE email_id = #{email_id};
     </select>
 
     <update id="updateUserData" parameterType="UserDto">

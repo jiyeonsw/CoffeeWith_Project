@@ -91,6 +91,6 @@ public class UserDao implements UserDaoInter {
 
     @Override
     public UserDto selectEmailId(String id) {
-        return null;
+        return session.selectOne(ns + "selectEmailId", id);
     }
 }

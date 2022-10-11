@@ -76,7 +76,7 @@ public class UserService implements UserServiceInter {
 
     @Override
     public UserDto selectEmailId(String id) {
-        return null;
+        return userDao.selectEmailId(id);
     }
     @Override
     public void updateUserPass(String new_pass, int login_id) {
@@ -94,6 +94,7 @@ public class UserService implements UserServiceInter {
 
     @Override
     public UserDto getDataById(String email_id) {
+        // TODO
         return null;
     }
 }
