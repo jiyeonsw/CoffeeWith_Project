@@ -1,6 +1,7 @@
 package bit.data.service;
 
 import bit.data.dto.CafeCmtDto;
+import bit.data.dto.CafeCtgDto;
 import bit.data.dto.CafeDto;
 import bit.data.dto.CafeImgDto;
 
@@ -28,4 +29,6 @@ public interface CafeServiceInter {
     public List<CafeImgDto> selectCmtImg(int cf_id, int cm_id);
     public int selectMaxNum();
     public void updateRs(int rg, int rs);
+    public List<CafeCtgDto> selectCtgByCfid(int cf_id);
+    public int selectCMCntByCfid(int cf_id);
 }

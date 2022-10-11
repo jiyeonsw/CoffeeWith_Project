@@ -2,6 +2,7 @@ package bit.data.service;
 
 import bit.data.dao.CafeDaoInter;
 import bit.data.dto.CafeCmtDto;
+import bit.data.dto.CafeCtgDto;
 import bit.data.dto.CafeDto;
 import bit.data.dto.CafeImgDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,5 +164,14 @@ public class CafeService implements CafeServiceInter {
         map.put("rg",rg);
         map.put("rs",rs);
         cafeDao.updateRs(map);
+    }
+    @Override
+    public List<CafeCtgDto> selectCtgByCfid(int cf_id) {
+        return cafeDao.selectCtgByCfid(cf_id);
+    }
+
+    @Override
+    public int selectCMCntByCfid(int cf_id) {
+        return cafeDao.selectCMCntByCfid(cf_id);
     }
 }

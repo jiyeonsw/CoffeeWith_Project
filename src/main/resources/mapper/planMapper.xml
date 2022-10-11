@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.data.dao.PlanDao">
+    <insert id="insertPlan" parameterType="pldto">
+        INSERT INTO pl VALUES (null, #{ur_id}, #{pl_nm}, #{s_date}, #{e_date}, now(), #{pl_txt})
+    </insert>
+    <select id="selectPlanByName" parameterType="String" resultType="pldto">
+        SELECT * FROM pl WHERE pl_nm = #{pl_nm}
+    </select>
+    <insert id="insertPlanLoc" parameterType="pllocdto">
+        INSERT INTO  pl_loc VALUES (null, #{pl_id}, #{cf_id}, #{v_date}, #{seq}, #{v_time})
+    </insert>
+</mapper>

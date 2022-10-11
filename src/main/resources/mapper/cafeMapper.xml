@@ -33,4 +33,11 @@
 	<delete id="deleteCafeLike" parameterType="Map">
 		DELETE FROM cf_lk WHERE ur_id=#{ur_id} AND cf_id=#{cf_id}
 	</delete>
+
+	<select id="selectCtgByCfid" parameterType="int" resultType="cgdto">
+		SELECT cg.cg_nm FROM cf_ctg_rel cgr
+			LEFT JOIN cf_ctg cg
+				ON cg.cg_id= cgr.cg_id
+		WHERE cf_id=#{cf_id}
+	</select>
 </mapper>

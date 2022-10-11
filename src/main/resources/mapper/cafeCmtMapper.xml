@@ -45,5 +45,8 @@
 	<update id="updateRs" parameterType="map">
 		UPDATE cf_cmt SET rs=rs+1 WHERE rg=#{rg} and rs>#{rs}
 	</update>
+	<select id="selectCMCntByCfid" parameterType="int" resultType="int">
+		SELECT count(*) FROM cf_cmt WHERE cf_id=#{cf_id}
+	</select>
 </mapper>
 

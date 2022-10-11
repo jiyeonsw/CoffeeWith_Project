@@ -1,6 +1,7 @@
 package bit.data.dao;
 
 import bit.data.dto.CafeCmtDto;
+import bit.data.dto.CafeCtgDto;
 import bit.data.dto.CafeDto;
 import bit.data.dto.CafeImgDto;
 
@@ -29,4 +30,6 @@ public interface CafeDaoInter {
     public List<CafeImgDto>  selectCmtImg(Map<String,Integer> map);
     public int selectMaxNum();
     public void updateRs(Map<String,Integer> map);
+    public List<CafeCtgDto> selectCtgByCfid(int cf_id);
+    public int selectCMCntByCfid(int cf_id);
 }
