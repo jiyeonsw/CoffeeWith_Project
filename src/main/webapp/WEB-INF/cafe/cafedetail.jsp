@@ -101,7 +101,7 @@
         span.cm-star-n{
             color: lightgray;
         }
-        div#btn-ck{cursor: pointer; width: 300px;}
+        div#btn-ck{cursor: pointer; width: 70px;}
         span.cm-edit-del{
             float:right;
             cursor: pointer;
@@ -202,10 +202,10 @@
             <div><span>위치</span>  <span>${dto.loc_addr} </span></div>
             <div><span>리뷰</span>  <span><span class="cm-cnt">${dto.cm_cnt}</span>
                    <c:if test="${dto.cm_star==-1}">
-                       (<span class="cm-star" style="color: gray">★</span>-)
+                       (<span class="cm-star" style="color: gray">★</span><span class="cm-star-avg">-</span>)
                    </c:if>
                    <c:if test="${dto.cm_star>-1}">
-                       (<span class="cm-star">★</span><span id="cm-star-avg">${dto.cm_star}</span>)
+                       (<span class="cm-star">★</span><span class="cm-star-avg">${dto.cm_star}</span>)
                    </c:if>
                </span></div>
             <hr>
@@ -376,8 +376,12 @@
                     var cm_cnt = res.cm_cnt;
                     var cm_star=res.cm_star;
                     $("span.cm-cnt").text(cm_cnt);
-                    $("span#cm-star-avg").text(cm_star);
-
+                    var pre_star = $("span.cm-star-avg").text();
+                    //console.log(pre_star);
+                    if (pre_star=="-"){
+                        $("span.cm-star").css("color",'rgba(250, 208, 0, 0.99)');
+                    }
+                    $("span.cm-star-avg").text(cm_star);
                 }//succ
             });//ajax
         });//리뷰등록
@@ -396,8 +400,16 @@
                     $("div#btn-cm-link").trigger('click');
                     var cm_cnt = res.cm_cnt;
                     var cm_star=res.cm_star;
+                    console.log(cm_star);
                     $("span.cm-cnt").text(cm_cnt);
-                    $("span#cm-star-avg").text(cm_star);
+                    var pre_star = $("span.cm-star-avg").text();
+                    console.log(pre_star);
+                    if (cm_star==-1){
+                        $("span.cm-star").css("color",'gray');
+                        $("span.cm-star-avg").text("-");
+                    }else {
+                        $("span.cm-star-avg").text(cm_star);
+                    }
                 }//succ
             });//ajax
         });//리뷰삭제
