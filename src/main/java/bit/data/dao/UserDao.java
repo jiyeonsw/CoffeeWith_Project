@@ -88,4 +88,9 @@ public class UserDao implements UserDaoInter {
     public void updateUserData(UserDto dto) {
         session.update(ns + "updateUserData", dto);
     }
+
+    @Override
+    public UserDto selectEmailId(String id) {
+        return null;
+    }
 }
