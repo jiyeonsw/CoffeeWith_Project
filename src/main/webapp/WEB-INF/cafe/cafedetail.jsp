@@ -205,7 +205,7 @@
                        (<span class="cm-star" style="color: gray">★</span>-)
                    </c:if>
                    <c:if test="${dto.cm_star>-1}">
-                       (<span class="cm-star">★</span>${dto.cm_star})
+                       (<span class="cm-star">★</span><span id="cm-star-avg">${dto.cm_star}</span>)
                    </c:if>
                </span></div>
             <hr>
@@ -374,7 +374,9 @@
                 success: function (res) {
                     cmList();
                     var cm_cnt = res.cm_cnt;
+                    var cm_star=res.cm_star;
                     $("span.cm-cnt").text(cm_cnt);
+                    $("span#cm-star-avg").text(cm_star);
 
                 }//succ
             });//ajax
@@ -393,7 +395,9 @@
                 success: function (res) {
                     $("div#btn-cm-link").trigger('click');
                     var cm_cnt = res.cm_cnt;
+                    var cm_star=res.cm_star;
                     $("span.cm-cnt").text(cm_cnt);
+                    $("span#cm-star-avg").text(cm_star);
                 }//succ
             });//ajax
         });//리뷰삭제
