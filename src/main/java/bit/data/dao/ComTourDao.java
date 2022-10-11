@@ -38,6 +38,11 @@ public class ComTourDao implements ComTourDaoInter{
     }
 
     @Override
+    public ComTourDto getData(int num) {
+        return session.selectOne(ns+"selectByNum",num);
+    }
+
+    @Override
     public void updateComTour(ComTourDto dto) {
 
     }
