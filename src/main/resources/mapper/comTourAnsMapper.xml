@@ -7,7 +7,8 @@
         INSERT INTO tr_cmt values (null,#{ur_id},#{tr_id},#{tm_txt},now(),now(),#{rg},#{rs},#{rl})
     </insert>
 
-
-
-
+    <select id="selectAllAnsData" parameterType="int" resultType="ctadto">
+       SELECT * FROM tr_cmt INNER JOIN ur ON tr_cmt.ur_id=ur.ur_id where tr_id=#{tr_id} order by tm_id desc
+    </select>
+    <!--select * from tr_cmt where tr_id=#{tr_id} order by tm_id desc-->
 </mapper>
