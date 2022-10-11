@@ -121,24 +121,32 @@ public class UserController {
 
     // 유저 정보 수정
     @PostMapping("/update_user")
-    public String updateUser(HttpSession session, HttpServletRequest request, UserDto dto, MultipartFile profil_img) {
+    public String updateUser(HttpSession session,
+                             HttpServletRequest request,
+                             UserDto dto,
+                             MultipartFile profile_img) {
 
+
+        //System.out.println(profile_img);
         //Tomcat Upload path
-        String path = request.getSession().getServletContext().getRealPath("/resources/images/profil_img");
+        String path = request.getSession().getServletContext().getRealPath("/resources/prfimg");
         System.out.println(path);
 
         //upload file name
-        String file_name = ChangeName.getChangeFileName(profil_img.getOriginalFilename());
+        String file_name = ChangeName.getChangeFileName(profile_img.getOriginalFilename());
 
         //dto ur_img에 수정할 이미지 추가
         dto.setUr_img(file_name);
 
         try {
-            profil_img.transferTo(new File(path + "/" + file_name));
+            profile_img.transferTo(new File(path + "/" + file_name));
             userService.updateUserData(dto);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("upnk:" + dto.getUr_nk());
+        System.out.println("upimg:" + dto.getUr_img());
+        System.out.println("upsi:" + dto.getLoc_si());
 
         session.setAttribute("login_nick", dto.getUr_nk());
         session.setAttribute("login_img", dto.getUr_img());

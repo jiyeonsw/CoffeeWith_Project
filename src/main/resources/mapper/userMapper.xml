@@ -57,7 +57,8 @@
         UPDATE ur
         SET ur_nk  = #{ur_nk},
             loc_si = #{loc_si},
-            loc_gu = #{loc_gu}
+            loc_gu = #{loc_gu},
+            ur_img = #{ur_img}
         WHERE ur_id = #{ur_id};
     </update>
 
