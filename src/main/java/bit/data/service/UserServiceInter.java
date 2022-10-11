@@ -19,7 +19,7 @@ public interface UserServiceInter {
     public UserDto selectDataById(int ur_id);
 
 
-    public UserDto getDataById(String id);
+    public UserDto selectEmailId(String id);
 
     public int getIdPassCheck(String email_id, String ur_pw);
 
