@@ -6,8 +6,6 @@
 <configuration>
     <typeAliases>
         <typeAlias type="bit.data.dto.UserDto" alias="userDto"/>
-        <typeAlias type="bit.data.dto.BoardDto" alias="bdto"/>
-        <typeAlias type="bit.data.dto.BoardAnswerDto" alias="badto"/>
         <typeAlias type="bit.data.dto.CafeDto" alias="cfdto"/>
         <typeAlias type="bit.data.dto.CafeImgDto" alias="cidto"/>
         <typeAlias type="bit.data.dto.CafeCmtDto" alias="cmdto"/>
@@ -15,6 +13,9 @@
         <typeAlias type="bit.data.dto.MyPageCafeLikeDto" alias="mpcldto"/>
         <typeAlias type="bit.data.dto.MyPageCafeCmtDto" alias="mpccdto"/>
         <typeAlias type="bit.data.dto.ComTourDto" alias="ctdto"/>
+        <typeAlias type="bit.data.dto.ComTourAnsDto" alias="ctadto"/>
+        <typeAlias type="bit.data.dto.PlanDto" alias="pldto"/>
+        <typeAlias type="bit.data.dto.PlanLocDto" alias="pllocdto"/>
 
     </typeAliases>
 </configuration>

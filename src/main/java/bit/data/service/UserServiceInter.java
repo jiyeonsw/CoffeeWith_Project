@@ -19,7 +19,7 @@ public interface UserServiceInter {
     public UserDto selectDataById(int ur_id);
 
 
-    public UserDto getDataById(String id);
+    public UserDto selectEmailId(String id);
 
     public int getIdPassCheck(String email_id, String ur_pw);
 
@@ -29,4 +29,9 @@ public interface UserServiceInter {
 
     public void updateUser(UserDto dto);
 
+    public String selectUserPass(int ur_id);
+
+    public void updateUserPass(String new_pass, int login_id);
+
+    public void updateUserData(UserDto dto);
 }

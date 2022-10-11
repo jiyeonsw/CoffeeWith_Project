@@ -42,6 +42,11 @@ public class ComTourService implements ComTourServiceInter{
         return daoInter.getUserData(num);
     }
 
+    @Override
+    public ComTourDto getData(int num) {
+        return daoInter.getData(num);
+    }
+
 
     @Override
     public void updateComTour(ComTourDto dto) {

@@ -14,22 +14,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
     <style type="text/css">
-        @font-face {
-            font-family: 'GangwonEdu_OTFBoldA';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        body * {
-            font-family: 'GangwonEdu_OTFBoldA';
-            color: #664400;
-        }
 
         .logotitle {
             font-family: 'GangwonEdu_OTFBoldA';
             font-style: oblique;
             font-weight: bolder;
+            font-size: 30px;
         }
 
         #btnlogin {
@@ -53,6 +43,7 @@
             display: block;
             width: 180px;
             font-family: 'Jua';
+            font-size: 20px;
         }
 
         li.main > a:hover {
@@ -63,7 +54,7 @@
 <body>
 <!-- 로고 버튼 누르면 홈으로 -->
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<a href="${root}/" class="logotitle" style="font-size: 30px;">
+<a href="${root}/" class="logotitle">
     <img src="${root}/images/logo1.png" class="rounded-circle" width="40" height="40">
     <b> Coffee With </b></a>
 
@@ -103,11 +94,10 @@
         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
                 세션주기</button>
     </c:if>
-
     <c:if test="${sessionScope.login_ok!=null}">
         <b>${sessionScope.login_nick}님</b>
         <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
-                onclick="location.href='${root}/mypage'">My Page</button>
+                onclick="location.href='${root}/mypage/main'">My Page</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
         <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
                 세션제거</button>
@@ -182,6 +172,7 @@
             }
         })
     })
+
 </script>
 </body>
 </html>

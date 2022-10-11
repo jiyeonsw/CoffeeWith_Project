@@ -12,16 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Coffeewith</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-
     <style>
-        /*  .bk_container div, .bk_container img {
-              border: 1px solid gray;
-          }*/
 
         .bk_container {
             display: grid;
@@ -139,6 +130,7 @@
     </ul>
 </div>
 <script>
+    
     //북마크 제거 버튼(-) 클릭시 db data delete
     $(".un-bk").click(function () {
         var ur_id = '${sessionScope.login_id }';
@@ -155,6 +147,7 @@
             }//suc
         })//ajax
     })//$(".un-bk")
+
 </script>
 </body>
 </html>

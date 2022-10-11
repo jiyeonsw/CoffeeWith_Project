@@ -12,6 +12,11 @@
         FROM ur
         WHERE ur_nk = #{userNick}
     </select>
+    <select id="selectUserPass" parameterType="int" resultType="String">
+        SELECT ur.ur_pw
+        FROM ur
+        WHERE ur_id = #{ur_id};
+    </select>
     <insert id="insertUser" parameterType="UserDto">
         INSERT INTO ur (ur_id, ur_nk, ur_nm, ur_pw, ur_txt, ur_img, email_id, naver_id, kakao_id, google_id, loc_si,
                         loc_gu, status, report, ur_phnum)
@@ -44,4 +49,21 @@
         GROUP BY loc_gu;
     </select>
 
+    <select id="selectEmailId" parameterType="String" resultType="userDto">
+        SELECT * FROM coffewith.ur where email_id = #{email_id}
+    </select>
+
+    <update id="updateUserData" parameterType="UserDto">
+        UPDATE ur
+        SET ur_nk  = #{ur_nk},
+            loc_si = #{loc_si},
+            loc_gu = #{loc_gu}
+        WHERE ur_id = #{ur_id};
+    </update>
+
+    <update id="updateUserPass" parameterType="Map">
+        UPDATE ur
+        SET ur_pw = #{new_pass}
+        WHERE ur_id = #{login_id};
+    </update>
 </mapper>
