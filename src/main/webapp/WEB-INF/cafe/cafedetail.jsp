@@ -398,6 +398,7 @@
 
         //리뷰수정버튼클릭
         $(document).on("click","#btnmedit",function (){
+
             var udata=$("#mform").serialize();
             //console.log(cm_id);
             $.ajax({
@@ -427,6 +428,7 @@
                 ccf+='<input type="hidden" name="rs" value='+rs+'>';
                 ccf+='<input type="hidden" name="rl" value='+rl+'>';
                 ccf+='<input type="hidden" name="star" value="0">';
+                ccf+='<input type="file" class="cc_upload" style="display: none" multiple="multiple">';
                 ccf+='<br><div class="input-group">';
                 ccf+='<textarea name="cm_txt" style=" height: 30px;" class="form-control cm-cm-txt"></textarea>';
                 ccf+='<button type="button" class="btn-cc-save" rg='+rg+' cf_id="${dto.cf_id }">댓글등록</button>';
@@ -445,15 +447,22 @@
         //리뷰댓글등록
         $(document).on("click",".btn-cc-save",function (){
             var rg=$(this).attr("rg");
-            console.log(rg);
+            //console.log(rg);
             var cf_id=$(this).attr("cf_id");
             //console.log(cf_id);
-            var ccdata=$(".ccform").serialize();
-            console.log(ccdata);
+            var formData=new FormData();
+            formData.append("uploadFiles",$(".cc_upload")[0].files[0]);
+            var ccdata=$(".ccform").serializeArray();
+            ccdata.forEach(function(data) {
+                formData.append(data["name"], data["value"]);
+            });
+            //console.log(formData);
             $.ajax({
                 type: "post",
                 url: "insert_cmt",
-                data: ccdata,
+                processData:false,
+                contentType:false,
+                data: formData,
                 dataType: "text",
                 success: function (res) {
                     ccList(cf_id,rg);

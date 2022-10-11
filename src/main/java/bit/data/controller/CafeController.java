@@ -7,10 +7,7 @@ import bit.data.service.CafeServiceInter;
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import util.ChangeName;
@@ -103,7 +100,7 @@ public class CafeController {
 
     @PostMapping("/insert_cmt")
     @ResponseBody
-    public void insertCafeCmt(CafeCmtDto dto, List<MultipartFile> uploadFiles){
+    public void insertCafeCmt(CafeCmtDto dto, @RequestParam(required = false) List<MultipartFile> uploadFiles){
         //cm_id를 위해 먼저 cmt table에 insert
         cafeService.insertCafeCmt(dto);
         String path= "E://Java0711//semiproject//CoffeeWith//src//main//webapp//resources//images//upload";
@@ -119,18 +116,18 @@ public class CafeController {
         //System.out.println("cm_id:"+dto.getCm_id());
         //System.out.println("cf_id:"+dto.getCf_id());
 
+
+        CafeImgDto cidto=new CafeImgDto();
+        cidto.setCf_id(dto.getCf_id());
+        cidto.setCm_id(dto.getCm_id());
         int idx=1;
-        if(uploadFiles.get(0).getOriginalFilename().equals("")){
-            System.out.println("파일없음");
-        }
-        else {
-            CafeImgDto cidto=new CafeImgDto();
-            cidto.setCf_id(dto.getCf_id());
-            cidto.setCm_id(dto.getCm_id());
-            for (MultipartFile multi : uploadFiles) {
-            String upload_img = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
-            //System.out.println("파일명:"+upload_img);
-            //업로드
+        int checkNull=1;
+        for (MultipartFile multi : uploadFiles) {
+            if(multi.isEmpty()) checkNull=0;
+            if (checkNull==1) {
+                String upload_img = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+                //System.out.println("파일명:"+upload_img);
+                //업로드
                 try {
                     multi.transferTo(new File(path + "/" + upload_img));
                     cidto.setCi_nm(upload_img);
@@ -138,7 +135,7 @@ public class CafeController {
                 } catch (IllegalStateException | IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                }
+                }//catch
             }
         }
     }
