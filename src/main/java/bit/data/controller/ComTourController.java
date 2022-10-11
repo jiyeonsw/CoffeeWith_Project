@@ -68,7 +68,7 @@ public class ComTourController {
             @RequestParam(defaultValue = "0") int tm_id) /*answer의 PK*/
     {
         ComTourDto dto = comTourService.getData(num);
-        System.out.println(dto);
+        //System.out.println(dto);
         ModelAndView mview = new ModelAndView();
         mview.addObject("dto",dto);
 
