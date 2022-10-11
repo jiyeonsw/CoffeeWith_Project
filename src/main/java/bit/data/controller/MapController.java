@@ -2,14 +2,24 @@ package bit.data.controller;
 
 import bit.data.dto.CafeCmtDto;
 import bit.data.dto.CafeDto;
+import bit.data.dto.PlanDto;
+import bit.data.dto.PlanLocDto;
 import bit.data.service.CafeServiceInter;
+import bit.data.service.PlanServiceInter;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import util.ChangeDate;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +31,9 @@ public class MapController {
     @Autowired
     CafeServiceInter cafeService;
 
+    @Autowired
+    PlanServiceInter planService;
+
     @GetMapping("/mainmap")
     public String mainMap(Model model) {
         List<CafeDto> list = cafeService.selectAllCafe();
@@ -30,14 +43,79 @@ public class MapController {
 
     @PostMapping("/maketour")
     public String makeTour(HttpSession session,
-                           @RequestParam List<Map<String, Object>> tourlist,
+                           @RequestParam String tourlist,
                            @RequestParam String tourname,
                            @RequestParam String tourdate,
-                           @RequestParam String tourinfo)
-    {
+                           @RequestParam String tourinfo) throws ParseException {
         int loginId = (int) session.getAttribute("login_id");
 
-        return "";
+        //pl 테이블에 입력할 dto
+        PlanDto dto = new PlanDto();
+        dto.setUr_id(loginId);
+        dto.setPl_nm(tourname);
+        dto.setS_date(ChangeDate.getS_Date(tourdate));
+        dto.setE_date(ChangeDate.getE_Date(tourdate));
+        dto.setPl_txt(tourinfo);
+        planService.insertPlan(dto);
+
+        //pl_loc에 세부 정보 입력
+        //입력 받은tourname을 가진 pl_id가져오기
+        PlanDto ndto = planService.selectPlanByName(tourname);
+        int pl_id = ndto.getPl_id();
+        //String to JSON
+        JSONParser jsonParser = new JSONParser();
+        JSONArray tourArray = (JSONArray)jsonParser.parse(tourlist);
+        //String to Time
+        SimpleDateFormat toDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat toTime = new SimpleDateFormat("HH:mm");
+
+        //날짜수 만큼 반복
+        for (int i=0; i<tourArray.size();i++){
+            //임시 dayJSON 오브젝트
+            JSONObject obj = new JSONObject();
+            //해당 날짜 JSON
+            obj = (JSONObject)tourArray.get(i);
+            //JSON오브젝트에서 v_date데이터 뽑고 String 으로 변환
+            String v_date = obj.get("day").toString();
+            //date 담을 임시 Date 타입
+            Date vdate = null;
+            try {
+                vdate = toDate.parse(v_date);
+            } catch (java.text.ParseException e) {
+                throw new RuntimeException(e);
+            }
+            //tour정보 얻기 (Array로)
+            JSONArray dayArray = (JSONArray)obj.get("tours");
+            for (int j=0; j< dayArray.size(); j++){
+                //pl_loc테이블에 입력할 dto
+                PlanLocDto plocdto = new PlanLocDto();
+                //임시 tourJSON 오브젝트
+                JSONObject tobj = new JSONObject();
+                //해당 카페 JSON
+                tobj = (JSONObject)dayArray.get(j);
+                //JSON오브젝트에서 v_time데이터 뽑고 String 으로 변환
+                String v_time = tobj.get("visit_time").toString();
+                //시간을 담을 임시 Date 타입
+                Date vtime= null;
+                try {
+                    //뽑은 String을 time형태로 변환
+                    vtime = toTime.parse(v_time);
+                } catch (java.text.ParseException e) {
+                    throw new RuntimeException(e);
+                }
+                //cf_id얻기
+                String cf_id = tobj.get("cf_id").toString();
+                //dto에 데이터 각각 넣기
+                plocdto.setPl_id(pl_id);
+                plocdto.setCf_id(Integer.parseInt(cf_id));
+                plocdto.setV_time(new Time(vtime.getTime()));
+                plocdto.setSeq(j);
+                plocdto.setV_date(new java.sql.Date(vdate.getTime()));
+                //DB에 넣기 (pl_loc)테이블
+                planService.insertPlanLoc(plocdto);
+            }
+        }
+        return "redirect:mainmap";
     }
 
     @GetMapping("/getcafedata")
