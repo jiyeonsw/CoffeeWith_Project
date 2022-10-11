@@ -23,19 +23,17 @@
 
         #container{
             display: flex;
-            height: 100%;
+            height: 550px;
         }
 
         #map{
             float:right;
             width:80%;
-            height: 590px;
         }
 
         #sidebar{
             width:20%;
             background-color: white;
-            height: 590px;
         }
 
         button.btn-make-tour{
@@ -115,15 +113,9 @@
             margin-left: 30px;
         }
 
-        .visit_time{
-            float: right;
-        }
-
         .rm-tour-icon{
             float: right;
         }
-
-
 
     </style>
 </head>
@@ -143,9 +135,9 @@
     </div>
     <div id="map"></div>
     <div id="maketour">
-<%--        <form action="maketour" method="post" onsubmit="return clttourlist()">--%>
+        <form action="maketour" method="post" onsubmit="return clttourlist()">
             <div class="tour-input">
-                <div for="tourname" class="tour-input-title">투어명<button type="button" id="tour-submit">투어 추가</button></div>
+                <div for="tourname" class="tour-input-title">투어명<button type="submit" id="tour-submit">투어 추가</button></div>
                 <input type="text" id="tourname" placeholder="투어명" class="form-control"
                        required="required" name="tourname">
             </div>
@@ -167,7 +159,7 @@
             <div class="tour-detail">
                 투어일정을 입력해주세요
             </div>
-<%--        </form>--%>
+        </form>
     </div>
 </div>
 <script>
@@ -177,7 +169,7 @@
 
     //투어추가 실헝용 추후에 삭제밑 위에서 폼 태그추가, button type submit으로 변경요망
     $(document).on('click','#tour-submit',function (){
-       clttourlist();
+       // clttourlist();
        console.log("투어이름: " + $("#tourname").val());
        console.log("투어소개: " + $("#tourinfo").val());
        console.log("투어일정: " + $("#tourdate").val());
@@ -214,7 +206,6 @@
 
     //검색
     $("button.search-btn").click(function (){
-        console.log(markerList);
         //검색어
         var searchword=$("input.cafe-search-bar").val();
         //검색결과 string
@@ -230,7 +221,6 @@
             success: function(res) {
                 //검색 결과가 있을때
                 if (res.list.length != 0) {
-                    console.log(res.list);
                     $.each(res.list, function (i, ele) {
                         s += "<div class='search-result'>";
                         s += "<div class='result-name'><a href='../cafe/detail?cf_id=" + ele.cf_id + "'>" + ele.cf_nm +"</a>";
@@ -312,7 +302,6 @@
             return;
         };
         isMakingTour = !isMakingTour;
-        //console.log(isMakingTour);
         if(isMakingTour==true)
         {
             //열려있는 정보창 닫기
@@ -393,7 +382,14 @@
         });
     });
 
-    //- 아이콘 클릭시 일정에서 삭제
+    //시간 설정시 시간별로 정렬
+    $(document).on('change','input.visit_time',function(){
+        $(this).parent().parent().children().each(function(i,day){
+            console.log(day);
+        });
+    });
+
+    // 아이콘 클릭시 일정에서 삭제
     $(document).on('click','.rm-tour-icon',function(){
         $(this).parent().remove();
     });

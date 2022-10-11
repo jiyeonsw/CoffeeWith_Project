@@ -14,6 +14,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
     <style type="text/css">
+        @font-face {
+            font-family: 'GangwonEdu_OTFBoldA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body * {
+            font-family: 'GangwonEdu_OTFBoldA';
+            color: #664400;
+        }
 
         .logotitle {
             font-family: 'GangwonEdu_OTFBoldA';

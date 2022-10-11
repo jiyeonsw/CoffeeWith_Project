@@ -20,8 +20,9 @@ public class ComTourAnsDao implements ComTourAnsDaoInter{
     }
 
     @Override
-    public List<ComTourAnsDto> getAllAnsList(int tr_id) {
-        return null;
+    public List<ComTourAnsDto> getAllAnsList(int tr_id)
+    {
+    return session.selectList(ns+"selectAllAnsData", tr_id);
     }
 
     @Override

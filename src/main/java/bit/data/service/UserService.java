@@ -91,4 +91,9 @@ public class UserService implements UserServiceInter {
     public void updateUserData(UserDto dto) {
         userDao.updateUserData(dto);
     }
+
+    @Override
+    public UserDto getDataById(String email_id) {
+        return null;
+    }
 }

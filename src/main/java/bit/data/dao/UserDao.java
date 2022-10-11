@@ -14,7 +14,7 @@ public class UserDao implements UserDaoInter {
     SqlSession session;
     String ns = "bit.data.dao.UserDao.";
 
-    @Override  // UserDaoInter에 해당 method 추가함
+    @Override  // UserDaoInter
     public int getTotalCount() {
         // TODO Auto-generated method stub
         return session.selectOne(ns+"getTotalCount");

@@ -29,16 +29,28 @@
         }
 
         .img-area {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             display: block;
             position: relative;
+            overflow: hidden;
+
         }
 
         .img-area > div {
-            overflow: hidden;
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .img-area img {
+            padding: 0.1rem;
+            background-color: #ecf2f5;
+            border: 1px solid #dee2e6;
             border-radius: 50%;
             box-shadow: 1px 1px 1px gray;
+            width: 99%;
+            height: 99%;
         }
 
         .img-area:after {
@@ -49,11 +61,6 @@
             width: 24px;
             height: 24px;
             background: url('${root}/images/pen.png') no-repeat;
-        }
-
-        .img-area img {
-            width: 100%;
-            height: 100%;
         }
 
         .box-type-01 {
@@ -67,7 +74,6 @@
         .txt, .num {
             color: #f0f0f0;
         }
-
 
         .link-area {
             height: 60px;
@@ -171,8 +177,8 @@
         <a href="${root}/mypage/edit_info" class="img-area">
             <div>
                 <c:if test="${sessionScope.login_img != null}">
-                    <img src="${root}/resources/prfimg/${sessionScope.login_img}"
-                         onerror="this.src='${root}/images/noprofile.jpg'">
+                    <img src="${root}/res/prfimg/${sessionScope.login_img}">
+                    <%--                         onerror="this.src='${root}/images/noprofile.jpg'">--%>
                 </c:if>
                 <c:if test="${sessionScope.login_img == null}">
                     <img src="${root}/images/noprofile.jpg">
@@ -206,16 +212,16 @@
         </div>
         <div class="link-area">
             <a href="#" class="inner">
-                <div class="txt join-tr">
-                    참여중인 투어
+                <div class="txt my-tr-plan">
+                    투어 플랜
                     <span class="num"></span>
                 </div>
             </a>
         </div>
         <div class="link-area">
             <a href="#" class="inner">
-                <div class="txt before-tr">
-                    지난 투어내역
+                <div class="txt my-com-tr">
+                    참여중인 투어
                     <span class="num"></span>
                 </div>
             </a>

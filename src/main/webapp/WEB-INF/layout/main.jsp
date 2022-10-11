@@ -14,6 +14,18 @@
     <title>CofeeWith</title>
 
     <style type="text/css">
+        @font-face {
+            font-family: 'GangwonEdu_OTFBoldA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body * {
+            font-family: 'GangwonEdu_OTFBoldA';
+            color: #664400;
+        }
+
         body {
             font-size: 20px;
         }
@@ -32,7 +44,6 @@
 <body>
 <div id="main">
     메인 홈페이지 부분
-
 </div>
 </body>
 </html>
