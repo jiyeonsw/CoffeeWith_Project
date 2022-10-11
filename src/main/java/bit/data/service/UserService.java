@@ -68,7 +68,7 @@ public class UserService implements UserServiceInter {
 
     @Override
     public void updateUser(UserDto dto) {
-
+    }
     @Override
     public String selectUserPass(int ur_id) {
         return userDao.selectUserPass(ur_id);
