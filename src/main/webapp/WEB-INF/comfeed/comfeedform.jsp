@@ -14,8 +14,9 @@
 <link rel="stylesheet" href="../res/css/style.css" type="text/css">
 <style type="text/css">
 
-    table{
+    .table{
         height: 700px;
+        margin-bottom: 0px;
     }
 
     .fddata {
@@ -28,12 +29,13 @@
         padding-bottom: 10px;
     }
 
-    .fddata .fdtitle .btn-close {
-        margin-right: 5px;
+    .fddata .fdtitle a{
+        padding-bottom: 10px;
         float: right;
+        padding-right: 15px;
     }
 
-    table .photo {
+    .table .photo {
         height: 100%;
         width: 70%;
         vertical-align: middle;
@@ -41,17 +43,17 @@
         padding: 0;
     }
 
-    table .profile {
+    .table .profile {
         height: 5%;
         text-align: left;
     }
 
-    table .fdcontent {
+    .table .fdcontent {
         height: 85%;
         vertical-align: top;
     }
 
-    table .inputtext {
+    .table .inputtext {
         height: 100%;
         width: 100%;
         padding: 0;
@@ -59,18 +61,12 @@
         outline: none;
     }
 
-    table .fdcafe {
+    .table .fdcafe {
         height: 5%;
     }
 
-    table .fdtag {
+    .table .fdtag {
         height: 5%;
-    }
-
-    .fddata .fdbot {
-        padding-bottom: 10px;
-        float: right;
-        padding-right: 15px;
     }
 
     #showimg{
@@ -88,10 +84,12 @@
     }
 
     #showimg .carousel-item img{
+        position: absolute;
+        top: 0;
+        left: 0;
         height: 100%;
-        max-width: 100%;
+        width: 100%;
     }
-
 
 </style>
 </head>
@@ -100,12 +98,12 @@
 
 <form action="insert" id="fdsubmit" method="post" enctype="multipart/form-data">
     <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
-
     <div class="fddata">
         <div class="fdtitle">
             <b>새 피드 작성</b>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <a type="submit" data-bs-dismiss="modal" onclick="document.getElementById('fdsubmit').submit();">공유하기</a>
         </div>
+
         <table class="table table-bordered" >
             <tr>
                 <td rowspan="4" class="photo">
@@ -113,14 +111,9 @@
                     <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="upload">
 
                     <!-- Carousel -->
-                    <div id="showimg" class="carousel slide" data-bs-ride="carousel" style="display: none">
+                    <div id="showimg" class="carousel slide" data-bs-interval="false" style="display: none">
 
-                        <!-- The slideshow/carousel -->
-                        <div class="carousel-inner" data-bs-interval="false">
-                            <!-- 처음 이미지에 active -->
-                        </div>
-
-                        <!-- Left and right controls/icons -->
+                        <div class="carousel-inner" data-bs-interval="false"></div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#showimg" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon"></span>
                         </button>
@@ -130,12 +123,13 @@
                     </div>
                 </td>
                 <td class="profile">
+                    <img src="${root}/images/${sessionScope.login_img}" style="border-radius: 50% 50%">
                     ${sessionScope.login_nick}
                 </td>
             </tr>
             <tr>
                 <td class="fdcontent">
-                    <textarea class="inputtext" required="required" name="fd_txt" placeholder="내용 입력"></textarea>
+                    <textarea class="inputtext" style="resize:none" required="required" name="fd_txt" placeholder="내용 입력"></textarea>
                 </td>
             </tr>
             <tr>
@@ -149,9 +143,6 @@
                 </td>
             </tr>
         </table>
-        <div class="fdbot">
-            <a type="submit" data-bs-dismiss="modal" onclick="document.getElementById('fdsubmit').submit();">공유하기</a>
-        </div>
     </div>
 </form>
 </body>
@@ -212,7 +203,6 @@
 
         });
     }
-
 
     function filter(){
         console.log("1");

@@ -17,6 +17,5 @@
         <typeAlias type="bit.data.dto.CafeCtgDto" alias="cgdto"/>
         <typeAlias type="bit.data.dto.PlanDto" alias="pldto"/>
         <typeAlias type="bit.data.dto.PlanLocDto" alias="pllocdto"/>
-
     </typeAliases>
 </configuration>

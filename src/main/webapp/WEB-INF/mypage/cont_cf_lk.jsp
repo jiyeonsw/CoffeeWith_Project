@@ -142,7 +142,7 @@
             dataType: "text",
             data: {"ur_id": ur_id, "cf_id": cf_id},
             success: function (res) {
-                // alert("yes");
+                alert("북마크에서 정상 제외되었습니다.")
                 location.reload();
             }//suc
         })//ajax
