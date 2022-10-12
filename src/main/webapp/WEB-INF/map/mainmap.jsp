@@ -86,7 +86,7 @@
             width:300px;
         }
 
-        #modalpopup{
+        #modalpopupbtn{
             float:right;
         }
 
@@ -117,6 +117,10 @@
             float: right;
         }
 
+        .btncontainer{
+            float: right;
+        }
+
     </style>
 </head>
 <body>
@@ -140,7 +144,8 @@
             <input type="text" id="modaltourinfo" name="tourinfo" hidden>
             <input type="text" id="modaltourdate" name="tourdate" hidden>
             <input type="text" id="modaltourlist" name="tourlist" hidden>
-            <div>
+            <div id="modalmap"></div>
+            <div class="btncontainer">
                 <button type="submit" id="tour-submit">투어 추가</button>
                 <button type="button" id="tour-cancel">취소</button>
             </div>
@@ -148,7 +153,7 @@
     </div>
     <div id="maketour">
         <div class="tour-input">
-            <div for="tourname" class="tour-input-title">투어명<button type="button" id="modalpopup">경로 확인</button></div>
+            <div for="tourname" class="tour-input-title">투어명<button type="button" id="modalpopupbtn">경로 확인</button></div>
             <input type="text" id="tourname" placeholder="투어명" class="form-control" name="tourname">
         </div>
         <hr>
@@ -172,7 +177,7 @@
 </div>
 <script>
     //모달 띄우기
-    $(document).on('click','#modalpopup', function (){
+    $(document).on('click','#modalpopupbtn', function (){
         clttourlist();
         $("#maketourmodal").show();
         $("#modaltourname").val($("#tourname").val());
@@ -183,7 +188,6 @@
         console.log($("#modaltourname").val());
         console.log($("#modaltourinfo").val());
         console.log($("#modaltourdate").val());
-
     });
     //모달 닫기
     $(document).on('click','#tour-cancel',function (){
@@ -203,25 +207,19 @@
             alert("투어일정을 선택해주세요");
             return false;
         }
-        if($("#modaltourlist").val()=="[]"){
-            alert("투어을 선택해주세요");
+        if($("#modaltourlist").val().indexOf('"tours":[]')!=-1){
+            alert("투어할 카페를 선택해주세요");
+            return false;
+        }
+        if($("#modaltourlist").val().indexOf('"visit_time":""')!=-1){
+            alert("투어할 시간를 선택해주세요");
             return false;
         }
     }
 
-
     /*$(document).ready(function (){
         $("button.search-btn").trigger('click');
     })*/
-
-    // //투어추가 실헝용 추후에 삭제밑 위에서 폼 태그추가, button type submit으로 변경요망
-    // $(document).on('click','#tour-submit',function (){
-    //    // clttourlist();
-    //    console.log("투어이름: " + $("#tourname").val());
-    //    console.log("투어소개: " + $("#tourinfo").val());
-    //    console.log("투어일정: " + $("#tourdate").val());
-    //    console.log("투어리스트: " + $("#tourlist").val());
-    // });
 
     //전역변수 선언
     var isMakingTour= false;
