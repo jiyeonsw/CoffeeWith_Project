@@ -16,21 +16,111 @@
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8mlhxamjq5"></script>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <style type="text/css">
+        .btn-submit {
+            width: 100px;
+            margin: 0 4px;
+            color: #404040;
+            background: #fff;
+            min-width: 72px;
+            height: 60px;
+            padding: 0 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #664400;
+            line-height: 33px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+        }
+        .btn-submit:hover{
+            background: #664400;
+            color: #fff;
+            box-shadow: 2px 2px 2px 2px lightgray;
+        }
+        .btn-camera{
+            width: 100px;
+            margin: 0 4px;
+            color: #404040;
+            background: #fff;
+            min-width: 72px;
+            height: 60px;
+            padding: 0 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #664400;
+            line-height: 33px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+        }
+        div.cafe-main-box{
+            width: 900px;
+            /*margin:50px 50px;*/
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        div.cafe-main-content{
+            display: inline-block;
+            text-align: left;
+        }
+        a.back{
+            color: #664400;
+        }
         div.cf-top{
             display: flex;
         }
+        div.cf-txt{
+            height:120px;
+            word-wrap:break-word;
+            display: -webkit-box;
+            -webkit-line-clamp:5;
+            -webkit-box-orient:vertical;
+            overflow: hidden;
+        }
+        div.cf-txt:hover{
+            cursor: pointer;
+        }
+        div.cf-txt:active{
+            overflow: visible;
+            display: block;
+            height: auto;
+        }
         div.cf-bottom{
             display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap;
+        }
+        div.cm-box{
+            width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         div.cf-middle{
             display: flex;
             text-align: center;
+            padding-top: 5px;
         }
-        div.cf-middle div{
+        div.cf-middle div.btn-cf-mid{
             font-size: 30px;
             width: 300px;
             text-align: center;
             cursor: pointer;
+            height: 70px;
+            line-height: 70px;
+        }
+        div.cf-middle div.btn-cf-mid:hover{
+            background-color: #664400;
+            color:#fff;
+        }
+        div.cf-middle div.btn-cf-mid:hover span.cm-cnt{
+            background-color: #664400;
+            color:#fff;
         }
         div.carousel-inner{
             border-radius: 10px;
@@ -49,17 +139,18 @@
             object-fit: cover;
             box-sizing: border-box;
             border: 1px solid #f1f1f1;
+            border-radius: 10px;
             margin-bottom: 10px;
         }
         div.ci-mini-card {
-            height: 200px;
+            height: 225px;
             overflow: hidden;
         }
 
         div.ci-mini-st {
-            width: 200px;
+            width: 225px;
             height: 100%;
-            border-radius: 4px;
+            border-radius: 10px;
             background: 50% 100% no-repeat;
             background-size: cover;
             object-fit: cover;
@@ -68,12 +159,17 @@
             margin-bottom: 10px;
         }
         div.mform{
-            width: 500px;
+            width: 700px;
         }
         #mform fieldset{
-            display: inline-block;
-            direction: rtl;
-            border:0;
+            display: flex;
+            flex-direction: row-reverse;
+            font-size: 30px;
+            line-height: 2.5rem;
+            justify-content: space-around;
+            padding: 0 0.2em;
+            text-align: center;
+            width: 5em;
         }
         #mform fieldset legend{
             text-align: right;
@@ -82,18 +178,19 @@
             display: none;
         }
         #mform label{
-            font-size: 30px;
-            color: transparent;
-            text-shadow: 0 0 0 #f0f0f0;
+            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 1.5px;
+            -webkit-text-stroke-color: #2b2a29;
+            cursor: pointer;
         }
         #mform label:hover{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+            -webkit-text-fill-color: #fff58c;
         }
         #mform label:hover ~ label{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+            -webkit-text-fill-color: #fff58c;
         }
         #mform input[type=radio]:checked ~ label{
-            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+            -webkit-text-fill-color: gold;
         }
         span.cm-star{
             color: rgba(250, 208, 0, 0.99);
@@ -130,12 +227,15 @@
             margin-right: 4px;
         }
         #cm-order{
-            width: 400px;
+            width: 700px;
             text-align: right;
         }
         #ciModal{
             background-color: rgba(0,0,0,0.5);
         }
+        #ciModal-content{
+            width: 500px;}
+
 
     </style>
     <script>
@@ -153,7 +253,8 @@
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <!-- The Modal -->
 
-<div style="margin: 50px 50px;">
+<div class="cafe-main-box">
+<div class="cafe-main-content">
     <div>&nbsp<a class="back" href="javascript:back();"><i class="fa-solid fa-map-location-dot"></i>&nbsp;맵으로 돌아가기</a></div><br>
     <div class="cf-top">
         <!-- Carousel -->
@@ -196,8 +297,9 @@
                     <b class="ctg-box">#${ctg.cg_nm}</b>&nbsp;
                 </c:forEach>
             </div>
-            <div>${dto.cf_txt}</div>
+            <div class="cf-txt">${dto.cf_txt}</div>
             <br>
+            <div class="loc-cm-lk">
             <div><span>위치</span>  <span>${dto.loc_addr} </span></div>
             <div><span>리뷰</span>  <span><span class="cm-cnt">${dto.cm_cnt}</span>
                    <c:if test="${dto.cm_star==-1}">
@@ -212,13 +314,14 @@
                 <c:if test="${dto.ck_cnt==0}"><i class="fa-regular fa-heart"></i>&nbsp;</c:if>
                 <c:if test="${dto.ck_cnt>0}"><i class="fa-solid fa-heart"></i>&nbsp;</c:if>
                 <span id="ck-cnt">${dto.ck_cnt}</span></div>
+            </div>
         </div>
     </div> <!--cf_top-->
     <br>
     <div class="cf-middle">
-        <div id="btn-cf-info">카페정보</div><div id="btn-cm-link">리뷰(<span class="cm-cnt">${dto.cm_cnt}</span>)</div><div id="btn-ci-link">사진</div>
+        <div class="btn-cf-mid" id="btn-cf-info">카페정보</div><div id="btn-cm-link" class="btn-cf-mid" >리뷰(<span class="cm-cnt">${dto.cm_cnt}</span>)</div><div id="btn-ci-link" class="btn-cf-mid" >사진</div>
     </div>
-    <hr>
+    <hr style="margin-top: 0;">
     <br>
     <div class="cf-bottom">
         <div id="map" y="${dto.loc_y}" x="${dto.loc_x}" style="width:300px;height:300px;"></div>
@@ -470,8 +573,8 @@
                 ccf+='<input type="hidden" name="star" value="0">';
                 ccf+='<input type="file" class="cc_upload" style="display: none" multiple="multiple">';
                 ccf+='<br><div class="input-group">';
-                ccf+='<textarea name="cm_txt" style=" height: 30px;" class="form-control cm-cm-txt"></textarea>';
-                ccf+='<button type="button" class="btn-cc-save" rg='+rg+' cf_id="${dto.cf_id }">댓글등록</button>';
+                ccf+='<textarea name="cm_txt" style=" height: 60px;" class="form-control cm-cm-txt"></textarea>';
+                ccf+='<button type="button" class="btn-cc-save btn-submit" rg='+rg+' cf_id="${dto.cf_id }">댓글등록</button>';
                 ccf+='</form></div>';
             }
             $(this).next().find("div.cm-cm-form").html(ccf);
@@ -579,7 +682,8 @@
                         var ci_path_url="url('"+ci_path+"')";
                         s+='<div class="ci-mini-st" style="background-image:'+ci_path_url+'" ';
                         s+='data-bs-toggle="modal" data-bs-target="#ciModal" ';
-                        s+='modal-ci='+ci_path+' modal-cm-txt='+elt.cm_txt+'>';
+                        var cm_txt=elt.cm_txt;
+                        s+='modal-ci='+ci_path+' modal-cm-txt="'+cm_txt+'">';
                         s+='</div></div>';
                     });//each
                     $("div.cf-bottom").html(s);
@@ -638,18 +742,19 @@
 
         // 리뷰리스트
         function cmList(){
-            var s="<div>";
+            var s="<div class='cm-box'>";
             var cm_cnt=${dto.cm_cnt};
             if(cm_cnt==0){s+='<div>아직 리뷰가 없습니다. 첫번째 리뷰를 남겨주세요!</div><br>';}
             if(login_ok=="yes"){
                 s+='<div class="mform">';
+                s+='<div> &nbsp;${sessionScope.login_nick}님, 리뷰를 남겨주세요!</div>';
                 s+='<form id="mform" enctype="multipart/form-data">';
                 s+='<input type="hidden" name="cf_id" value="${dto.cf_id }">';
                 s+='<input type="hidden" name="ur_id" value="${sessionScope.login_id }">';
                 s+='<input type="hidden" name="rg" value="-1">';
                 s+='<input type="hidden" name="rs" value="0">';
                 s+='<input type="hidden" name="rl" value="0">';
-                s+='<fieldset><span>&nbsp;별점을 선택해주세요</span>';
+                s+='<fieldset>';
                 s+='<input type="radio" name="star" value="5" id="rate1"><label for="rate1">★</label>';
                 s+='<input type="radio" name="star" value="4" id="rate2"><label for="rate2">★</label>';
                 s+='<input type="radio" name="star" value="3" id="rate3"><label for="rate3">★</label>';
@@ -657,10 +762,10 @@
                 s+='<input type="radio" name="star" value="1" id="rate5"><label for="rate5">★</label>';
                 s+='</fieldset>';
                 s+='<input type="file" id="cm-i-upload" style="display: none" multiple="multiple">';
-                s+='<br><div class="input-group">';
+                s+='<div class="input-group">';
                 s+='<textarea name="cm_txt" id="cm_txt" style="height: 60px;" class="form-control"></textarea>';
-                s+='<button type="button" id="btnmsave">리뷰등록</button>';
-                s+='</div> <div id="cm-i-box"><button type="button" id="btn-img">';
+                s+='<button type="button" id="btnmsave" class="btn-submit">리뷰등록</button>';
+                s+='</div> <div id="cm-i-box"><button type="button" class="btn-camera" id="btn-img">';
                 s+='<i class="fa-solid fa-camera"></i></button>';
                 s+='&nbsp;&nbsp;<span id="cm-i-preview"></span></div>'
                 s+='</form></div>';
@@ -682,7 +787,7 @@
                 dataType: "json",
                 data: {"cf_id": cf_id,"cm_order":cm_order,"rl":0},
                 success: function (res) {
-                    cl+='<div id="cm-order" style="width: 500px;"><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
+                    cl+='<div id="cm-order" ><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
                     cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></div><br><br>';
                     $.each(res, function (i, elt) {
                         if(elt.rl==0){
@@ -799,9 +904,9 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal" id="ciModal" >
-    <div class="modal-dialog modal-xl modal-dialog-centered" id="ciModal-dialog">
-        <div class="modal-content" style="width: 550px;">
+<div class="modal justify-content-center" id="ciModal"  >
+    <div class="modal-dialog modal-xl" id="ciModal-dialog">
+        <div class="modal-content" id="ciModal-content">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -814,6 +919,7 @@
 
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
