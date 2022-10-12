@@ -108,7 +108,7 @@
     <c:if test="${sessionScope.login_ok!=null}">
         <b>${sessionScope.login_nick}님</b>
         <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
-                onclick="location.href='${root}/mypage/main'">My Page</button>
+                onclick="location.href='${root}/mypage/bookmarks'">My Page</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
         <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
                 세션제거</button>
