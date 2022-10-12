@@ -85,7 +85,7 @@
         });//스크립트 전체 함수 영역
     </script>
 </head>
-
+<c:set var="root" value="<%=request.getContextPath()%>"/>
 <div class="flex">
     <form action="list">
             <div class="input-group" style="margin-left: 30px; width: 700px;">
@@ -138,6 +138,7 @@
                         </tr>
                         <tr>
                             <td colspan="4">
+                                <img src="${root}/res/prfimg/${dto.ur_img}" style="width: 50px;" class="rounded-circle">
                                 주최자: ${dto.ur_nm}
                             </td>
                         </tr>

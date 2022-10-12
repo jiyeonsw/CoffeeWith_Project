@@ -7,8 +7,14 @@
         INSERT INTO tr_cmt values (null,#{ur_id},#{tr_id},#{tm_txt},now(),now(),#{rg},#{rs},#{rl})
     </insert>
 
+    <!--등록글에 대한 정보 리턴 영역-->
     <select id="selectAllAnsData" parameterType="int" resultType="ctadto">
        SELECT * FROM tr_cmt INNER JOIN ur ON tr_cmt.ur_id=ur.ur_id where tr_id=#{tr_id} order by tm_id desc
     </select>
-    <!--select * from tr_cmt where tr_id=#{tr_id} order by tm_id desc-->
+
+    <!--rg을 위한 Max값 구하기-->
+    <select id="getMaxNum" resultType="int">
+        select ifnull(max(tm_id),0) from tr_cmt
+    </select>
+
 </mapper>
