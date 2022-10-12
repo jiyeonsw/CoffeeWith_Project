@@ -20,7 +20,7 @@
         <put-attribute name="header" value="/WEB-INF/mypage/header.jsp"/>
         <put-attribute name="sub" value="/WEB-INF/mypage/sub.jsp"/>
         <put-attribute name="top" value="/WEB-INF/mypage/top.jsp"/>
-        <put-attribute name="cmain" value="/WEB-INF/mypage/cont_main.jsp"/>
+        <put-attribute name="cmain" value=""/>
     </definition>
 
     <!-- MyPage macro -->
