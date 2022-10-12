@@ -14,7 +14,6 @@ public class UserDao implements UserDaoInter {
     SqlSession session;
     String ns = "bit.data.dao.UserDao.";
 
-
     @Override
     public int selectSearchId(String email_id) {
 //        System.out.println("Dao_email: " + email_id);

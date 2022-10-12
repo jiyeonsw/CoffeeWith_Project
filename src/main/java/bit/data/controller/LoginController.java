@@ -25,10 +25,9 @@ public class LoginController {
     public String loginprocess(String email_id, String ur_pw, HttpSession session) {
         Map<String, String> map = new HashMap<String, String>();
         int result = userService.getIdPassCheck(email_id,ur_pw);
-        if (result==1) {// 아이디와 패스워드 모두 일치하는 경우 pass
-
-
-//            로그인한 아이디에 대한 정보를 얻어서 세션에 저장
+        // 아이디와 패스워드 모두 일치하는 경우 pass
+        if (result==1) {
+            // 로그인한 아이디에 대한 정보를 얻어서 세션에 저장
             UserDto dto = userService.selectEmailId(email_id);
             System.out.println(dto.getEmail_id());
             if (dto == null) {
@@ -36,9 +35,8 @@ public class LoginController {
                 //throw new Exception("");
             } else {
                 // UserServiceInter
-                // 로그인 유지는 4시간으로 설정
+                // 로그인 유지는 4시간으로 설정 / 닉네임 보임
                 session.setMaxInactiveInterval(60*60*4);
-
                 session.setAttribute("login_ok", "yes");
                 session.setAttribute("login_nick", dto.getUr_nk());
             }
@@ -46,6 +44,15 @@ public class LoginController {
         } else {
             return "redirect:../login_main";
         }
+    }
+    // 로그아웃 하기
+    @GetMapping("/logout")
+    // @ResponseBody
+    public void logout(HttpSession session) {
+        //로그아웃시 제거되어야할 세션
+        session.removeAttribute("login_ok");
+        session.removeAttribute("login_nick");
+        // session.removeAttribute("login_id");
     }
 
     // 아이디 찾기
@@ -61,14 +68,6 @@ public class LoginController {
     }
 
 
-    @GetMapping("/logout")
-    @ResponseBody
-    public void logout(HttpSession session) {
-        //로그아웃시 제거되어야할 세션
-        session.removeAttribute("login_ok");
-        session.removeAttribute("login_id");
-        session.removeAttribute("login_nick");
-    }
 
     //[임시] 세션 저장
     @GetMapping("/call_session")
