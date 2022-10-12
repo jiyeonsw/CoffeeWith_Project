@@ -1,6 +1,8 @@
 package bit.data.controller;
 
+import bit.data.dto.CafeDto;
 import bit.data.dto.ComFeedDto;
+import bit.data.service.CafeServiceInter;
 import bit.data.service.ComFeedServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import util.ChangeName;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +26,8 @@ public class ComFeedController {
 
     @Autowired
     ComFeedServiceInter comFeedService;
-
     @Autowired
-    private ServletContext sct;
+    CafeServiceInter cafeService;
 
     @GetMapping("/main")
     public String list(@RequestParam(value = "searchcolumn", required = false) String sc,
@@ -40,11 +40,6 @@ public class ComFeedController {
         model.addAttribute("list", list);
         model.addAttribute("totalCount", totalCount);
 
-        /*for (ComFeedDto dto : list) {
-            int acount = answerService.getAllAnswerList(dto.getNum()).size();
-            dto.setAcount(acount);
-        }*/
-
         return "/bit/comfeed/comfeedlist";
     }
 
@@ -52,6 +47,7 @@ public class ComFeedController {
     public String insert(ComFeedDto dto, List<MultipartFile> upload, HttpServletRequest request) {
 
         String path = "D:\\Project\\CoffeeWith\\src\\main\\webapp\\resources\\images\\upload";
+//        String path = "C:\\Java\\CoffeeWith\\src\\main\\webapp\\resources\\images\\upload";
 
         String photo = "";
 
@@ -73,18 +69,22 @@ public class ComFeedController {
 
         dto.setFd_photo(photo);
 
-//        comFeedService.insertFeed(dto);
+        comFeedService.insertFeed(dto);
 
         return "redirect:main";
     }
 
     @GetMapping("/detail")
-    public ModelAndView detail(int num) {
+    public ModelAndView detail(int fd_id) {
         ModelAndView mview = new ModelAndView();
 
-        ComFeedDto dto = comFeedService.selectFeed(num);
+        ComFeedDto comFeedDto = comFeedService.selectFeed(fd_id);
+        int cf_id = comFeedDto.getCf_id();
+        System.out.println(cf_id);
+        CafeDto cafeDto = cafeService.selectCafe(cf_id);
 
-        mview.addObject("dto", dto);
+        mview.addObject("comfeeddto", comFeedDto);
+        mview.addObject("cafedto",cafeDto);
 
         mview.setViewName("comfeed/comfeeddetail");
         return mview;
@@ -104,6 +104,41 @@ public class ComFeedController {
     public String form() {
 
         return "comfeed/comfeedform";
+    }
+
+    @GetMapping("/delete")
+    public String delete(int fd_id) {
+        comFeedService.deleteFeed(fd_id);
+        return "redirect:main";
+    }
+
+    @PostMapping("/update")
+    public String update(ComFeedDto dto, List<MultipartFile> upload) {
+
+        String path = "D:\\Project\\CoffeeWith\\src\\main\\webapp\\resources\\images\\upload";
+
+        String photo = "";
+        int idx = 1;
+        for (MultipartFile multi : upload) {
+
+            String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+            photo += newName + ",";
+
+            try {
+                multi.transferTo(new File(path + "/" + newName));
+            } catch (IllegalStateException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        photo = photo.substring(0, photo.length() - 1);
+
+        dto.setFd_photo(photo);
+
+        comFeedService.updateFeed(dto);
+
+        return "redirect:detail?&num=" + dto.getFd_id();
     }
 }
 

@@ -134,7 +134,7 @@
                 <span class="my-cmt-update" cm_id="${dto.cm_id}" star="${dto.star}" txt="${dto.cm_txt}">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </span>
-                <span class="my-cmt-del" value="${dto.cm_id}">
+                <span class="my-cmt-del" cm_id="${dto.cm_id}" cf_id="${dto.cf_id}">
                     <i class="fa-solid fa-trash"></i>
                 </span>
             </div>
@@ -193,6 +193,7 @@
     </div>
 </div>
 <script>
+
     /* 수정 버튼 클릭시 modal */
     $(".my-cmt-update").click(function () {
         //console.log("click yes")
@@ -225,18 +226,22 @@
 
     /* 리뷰 삭제 */
     $(".my-cmt-del").click(function () {
-        var cm_id = $(this).attr("value");
+        var cm_id = $(this).attr("cm_id");
         //console.log(cm_id);
         $.ajax({
             type: "get",
-            url: "${root}/cafe/delete_cmt",
+            url: "${root}/mypage/delete_cmt",
             data: {"cm_id": cm_id},
             dataType: "text",
             success: function (res) {
-                location.reload();
+                if (res == "success") {
+                    alert("작성한 리뷰가 정상 삭제되었습니다.");
+                    location.reload();
+                }
             }//succ
         });//ajax
     });//리뷰삭제
+
 </script>
 </body>
 </html>

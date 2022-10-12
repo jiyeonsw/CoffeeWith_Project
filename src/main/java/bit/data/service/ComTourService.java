@@ -55,7 +55,7 @@ public class ComTourService implements ComTourServiceInter{
 
     @Override
     public void deleteComTour(int num) {
-
+        daoInter.deleteComTour(num);
     }
 
     @Override

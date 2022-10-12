@@ -21,16 +21,20 @@
        SELECT * FROM tr INNER JOIN ur ON tr.ur_id=ur.ur_id
         <if test="searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
-        </if>
+        </if> order by tr_id desc
     </select>
 
     <select id="getUserData" parameterType="int" resultType="ctdto">
-        select * from ur where ur_id=#{ur_id}
+        select * from tr where tr_id=#{num}
     </select>
 
     <!--게시글 하나의 정보 가져오기-->
     <select id="selectByNum" parameterType="int" resultType="ctdto">
         SELECT * FROM tr INNER JOIN ur ON tr.ur_id=ur.ur_id where tr_id=#{tr_id}
     </select>
+    <!--게시글 지우기-->
+    <delete id="deleteList" parameterType="int">
+        delete from tr where tr_id=#{num}
+    </delete>
 </mapper>
 

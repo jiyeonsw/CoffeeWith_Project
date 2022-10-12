@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDaoInter {
-    public int getTotalCount();
 
-    public List<UserDto> getAllUser();
-
-    public void insertUsers(UserDto dto);
 
     public int selectSearchId(String email_id);
 

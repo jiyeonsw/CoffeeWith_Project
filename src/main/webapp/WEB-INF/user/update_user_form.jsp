@@ -41,8 +41,8 @@
             display: block;
             position: relative;
             margin-bottom: 30px;
-            width: 90px;
-            height: 90px;
+            width: 120px;
+            height: 120px;
             cursor: pointer;
         }
 

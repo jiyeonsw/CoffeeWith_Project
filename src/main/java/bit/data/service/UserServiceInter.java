@@ -20,19 +20,12 @@ public interface UserServiceInter {
 
     public void updateUserData(UserDto dto);
 
-    public void updateUser(UserDto dto);
-
     public void updateUserPass(String new_pass, int login_id);
 
     public String selectUserPass(int ur_id);
-
-    public UserDto getDataById(String email_id);
 
     public UserDto selectDataById(int ur_id);
 
     public UserDto selectEmailId(String email_id);
 
-    public UserDto getDataByNum(int num);
-
-    public void deleteUser(int num);
 }

@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.UserDao">
+
+    <!-- 로그인 이메일 아이디 / jy -->
+    <select id="selectEmailId" parameterType="String" resultType="userDto">
+        SELECT * FROM ur
+        WHERE email_id = #{email_id};
+    </select>
+
     <select id="selectSearchId" parameterType="String" resultType="int">
         SELECT count(*)
         FROM ur
@@ -49,11 +56,6 @@
         GROUP BY loc_gu;
     </select>
 
-    <select id="selectEmailId" parameterType="String" resultType="userDto">
-        SELECT * FROM coffeewith.ur
-        where email_id = #{email_id}
-    </select>
-
     <update id="updateUserData" parameterType="UserDto">
         UPDATE ur
         SET ur_nk  = #{ur_nk},
@@ -68,9 +70,4 @@
         SET ur_pw = #{new_pass}
         WHERE ur_id = #{login_id};
     </update>
-
-<!--    <select id="getTotalCount" parameterType="UserDao" resultType="userDao">-->
-<!--        select count(*)-->
-<!--        from user-->
-<!--    </select>-->
 </mapper>
