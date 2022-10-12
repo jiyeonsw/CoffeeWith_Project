@@ -37,11 +37,11 @@
                 data:{"tr_id":tr_id},
                 dataType: "json",
                 success:function(res){
-                    alert(res);
+                   // alert(res);
                     $.each(res,function (i,elt){
 
                         s+="<b>"+elt.tm_txt+", </b>";
-                        s+="<b>글쓴이:"+elt.ur_id+"</b><br>"
+                        s+="<b>글쓴이:"+elt.ur_nm+"</b><br>"
                     });//each 함수
                     $("div.alist").html(s);
                 }//success
@@ -52,11 +52,9 @@
 </head>
 <body>
 <h1>${dto.tr_id}</h1>
-<h1>${tm_id}</h1>
-<h1>${rg}</h1>
-<h5>${dto}</h5>
-
-
+<h1>tm+id : ${tm_id}</h1>
+<c:set var="root" value="<%=request.getContextPath()%>"/>
+${root}
 <!--dto 객체에 tr 테이블(inner join으로 ur 정보 포함)의 정보가 담겨 있어서 dto.xx 형태로 꺼내어 쓰면 됨-->
 <div class="wholetable">
     <table class="table table-bordered" style="width: 1460px">
@@ -122,6 +120,17 @@
         </tr>
 
         <tr>
+            <td colspan="2">
+                <button type="button" class="btn btn-outline" id="nform">새글</button>
+                <button type="button" class="btn btn-outline" onclick="location.href='list'">목록</button>
+                <c:if test="${sessionScope.login_ok!=null&&sessionScope.login_id==dto.ur_id}">
+                    <button type="button" class="btn btn-outline" onclick="location.href='updateform?num=${dto.tr_id}'">수정</button>
+                </c:if>
+                <c:if test="${sessionScope.login_ok!=null&&sessionScope.login_id==dto.ur_id}">
+                    <button type="button" class="btn btn-outline" onclick="location.href='delete?num=${dto.tr_id}'">삭제</button>
+                </c:if>
+
+            </td>
             <td colspan="3" style="width: 300px; text-align: center">
                 <button type="submit" class="btn bnt-outline">참여하기</button>
                 <b style="font-size: 25px">??/${dto.tw_max}</b>
@@ -129,6 +138,23 @@
         </tr>
     </table>
 </div>
+<script>
+    $("#nform").click(function (){
+        location.href='form2';
+    })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
     var root="${root}";
@@ -143,16 +169,12 @@
             success:function (res){
                  list();
                 $("#msg").val("");
+
             },
         });//ajax
     });//btnasave
 
 </script>
 
-
-
-
-
 </body>
-
 </html>

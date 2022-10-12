@@ -49,7 +49,7 @@ public class ComTourDao implements ComTourDaoInter{
 
     @Override
     public void deleteComTour(int num) {
-
+        session.delete(ns+"deleteList",num);
     }
 
     @Override

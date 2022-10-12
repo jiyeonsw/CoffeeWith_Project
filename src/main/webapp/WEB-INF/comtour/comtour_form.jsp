@@ -14,18 +14,17 @@
     <link rel="stylesheet" href="../res/css/style.css" type="text/css">
     <style type="text/css">
         div.wholetable{
-            margin: 70px;
+            margin: 50px 70px;
         }
 
     </style>
 </head>
 <body>
-  <%--<c:if test="${sessionScope.login_ok==null}">
+  <c:if test="${sessionScope.login_ok==null}">
       <script>
           alert("먼저 로그인 후 글을 써 주세요");
-          history.back();
       </script>
-  </c:if>--%>
+  </c:if>
   <form action="insert" method="post">
       <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
 <div class="wholetable">

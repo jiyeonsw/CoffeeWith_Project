@@ -17,5 +17,8 @@ public class ComTourAnsDto {
     private int rs;
     private int rl;
 
+    private String ur_nk;
+    private String ur_nm;
+
 }
 
