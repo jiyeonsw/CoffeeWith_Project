@@ -20,7 +20,6 @@
             overflow: hidden;
         }
 
-
         #container{
             display: flex;
             height: 550px;
@@ -69,7 +68,7 @@
             opacity: 80%;
             background-color: white;
             width: 300px;
-            height: 590px;
+            height: 550px;
             right: 0;
             z-index: 1;
         }
@@ -86,13 +85,13 @@
             width:300px;
         }
 
-        #modalpopupbtn{
+        #modalpopopbtn{
             float:right;
         }
 
         div.tour-detail{
             overflow-y: scroll;
-            height: 300px;
+            height: 250px;
             -ms-overflow-style: none;
         }
 
@@ -118,9 +117,29 @@
         }
 
         .btncontainer{
-            float: right;
+            width: 100%;
         }
 
+        #maketourmodal{
+            position: absolute;
+            margin: -350px 0px 0px -500px;
+            top: 50%;
+            left: 50%;
+            width: 1000px;
+            height: 700px;
+            text-align: center;
+        }
+
+        #modalmap{
+            width: 100%;
+            height: 500px;
+        }
+
+        .active-page{
+            color: #fff;
+            cursor: default;
+            background-color: #337ab7;
+        }
     </style>
 </head>
 <body>
@@ -144,6 +163,13 @@
             <input type="text" id="modaltourinfo" name="tourinfo" hidden>
             <input type="text" id="modaltourdate" name="tourdate" hidden>
             <input type="text" id="modaltourlist" name="tourlist" hidden>
+            <input type="text" id="modalpolylist" hidden>
+            <div id="modalinfo"></div>
+            <div class="btncontainer">
+                <button type="button" id="btnmodalday0" value="">1일차</button>
+                <button type="button" id="btnmodalday1" value="">2일차</button>
+                <button type="button" id="btnmodalday2" value="">3일차</button>
+            </div>
             <div id="modalmap"></div>
             <div class="btncontainer">
                 <button type="submit" id="tour-submit">투어 추가</button>
@@ -153,7 +179,7 @@
     </div>
     <div id="maketour">
         <div class="tour-input">
-            <div for="tourname" class="tour-input-title">투어명<button type="button" id="modalpopupbtn">경로 확인</button></div>
+            <div for="tourname" class="tour-input-title">투어명<button type="button" id="modalpopopbtn">경로 확인</button></div>
             <input type="text" id="tourname" placeholder="투어명" class="form-control" name="tourname">
         </div>
         <hr>
@@ -169,26 +195,138 @@
             <div id="tourdatewords"></div>
         </div>
         <hr>
-        <input type="text" name="tourlist" id="tourlist" hidden>
+        <input type="text" id="tourlist" hidden>
+        <input type="text" id="polylist" hidden>
         <div class="tour-detail">
             투어일정을 입력해주세요
         </div>
     </div>
 </div>
 <script>
+    //전역변수 선언
+    var isMakingTour= false;
+    var currentPage = parseInt(1);
+    var perPage = parseInt(3);
+    var perBlock= parseInt(5);
+    var startDate="";
+    var endDate="";
+    var tourDays="";
+    //경로변수
+    var polyTotal = [];
+    var polymarkerList = [];
+    //좌표 마커 배열 생성
+    var markerList = [];
+    //마커 정보창 배열 생성
+    var infoWindowList = [];
+    //좌표 마커 스타일
+    var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
+
     //모달 띄우기
-    $(document).on('click','#modalpopupbtn', function (){
+    $(document).on('click','#modalpopopbtn', function (){
+        //투어 정보 모으기
         clttourlist();
         $("#maketourmodal").show();
+        $("#btnmodalday0").show();
+        $("#btnmodalday1").show();
+        $("#btnmodalday2").show();
+        //모달 폼에 정보 전달
         $("#modaltourname").val($("#tourname").val());
         $("#modaltourinfo").val($("#tourinfo").val());
         $("#modaltourdate").val($("#tourdate").val());
         $("#modaltourlist").val($("#tourlist").val());
+        $("#modalpolylist").val($("#polylist").val());
+        var s = "";
+        s += "투어명 :" + $("#modaltourname").val() + "<br>투어일정 :" + $("#modaltourdate").val();
+        $("#modalinfo").html(s);
         console.log($("#modaltourlist").val());
         console.log($("#modaltourname").val());
         console.log($("#modaltourinfo").val());
         console.log($("#modaltourdate").val());
+        console.log($("#modalpolylist").val());
+        //버튼들 띄우기
+        var dayCnt= 0;
+        var pos= $("#modaltourlist").val().indexOf('"day"');
+        while (pos!=-1){
+            dayCnt++;
+            pos = $("#modaltourlist").val().indexOf('"day"', pos+1);
+        }
+        if(dayCnt<3){
+            $("#btnmodalday2").hide();
+        }
+        if(dayCnt<2){
+            $("#btnmodalday1").hide();
+        }
+        if(dayCnt<1){
+            $("#btnmodalday0").hide();
+        }
+        // //지도 옵션
+        // var modalMapOptions = {
+        //     center: new naver.maps.LatLng(37.4993705, 127.0290175),
+        //     zoom: 18
+        // };
+        //모달 지도 띄우기
+        var modalmap = new naver.maps.Map("modalmap");
+        //경로 생성
+        //경로를 JSON 으로 바꾸기
+        var polyJSON = JSON.parse($("#modalpolylist").val());
+        //button에 value값 추가
+        $("#btnmodalday0").attr("value",polyJSON[0].length);
+        $("#btnmodalday1").attr("value",polyJSON[1].length);
+        $("#btnmodalday2").attr("value",polyJSON[2].length);
+
+        var iIdx = 0;
+        //배열안 날짜만큼 반복
+        for(var i of polyJSON){
+            var polypath = [];
+            //날짜안의 카페수 만큼 반복
+            for (var j of i) {
+                //카페 아이디로 위치따기
+                polypath.push(markerList[j.cf_id - 1].getPosition());
+                var polymarker = new naver.maps.Marker({
+                    position: markerList[j.cf_id - 1].getPosition(),
+                    map: modalmap,
+                    title:markerList[j.cf_id - 1].getTitle()
+                });
+                polymarkerList.push(polymarker);
+            }
+            //색상배열
+            var rainbow = ["red","orange","yellow","green","blue","indigo","purple"];
+            //경로 생성
+            var polyline = new naver.maps.Polyline({
+                map: modalmap,
+                path: polypath,
+                strokeColor: rainbow[iIdx],
+                strokeOpacity: 0.8,
+                strokeWeight: 6,
+                zIndex: 2,
+                clickable: true,
+                endIcon: naver.maps.PointingIcon.OPEN_ARROW
+            });
+            //polymarkerList에서 바운드 가져오기
+            var bounds = new naver.maps.LatLngBounds(polymarkerList[0].getPosition(), polymarkerList[1].getPosition());
+            for(var i=0;i<polymarkerList.length;i++){
+                var latLng = polymarkerList[i].getPosition();
+                bounds.extend(latLng);
+            }
+            modalmap.fitBounds(bounds);
+            polyTotal.push(polyline);
+            iIdx++;
+        }
+        console.log(polyTotal);
     });
+
+    $(document).on('btnmodalday0', 'click', function() {
+        var v = $(this).attr("value");
+        console.log(v);
+        for (var i=0;i<v;i++) {
+            if (polymarkerList[i].getAnimation() !== null) {
+                polymarkerList[i].setAnimation(null);
+            } else {
+                polymarkerList[i].setAnimation(naver.maps.Animation.BOUNCE);
+            }
+        }
+    });
+
     //모달 닫기
     $(document).on('click','#tour-cancel',function (){
         $("#maketourmodal").hide();
@@ -215,20 +353,12 @@
             alert("투어할 시간를 선택해주세요");
             return false;
         }
+        alert("투어가 생성 되었습니다");
     }
 
     /*$(document).ready(function (){
         $("button.search-btn").trigger('click');
     })*/
-
-    //전역변수 선언
-    var isMakingTour= false;
-    var currentPage = parseInt(1);
-    var perPage = parseInt(3);
-    var perBlock= parseInt(5);
-    var startDate="";
-    var endDate="";
-    var tourDays="";
 
     //로그인체크
     function loginCheck()
@@ -299,7 +429,11 @@
                     }
                     //중간 숫자 버튼
                     for (var idx = res.startPage; idx <= res.endPage; idx++) {
-                        p += "<button type='button' class='page-link btn-pagenum'>" + idx + "</button>";
+                        p += "<button type='button' class='page-link btn-pagenum ";
+                        if(idx==res.rcurrentPage) {
+                            p +=" active-page";
+                        }
+                        p += "'>" + idx + "</button>";
                     }
                     //다음버튼
                     if (res.endPage < res.totalPage) {
@@ -356,7 +490,6 @@
             $(".tour-icon-set").show();
         }else {
             //열려있는 정보창 닫기
-            //for (var i=0, ii=newIWList.length; i<ii; i++){newIWList[i].close()}
             $(this).text("투어만들기");
             $("#maketour").hide();
             $(".tour-icon-set").hide();
@@ -440,31 +573,31 @@
     // 아이콘 클릭시 일정에서 삭제
     $(document).on('click','.rm-tour-icon',function(){
         $(this).parent().remove();
-        var rmpoly = polyLinePath.find()
-        console.log(polyLinePath);
     });
 
     //경로확인전 일정 정보를 json형태로 변환
     function clttourlist()
     {
-        if(loginCheck()==false){
-            return false;
-        };
         //반환할 배열 변수생성
         var tourList = [];
-
+        var polyList = [];
         //날짜수 만큼 반복
         $(".detail-div").each(function(i,day){
             //하루 날짜에 해당하는 데이터 배열
             var tourPerDay = [];
+            var polyPerDay = [];
             //해당 날짜 카페수 만큼 반복
             $(day).children(".detail-bar-cafe").children().each(function (j,cafe){
                 //카페 데이터 담을 공간
                 var cafeData = {};
-                //카페 순서
-                cafeData.visit_time =$(cafe).children(".visit_time").val();
+                var polyData = {};
                 //카페 id
                 cafeData.cf_id = $(cafe).attr("value");
+                polyData.cf_id = $(cafe).attr("value");
+                //poly에 넣기
+                polyPerDay.push(polyData);
+                //카페 순서(방문시간)
+                cafeData.visit_time =$(cafe).children(".visit_time").val();
                 tourPerDay.push(cafeData);
             });
             //날짜 데이터 담을 공간
@@ -474,10 +607,13 @@
             //해당 날짜 투어정보
             dayData.tours = tourPerDay;
             tourList.push(dayData);
+            polyList.push(polyPerDay);
         });
         //json형태로 바꾸기
         var tourjson = JSON.stringify(tourList);
+        var polyjson = JSON.stringify(polyList);
         $("#tourlist").attr("value",tourjson);
+        $("#polylist").attr("value",polyjson);
     }
 
     //지도 옵션
@@ -487,14 +623,6 @@
     };
     //지도 초기화
     var map =new naver.maps.Map('map', mapOptions);
-    //좌표 마커 배열 생성
-    var markerList = [];
-    //마커 정보창 배열 생성
-    var infoWindowList = [];
-    //var newIWList = [];
-
-    //좌표 마커 스타일
-    var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
 
     //좌표 마커를 찍어서 배열에 저장
     //map.getPanes().floatPane.appendChild(menuLayer[0]);
@@ -515,7 +643,7 @@
         var marker = new naver.maps.Marker({
             position: position,
             map: map,
-            title:"${dto.cf_id}"
+            title:"${dto.cf_nm}"
         });
 
         //정보창 생성
@@ -530,31 +658,18 @@
         markerList.push(marker);
         //정보창을 정보창 배열에 넣기
         infoWindowList.push(infoWindow);
-        //newIWList.push(newIW);
     </c:forEach>
 
     // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
     function getClickHandler(seq) {
         return function(e) {
             var marker = markerList[seq],
-                infoWindow = infoWindowList[seq];
-            //    newIW = newIWList[seq];
-            //투어만들기중 일때
-            /*if(isMakingTour == true)
-            {
-                if (newIW.getMap()) {
-                    newIW.close();
-                } else {
-                    newIW.open(map, marker);
-                }
-            //평시
-            }else{*/
-                if (infoWindow.getMap()) {
-                    infoWindow.close();
-                } else {
-                    infoWindow.open(map, marker);
-                }
-            //}
+            infoWindow = infoWindowList[seq];
+            if (infoWindow.getMap()) {
+                infoWindow.close();
+            } else {
+                infoWindow.open(map, marker);
+            }
         }
     }
 

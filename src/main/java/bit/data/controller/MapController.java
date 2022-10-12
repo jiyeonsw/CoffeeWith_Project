@@ -170,6 +170,10 @@ public class MapController {
         //총글의갯수/한페이지당보여질갯수로 나눔(7/5=1)
         //나머지가 1이라도 있으면 무조건 1페이지 추가(1+1=2페이지가 필요)
         totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
+        if(currentPage>totalPage)
+        {
+            currentPage=1;
+        }
 
         //각 블럭당 보여질 시작페이지
         //perBlock=5 일경우 현재페이지가 1~5 일경우는 시작페이지가 1, 끝페이지가 5
@@ -226,7 +230,7 @@ public class MapController {
         map.put("perPage",perPage);
         map.put("perBlock",perBlock);
         map.put("totalCount",totalCount);
-        map.put("currentPage",currentPage);
+        map.put("rcurrentPage",currentPage);
         map.put("startPage",startPage);
         map.put("endPage",endPage);
         map.put("no",no);
