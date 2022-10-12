@@ -21,4 +21,5 @@ public class CafeCmtDto {
     private int star;
     private String ur_nk;
     private List<CafeImgDto> img;
+    private String ur_img;
 }
