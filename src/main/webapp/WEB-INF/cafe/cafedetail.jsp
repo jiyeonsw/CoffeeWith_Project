@@ -377,10 +377,11 @@
                     $("span.cm-cnt").text(cm_cnt);
                     var pre_star = $("span.cm-star-avg").text();
                     //console.log(pre_star);
-                    if (pre_star=="-"){
+                    if (pre_star=="-" && cm_star!=-1){
                         $("span.cm-star").css("color",'rgba(250, 208, 0, 0.99)');
                     }
-                    $("span.cm-star-avg").text(cm_star);
+                    if(cm_star==-1){ $("span.cm-star-avg").text('-'); }
+                    else{$("span.cm-star-avg").text(cm_star);}
                 }//succ
             });//ajax
         });//리뷰등록
@@ -749,7 +750,7 @@
                     $.each(res, function (i, elt) {
                         if(elt.rg==rg){
                             ccl+='<div>';
-                            ccl+='<img src="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
+                            ccl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="${root}/images/noprofile.jpg"  style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 ccl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cc-edit" rg='+elt.rg+' cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 ccl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'" cf_id="'+cf_id+'"></i></span>';}
