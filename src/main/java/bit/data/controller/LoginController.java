@@ -38,6 +38,7 @@ public class LoginController {
                 // 로그인 유지는 4시간으로 설정 / 닉네임 보임
                 session.setMaxInactiveInterval(60*60*4);
                 session.setAttribute("login_ok", "yes");
+                session.setAttribute("login_id", dto.getUr_id());
                 session.setAttribute("login_nick", dto.getUr_nk());
             }
             return "redirect:../";
