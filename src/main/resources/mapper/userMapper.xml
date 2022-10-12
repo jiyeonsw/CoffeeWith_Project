@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.UserDao">
+
+    <!-- 로그인 이메일 아이디 / jy -->
+    <select id="selectEmailId" parameterType="String" resultType="userDto">
+        SELECT * FROM ur
+        WHERE email_id = #{email_id};
+    </select>
+
     <select id="selectSearchId" parameterType="String" resultType="int">
         SELECT count(*)
         FROM ur
@@ -47,12 +54,6 @@
         WHERE loc_addr
                   LIKE concat(#{selSi}, '%')
         GROUP BY loc_gu;
-    </select>
-
-<!-- 로그인 이메일 아이디-->
-    <select id="selectEmailId" parameterType="String" resultType="userDto">
-        SELECT * FROM ur
-        WHERE email_id = #{email_id};
     </select>
 
     <update id="updateUserData" parameterType="UserDto">
