@@ -49,9 +49,10 @@
         GROUP BY loc_gu;
     </select>
 
+<!-- 로그인 이메일 아이디-->
     <select id="selectEmailId" parameterType="String" resultType="userDto">
-        SELECT * FROM coffeewith.ur
-        where email_id = #{email_id}
+        SELECT * FROM ur
+        WHERE email_id = #{email_id};
     </select>
 
     <update id="updateUserData" parameterType="UserDto">
@@ -68,9 +69,4 @@
         SET ur_pw = #{new_pass}
         WHERE ur_id = #{login_id};
     </update>
-
-<!--    <select id="getTotalCount" parameterType="UserDao" resultType="userDao">-->
-<!--        select count(*)-->
-<!--        from user-->
-<!--    </select>-->
 </mapper>

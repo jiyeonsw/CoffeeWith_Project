@@ -95,7 +95,7 @@
     </ul>
 </div>
 
-<!-- 로그인 로그아웃 -->
+<!-- 로그인  -->
 <span id="loginstate" style="text-align: right;">
     <c:if test="${sessionScope.login_ok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
@@ -105,6 +105,8 @@
         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
                 세션주기</button>
     </c:if>
+
+<!-- 로그아웃 -->
     <c:if test="${sessionScope.login_ok!=null}">
         <b>${sessionScope.login_nick}님</b>
         <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
