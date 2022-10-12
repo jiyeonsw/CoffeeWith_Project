@@ -234,8 +234,13 @@
             background-color: rgba(0,0,0,0.5);
         }
         #ciModal-content{
-            width: 500px;}
-
+            width: 550px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            margin-left:-275px;
+            margin-top: 150px;
+        }
 
     </style>
     <script>
