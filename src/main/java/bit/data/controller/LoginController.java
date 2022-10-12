@@ -26,20 +26,21 @@ public class LoginController {
         Map<String, String> map = new HashMap<String, String>();
         int result = userService.getIdPassCheck(email_id,ur_pw);
         if (result==1) {// 아이디와 패스워드 모두 일치하는 경우 pass
-            UserDto user = userService.selectEmailId(email_id);
-            // 로그인 유지는 4시간으로 설정
-              session.setMaxInactiveInterval(60*60*4);
+
 
 //            로그인한 아이디에 대한 정보를 얻어서 세션에 저장
             UserDto dto = userService.selectEmailId(email_id);
+            System.out.println(dto.getEmail_id());
             if (dto == null) {
                 // TODO
                 //throw new Exception("");
             } else {
                 // UserServiceInter
-                session.setAttribute("loginok", "yes");
-                session.setAttribute("loginid", dto.getUr_nm());
-                session.setAttribute("loginname", dto.getUr_nk());
+                // 로그인 유지는 4시간으로 설정
+                session.setMaxInactiveInterval(60*60*4);
+
+                session.setAttribute("login_ok", "yes");
+                session.setAttribute("login_nick", dto.getUr_nk());
             }
             return "redirect:../";
         } else {
