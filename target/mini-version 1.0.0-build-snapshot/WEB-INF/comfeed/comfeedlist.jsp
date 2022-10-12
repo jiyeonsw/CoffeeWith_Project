@@ -46,7 +46,6 @@
         }
 
         .feed {
-            display: flex;
             width: 90%;
             padding-top: 20px;
             margin: auto;
@@ -60,7 +59,7 @@
         }
 
         .feed .idv img {
-            width: 100%;
+
             padding: 5px 5px 5px 5px;
             cursor: pointer;
         }
@@ -117,7 +116,7 @@
     $(".idv img").click(function () {
         var fd_id = $(this).attr("value");
         $("#modaltmp").modal("show");
-        $("#modaltmp .modal-content").load("detail?num="+fd_id);
+        $("#modaltmp .modal-content").load("detail?fd_id="+fd_id);
     })
 
     $("#btnform").click(function () {

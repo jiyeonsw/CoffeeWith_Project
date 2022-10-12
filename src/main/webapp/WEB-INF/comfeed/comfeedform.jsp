@@ -123,7 +123,7 @@
                     </div>
                 </td>
                 <td class="profile">
-                    <img src="${sessionScope.login_img}" style="border-radius: 50% 50%">
+                    <img src="${root}/images/${sessionScope.login_img}" style="border-radius: 50% 50%">
                     ${sessionScope.login_nick}
                 </td>
             </tr>

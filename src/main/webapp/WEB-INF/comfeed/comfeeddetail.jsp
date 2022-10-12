@@ -17,6 +17,8 @@
         .table{
             height: 700px;
             margin-bottom: 0px;
+            border-radius: 50% 50%;
+            border-style: hidden;
         }
 
         .fddata {
@@ -41,17 +43,11 @@
         .table .fdcontent {
             height: 85%;
             vertical-align: top;
-        }
-
-        .table .inputtext {
-            height: 100%;
-            width: 100%;
-            padding: 0;
-            border: none;
-            outline: none;
+            text-align: left;
         }
 
         .table .fdcafe {
+            text-align: left;
             height: 5%;
         }
 
@@ -84,6 +80,8 @@
     </style>
 </head>
 <body>
+<c:set var="root" value="<%=request.getContextPath()%>"/>
+
 <div class="fddata">
     <table class="table table-bordered">
         <tr>
@@ -92,7 +90,13 @@
                 <!-- Carousel -->
                 <div id="showimg" class="carousel slide" data-bs-interval="false" style="display: none">
 
-                    <div class="carousel-inner" data-bs-interval="false"></div>
+                    <div class="carousel-inner" data-bs-interval="false">
+                        <c:forEach var="photo" items="${comfeeddto.fd_photo.split(',')}">
+                            <div class="carousel-item">
+                                <img src="${root}/images/upload/${photo}">
+                            </div>
+                        </c:forEach>
+                    </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#showimg" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon"></span>
                     </button>
@@ -102,23 +106,22 @@
                 </div>
             </td>
             <td class="profile">
-                ${dto.ur_id}
+                ${comfeeddto.ur_id} ${photo}
             </td>
         </tr>
         <tr>
             <td class="fdcontent">
-                <textarea class="inputtext" required="required" value="${dto.fd_txt}"></textarea>
+                ${comfeeddto.fd_txt}
             </td>
         </tr>
         <tr>
             <td class="fdcafe">
-                <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_id"
-                       placeholder="카페 추가">
+                ${cafedto.cf_nm}
             </td>
         </tr>
         <tr>
             <td class="fdtag">
-                <input onkeyup="filter()" type="text" class="inputtext" name="fg_nm" placeholder="태그 입력">
+                ${comfeeddto.fg_nm}
             </td>
         </tr>
     </table>
