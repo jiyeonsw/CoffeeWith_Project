@@ -126,7 +126,7 @@
     </c:if>
 </span>
 
-<script>
+<%--<script>--%>
     <%--$(function (){--%>
     <%--    var login_ok = "${sessionScope.login_ok}"--%>
     <%--    if (login_ok == "yes") {--%>
@@ -139,7 +139,7 @@
     <%--        alert("아이디 또는 비밀번호를 다시 확인해주세요");--%>
     <%--    }--%>
     <%--});--%>
-</script>
+<%--</script>--%>
 
 <!-- 로그인 스크립트 이벤트 -->
 <%--<script type="text/javascript">--%>
