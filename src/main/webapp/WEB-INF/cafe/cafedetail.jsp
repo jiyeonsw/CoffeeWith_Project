@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=8mlhxamjq5"></script>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
     <style type="text/css">
         .btn-submit {
             width: 100px;
@@ -39,27 +40,10 @@
             color: #fff;
             box-shadow: 2px 2px 2px 2px lightgray;
         }
-        .btn-camera{
-            width: 100px;
-            margin: 0 4px;
-            color: #404040;
-            background: #fff;
-            min-width: 72px;
-            height: 60px;
-            padding: 0 15px;
-            font-size: 1rem;
-            border-radius: 8px;
-            border: 1px solid #664400;
-            line-height: 33px;
-            overflow: hidden;
-            position: relative;
-            display: inline-block;
-            font-weight: 600;
-            text-align: center;
-        }
+
         div.cafe-main-box{
             width: 900px;
-            /*margin:50px 50px;*/
+            margin-top:30px;
             text-align: center;
             margin-left: auto;
             margin-right: auto;
@@ -68,11 +52,17 @@
             display: inline-block;
             text-align: left;
         }
-        a.back{
+        a{
             color: #664400;
         }
         div.cf-top{
             display: flex;
+        }
+
+        span.ctg-box{
+            border: 1px solid #f1f1f1;
+            padding: 15px 20px 10px 15px;
+            border-radius: 25px;
         }
         div.cf-txt{
             height:120px;
@@ -105,6 +95,7 @@
             display: flex;
             text-align: center;
             padding-top: 5px;
+
         }
         div.cf-middle div.btn-cf-mid{
             font-size: 30px;
@@ -210,21 +201,46 @@
         }
         #cm-i-box{
             margin-top: 5px;
-            vertical-align: middle;
+            vertical-align: top;
         }
         #btn-img{
             width: 60px;
+            color: #404040;
+            background: #fff;
+            min-width: 72px;
             height: 60px;
-            font-size: 30px;
-            border: 1px solid gray;
-            border-radius: 4px;
-            line-height: 60px;
+            padding: 0 10px;
+            font-size: 20px;
+            border-radius: 8px;
+            border: 1px solid #664400;
+            line-height: 33px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+        }
+        #btn-img:hover{
+             background: #664400;
+             color: #fff;
+             box-shadow: 2px 2px 2px 2px lightgray;
+         }
+        #btn-img-cmt{
+            margin-top: -5px;
+            font-size: 15px;
+        }
+        #btn-img:hover div#btn-img-cmt {
+            color: #fff;
+        }
+        #btn-img:hover #img-icon{
+            color: #fff;
         }
         img.cmt-img{
             border-radius: 4px;
             height: 60px;
             border: 1px solid gray;
             margin-right: 4px;
+            margin-top: 20px;
         }
         #cm-order{
             width: 700px;
@@ -239,7 +255,25 @@
             top:50%;
             left:50%;
             margin-left:-275px;
-            margin-top: 150px;
+            margin-top: 50px;
+        }
+        div.cm-box-each{
+            padding: 10px 10px 10px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
+        div#cf-img-car{
+            width: 350px;
+            background-size: cover;
+        }
+        div.cf-info{
+            width: 550px;
+            overflow: clip;
+        }
+        div.cm-list-box{
+            display: flex;
         }
 
     </style>
@@ -263,9 +297,9 @@
     <div>&nbsp<a class="back" href="javascript:back();"><i class="fa-solid fa-map-location-dot"></i>&nbsp;맵으로 돌아가기</a></div><br>
     <div class="cf-top">
         <!-- Carousel -->
-        <div id="cf-img-car" class="carousel slide" data-bs-ride="carousel" style="width: 350px; height: 350px;">
+        <div id="cf-img-car" class="carousel slide" data-bs-ride="carousel" style="width: 350px; height: 350px; background-image:url('${root}/images/logo1.png');">
             <!-- Indicators/dots -->
-            <div class="carousel-indicators">
+            <div class="carousel-indicators" >
                 <c:forEach items="${list}" var="dtoi" varStatus="i">
                     <button type="button" data-bs-target="#cf-img-car" data-bs-slide-to="${i.index}"
                             <c:if test="${i.index==0}"> class="active"</c:if>
@@ -273,7 +307,7 @@
                 </c:forEach>
             </div>
             <!-- The slideshow/carousel -->
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="width: 350px;">
 
                 <c:forEach items="${list}" var="dtoi" varStatus="i">
                     <div class="carousel-item ${i.count==1?'active':''}" >
@@ -297,9 +331,9 @@
         <!--메인정보-->
         <div style="margin-left: 30px;">
             <div><h1>${dto.cf_nm}</h1></div>
-            <div style="margin-bottom: 10px;">
+            <div style="margin-bottom: 15px;">
                 <c:forEach items="${listctg}" var="ctg">
-                    <b class="ctg-box">#${ctg.cg_nm}</b>&nbsp;
+                    <span class="ctg-box">#${ctg.cg_nm}</span>&nbsp;
                 </c:forEach>
             </div>
             <div class="cf-txt">${dto.cf_txt}</div>
@@ -688,7 +722,7 @@
                         s+='<div class="ci-mini-st" style="background-image:'+ci_path_url+'" ';
                         s+='data-bs-toggle="modal" data-bs-target="#ciModal" ';
                         var cm_txt=elt.cm_txt;
-                        s+='modal-ci='+ci_path+' modal-cm-txt="'+cm_txt+'">';
+                        s+='modal-cm-txt="'+cm_txt+'">';
                         s+='</div></div>';
                     });//each
                     $("div.cf-bottom").html(s);
@@ -698,7 +732,7 @@
 
         //사진각각클릭
         $(document).on("click",".ci-mini-st",function (){
-            var modal_img=$(this).attr("modal-ci");
+            var modal_img=$(this).css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1');
             //console.log(modal_img);
             var modal_img_tag='<img src="'+modal_img+'" width="500px;">';
            $(".modal-body").html(modal_img_tag);
@@ -770,8 +804,8 @@
                 s+='<div class="input-group">';
                 s+='<textarea name="cm_txt" id="cm_txt" style="height: 60px;" class="form-control"></textarea>';
                 s+='<button type="button" id="btnmsave" class="btn-submit">리뷰등록</button>';
-                s+='</div> <div id="cm-i-box"><button type="button" class="btn-camera" id="btn-img">';
-                s+='<i class="fa-solid fa-camera"></i></button>';
+                s+='</div> <div id="cm-i-box"><button type="button" id="btn-img">';
+                s+='<i class="bi bi-images" id="img-icon"></i><div id="btn-img-cmt">사진선택</div></button>';
                 s+='&nbsp;&nbsp;<span id="cm-i-preview"></span></div>'
                 s+='</form></div>';
             }else {
@@ -797,7 +831,7 @@
                     $.each(res, function (i, elt) {
                         if(elt.rl==0){
                             //console.dir(elt);
-                            cl+='<div>';
+                            cl+='<div class="cm-box-each"><div style="width: 660px;">';
                             cl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 cl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
@@ -834,9 +868,12 @@
                                 cl+='<span class="carousel-control-next-icon"></span></button></div>';
                             }
                             cl+='<pre>'+elt.cm_txt+'</pre>';
-                            cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'>댓글보기 <i class="fa-solid fa-caret-down"></i></a>';
-                            cl+='<div style="display: none; margin: 10px 10px; background-color: lightgray" ><div class="cm-cm-form" ></div>';
-                            cl+='<div class="cm-cm-list"></div></div><hr>';
+                            cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'>댓글보기 ('+(elt.cm_cnt-1)+') <i class="fa-solid fa-caret-down"></i></a>';
+                            cl+='<div style="display: none; " ><div class="cm-cm-form" ></div>';
+                            if((elt.cm_cnt-1)>0){
+                                cl+='<div class="cm-list-box"><i class="bi bi-arrow-return-right" style="margin-top: 10px;"></i>&nbsp;&nbsp;';
+                            }
+                            cl+='<div class="cm-cm-list"></div></div></div></div>';
                         }
                     });//each
                     cl+='</div>';
@@ -859,7 +896,7 @@
                     var ccl='';
                     $.each(res, function (i, elt) {
                         if(elt.rg==rg){
-                            ccl+='<div>';
+                            ccl+='<div style="width: 620px; margin-top: 10px;">';
                             ccl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="${root}/images/noprofile.jpg"  style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 ccl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cc-edit" rg='+elt.rg+' cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
@@ -909,7 +946,7 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal justify-content-center" id="ciModal"  >
+<div class="modal" id="ciModal"  >
     <div class="modal-dialog modal-xl" id="ciModal-dialog">
         <div class="modal-content" id="ciModal-content">
             <div class="modal-header">

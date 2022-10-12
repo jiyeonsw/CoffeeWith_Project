@@ -132,4 +132,9 @@ public class CafeDao implements CafeDaoInter {
     }
     @Override
     public int selectCMCntByCfid(int cf_id){return session.selectOne(nsm+"selectCMCntByCfid",cf_id);}
+
+    @Override
+    public int selectCMCntByRg(int cm_id) {
+        return session.selectOne(nsm+"selectCMCntByRg",cm_id);
+    }
 }

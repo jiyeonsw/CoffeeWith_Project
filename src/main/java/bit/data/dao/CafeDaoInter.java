@@ -32,4 +32,5 @@ public interface CafeDaoInter {
     public void updateRs(Map<String,Integer> map);
     public List<CafeCtgDto> selectCtgByCfid(int cf_id);
     public int selectCMCntByCfid(int cf_id);
+    public int selectCMCntByRg(int cm_id);
 }
