@@ -16,7 +16,7 @@
     <style>
         .user-profil-box {
             margin-left: 40px;
-            height: 100px;
+            height: 160px;
             display: grid;
             position: relative;
             grid-template-columns: 60px 2fr 1fr;
@@ -66,9 +66,9 @@
         .box-type-01 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr;
-            margin: 24px 0;
             border-radius: 8px;
             background: #6B4804;
+            margin-bottom: 20px;
         }
 
         .txt, .num {

@@ -125,33 +125,44 @@ public class UserController {
                              HttpServletRequest request,
                              UserDto dto,
                              MultipartFile profile_img) {
-
-
-        //System.out.println(profile_img);
         //Tomcat Upload path
         String path = request.getSession().getServletContext().getRealPath("/resources/prfimg");
-        System.out.println(path);
+        //        System.out.println(path);
+        String file_name = "";
 
-        //upload file name
-        String file_name = ChangeName.getChangeFileName(profile_img.getOriginalFilename());
+        if (profile_img.getOriginalFilename() == "") {
 
-        //dto ur_img에 수정할 이미지 추가
-        dto.setUr_img(file_name);
+            UserDto exi_dto = userService.selectDataById((Integer) session.getAttribute("login_id"));
 
-        try {
-            profile_img.transferTo(new File(path + "/" + file_name));
+            //upload file name
+            file_name = exi_dto.getUr_img();
+
+            dto.setUr_img(file_name);
             userService.updateUserData(dto);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+            session.setAttribute("login_nick", dto.getUr_nk());
+            session.setAttribute("login_img", dto.getUr_img());
+            return "redirect:/mypage/bookmarks";
+        } else {
+            file_name = ChangeName.getChangeFileName(profile_img.getOriginalFilename());
+            //dto ur_img에 수정할 이미지 추가
+            dto.setUr_img(file_name);
+
+            try {
+                profile_img.transferTo(new File(path + "/" + file_name));
+                userService.updateUserData(dto);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+//            System.out.println("upnk:" + dto.getUr_nk());
+//            System.out.println("upimg:" + dto.getUr_img());
+//            System.out.println("upsi:" + dto.getLoc_si());
+
+            session.setAttribute("login_nick", dto.getUr_nk());
+            session.setAttribute("login_img", dto.getUr_img());
+
+            return "redirect:/mypage/bookmarks";
         }
-        System.out.println("upnk:" + dto.getUr_nk());
-        System.out.println("upimg:" + dto.getUr_img());
-        System.out.println("upsi:" + dto.getLoc_si());
-
-        session.setAttribute("login_nick", dto.getUr_nk());
-        session.setAttribute("login_img", dto.getUr_img());
-
-        return "redirect:/mypage/main";
     }
 
     //유저 비밀번호 변경 : 기존 비밀번호 정상 체크

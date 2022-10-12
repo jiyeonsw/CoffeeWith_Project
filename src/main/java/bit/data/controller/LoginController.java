@@ -95,6 +95,7 @@ public class LoginController {
 
         session.removeAttribute("login_ok");
         session.removeAttribute("login_id");
+        session.removeAttribute("login_img");
         session.removeAttribute("login_nick");
         session.removeAttribute("cfCmtCnt");
         session.removeAttribute("cfLkCnt'");
