@@ -15,9 +15,12 @@
     <c:set var="root" value="<%=request.getContextPath()%>"/>
     <style type="text/css">
 
-        div.wholetable{
-            display: table; margin-left: auto; margin-right: auto; border: 0px solid gray;
-            }
+        div.flex {
+           margin-left: 150px;
+        }
+        div.cell {
+            display: table-cell; vertical-align: middle;
+        }
 
         ul.itemlist{
             display: flex;
@@ -55,7 +58,7 @@
 
     <script>
 
-       var login_ok="<%=(String)session.getAttribute("login_ok")%>"
+       var login_ok="<%=(String)session.getAttribute("login_ok")%>";
 
         $(function (){
             //새글쓰기 모달창
@@ -83,7 +86,7 @@
     </script>
 </head>
 
-<div class="wholetable">
+<div class="flex">
     <form action="list">
             <div class="input-group" style="margin-left: 30px; width: 700px;">
                 <!--검색 영역-->
@@ -150,20 +153,28 @@
             </c:if>
         </c:forEach>
     </ul>
-</div> <!--whole table-->
-<%--헤터 영역(검색창, li 태그 부분)--%>
+</div> <!--wrapper-->
+
+
+
+
+
+
+
+
+
+
+
     <%--새 글 모달 영역--%>
 <div class="modal" id="modalform">
     <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-        </div>
+        <div class="modal-content"></div>
     </div>
 </div>
     <%--디테일 모달 영역--%>
 <div class="modal" id="modaldetail">
     <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-        </div>
+        <div class="modal-content"></div>
     </div>
 </div>
 

@@ -27,6 +27,11 @@ public class ComTourController {
         return "/comtour/comtour_form";
     }
 
+    @GetMapping("/comtour/form2")
+    public String comtourform2(){
+        return "/bit/comtour/comtour_form";
+    }
+
     @PostMapping("/comtour/insert")
     public String insert(ComTourDto dto){
 
@@ -36,6 +41,24 @@ public class ComTourController {
 
 
         return "redirect:list?ur_id="+ur_id;
+    }
+
+    @GetMapping("/comtour/delete")
+    public String delete(int num)
+    {
+        System.out.println(num);
+        comTourService.deleteComTour(num);
+        return "redirect:list";
+    }
+
+    @GetMapping("/comtour/updateform")
+    public String updateform(int num, Model model)
+    {
+        //System.out.println(num);
+      ComTourDto dto = comTourService.getUserData(num);
+      //System.out.println("update Dto 정보:"+dto); //DB에는 없으나 DTO에 변수가 있으면 해당 값들은 null로 가져와 짐
+        model.addAttribute("dto",dto);
+        return "/bit/comtour/comtour_updateform";
     }
 
     @GetMapping("/comtour/list")
