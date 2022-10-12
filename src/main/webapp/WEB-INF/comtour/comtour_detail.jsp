@@ -19,20 +19,42 @@
         }
     </style>
     <script>
-        var num=${dto.tr_id};
+        var tr_id=${dto.tr_id}; /*tr_id는 answer 테이블에 등록된 것을 말하며 중복된 글 전체를 말함*/
+
         $(function (){
            list();
         });
 
         function list(){
+            var login_ok = '${sessionScope.login_ok}';
+            var login_id = '${sessionScope.login_id}';
+            //alert(login_ok); yes
 
-        }
+            var s="";
+            $.ajax({
+                type:"get",
+                url: "../answer1/list",
+                data:{"tr_id":tr_id},
+                dataType: "json",
+                success:function(res){
+                    alert(res);
+                    $.each(res,function (i,elt){
+
+                        s+="<b>"+elt.tm_txt+", </b>";
+                        s+="<b>글쓴이:"+elt.ur_id+"</b><br>"
+                    });//each 함수
+                    $("div.alist").html(s);
+                }//success
+            })//a.jax
+        }//list함수
 
     </script>
 </head>
 <body>
 <h1>${dto.tr_id}</h1>
-<h1>${dto1}</h1>
+<h1>${tm_id}</h1>
+<h1>${rg}</h1>
+<h5>${dto}</h5>
 
 
 <!--dto 객체에 tr 테이블(inner join으로 ur 정보 포함)의 정보가 담겨 있어서 dto.xx 형태로 꺼내어 쓰면 됨-->
@@ -81,7 +103,7 @@
                 <c:if test="${sessionScope.login_id!=null}">
                     <div class="aform">
                         <form id="aform">
-                            <%--<input type="hidden" name="tm_id" value="${tm_id}"> <!--?????????-->--%>
+                            <input type="hidden" name="tm_id" value="${tm_id}">
                             <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
                             <input type="hidden" name="tr_id" value="${dto.tr_id}">
                             <input type="hidden" name="rg" value="${rg}">
@@ -112,14 +134,14 @@
     var root="${root}";
     $("#btnasave").click(function (){
         var fdata = $("#aform").serialize();// form tag의 내용을 쿼리스트링 형태로 읽는다.
-        alert(fdata); //tm_id=0& ur_id=2& tr_id=13& rg=0& rs=0& rl=0& tm_txt=test
+        //alert(fdata); //tm_id=0& ur_id=2& tr_id=13& rg=0& rs=0& rl=0& tm_txt=test
         $.ajax({
             type:"post",
             url:"../answer1/insert",
             dataType:"text",
             data:fdata,
             success:function (res){
-               // list();
+                 list();
                 $("#msg").val("");
             },
         });//ajax

@@ -86,7 +86,7 @@
             width:300px;
         }
 
-        #tour-submit{
+        #modalpopup{
             float:right;
         }
 
@@ -134,47 +134,94 @@
         </div>
     </div>
     <div id="map"></div>
-    <div id="maketour">
-        <form action="maketour" method="post" onsubmit="return clttourlist()">
-            <div class="tour-input">
-                <div for="tourname" class="tour-input-title">투어명<button type="submit" id="tour-submit">투어 추가</button></div>
-                <input type="text" id="tourname" placeholder="투어명" class="form-control"
-                       required="required" name="tourname">
-            </div>
-            <hr>
-            <div class="tour-input">
-                <div for="tourinfo" class="tour-input-title">투어소개</div>
-                <input type="text" id="tourinfo" placeholder="간단한투어소개" class="form-control"
-                       required="required" name="tourinfo">
-            </div>
-            <hr>
-            <div class="tour-input">
-                <div for="tourdate" class="tour-input-title">투어일정</div>
-                <input type="text" id="tourdate" name="tourdate"/>
-                <br>
-                <div id="tourdatewords"></div>
-            </div>
-            <hr>
-            <input type="text" name="tourlist" id="tourlist" hidden>
-            <div class="tour-detail">
-                투어일정을 입력해주세요
+    <div id="maketourmodal" class="modal">
+        <form class="modal-content anime" action="maketour" method="post" onsubmit="return checkData()">
+            <input type="text" id="modaltourname" name="tourname" hidden>
+            <input type="text" id="modaltourinfo" name="tourinfo" hidden>
+            <input type="text" id="modaltourdate" name="tourdate" hidden>
+            <input type="text" id="modaltourlist" name="tourlist" hidden>
+            <div>
+                <button type="submit" id="tour-submit">투어 추가</button>
+                <button type="button" id="tour-cancel">취소</button>
             </div>
         </form>
     </div>
+    <div id="maketour">
+        <div class="tour-input">
+            <div for="tourname" class="tour-input-title">투어명<button type="button" id="modalpopup">경로 확인</button></div>
+            <input type="text" id="tourname" placeholder="투어명" class="form-control" name="tourname">
+        </div>
+        <hr>
+        <div class="tour-input">
+            <div for="tourinfo" class="tour-input-title">투어소개</div>
+            <input type="textarea" id="tourinfo" placeholder="간단한투어소개" class="form-control" name="tourinfo">
+        </div>
+        <hr>
+        <div class="tour-input">
+            <div for="tourdate" class="tour-input-title">투어일정</div>
+            <input type="text" id="tourdate" name="tourdate">
+            <br>
+            <div id="tourdatewords"></div>
+        </div>
+        <hr>
+        <input type="text" name="tourlist" id="tourlist" hidden>
+        <div class="tour-detail">
+            투어일정을 입력해주세요
+        </div>
+    </div>
 </div>
 <script>
+    //모달 띄우기
+    $(document).on('click','#modalpopup', function (){
+        clttourlist();
+        $("#maketourmodal").show();
+        $("#modaltourname").val($("#tourname").val());
+        $("#modaltourinfo").val($("#tourinfo").val());
+        $("#modaltourdate").val($("#tourdate").val());
+        $("#modaltourlist").val($("#tourlist").val());
+        console.log($("#modaltourlist").val());
+        console.log($("#modaltourname").val());
+        console.log($("#modaltourinfo").val());
+        console.log($("#modaltourdate").val());
+
+    });
+    //모달 닫기
+    $(document).on('click','#tour-cancel',function (){
+        $("#maketourmodal").hide();
+    });
+    //폼 받기전 데이터 확인
+    function checkData(){
+        if($("#modaltourname").val()==""){
+            alert("투어명을 입력해주세요");
+            return false;
+        }
+        if($("#modaltourinfo").val()==""){
+            alert("투어소개을 입력해주세요");
+            return false;
+        }
+        if($("#modaltourdate").val()==""){
+            alert("투어일정을 선택해주세요");
+            return false;
+        }
+        if($("#modaltourlist").val()=="[]"){
+            alert("투어을 선택해주세요");
+            return false;
+        }
+    }
+
+
     /*$(document).ready(function (){
         $("button.search-btn").trigger('click');
     })*/
 
-    //투어추가 실헝용 추후에 삭제밑 위에서 폼 태그추가, button type submit으로 변경요망
-    $(document).on('click','#tour-submit',function (){
-       // clttourlist();
-       console.log("투어이름: " + $("#tourname").val());
-       console.log("투어소개: " + $("#tourinfo").val());
-       console.log("투어일정: " + $("#tourdate").val());
-       console.log("투어리스트: " + $("#tourlist").val());
-    });
+    // //투어추가 실헝용 추후에 삭제밑 위에서 폼 태그추가, button type submit으로 변경요망
+    // $(document).on('click','#tour-submit',function (){
+    //    // clttourlist();
+    //    console.log("투어이름: " + $("#tourname").val());
+    //    console.log("투어소개: " + $("#tourinfo").val());
+    //    console.log("투어일정: " + $("#tourdate").val());
+    //    console.log("투어리스트: " + $("#tourlist").val());
+    // });
 
     //전역변수 선언
     var isMakingTour= false;
@@ -333,10 +380,9 @@
             "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
         },
         "minDate": moment(),
-        "startDate": moment(),
-        "endDate": moment().add(2,"d"),
         "maxSpan": { "days": 2 },
-        "drops": "auto"
+        "drops": "auto",
+        "autoUpdateInput": true
     },function (start, end, label) {
         //날짜를 고르면 밑에 며칠인지 표시하기
         startDate=start.format('YYYY-MM-DD');
@@ -374,9 +420,9 @@
             data: {"cf_id":id},
             success: function(res){
                 s += "<div class='cafe-in-tour' value='" + id + "'>" + res.cf_nm;
-                s += "<input type='time' class='visit_time'>"
+                s += "<input type='time' class='visit_time' required='required'>"
                 s += "<i class='fa-solid fa-xmark rm-tour-icon'></i>";
-                s += "</div>"
+                s += "</div>";
                 $("div.active-bar").children(".detail-bar-cafe").append(s);
             }
         });
@@ -384,17 +430,23 @@
 
     //시간 설정시 시간별로 정렬
     $(document).on('change','input.visit_time',function(){
-        $(this).parent().parent().children().each(function(i,day){
-            console.log(day);
-        });
+        $(this).parent().parent().children().each(function (i,day){
+            $(day).parent().children().each(function (j,cafes){
+                if($(cafes).children("input.visit_time").val()>$(cafes).next().children("input.visit_time").val()){
+                    $(cafes).insertAfter($(cafes).next());
+                }
+            })
+        })
     });
 
     // 아이콘 클릭시 일정에서 삭제
     $(document).on('click','.rm-tour-icon',function(){
         $(this).parent().remove();
+        var rmpoly = polyLinePath.find()
+        console.log(polyLinePath);
     });
 
-    //투어 추가시 submit전 일정 정보를 json형태로 변환
+    //경로확인전 일정 정보를 json형태로 변환
     function clttourlist()
     {
         if(loginCheck()==false){
@@ -474,7 +526,6 @@
             content: `<div class="info-window">
                          <span style="display:none">${dto.cf_id}</span>
                          <div>${dto.cf_nm}</div>
-                         <div>★</div>
                       </div>`
         });
         //마커를 마커 배열에 넣기

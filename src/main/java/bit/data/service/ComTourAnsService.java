@@ -20,7 +20,8 @@ public class ComTourAnsService implements ComTourAnsServiceInter{
 
     @Override
     public List<ComTourAnsDto> getAllAnsList(int tr_id) {
-        return null;
+
+        return ansDaoInter.getAllAnsList(tr_id);
     }
 
     @Override
