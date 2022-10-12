@@ -119,7 +119,7 @@
 
         <!-- 로그아웃 / 검정버튼 -->
         <button type="button" class="btn btn-dark btn-sm" id="btnlogout"
-                onclick="location.href='${root}/login/login_form'">Logout</button>
+                onclick="location.href='${root}/user/logout'">Logout</button>
 
         <!-- [임시] 세션제거 -->
         <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">세션제거</button>

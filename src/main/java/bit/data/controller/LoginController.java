@@ -46,8 +46,8 @@ public class LoginController {
 //        }
 //    }
 
-    @PostMapping("/login")
-    public String loginprocess(String email_id, String ur_pw, HttpSession session, Model model) {
+    @PostMapping("/login") // loginprocess
+    public String login(String email_id, String ur_pw, HttpSession session, Model model) {
         Map<String, String> map = new HashMap<String, String>();
         int result = userService.getIdPassCheck(email_id, ur_pw);
         // 아이디와 패스워드 모두 일치하는 경우 (result == 1)
@@ -69,12 +69,13 @@ public class LoginController {
 
     // 로그아웃 하기
     @GetMapping("/logout")
-    @ResponseBody
-    public void logout(HttpSession session) {
+    public String logout(HttpSession session) {
         //로그아웃시 제거되어야할 세션
         session.removeAttribute("login_ok");
         session.removeAttribute("login_id");
         session.removeAttribute("login_nick");
+        session.removeAttribute("login_img");
+        return "redirect:../";
     }
 
     // 아이디 찾기
