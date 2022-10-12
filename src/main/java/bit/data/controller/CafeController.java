@@ -104,7 +104,7 @@ public class CafeController {
 
     @PostMapping("/insert_cmt")
     @ResponseBody
-    public Map<String,Integer> insertCafeCmt(CafeCmtDto dto, @RequestParam(required = false) List<MultipartFile> uploadFiles){
+    public Map<String,Object> insertCafeCmt(CafeCmtDto dto, @RequestParam(required = false) List<MultipartFile> uploadFiles){
         //cm_id를 위해 먼저 cmt table에 insert
         cafeService.insertCafeCmt(dto);
         String path= "E://Java0711//semiproject//CoffeeWith//src//main//webapp//resources//images//upload";
@@ -135,9 +135,29 @@ public class CafeController {
                 }//catch
             }
         }
-        Map<String,Integer> map=new HashMap<>();
+
+        //리뷰 숫자
+        Map<String,Object> map=new HashMap<>();
         int cm_cnt=cafeService.selectCMCntByCfid(dto.getCf_id());
+        List<CafeCmtDto> listm=cafeService.selectCafeCmt(dto.getCf_id());
         map.put("cm_cnt",cm_cnt);
+
+        //리뷰별점 평균
+        int star_cnt=0;
+        double sum=0;
+        for (CafeCmtDto dtom : listm){
+            if(dtom.getStar()==0){continue;}
+            sum+=dtom.getStar();
+            star_cnt++;
+        }
+        if(star_cnt==0){
+            int cm_star = -1;
+            map.put("cm_star",cm_star);
+        }else {
+            double avg=Math.round(sum/star_cnt*10)/10.0;
+            map.put("cm_star",avg);
+        }
+
         return map;
     }
 
@@ -173,11 +193,31 @@ public class CafeController {
 
     @GetMapping("/delete_cmt")
     @ResponseBody
-    public Map<String,Integer> deleteCafeCmt(int cm_id, int cf_id){
+    public Map<String,Object> deleteCafeCmt(int cm_id, int cf_id){
         cafeService.deleteCafeCmt(cm_id);
-        Map<String,Integer> map=new HashMap<>();
+
+        //리뷰숫자
+        Map<String,Object> map=new HashMap<>();
         int cm_cnt=cafeService.selectCMCntByCfid(cf_id);
         map.put("cm_cnt",cm_cnt);
+
+        //리뷰별점 평균
+        List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
+        int star_cnt=0;
+        double sum=0;
+        for (CafeCmtDto dtom : listm){
+            if(dtom.getStar()==0){continue;}
+            sum+=dtom.getStar();
+            star_cnt++;
+        }
+        if(star_cnt==0){
+            int cm_star = -1;
+            map.put("cm_star",cm_star);
+        }else {
+            double avg=Math.round(sum/star_cnt*10)/10.0;
+            map.put("cm_star",avg);
+        }
+
         return map;
     }
 

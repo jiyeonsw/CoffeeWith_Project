@@ -101,7 +101,7 @@
         span.cm-star-n{
             color: lightgray;
         }
-        div#btn-ck{cursor: pointer; width: 300px;}
+        div#btn-ck{cursor: pointer; width: 70px;}
         span.cm-edit-del{
             float:right;
             cursor: pointer;
@@ -153,7 +153,6 @@
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <!-- The Modal -->
 
-
 <div style="margin: 50px 50px;">
     <div>&nbsp<a class="back" href="javascript:back();"><i class="fa-solid fa-map-location-dot"></i>&nbsp;맵으로 돌아가기</a></div><br>
     <div class="cf-top">
@@ -202,10 +201,10 @@
             <div><span>위치</span>  <span>${dto.loc_addr} </span></div>
             <div><span>리뷰</span>  <span><span class="cm-cnt">${dto.cm_cnt}</span>
                    <c:if test="${dto.cm_star==-1}">
-                       (<span class="cm-star" style="color: gray">★</span>-)
+                       (<span class="cm-star" style="color: gray">★</span><span class="cm-star-avg">-</span>)
                    </c:if>
                    <c:if test="${dto.cm_star>-1}">
-                       (<span class="cm-star">★</span>${dto.cm_star})
+                       (<span class="cm-star">★</span><span class="cm-star-avg">${dto.cm_star}</span>)
                    </c:if>
                </span></div>
             <hr>
@@ -374,8 +373,14 @@
                 success: function (res) {
                     cmList();
                     var cm_cnt = res.cm_cnt;
+                    var cm_star=res.cm_star;
                     $("span.cm-cnt").text(cm_cnt);
-
+                    var pre_star = $("span.cm-star-avg").text();
+                    //console.log(pre_star);
+                    if (pre_star=="-"){
+                        $("span.cm-star").css("color",'rgba(250, 208, 0, 0.99)');
+                    }
+                    $("span.cm-star-avg").text(cm_star);
                 }//succ
             });//ajax
         });//리뷰등록
@@ -393,7 +398,17 @@
                 success: function (res) {
                     $("div#btn-cm-link").trigger('click');
                     var cm_cnt = res.cm_cnt;
+                    var cm_star=res.cm_star;
+                    console.log(cm_star);
                     $("span.cm-cnt").text(cm_cnt);
+                    var pre_star = $("span.cm-star-avg").text();
+                    console.log(pre_star);
+                    if (cm_star==-1){
+                        $("span.cm-star").css("color",'gray');
+                        $("span.cm-star-avg").text("-");
+                    }else {
+                        $("span.cm-star-avg").text(cm_star);
+                    }
                 }//succ
             });//ajax
         });//리뷰삭제
@@ -462,6 +477,9 @@
             $(this).siblings("a.view-cm-cm").next().hide();
             $(this).siblings("a.view-cm-cm").find("svg").addClass("fa-caret-down");
             $(this).siblings("a.view-cm-cm").find("svg").removeClass("fa-caret-up");
+            $(this).siblings("a").next().find("form").removeClass("ccform");
+            $(this).next().find("form").addClass("ccform");
+            $(".ccform")[0].reset();
             ccList(${dto.cf_id},rg);
             $(this).next().slideToggle(500);
             $(this).find("svg").toggleClass("fa-caret-down");
@@ -475,14 +493,15 @@
             //console.log(rg);
             var cf_id=$(this).attr("cf_id");
             //console.log(cf_id);
-            var formData=new FormData();
+            var formData =new FormData();
             formData.append("uploadFiles",$(".cc_upload")[0].files[0]);
             var ccdata=$(".ccform").serializeArray();
+           //console.log(ccdata);
             ccdata.forEach(function(data) {
                 formData.append(data["name"], data["value"]);
             });
             $(".cm-cm-txt").val('');
-            //console.log(formData);
+
             $.ajax({
                 type: "post",
                 url: "insert_cmt",
@@ -668,7 +687,7 @@
                         if(elt.rl==0){
                             //console.dir(elt);
                             cl+='<div>';
-                            cl+='<img src="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
+                            cl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 cl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 cl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'" cf_id="'+cf_id+'"></i></span>';}

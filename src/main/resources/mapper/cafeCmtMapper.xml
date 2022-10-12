@@ -11,7 +11,7 @@
 		order by cm.w_date desc
 	</select>
 	<select id="selectCMOrder" parameterType="map" resultType="cmdto">
-		select cm.cm_id, cm.cf_id, cm.w_date, cm.star, cm.cm_txt, cm.rg, cm.rs, cm.rl,ur.ur_nk, ur.ur_id
+		select cm.cm_id, cm.cf_id, cm.w_date, cm.star, cm.cm_txt, cm.rg, cm.rs, cm.rl,ur.ur_nk, ur.ur_id, ur.ur_img
 		from cf_cmt cm
 				 left join ur
 						   on cm.ur_id=ur.ur_id
