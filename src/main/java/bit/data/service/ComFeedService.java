@@ -64,4 +64,11 @@ public class ComFeedService implements ComFeedServiceInter{
     public void insertPhoto(ComFeedDto dto) {
         daoInter.insertPhoto(dto);
     }
+
+    @Override
+    public List<String> selectPhoto(int fd_id) {
+        return daoInter.selectPhoto(fd_id);
+    }
+
+
 }

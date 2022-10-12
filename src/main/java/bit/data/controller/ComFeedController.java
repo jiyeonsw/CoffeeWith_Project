@@ -41,6 +41,16 @@ public class ComFeedController {
 
         List<ComFeedDto> list = comFeedService.searchFeedByTag(sc, sw);
 
+        for(ComFeedDto dto:list){
+            List<String> list1 = comFeedService.selectPhoto(dto.getFd_id());
+            String photo="";
+            for(String str:list1){
+                photo+=(str+",");
+                photo.substring(0,photo.length()-1);
+            }
+            dto.setFd_photo(photo);
+        }
+
         int totalCount = comFeedService.selectTotalCount(sc, sw);
 
         model.addAttribute("list", list);
@@ -52,34 +62,29 @@ public class ComFeedController {
     @PostMapping("/insert")
     public String insert(ComFeedDto dto, List<MultipartFile> upload, HttpServletRequest request) {
 
+        String ntxt = dto.getFd_txt().replaceAll("\r\n","<br>");
+        dto.setFd_txt(ntxt);
+
+        comFeedService.insertFeed(dto);
+        int fd_id = comFeedService.selectMaxNum();
+        dto.setFd_id(fd_id);
+
         String path = request.getSession().getServletContext().getRealPath("/resources/images/upload");
-
-        System.out.println(path);
-
-        String photo = "";
 
         int idx = 1;
         for (MultipartFile multi : upload) {
 
-            String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
-            photo += newName + ",";
+            String photo = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+            dto.setFd_photo(photo);
+            comFeedService.insertPhoto(dto);
 
             try {
-                multi.transferTo(new File(path + "/" + newName));
+                multi.transferTo(new File(path + "/" + photo));
             } catch (IllegalStateException | IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-
-        photo = photo.substring(0, photo.length() - 1);
-
-        dto.setFd_photo(photo);
-
-        String ntxt = dto.getFd_txt().replaceAll("\r\n","<br>");
-        dto.setFd_txt(ntxt);
-
-        comFeedService.insertFeed(dto);
 
         return "redirect:main";
     }
@@ -89,6 +94,14 @@ public class ComFeedController {
         ModelAndView mview = new ModelAndView();
 
         ComFeedDto comFeedDto = comFeedService.selectFeed(fd_id);
+        List<String> list = comFeedService.selectPhoto(fd_id);
+        String photo="";
+        for(String str:list){
+            photo+=(str+",");
+            photo.substring(0,photo.length()-1);
+        }
+        comFeedDto.setFd_photo(photo);
+
         int cf_id = comFeedDto.getCf_id();
         CafeDto cafeDto = cafeService.selectCafe(cf_id);
         int ur_id = comFeedDto.getUr_id();
