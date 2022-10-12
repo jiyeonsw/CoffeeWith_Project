@@ -24,26 +24,25 @@
         body * {
             font-family: 'GangwonEdu_OTFBoldA';
             color: #664400;
-        }
-
-        body {
             font-size: 20px;
         }
 
-        #main {
-            font-family: 'Jua';
-            font-size: 20px;
-            color: #664400;
-            padding-top: 30px;
-            padding-left: 50px;
+        .main-page-container {
+
         }
 
     </style>
 </head>
 
 <body>
-<div id="main">
-    메인 홈페이지 부분
+<div class="main-page-container">
+    <div class="cf-cafe-container">
+        <div class="cafe-card">
+            <div>
+
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

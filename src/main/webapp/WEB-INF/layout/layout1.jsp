@@ -42,8 +42,10 @@
         }
 
         #header {
-            height: 90px;
+            height: 120px;
             text-align: center;
+            z-index: 101;
+            box-shadow: 0 8px 8px rgb(0 0 0 / 5%);
         }
 
     </style>
@@ -53,11 +55,9 @@
     <div class="main" id="header">
         <tiles:insertAttribute name="header"/>
     </div>
-    <hr>
     <div class="main" id="main">
         <tiles:insertAttribute name="main"/>
     </div>
-
 </div>
 </body>
 </html>

@@ -1,9 +1,12 @@
 package bit.data.controller;
 
 import bit.data.dto.CafeDto;
+import bit.data.dto.ComFeedCmtDto;
 import bit.data.dto.ComFeedDto;
+import bit.data.dto.UserDto;
 import bit.data.service.CafeServiceInter;
 import bit.data.service.ComFeedServiceInter;
+import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,9 @@ public class ComFeedController {
     @Autowired
     CafeServiceInter cafeService;
 
+    @Autowired
+    UserServiceInter userService;
+
     @GetMapping("/main")
     public String list(@RequestParam(value = "searchcolumn", required = false) String sc,
                        @RequestParam(value = "searchword", required = false) String sw, Model model) {
@@ -46,8 +52,9 @@ public class ComFeedController {
     @PostMapping("/insert")
     public String insert(ComFeedDto dto, List<MultipartFile> upload, HttpServletRequest request) {
 
-        String path = "D:\\Project\\CoffeeWith\\src\\main\\webapp\\resources\\images\\upload";
-//        String path = "C:\\Java\\CoffeeWith\\src\\main\\webapp\\resources\\images\\upload";
+        String path = request.getSession().getServletContext().getRealPath("/resources/images/upload");
+
+        System.out.println(path);
 
         String photo = "";
 
@@ -69,6 +76,9 @@ public class ComFeedController {
 
         dto.setFd_photo(photo);
 
+        String ntxt = dto.getFd_txt().replaceAll("\r\n","<br>");
+        dto.setFd_txt(ntxt);
+
         comFeedService.insertFeed(dto);
 
         return "redirect:main";
@@ -80,11 +90,13 @@ public class ComFeedController {
 
         ComFeedDto comFeedDto = comFeedService.selectFeed(fd_id);
         int cf_id = comFeedDto.getCf_id();
-        System.out.println(cf_id);
         CafeDto cafeDto = cafeService.selectCafe(cf_id);
+        int ur_id = comFeedDto.getUr_id();
+        UserDto userDto = userService.selectDataById(ur_id);
 
         mview.addObject("comfeeddto", comFeedDto);
         mview.addObject("cafedto",cafeDto);
+        mview.addObject("userdto",userDto);
 
         mview.setViewName("comfeed/comfeeddetail");
         return mview;

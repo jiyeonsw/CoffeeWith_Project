@@ -17,6 +17,7 @@
     .table{
         height: 700px;
         margin-bottom: 0px;
+        table-layout: fixed;
     }
 
     .fddata {
@@ -48,6 +49,12 @@
         text-align: left;
     }
 
+    .table .profile img{
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+    }
+
     .table .fdcontent {
         height: 85%;
         vertical-align: top;
@@ -69,21 +76,21 @@
         height: 5%;
     }
 
-    #showimg{
+    #imgform{
         width: 100%;
         height: 100%;
     }
 
-    #showimg .carousel-inner{
+    #imgform .carousel-inner{
         width: 100%;
         height: 100%;
     }
 
-    #showimg .carousel-item{
+    #imgform .carousel-item{
         height: 100%;
     }
 
-    #showimg .carousel-item img{
+    #imgform .carousel-item img{
         position: absolute;
         top: 0;
         left: 0;
@@ -111,19 +118,19 @@
                     <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="upload">
 
                     <!-- Carousel -->
-                    <div id="showimg" class="carousel slide" data-bs-interval="false" style="display: none">
+                    <div id="imgform" class="carousel slide" data-bs-interval="false" style="display: none">
 
                         <div class="carousel-inner" data-bs-interval="false"></div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#showimg" data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imgform" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon"></span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#showimg" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#imgform" data-bs-slide="next">
                             <span class="carousel-control-next-icon"></span>
                         </button>
                     </div>
                 </td>
                 <td class="profile">
-                    <img src="${root}/images/${sessionScope.login_img}" style="border-radius: 50% 50%">
+                    <img src="${root}/res/prfimg/${sessionScope.login_img}">
                     ${sessionScope.login_nick}
                 </td>
             </tr>
@@ -187,7 +194,7 @@
     }
 
     function preview(arr){
-        $("#showimg").show();
+        $("#imgform").show();
         arr.forEach(function(f, ele){
 
             var str='';

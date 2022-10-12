@@ -38,11 +38,17 @@
                 dataType: "json",
                 success:function(res){
                    // alert(res);
+                    s+="<table class='table table-bordered'>";
                     $.each(res,function (i,elt){
 
-                        s+="<b>"+elt.tm_txt+", </b>";
-                        s+="<b>글쓴이:"+elt.ur_nm+"</b><br>"
+                    s+="<tr><td style='width: 100px;'>"+elt.ur_img+"</td>";
+                    s+="<td style='width: 200px;'>"+elt.ur_nk+"</td>";
+                    s+="<td style='width: 600px;'>"+elt.tm_txt+"<br>2시간전elt.w_date</td>"
+                    s+="<td style='width: 30px;'>X버튼</td></tr>"
+                      /*  s+="<b>"+elt.tm_txt+", </b>";
+                        s+="<b>글쓴이:"+elt.ur_nk+"</b><br>"*/
                     });//each 함수
+                    s+="</table>"
                     $("div.alist").html(s);
                 }//success
             })//a.jax
@@ -51,50 +57,35 @@
     </script>
 </head>
 <body>
-<h1>${dto.tr_id}</h1>
-<h1>tm+id : ${tm_id}</h1>
+<h3 style="color: red">comtour/list에서 넘어온 tr_id(PK): ${dto.tr_id}</h3>
+<h5>dto 정보: tr + ur table<br> ${dto}</h5>
+<hr>
+<h5 style="color: red">tr_cmt에 입력할 tm_id(PK), rg, rs, rl이 모두 "0"으로 넘어옴</h5>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-${root}
+${root} ${tm_id}
+<hr>
+
+
 <!--dto 객체에 tr 테이블(inner join으로 ur 정보 포함)의 정보가 담겨 있어서 dto.xx 형태로 꺼내어 쓰면 됨-->
 <div class="wholetable">
     <table class="table table-bordered" style="width: 1460px">
         <tr>
-            <th colspan="3" style="width: 1000px; text-align: center">
+            <th colspan="3" style="text-align: center">
                 카페 모임 상세 정보
                 <%--<button type="button" class="btn-close" data-bs-dismiss="modal" style="float: right"></button>--%>
             </th>
 
         </tr>
-        <tr>
+        <tr> <%--타이틀 상단--%>
             <td style="width: 130px;">title</td>
-            <td style="width: 630px;">
-            ${dto.tr_nm}
-            </td>
-            <td style="width: 700px;">
-                모임관련 정보 : 주최자(${dto.ur_nm}), 아이디(${dto.email_id})
-            </td>
+            <td style="width: 400px;">${dto.tr_nm}</td>
+            <td style="width: 930px;">모임관련 정보 : 주최자(${dto.ur_nm}), 아이디(${dto.email_id})</td>
         </tr>
 
         <tr>
             <td>Content</td>
+            <td><textarea class="form-control" style="height: 300px;">${dto.tr_txt}</textarea></td>
             <td>
-                <textarea class="form-control" style="height: 300px;">${dto.tr_txt}</textarea>
-            </td>
-            <td>
-
-
-                <!--계층형 게시판 영역-->
-                <table class="table table-bordered">
-                    <tr>
-                        <td>111</td>
-                        <td>111</td>
-                        <td>111</td>
-                    </tr>
-                </table>
-                <!--계층형 게시판 영역 종료-->
-
-
-
                 <!--디테일 페이지의 댓글 입력창 만들기-->
                 <div class="alist">댓글목록</div>
 
@@ -115,7 +106,6 @@ ${root}
                         </form>
                     </div><!--aform -->
                 </c:if>
-
             </td>
         </tr>
 
@@ -146,8 +136,14 @@ ${root}
 
 
 
-
-
+<table>
+<tr>
+    <td style="width: 100px;">사진</td>
+    <td style="width: 200px;">아이디</td>
+    <td style="width: 600px;">텍스트<br>2시간전</td>
+    <td style="width: 30px;"> X </td>
+</tr>
+</table>
 
 
 
