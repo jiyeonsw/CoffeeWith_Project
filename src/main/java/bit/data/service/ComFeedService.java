@@ -28,8 +28,8 @@ public class ComFeedService implements ComFeedServiceInter{
     }
 
     @Override
-    public ComFeedDto selectFeed(int num) {
-        return daoInter.selectFeed(num);
+    public ComFeedDto selectFeed(int fd_id) {
+        return daoInter.selectFeed(fd_id);
     }
 
     @Override
@@ -51,12 +51,17 @@ public class ComFeedService implements ComFeedServiceInter{
     }
 
     @Override
-    public void deleteFeed(int num) {
-        daoInter.deleteFeed(num);
+    public void deleteFeed(int fd_id) {
+        daoInter.deleteFeed(fd_id);
     }
 
     @Override
-    public void updateLikes(int num) {
-        daoInter.updateLikes(num);
+    public void updateLikes(int fd_id) {
+        daoInter.updateLikes(fd_id);
+    }
+
+    @Override
+    public void insertPhoto(ComFeedDto dto) {
+        daoInter.insertPhoto(dto);
     }
 }

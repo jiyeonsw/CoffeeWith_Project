@@ -33,4 +33,7 @@
     <update id="updateLikes" parameterType="int">
         update fd set likes = likes+1 where fd_id=#{fd_id}
     </update>
+    <insert id="insertPhoto" parameterType="fddto">
+        insert into cf_img values (null,${cf_id},${fd_photo},'/images/upload/',now(),${fd_id},null)
+    </insert>
 </mapper>
