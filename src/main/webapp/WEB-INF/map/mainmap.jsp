@@ -23,19 +23,17 @@
 
         #container{
             display: flex;
-            height: 100%;
+            height: 550px;
         }
 
         #map{
             float:right;
             width:80%;
-            height: 590px;
         }
 
         #sidebar{
             width:20%;
             background-color: white;
-            height: 590px;
         }
 
         button.btn-make-tour{
@@ -102,7 +100,7 @@
             display:none;
         }
 
-        div.detail-bar{
+        div.detail-bar-date{
             background-color: aqua;
             opacity: 80%;
         }
@@ -159,17 +157,29 @@
             <hr>
             <input type="text" name="tourlist" id="tourlist" hidden>
             <div class="tour-detail">
-                1oierf;ljg;iㅈ루ㅑㅕ누파ㅓㄴㅅ구히ㅏㅓㅜㄷㅈㅁ;래ㅑ[ㄷ재ㅑ루;ㅐㅑ듛;ㅕㄱㄴ;햐;ㄹ웊미ㅏㅓ깋라ㅓ듄;패ㅑ뮹;ㅐㅑㄷㅈㄹ;ㅏㅓㅠㅁ;나ㅓ윺;ㅕㄷㄱㅁ['ㅎ몰개ㅑㅈㅂ;ㄻㄱ;힐야ㅠ히ㅑㅅㄱ녀ㅗ햐ㅗ;ㅐ랴;ㅈ둘;ㅓ:ㅇㄴ러ㅠ;ㅁ냥ㄹ;ㅐㅑ뮫개ㅑ루;ㄷㅈ버ㅠ;라ㅓㅜㅇㄴ;ㅓㅠㅍ;ㅐㅑㄷ개ㅑㄼ;ㄷ개ㅑㄹ;ㅈ듁;ㄷㅈ뷱;ㅏㅓㅠㅇㄴ.프ㅜ날두;ㄷ쟈ㅗㄱ'ㅐㅑㅗㅇㄴ매ㅑ롣재'ㅑㅗ개ㅑㅈㅄ;ㄷ거ㅜㄹ;<ㅣㅏㅇㄴ머ㅠ라ㅓㅇ뉴ㅏ류>ㅣㅏㅓ규;ㅑㅗㅊ['ㅑㅇ놀'매ㅑㅈ것;ㅣㅏ부ㅠ라ㅓㅠㄷㅈ ㅓㅇ;냐ㅗㄹ'ㅑㄴㄱ' ㅏㅜㄱ/ㅣㅏㄷ주ㅠㄹ/ㅣㅏㅠ러ㅠ                 1oierf;ljg;iㅈ루ㅑㅕ누파ㅓㄴㅅ구히ㅏㅓㅜㄷㅈㅁ;래ㅑ[ㄷ재ㅑ루;ㅐㅑ듛;ㅕㄱㄴ;햐;ㄹ웊미ㅏㅓ깋라ㅓ듄;패ㅑ뮹;ㅐㅑㄷㅈㄹ;ㅏㅓㅠㅁ;나ㅓ윺;ㅕㄷㄱㅁ['ㅎ몰개ㅑㅈㅂ;ㄻㄱ;힐야ㅠ히ㅑㅅㄱ녀ㅗ햐ㅗ;ㅐ랴;ㅈ둘;ㅓ:ㅇㄴ러ㅠ;ㅁ냥ㄹ;ㅐㅑ뮫개ㅑ루;ㄷㅈ버ㅠ;라ㅓㅜㅇㄴ;ㅓㅠㅍ;ㅐㅑㄷ개ㅑㄼ;ㄷ개ㅑㄹ;ㅈ듁;ㄷㅈ뷱;ㅏㅓㅠㅇㄴ.프ㅜ날두;ㄷ쟈ㅗㄱ'ㅐㅑㅗㅇㄴ매ㅑ롣재'ㅑㅗ개ㅑㅈㅄ;ㄷ거ㅜㄹ;<ㅣㅏㅇㄴ머ㅠ라ㅓㅇ뉴ㅏ류>ㅣㅏㅓ규;ㅑㅗㅊ['ㅑㅇ놀'매ㅑㅈ것;ㅣㅏ부ㅠ라ㅓㅠㄷㅈ ㅓㅇ;냐ㅗㄹ'ㅑㄴㄱ' ㅏㅜㄱ/ㅣㅏㄷ주ㅠㄹ/ㅣㅏㅠ러ㅠ    ㅇ'ㅗㄹ'ㅇㄴㄹ'ㅏㅣㄷ</ㅣㅏㅇㄴ머ㅠ라ㅓㅇ뉴ㅏ류>
-                ㅇ'ㅗㄹ'ㅇㄴㄹ'ㅏㅣㄷ</ㅣㅏㅇㄴ머ㅠ라ㅓㅇ뉴ㅏ류>
+                투어일정을 입력해주세요
             </div>
         </form>
     </div>
 </div>
 <script>
+    /*$(document).ready(function (){
+        $("button.search-btn").trigger('click');
+    })*/
+
+    //투어추가 실헝용 추후에 삭제밑 위에서 폼 태그추가, button type submit으로 변경요망
+    $(document).on('click','#tour-submit',function (){
+       // clttourlist();
+       console.log("투어이름: " + $("#tourname").val());
+       console.log("투어소개: " + $("#tourinfo").val());
+       console.log("투어일정: " + $("#tourdate").val());
+       console.log("투어리스트: " + $("#tourlist").val());
+    });
+
     //전역변수 선언
     var isMakingTour= false;
     var currentPage = parseInt(1);
-    var perPage = parseInt(4);
+    var perPage = parseInt(3);
     var perBlock= parseInt(5);
     var startDate="";
     var endDate="";
@@ -292,7 +302,6 @@
             return;
         };
         isMakingTour = !isMakingTour;
-        //console.log(isMakingTour);
         if(isMakingTour==true)
         {
             //열려있는 정보창 닫기
@@ -339,14 +348,17 @@
         var d="";
         for(var i=0; i<parseInt(tourDays); i++ ) {
             var nowdate=start;
-            d += "<div class='detail-div " + (i==0?"active-bar":"") + " day" + i +"'><div class='detail-bar'>" + nowdate.add(parseInt(i),"days").format('YYYY-MM-DD') + "</div></div>";
+            d += "<div class='detail-div " + (i==0?"active-bar":"") + " day" + i +"'>"
+            d += "<div class='detail-bar-date'>" + nowdate.add(parseInt(i),"days").format('YYYY-MM-DD') + "</div>"
+            d += "<div class='detail-bar-cafe'></div>"
+            d += "</div>";
             nowdate.subtract(parseInt(i),"days");
         }
         $("div.tour-detail").html(d);
     });
 
     //날짜 bar 클릭시 활성화
-    $(document).on('click','.detail-bar',function(){
+    $(document).on('click','.detail-bar-date',function(){
        $(this).parent().addClass('active-bar');
        $(this).parent().siblings().removeClass('active-bar');
     });
@@ -361,19 +373,28 @@
             dataType: "json",
             data: {"cf_id":id},
             success: function(res){
-                s += "<div class='cafe-in-tour'>" + res.cf_nm;
+                s += "<div class='cafe-in-tour' value='" + id + "'>" + res.cf_nm;
+                s += "<input type='time' class='visit_time'>"
                 s += "<i class='fa-solid fa-xmark rm-tour-icon'></i>";
                 s += "</div>"
-                $("div.active-bar").append(s);
+                $("div.active-bar").children(".detail-bar-cafe").append(s);
             }
         });
     });
 
-    //- 아이콘 클릭시 일정에서 삭제
+    //시간 설정시 시간별로 정렬
+    $(document).on('change','input.visit_time',function(){
+        $(this).parent().parent().children().each(function(i,day){
+            console.log(day);
+        });
+    });
+
+    // 아이콘 클릭시 일정에서 삭제
     $(document).on('click','.rm-tour-icon',function(){
         $(this).parent().remove();
     });
 
+    //투어 추가시 submit전 일정 정보를 json형태로 변환
     function clttourlist()
     {
         if(loginCheck()==false){
@@ -383,17 +404,30 @@
         var tourList = [];
 
         //날짜수 만큼 반복
-        for(var i=0; i<$(".detail-div").siblings().length; i++)
-        {
-            var day = "day" + i;
-            //해당 날짜 카페수 만큼
-            for(var j=0; j<$(".tour-detail").find(day).siblings().length; j++)
-            {
-                $(".tour-detail").find(day).
-                console.log(day);
-            }
-        }
-        $("#tourlist").attr("value",tourList);
+        $(".detail-div").each(function(i,day){
+            //하루 날짜에 해당하는 데이터 배열
+            var tourPerDay = [];
+            //해당 날짜 카페수 만큼 반복
+            $(day).children(".detail-bar-cafe").children().each(function (j,cafe){
+                //카페 데이터 담을 공간
+                var cafeData = {};
+                //카페 순서
+                cafeData.visit_time =$(cafe).children(".visit_time").val();
+                //카페 id
+                cafeData.cf_id = $(cafe).attr("value");
+                tourPerDay.push(cafeData);
+            });
+            //날짜 데이터 담을 공간
+            var dayData = {};
+            //날짜
+            dayData.day = $(day).children(".detail-bar-date").text();
+            //해당 날짜 투어정보
+            dayData.tours = tourPerDay;
+            tourList.push(dayData);
+        });
+        //json형태로 바꾸기
+        var tourjson = JSON.stringify(tourList);
+        $("#tourlist").attr("value",tourjson);
     }
 
     //지도 옵션
@@ -443,16 +477,6 @@
                          <div>★</div>
                       </div>`
         });
-        //투어만들기중 정보창
-        /*var newIW = new naver.maps.InfoWindow({
-            content: `<div class="infowindow">
-                         <span style="display:none">${dto.cf_id}</span>
-                         <div>${dto.cf_nm}</div>
-                         <button type="button" class="btnaddtour"><i class="fa-solid fa-plus"></i></button>
-                         <button type="button" class="btnrmtour"><i class="fa-solid fa-xmark"></i></button>
-                      </div>`
-        });*/
-
         //마커를 마커 배열에 넣기
         markerList.push(marker);
         //정보창을 정보창 배열에 넣기

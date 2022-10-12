@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -25,6 +26,25 @@ public class ComTourService implements ComTourServiceInter{
         map.put("searchcolumn",searchcolumn);
         map.put("searchword", searchword);
         return daoInter.getTotalCount(map);
+    }
+
+    @Override
+    public List<ComTourDto> getPagingList(String searchcolumn, String searchword) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("searchcolumn", searchcolumn);
+        map.put("searchword", searchword);
+
+        return daoInter.getPagingList(map);
+    }
+
+    @Override
+    public ComTourDto getUserData(int num) {
+        return daoInter.getUserData(num);
+    }
+
+    @Override
+    public ComTourDto getData(int num) {
+        return daoInter.getData(num);
     }
 
 

@@ -49,32 +49,33 @@ public class UserService implements UserServiceInter {
     }
 
     @Override
-    public UserDto getDataById(String id) {
-        return null;
-    }
-
-    @Override
-    public int getIdPassCheck(String email_id, String ur_pw){
-        Map<String,String> map=new HashMap<>();
-        map.put("email_id",email_id);
-        map.put("ur_pw",ur_pw);
+    public int getIdPassCheck(String email_id, String ur_pw) {
+        Map<String, String> map = new HashMap<>();
+        map.put("email_id", email_id);
+        map.put("ur_pw", ur_pw);
         return userDao.getIdPassCheck(map);
     }
 
     @Override
-    public void deleteUser(int num) {
-
+    public String selectUserPass(int ur_id) {
+        return userDao.selectUserPass(ur_id);
     }
 
     @Override
-    public UserDto getDataByNum(int num) {
-        return null;
+    public UserDto selectEmailId(String id) {
+        return userDao.selectEmailId(id);
+    }
+    @Override
+    public void updateUserPass(String new_pass, int login_id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("new_pass", new_pass);
+        map.put("login_id", login_id);
+
+        userDao.updateUserPass(map);
     }
 
     @Override
-    public void updateUser(UserDto dto) {
-
+    public void updateUserData(UserDto dto) {
+        userDao.updateUserData(dto);
     }
-
-
 }

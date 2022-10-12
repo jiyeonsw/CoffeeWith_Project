@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.data.dao.ComTourAnsDao">
+    <!--게시글 입력-->
+    <insert id="insertAns" parameterType="ctadto">
+        INSERT INTO tr_cmt values (null,#{ur_id},#{tr_id},#{tm_txt},now(),now(),#{rg},#{rs},#{rl})
+    </insert>
+
+    <select id="selectAllAnsData" parameterType="int" resultType="ctadto">
+       SELECT * FROM tr_cmt INNER JOIN ur ON tr_cmt.ur_id=ur.ur_id where tr_id=#{tr_id} order by tm_id desc
+    </select>
+    <!--select * from tr_cmt where tr_id=#{tr_id} order by tm_id desc-->
+</mapper>

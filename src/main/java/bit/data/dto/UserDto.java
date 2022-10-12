@@ -19,4 +19,5 @@ public class UserDto {
     private String status;
     private int report;
     private String ur_phnum;
+
 }

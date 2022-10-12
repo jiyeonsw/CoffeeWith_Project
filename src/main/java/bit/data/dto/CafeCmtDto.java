@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 public class CafeCmtDto {
@@ -19,4 +20,5 @@ public class CafeCmtDto {
     private int rl;
     private int star;
     private String ur_nk;
+    private List<CafeImgDto> img;
 }

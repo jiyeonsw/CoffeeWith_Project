@@ -30,6 +30,7 @@
             font-family: 'GangwonEdu_OTFBoldA';
             font-style: oblique;
             font-weight: bolder;
+            font-size: 30px;
         }
 
         #btnlogin {
@@ -53,6 +54,7 @@
             display: block;
             width: 180px;
             font-family: 'Jua';
+            font-size: 20px;
         }
 
         li.main > a:hover {
@@ -63,7 +65,7 @@
 <body>
 <!-- 로고 버튼 누르면 홈으로 -->
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<a href="${root}/" class="logotitle" style="font-size: 30px;">
+<a href="${root}/" class="logotitle">
     <img src="${root}/images/logo1.png" class="rounded-circle" width="40" height="40">
     <b> Coffee With </b></a>
 
@@ -93,7 +95,7 @@
     </ul>
 </div>
 
-<!-- 로그인 로그아웃 -->
+<!-- 로그인  -->
 <span id="loginstate" style="text-align: right;">
     <c:if test="${sessionScope.login_ok==null}">
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
@@ -104,10 +106,11 @@
                 세션주기</button>
     </c:if>
 
+<!-- 로그아웃 -->
     <c:if test="${sessionScope.login_ok!=null}">
         <b>${sessionScope.login_nick}님</b>
         <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
-                onclick="location.href='${root}/mypage'">My Page</button>
+                onclick="location.href='${root}/mypage/main'">My Page</button>
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
         <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
                 세션제거</button>
@@ -182,6 +185,7 @@
             }
         })
     })
+
 </script>
 </body>
 </html>

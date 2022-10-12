@@ -8,22 +8,38 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <%--jquery script--%>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <%--bootstrap 5 css,script--%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <%--google font --%>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Edu+VIC+WA+NT+Beginner:wght@600&family=Gamja+Flower&family=Single+Day&family=Jua&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
+    <%--icon--%>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <title>CoffeeWith</title>
-    <style type="text/css">
+    <style>
+        @font-face {
+            font-family: 'GangwonEdu_OTFBoldA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body * {
+            font-family: 'GangwonEdu_OTFBoldA';
+            color: #664400;
+        }
 
         .main-mypage {
             display: grid;
-            width: 1136px;
-            grid-template-columns: 0.4fr 1.6fr;
+            width: 950px;
             grid-auto-rows: 0fr 1fr;
             grid-template-areas:
-                    "  sub   top  "
-                    "  sub  cmain ";
+                    "top"
+                    "cmain";
             margin: 0 auto;
             text-align: left;
             overflow: hidden;
@@ -34,10 +50,6 @@
             height: 90px;
             text-align: center;
             grid-area: header;
-        }
-
-        #sub {
-            grid-area: sub;
         }
 
         #top {
@@ -59,6 +71,7 @@
         .main-mypage > div {
             border: 1px solid gray;
         }
+
     </style>
 </head>
 <body>
@@ -68,12 +81,10 @@
     </div>
     <hr>
     <div class="main-mypage">
-        <div class="main" id="sub">
-            <tiles:insertAttribute name="sub"/>
-        </div>
         <div class="main" id="top">
             <tiles:insertAttribute name="top"/>
         </div>
+        <%--contents main--%>
         <div class="main" id="cmain">
             <tiles:insertAttribute name="cmain"/>
         </div>
