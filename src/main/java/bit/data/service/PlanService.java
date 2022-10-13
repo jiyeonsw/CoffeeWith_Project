@@ -6,6 +6,8 @@ import bit.data.dto.PlanLocDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlanService implements PlanServiceInter {
 
@@ -25,5 +27,20 @@ public class PlanService implements PlanServiceInter {
     @Override
     public void insertPlanLoc(PlanLocDto dto) {
         planDao.insertPlanLoc(dto);
+    }
+
+    @Override
+    public int selectPlanCnt(int ur_id) {
+        return planDao.selectPlanCnt(ur_id);
+    }
+
+    @Override
+    public List<PlanDto> selectMyPlans(int ur_id) {
+        return planDao.selectMyPlans(ur_id);
+    }
+
+    @Override
+    public List<PlanLocDto> selectPlanLoc(int pl_id) {
+        return planDao.selectPlanLoc(pl_id);
     }
 }

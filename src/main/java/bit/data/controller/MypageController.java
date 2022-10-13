@@ -1,12 +1,7 @@
 package bit.data.controller;
 
-import bit.data.dto.CafeCmtDto;
-import bit.data.dto.MyPageCafeCmtDto;
-import bit.data.dto.MyPageCafeLikeDto;
-import bit.data.dto.UserDto;
-import bit.data.service.CafeServiceInter;
-import bit.data.service.MypageServiceInter;
-import bit.data.service.UserService;
+import bit.data.dto.*;
+import bit.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +20,13 @@ public class MypageController {
     MypageServiceInter mypageService;
 
     @Autowired
-
     CafeServiceInter cafeService;
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PlanServiceInter planService;
 
     //MyPage top View
     @GetMapping("/main")
@@ -191,5 +188,85 @@ public class MypageController {
         model.addAttribute("loc_gu", dto.getLoc_gu());
 
         return "/bit/user/update_user_form";
+    }
+
+    @GetMapping("/plan")
+    public String myPagePlanList(@RequestParam(defaultValue = "1") int currentPage,
+                                 HttpSession session,
+                                 Model model)
+    {
+        int loginId = (int) session.getAttribute("login_id");
+        //paging 처리
+        int totalCount = planService.selectPlanCnt(loginId);
+        int perPage = 12;// 한페이지당 보여질 북마크의 개수
+        int perBlock = 3;// 한블럭당 보여질 페이지의 개수
+        int startNum; // db에서 가져올 북마크 시작번호(mysql 0부터 시작)
+        int startPage;// 각 블럭당 보여질 시작페이지
+        int endPage;// 각 블럭당 보여질 끝페이지
+        int totalPage;// 총 페이지수
+        int no;// 각 페이지당 출력할 시작번호
+        int testNum;
+        // 총 페이지수를 구하기
+        // 총 북마크의 개수/한페이지당 보여질 개수로 나눔(7/5=1)
+        // 나머지가 1이라도 있으면 무조건 1 페이지 추가(1+1=2페이지가 필요)
+        totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1);
+
+        // 각 블럭당 보여질 시작페이지
+        // perBlock=5 일경우 현재페이지가 1~5 일경우는 시작페이지가 1, 끝페이지가 5
+        // 만약 현재페이지가 13 일경우는 시작페이지가 11, 끝페이지가 15
+        startPage = (currentPage - 1) / perBlock * perBlock + 1;
+        endPage = startPage + perBlock - 1;
+
+        // 총페이지수가 23개일경우 마지막 블럭은 끝페이지가 25가 아니라 23이라야한다
+        if (endPage > totalPage)
+            endPage = totalPage;
+
+        // 각 페이지에서 보여질 시작번호
+        // 예: 1페이지->0, 2페이지:12, 3페이지 : 24...
+        startNum = (currentPage - 1) * perPage;
+
+
+        // 각페이지당 출력할 시작번호 구하기
+        // 예: 총글갯수가 23이라면 1페이지는 23,2페이지는 18,3페이지는 13...
+        no = totalCount - (currentPage - 1) * perPage;
+        testNum = startNum + perPage;
+
+//        System.out.println("startPage : " + startPage);
+//        System.out.println("endPage : " + endPage);
+//        System.out.println("startNum : " + startNum);
+//        System.out.println("no : " + no);
+//        System.out.println("testNum" + testNum);
+
+        List<PlanDto> list = planService.selectMyPlans(loginId);
+        List<PlanDto> slist = new ArrayList<>();
+
+        for (int i = startNum; i < testNum; i++) {
+            try {
+                if (list.get(i).getPl_nm() != null) {
+                    //Plandto에 값추가
+                    PlanDto sPlanDto = list.get(i);
+                    List<PlanLocDto> loclist = planService.selectPlanLoc(sPlanDto.getPl_id());
+                    //locdto에 좌표 추가
+                    for (PlanLocDto locdto:loclist){
+                        locdto.setLoc_x(cafeService.selectCafe(locdto.getCf_id()).getLoc_x());
+                        locdto.setLoc_y(cafeService.selectCafe(locdto.getCf_id()).getLoc_y());
+                    }
+                    sPlanDto.setPl_loc(loclist);
+                    slist.add(sPlanDto);
+                }
+            } catch (IndexOutOfBoundsException iobe) {
+                iobe.getMessage();
+            }
+        }
+
+        model.addAttribute("totalCount", totalCount);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("no", no);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("list", slist);
+
+        return "/cmain/mypage/cont_pl";
     }
 }
