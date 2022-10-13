@@ -14,11 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import util.ChangeName;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +95,7 @@ public class CafeController {
         List<CafeCmtDto> list_cm=cafeService.selectCMOrder(cf_id, cm_order, rl);
         for(CafeCmtDto dto:list_cm){
             dto.setImg(cafeService.selectCmtImg(dto.getCf_id(),dto.getCm_id()));
+            dto.setCm_cnt(cafeService.selectCMCntByRg(dto.getCm_id()));
         }
         return list_cm;
     }

@@ -174,4 +174,8 @@ public class CafeService implements CafeServiceInter {
     public int selectCMCntByCfid(int cf_id) {
         return cafeDao.selectCMCntByCfid(cf_id);
     }
+    @Override
+    public int selectCMCntByRg(int cm_id) {
+        return cafeDao.selectCMCntByRg(cm_id);
+    }
 }
