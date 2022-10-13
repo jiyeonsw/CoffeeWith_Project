@@ -119,12 +119,12 @@
         div.ci-card {
             width: 350px;
             overflow: hidden;
+            border-radius: 10px;
         }
 
         div.ci-st {
             width: 100%;
             height: 350px;
-            border-radius: 10px;
             background: 50% 100% no-repeat;
             background-size: cover;
             object-fit: cover;
@@ -267,6 +267,7 @@
         div#cf-img-car{
             width: 350px;
             background-size: cover;
+            border-radius: 15px;
         }
         div.cf-info{
             width: 550px;
@@ -274,6 +275,9 @@
         }
         div.cm-list-box{
             display: flex;
+        }
+        div.cm-cm-list{
+            margin-top: 10px;
         }
 
     </style>
@@ -339,8 +343,8 @@
             <div class="cf-txt">${dto.cf_txt}</div>
             <br>
             <div class="loc-cm-lk">
-            <div><span>위치</span>  <span>${dto.loc_addr} </span></div>
-            <div><span>리뷰</span>  <span><span class="cm-cnt">${dto.cm_cnt}</span>
+            <div><span >위치<i class="bi bi-geo-alt"></i></span>&nbsp;<span>${dto.loc_addr} </span></div>
+            <div><span>리뷰<i class="bi bi-chat-dots"></i></span>&nbsp;<span><span class="cm-cnt">${dto.cm_cnt}</span>
                    <c:if test="${dto.cm_star==-1}">
                        (<span class="cm-star" style="color: gray">★</span><span class="cm-star-avg">-</span>)
                    </c:if>
@@ -365,11 +369,11 @@
     <div class="cf-bottom">
         <div id="map" y="${dto.loc_y}" x="${dto.loc_x}" style="width:300px;height:300px;"></div>
         <div style="margin-left: 30px;" class="cf-info">
-            <div><span>영업시간</span> <span>${dto.open_time}</span></div>
-            <div><span>휴무일</span> <span>${dto.off_day}</span></div>
-            <div><span>전화번호</span> <span>${dto.cf_tel}</span></div>
-            <div><span>주소</span> <span>${dto.loc_addr}</span></div>
-            <div><span>대표메뉴</span> <span>${dto.menu}</span></div>
+            <div><span>영업시간)</span> <span>${dto.open_time}</span></div>
+            <div><span>휴무일)</span> <span>${dto.off_day}</span></div>
+            <div><span>전화번호)</span> <span>${dto.cf_tel}</span></div>
+            <div><span>주소)</span> <span>${dto.loc_addr}</span></div>
+            <div><span>대표메뉴)</span> <span>${dto.menu}</span></div>
         </div>
     </div>
     <script>
@@ -622,7 +626,7 @@
             $(this).siblings("a.view-cm-cm").find("svg").removeClass("fa-caret-up");
             $(this).siblings("a").next().find("form").removeClass("ccform");
             $(this).next().find("form").addClass("ccform");
-            $(".ccform")[0].reset();
+            $('.ccform')[0].reset();
             ccList(${dto.cf_id},rg);
             $(this).next().slideToggle(500);
             $(this).find("svg").toggleClass("fa-caret-down");
@@ -832,6 +836,7 @@
                         if(elt.rl==0){
                             //console.dir(elt);
                             cl+='<div class="cm-box-each"><div style="width: 660px;">';
+                            if (elt.ur_img==null){ elt.ur_img='noprofile.jpg';}
                             cl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 cl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
@@ -870,10 +875,8 @@
                             cl+='<pre>'+elt.cm_txt+'</pre>';
                             cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'>댓글보기 ('+(elt.cm_cnt-1)+') <i class="fa-solid fa-caret-down"></i></a>';
                             cl+='<div style="display: none; " ><div class="cm-cm-form" ></div>';
-                            if((elt.cm_cnt-1)>0){
-                                cl+='<div class="cm-list-box"><i class="bi bi-arrow-return-right" style="margin-top: 10px;"></i>&nbsp;&nbsp;';
-                            }
-                            cl+='<div class="cm-cm-list"></div></div></div></div>';
+                            cl+='<div class="cm-list-box"><i class="bi bi-arrow-return-right" style="margin-top: 10px;"></i>&nbsp;&nbsp;';
+                            cl+='<div class="cm-cm-list">댓글이 없어요&nbsp;<i class="fa-regular fa-face-sad-tear"></i></div></div></div></div>';
                         }
                     });//each
                     cl+='</div>';
@@ -896,7 +899,7 @@
                     var ccl='';
                     $.each(res, function (i, elt) {
                         if(elt.rg==rg){
-                            ccl+='<div style="width: 620px; margin-top: 10px;">';
+                            ccl+='<div style="width: 620px; ">';
                             ccl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="${root}/images/noprofile.jpg"  style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 ccl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cc-edit" rg='+elt.rg+' cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
