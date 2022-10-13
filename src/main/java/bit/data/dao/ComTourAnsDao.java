@@ -28,21 +28,24 @@ public class ComTourAnsDao implements ComTourAnsDaoInter{
 
     @Override
     public void insertAns(ComTourAnsDto dto) {
+
         session.insert(ns+"insertAns",dto);
     }
 
     @Override
     public ComTourAnsDto getAnsData(int tm_id) {
+
         return null;
     }
 
     @Override
-    public void deleteAns(int tm_id) {
-
+    public void deleteAns(int num) {
+        session.delete(ns+"deleteAns",num);
     }
 
     @Override
-    public void updateRestep(Map<String, Integer> map) {
-
+    public void updateRestep(Map<String, Integer> map)
+    {
+        session.update(ns+"updateRestep",map);
     }
 }
