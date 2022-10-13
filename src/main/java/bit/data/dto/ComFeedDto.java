@@ -10,7 +10,6 @@ public class ComFeedDto {
     private int cf_id;
     private int ur_id;
     private int fg_id;
-    private String ci_nm;
     private String fd_txt;
     private String fd_photo;
     private String fg_nm;

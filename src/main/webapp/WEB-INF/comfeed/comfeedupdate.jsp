@@ -58,9 +58,11 @@
         .table .fdcontent {
             height: 85%;
             vertical-align: top;
+            text-align: left;
         }
 
         .table .inputtext {
+            text-align: left;
             height: 100%;
             width: 100%;
             padding: 0;
@@ -103,54 +105,66 @@
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 
-<form action="${root}/comfeed/insert" id="fdsubmit" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
+<form action="${root}/comfeed/update" id="fdsubmit" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="fd_id" value="${comfeeddto.fd_id}">
     <div class="fddata">
         <div class="fdtitle">
-            <b>새 피드 작성</b>
-            <a data-bs-dismiss="modal" onclick="document.getElementById('fdsubmit').submit();">공유하기</a>
+            <b>피드 수정</b>
+            <a data-bs-dismiss="modal" onclick="detailmodal()">수정하기</a>
         </div>
 
         <table class="table table-bordered">
             <tr>
                 <td rowspan="4" class="photo">
-                    <a><i class='fas fa-photo-video' style='font-size:24px'></i>사진 선택</a>
-                    <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="upload">
+                    <c:if test="${comfeeddto.fd_photo==null}">
+                        <a><i class='fas fa-photo-video' style='font-size:24px'></i>사진 선택</a>
+                        <input class="selectphoto" type="file" multiple="multiple" style="display: none" name="upload">
+                    </c:if>
 
                     <!-- Carousel -->
-                    <div id="imgform" class="carousel slide" data-bs-interval="false" style="display: none">
-
-                        <div class="carousel-inner" data-bs-interval="false"></div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#imgform"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#imgform"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </button>
+                    <div id="imgform" class="carousel slide" data-bs-interval="false">
+                        <div class="carousel-inner" data-bs-interval="false">
+                            <c:forEach var="photo" varStatus="i" items="${comfeeddto.fd_photo.split(',')}">
+                            <c:if test="${i.count==1}">
+                            <div class="carousel-item active">
+                                </c:if>
+                                <c:if test="${i.count!=1}">
+                                <div class="carousel-item">
+                                    </c:if>
+                                    <img src="${root}/images/upload/${photo}">
+                                </div>
+                                <c:if test="${i.count==2}">
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#imgform"
+                                            data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#imgform"
+                                            data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </c:if>
+                            </c:forEach>
+                        </div>
                     </div>
                 </td>
                 <td class="profile">
-                    <img src="${root}/res/prfimg/${sessionScope.login_img}">
-                    ${sessionScope.login_nick}
+                    <img src="${root}/res/prfimg/${userdto.ur_img}">
+                    ${userdto.ur_nk}
                 </td>
             </tr>
             <tr>
                 <td class="fdcontent">
-                    <textarea class="inputtext" style="resize:none" required="required" name="fd_txt"
-                              placeholder="내용 입력"></textarea>
+                    <textarea class="inputtext" style="resize:none" required="required" name="fd_txt">${comfeeddto.fd_txt}</textarea>
                 </td>
             </tr>
             <tr>
                 <td class="fdcafe">
-                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_id"
-                           placeholder="카페 추가">
+                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_id" value="${cafedto.cf_nm}">
                 </td>
             </tr>
             <tr>
                 <td class="fdtag">
-                    <input onkeyup="filter()" type="text" class="inputtext" name="fg_nm" placeholder="태그 입력">
+                    <input type="text" class="inputtext" name="fg_nm" value="${comfeeddto.fg_nm}">
                 </td>
             </tr>
         </table>
@@ -217,6 +231,11 @@
 
     function filter() {
         console.log("1");
+    }
+
+    function detailmodal(){
+        var fd_id = ${comfeeddto.fd_id};
+        document.getElementById('fdsubmit').submit();
     }
 
 

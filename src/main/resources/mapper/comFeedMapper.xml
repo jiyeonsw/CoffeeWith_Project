@@ -34,7 +34,7 @@
     </insert>
     <update id="updateFeed" parameterType="fddto">
         update fd
-        set fd_txt=#{fd_txt},fd_photo=#{fd_photo},w_date=null,u_date=now()
+        set cf_id=#{cf_id},fd_txt=#{fd_txt},u_date=now()
         where fd_id=#{fd_id}
     </update>
     <delete id="deleteFeed" parameterType="int">
@@ -56,4 +56,9 @@
         inner join fd
         on fd.fd_id=#{fd_id} and cf_img.fd_id=#{fd_id}
     </select>
+    <insert id="insertTag" parameterType="fddto">
+        insert ingore into fg_tag
+            (fg_id,fg_nm)
+        values (#{fg_id},#{fg_nm})
+    </insert>
 </mapper>

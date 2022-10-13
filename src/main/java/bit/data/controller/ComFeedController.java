@@ -1,7 +1,6 @@
 package bit.data.controller;
 
 import bit.data.dto.CafeDto;
-import bit.data.dto.ComFeedCmtDto;
 import bit.data.dto.ComFeedDto;
 import bit.data.dto.UserDto;
 import bit.data.service.CafeServiceInter;
@@ -137,33 +136,61 @@ public class ComFeedController {
         return "redirect:main";
     }
 
+    @GetMapping("/update")
+    public ModelAndView update(int fd_id) {
+        ModelAndView mview = new ModelAndView();
+
+        ComFeedDto comFeedDto = comFeedService.selectFeed(fd_id);
+
+        String ntxt = comFeedDto.getFd_txt().replaceAll("<br>","\r\n");
+        comFeedDto.setFd_txt(ntxt);
+
+        List<String> list = comFeedService.selectPhoto(fd_id);
+        String photo="";
+        for(String str:list){
+            photo+=(str+",");
+            photo.substring(0,photo.length()-1);
+        }
+        comFeedDto.setFd_photo(photo);
+
+        int cf_id = comFeedDto.getCf_id();
+        CafeDto cafeDto = cafeService.selectCafe(cf_id);
+        int ur_id = comFeedDto.getUr_id();
+        UserDto userDto = userService.selectDataById(ur_id);
+
+        mview.addObject("comfeeddto", comFeedDto);
+        mview.addObject("cafedto",cafeDto);
+        mview.addObject("userdto",userDto);
+
+        mview.setViewName("comfeed/comfeedupdate");
+        return mview;
+    }
+
     @PostMapping("/update")
-    public String update(ComFeedDto dto, List<MultipartFile> upload) {
+    public String update(ComFeedDto dto, List<MultipartFile> upload, HttpServletRequest request) {
 
-        String path = "D:\\Project\\CoffeeWith\\src\\main\\webapp\\resources\\images\\upload";
+        String ntxt = dto.getFd_txt().replaceAll("\r\n","<br>");
+        dto.setFd_txt(ntxt);
 
-        String photo = "";
+        comFeedService.updateFeed(dto);
+
+        String path = request.getSession().getServletContext().getRealPath("/resources/images/upload");
+
         int idx = 1;
         for (MultipartFile multi : upload) {
 
-            String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
-            photo += newName + ",";
+            String photo = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+            dto.setFd_photo(photo);
+            comFeedService.insertPhoto(dto);
 
             try {
-                multi.transferTo(new File(path + "/" + newName));
+                multi.transferTo(new File(path + "/" + photo));
             } catch (IllegalStateException | IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-
-        photo = photo.substring(0, photo.length() - 1);
-
-        dto.setFd_photo(photo);
-
-        comFeedService.updateFeed(dto);
-
-        return "redirect:detail?&num=" + dto.getFd_id();
+        return "redirect:main";
     }
 }
 
