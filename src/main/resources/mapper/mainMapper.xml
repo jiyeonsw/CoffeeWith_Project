@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.data.dao.MainDao">
+	<select id="selectTr3List" resultType="ctdto">
+		SELECT tr.tr_id, tr_nm,tr.ur_id, tr_txt, tr_loc, tw_max, s_date, e_date, ur.ur_nk, count(tw.ur_id) tw_cnt
+		FROM tr
+		    left join ur
+		        on tr.ur_id = ur.ur_id
+		    left join tr_crw tw
+		        on tr.tr_id=tw.tr_id
+		order by u_date desc limit 3
+	</select>
+</mapper>

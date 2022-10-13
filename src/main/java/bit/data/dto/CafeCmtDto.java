@@ -22,4 +22,5 @@ public class CafeCmtDto {
     private String ur_nk;
     private List<CafeImgDto> img;
     private String ur_img;
+    private int cm_cnt;
 }

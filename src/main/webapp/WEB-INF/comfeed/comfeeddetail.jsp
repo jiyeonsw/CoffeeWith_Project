@@ -7,16 +7,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Coffeewith</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
     <link rel="stylesheet" href="../res/css/style.css" type="text/css">
     <style type="text/css">
 
-        a{
+        .fddata a{
             text-decoration: none;
             color: black;
+            font-size: 13px;
         }
 
         .fddata {
@@ -26,14 +27,13 @@
         }
 
         .table {
-            table-layout: fixed;
-            height: 700px;
+            height: 750px;
             margin-bottom: 0;
-            border-radius: 50% 50%;
-            border-style: hidden;
+            border-collapse: collapse;
         }
 
         .table .photo {
+            border: hidden;
             height: 100%;
             width: 70%;
             vertical-align: middle;
@@ -44,6 +44,15 @@
         .table .profile {
             height: 5%;
             text-align: left;
+            padding-bottom: 0;
+            border-bottom: hidden;
+        }
+
+        .table .fdcafe {
+            text-align: left;
+            height: 3%;
+            padding: 0;
+            padding-left: 10px;
         }
 
         .table .profile img {
@@ -53,18 +62,25 @@
         }
 
         .table .fdcontent {
-            height: 85%;
+            height: 45%;
             vertical-align: top;
             text-align: left;
         }
 
-        .table .fdcafe {
-            text-align: left;
-            height: 5%;
+        .table .fdtag {
+            border: hidden;
+            height: 3%;
         }
 
-        .table .fdtag {
-            height: 5%;
+        .table .fdmpl{
+            height: 2%;
+            padding: 0;
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .table .fdcmt{
+            height: 42%;
         }
 
         #imgdetail {
@@ -93,11 +109,10 @@
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-
 <div class="fddata">
-    <table class="table table-bordered">
+    <table class="table">
         <tr>
-            <td rowspan="5" class="photo">
+            <td rowspan="6" class="photo">
                 <!-- Carousel -->
                 <div id="imgdetail" class="carousel slide" data-bs-interval="false">
                     <div class="carousel-inner" data-bs-interval="false">
@@ -130,6 +145,11 @@
             </td>
         </tr>
         <tr>
+            <td class="fdcafe">
+                <a href="${root}/cafe/detail?cf_id=${cafedto.cf_id}">${cafedto.cf_nm}</a>
+            </td>
+        </tr>
+        <tr>
             <td class="fdcontent">
                 ${comfeeddto.fd_txt}
             </td>
@@ -140,20 +160,25 @@
             </td>
         </tr>
         <tr>
-            <td class="fdcafe">
-                <a href="${root}/cafe/detail?cf_id=${cafedto.cf_id}">${cafedto.cf_nm}</a>
+        <c:if test="${sessionScope.login_id==comfeeddto.ur_id}">
+            <td class="fdmpl">
+                <a id="updatefd" onclick="updatemodal()">수정하기</a>&nbsp;&nbsp;&nbsp;
+                <a id="deletefd" onclick="location.href='delete?fd_id=${comfeeddto.fd_id}'">삭제하기</a>
             </td>
+        </c:if>
          </tr>
         <tr>
-            <td>
-
+            <td class="fdcmt">
             </td>
         </tr>
     </table>
 </div>
 
 <script>
-
+    function updatemodal(){
+        var fd_id = ${comfeeddto.fd_id}
+        $("#modaltmp .modal-content").load("update?fd_id=" + fd_id);
+    }
 
 </script>
 </body>

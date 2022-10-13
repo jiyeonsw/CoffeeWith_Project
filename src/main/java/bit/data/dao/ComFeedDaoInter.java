@@ -15,4 +15,5 @@ public interface ComFeedDaoInter {
     public void deleteFeed(int fd_id);
     public void updateLikes(int fd_id);
     public void insertPhoto(ComFeedDto dto);
+    public List<String> selectPhoto(int fd_id);
 }

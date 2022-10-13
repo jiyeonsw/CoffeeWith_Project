@@ -19,7 +19,7 @@ public class ComTourAnsController {
     ComTourAnsServiceInter ansService;
 
 
-    @PostMapping("/answer1/insert")
+    @PostMapping("/answer/insert")
     public String insert(ComTourAnsDto dto) {
         //dto에는 디테일 등록페이지의 다음 정보가 담겨 있음
         // : hidden(tm_id(PK),rg,rs,rl=0  >> ur_id(ss), tr_id(tr table) 그리고 txt(최종테스트)
@@ -30,7 +30,7 @@ public class ComTourAnsController {
         return "/bit/comtour/comtour_list";
     }
 
-    @GetMapping("/answer1/list") //디테일로 리텐되는 답글 표시 창을 말함
+    @GetMapping("/answer/list") //디테일로 리텐되는 답글 표시 창을 말함
     @ResponseBody
     public List<ComTourAnsDto> list(int tr_id)
     {
@@ -40,4 +40,11 @@ public class ComTourAnsController {
         return ansService.getAllAnsList(tr_id);
     }
 
+    @GetMapping("/answer/delete")
+    @ResponseBody
+    public void answerDel(int num)
+    {
+        //System.out.println("답글삭제:"+num);
+        ansService.deleteAns(num);
+    }
 }

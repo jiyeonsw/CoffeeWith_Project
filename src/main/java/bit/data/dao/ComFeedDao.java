@@ -59,4 +59,10 @@ public class ComFeedDao implements ComFeedDaoInter{
         session.insert(ns+"insertPhoto",dto);
     }
 
+    @Override
+    public List<String> selectPhoto(int fd_id) {
+        return session.selectList(ns+"selectPhoto",fd_id);
+    }
+
+
 }

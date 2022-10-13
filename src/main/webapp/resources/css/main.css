@@ -19,8 +19,8 @@ body * {
 .main-page-container {
     display: grid;
     width: 950px;
-    grid-auto-rows: 1fr 1fr 1fr 1fr;
-    grid-template-areas:
+    grid-auto-rows: 1fr 300px 350px 400px;
+    grid-template-areas: 
                 "best"
                 "loc"
                 "tr"
@@ -28,6 +28,7 @@ body * {
     margin: 0 auto;
     text-align: left;
 }
+
 
 .cf-best-container {
     margin-top: 30px;
@@ -84,6 +85,7 @@ body * {
     background: url(../images/ico_star.png) no-repeat;
 }
 
+
 div.cf-info .cf-lk-box::after {
     top: 4px;
     left: 5px;
@@ -95,6 +97,7 @@ div.cf-info .cf-lk-box::after {
 i {
     font-style: normal;
 }
+
 
 .cf-img-box {
     height: 368px;
@@ -189,4 +192,125 @@ div.swiper-wrapper {
     width: 950px;
     padding: 0;
     margin-left: 15px;
+
+li{
+    list-style: none;
+}
+
+/*tr-container*/
+div.tr-tit-box{
+    display: grid;
+    grid-template-columns: 850px 100px ;
+}
+div.fd-cont-box{
+    margin-left: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+
+}
+span.tr-tit{
+    float: left;
+    height: 55px;
+}
+span.tr-more-box{
+    float: right;
+    height: 55px;
+    line-height: 55px;
+}
+a.tr-more{
+    font-size: 1.5rem;
+    color:gray;
+}
+div.tr-card {
+    width: 300px;
+    overflow: hidden;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    margin-right: 10px;
+}
+img.tr-prf{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+div.tr-cont-txt{
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}
+/*fd-container*/
+
+div.fd-tit-box{
+    display: grid;
+    grid-template-columns: 850px 100px ;
+}
+span.fd-tit{
+    float: left;
+    height: 55px;
+}
+span.fd-more-box{
+    float: right;
+    height: 55px;
+    line-height: 55px;
+}
+a.fd-more{
+    font-size: 1.5rem;
+    color:gray;
+}
+div.fd-cont-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
+
+.fd-lk-box{
+    float: right;
+}
+.fd-lk-box:before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0 0 -3px 0;
+    background: url(../images/ico_lk.png) no-repeat;
+}
+div.fd-cont-txt{
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}
+div.fd-more-box{
+    float : right;
+}
+
+div.fd-card {
+    width: 225px;
+    height: 270px;
+    overflow: hidden;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+div.fd-txt-area {
+}
+
+div.fd-txt-area:hover {
+    cursor: pointer;
+}
+
+.fdi-nm {
+    width: 100%;
+    height: 194px;
+    border-radius: 4px;
+    background: 50% 50% no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    box-sizing: border-box;
+    border: 1px solid #f1f1f1;
+    border-radius: 4px;
+    background: 50% 50% no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    box-sizing: border-box;
+    border: 1px solid #f1f1f1;
+    margin-bottom: 10px;
 }

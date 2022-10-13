@@ -31,4 +31,5 @@ public interface CafeServiceInter {
     public void updateRs(int rg, int rs);
     public List<CafeCtgDto> selectCtgByCfid(int cf_id);
     public int selectCMCntByCfid(int cf_id);
+    public int selectCMCntByRg(int cm_id);
 }

@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../res/css/style.css" type="text/css">
 
     <style type="text/css">
@@ -68,6 +69,12 @@
             cursor: pointer;
         }
 
+        div .closemodal{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -109,6 +116,9 @@
 </c:if>
 
 <div class="modal" id="modaltmp">
+    <div class="closemodal" data-bs-dismiss="modal">
+        <i class="material-icons" style="font-size:36px">close</i>
+    </div>
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
         </div>
@@ -128,7 +138,7 @@
         if (login_ok !== "yes") {
             alert("로그인을 먼저 해주세요")
         } else {
-            $("#modaltmp").modal("toggle");
+            $("#modaltmp").modal("show");
             $("#modaltmp .modal-content").load("form");
         }
     })
