@@ -13,7 +13,7 @@
           rel="stylesheet">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <title>CoffeeWithLayout</title>
+    <title>Coffee With</title>
 
     <style type="text/css">
         @font-face {
