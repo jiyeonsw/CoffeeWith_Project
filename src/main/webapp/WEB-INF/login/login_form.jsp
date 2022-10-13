@@ -37,7 +37,7 @@
             text-align: center;
         }
 
-        .loginbutton {
+        .btnloginok {
             width: 450px;
             text-align: center;
         }
@@ -64,7 +64,7 @@
         <label for="ur_pw" class="titLab">비밀번호</label>
         <input type="password" name="ur_pw" id="ur_pw" placeholder="비밀번호를 입력해주세요" class="form-control" required="required">
         <br>
-        <button type="submit" id="loginbutton" class="btn btn-secondary">로그인</button>
+        <button type="submit" id="btnloginok" class="btn btn-secondary">로그인</button>
     </form>
 
     <div class="id-success"></div>
@@ -84,92 +84,6 @@
     <a href="${root}/user/find_pw">비밀번호 찾기</a> <!-- Find PW page -->
 </div>
 </div>
-
-<script>
-    $('#mForm button[type=submit]').click(function(e){
-        e.preventDefault();
-
-        let id = $('#email_id').val();
-        let pass = $('#ur_pw').val();
-
-        $.ajax({
-            url: "../layout/main.jsp",
-            data:{"email_id":id, "ur_pw":pass},
-            type: "POST",
-            dataType: "json",
-            success: function(data){
-                if(data.succ)
-                    alert("로그인 성공");
-                else
-                    alert("로그인 실패");
-            },
-            error: function(err){
-                alert(err);
-            }
-        });
-    });
-
-    $('#mForm button[type=submit]').click(function(e){
-        e.preventDefault();
-
-        // TODO : 시작 전 loading visible
-        $.ajax({
-            // url: './layout1.jsp',
-            type: "POST",
-            dataType: "json",
-            success: function(data){
-                // TODO : loading invisible
-            },
-            error: function(err){
-                // TODO : loading invisible
-            }
-        });
-    });
-</script>
-
-<%--<!-- 로그인 스크립트 이벤트 -->--%>
-<%--<script type="text/javascript">--%>
-<%--    console.log('hit1')--%>
-<%--    // 팝업창에 있는 로그인 버튼--%>
-<%--    $("#loginbutton").click(function(){--%>
-<%--        // 아이디와 비번 읽기--%>
-<%--        console.log("hit");--%>
-<%--        var id=$("#email_id").val();--%>
-<%--        var pass=$("#ur_pw").val();--%>
-<%--        var root='${root}';--%>
-<%--        console.log("root"+root);--%>
-<%--        console.log(id,pass);--%>
-
-<%--        $.ajax({--%>
-<%--            type:"post",--%>
-<%--            url:root+"/user/login",--%>
-<%--            dataType:"json",--%>
-<%--            data:{"email_id":id, "ur_pw":pass},--%>
-<%--            success:function(res){--%>
-<%--                if(res.result=='fail'){--%>
-<%--                    alert("아이디나 비번이 맞지 않습니다");--%>
-<%--                }else{--%>
-<%--                    location.reload();--%>
-<%--                }--%>
-<%--            }--%>
-<%--        });--%>
-<%--    });--%>
-
-<%--    // 로그아웃--%>
-<%--    $("#logoutbutton").click(function(){--%>
-<%--        var root='${root}';--%>
-
-<%--        $.ajax({--%>
-<%--            type:"get",--%>
-<%--            url:root+"/user/logout",--%>
-<%--            dataType:"text",--%>
-
-<%--            success:function(res){--%>
-<%--                location.reload();--%>
-<%--            }--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
 
 </body>
 </html>
