@@ -211,7 +211,7 @@
             </a>
         </div>
         <div class="link-area">
-            <a href="#" class="inner">
+            <a href="${root}/mypage/plan" class="inner">
                 <div class="txt my-tr-plan">
                     투어 플랜
                     <span class="num"></span>

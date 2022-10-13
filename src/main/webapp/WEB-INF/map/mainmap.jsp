@@ -19,49 +19,39 @@
         body{
             overflow: hidden;
         }
-
         #container{
             display: flex;
             height: 550px;
         }
-
         #map{
             float:right;
             width:80%;
         }
-
         #sidebar{
             width:20%;
             background-color: white;
         }
-
         button.btn-make-tour{
             float: right;
         }
-
         div.paging{
             display: flex;
             flex-direction: row;
         }
-
         .map-icon{
             float: right;
             margin-right: 10px;
             margin-top: 10px;
         }
-
         .map-icon:hover{
             cursor: pointer;
         }
-
         .result-name{
             font-size: 20px;
         }
-
         .result-cnt{
             font-size: 12px;
         }
-
         #maketour{
             display: none;
             position: fixed;
@@ -72,54 +62,42 @@
             right: 0;
             z-index: 1;
         }
-
-       /* .tour-input-title{
-            text-align: center;
-        }*/
-
+        /* .tour-input-title{
+             text-align: center;
+         }*/
         #tourdatewords{
             text-align: center;
         }
-
         #tourdate{
             width:300px;
         }
-
         #modalpopopbtn{
             float:right;
         }
-
         div.tour-detail{
             overflow-y: scroll;
             height: 250px;
             -ms-overflow-style: none;
         }
-
         div.tour-detail::-webkit-scrollbar{
             display:none;
         }
-
         div.detail-bar-date{
             background-color: aqua;
             opacity: 80%;
         }
-
         div.active-bar{
             border: 1px solid black;
         }
-
         .tour-icon-set{
             margin-left: 30px;
         }
-
         .rm-tour-icon{
             float: right;
         }
-
         .btncontainer{
             width: 100%;
         }
-
         #maketourmodal{
             position: absolute;
             margin: -350px 0px 0px -500px;
@@ -129,12 +107,10 @@
             height: 700px;
             text-align: center;
         }
-
         #modalmap{
             width: 100%;
             height: 500px;
         }
-
         .active-page{
             color: #fff;
             cursor: default;
@@ -204,31 +180,32 @@
 </div>
 <script>
     //전역변수 선언
-    var isMakingTour= false;
-    var currentPage = parseInt(1);
-    var perPage = parseInt(3);
-    var perBlock= parseInt(5);
-    var startDate="";
-    var endDate="";
-    var tourDays="";
-    //경로변수
-    var polyTotal = [];
-    var polymarkerList = [];
+    let isMakingTour= false;
+    let currentPage = parseInt(1);
+    let perPage = parseInt(3);
+    let perBlock= parseInt(5);
+    let startDate="";
+    let endDate="";
+    let tourDays="";
     //좌표 마커 배열 생성
-    var markerList = [];
+    let markerList = [];
+    let polymarkerList = [];
     //마커 정보창 배열 생성
-    var infoWindowList = [];
+    let infoWindowList = [];
     //좌표 마커 스타일
-    var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
-
+    let menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
     //모달 띄우기
     $(document).on('click','#modalpopopbtn', function (){
+        //경로변수
+        var polyTotal = [];
+        polymarkerList = [];
         //투어 정보 모으기
         clttourlist();
+        if($("#tourlist").val().indexOf('[]')!=-1){
+            alert("투어할 카페를 선택해주세요");
+            return
+        }
         $("#maketourmodal").show();
-        $("#btnmodalday0").show();
-        $("#btnmodalday1").show();
-        $("#btnmodalday2").show();
         //모달 폼에 정보 전달
         $("#modaltourname").val($("#tourname").val());
         $("#modaltourinfo").val($("#tourinfo").val());
@@ -243,22 +220,6 @@
         console.log($("#modaltourinfo").val());
         console.log($("#modaltourdate").val());
         console.log($("#modalpolylist").val());
-        //버튼들 띄우기
-        var dayCnt= 0;
-        var pos= $("#modaltourlist").val().indexOf('"day"');
-        while (pos!=-1){
-            dayCnt++;
-            pos = $("#modaltourlist").val().indexOf('"day"', pos+1);
-        }
-        if(dayCnt<3){
-            $("#btnmodalday2").hide();
-        }
-        if(dayCnt<2){
-            $("#btnmodalday1").hide();
-        }
-        if(dayCnt<1){
-            $("#btnmodalday0").hide();
-        }
         // //지도 옵션
         // var modalMapOptions = {
         //     center: new naver.maps.LatLng(37.4993705, 127.0290175),
@@ -269,11 +230,30 @@
         //경로 생성
         //경로를 JSON 으로 바꾸기
         var polyJSON = JSON.parse($("#modalpolylist").val());
+        //버튼들 띄우기
+        var dayCnt= 0;
+        var pos= $("#modaltourlist").val().indexOf('"day"');
+        while (pos!=-1){
+            dayCnt++;
+            pos = $("#modaltourlist").val().indexOf('"day"', pos+1);
+        }
         //button에 value값 추가
-        $("#btnmodalday0").attr("value",polyJSON[0].length);
-        $("#btnmodalday1").attr("value",polyJSON[1].length);
-        $("#btnmodalday2").attr("value",polyJSON[2].length);
-
+        if(dayCnt > 0){
+            $("#btnmodalday0").show();
+            $("#btnmodalday0").attr("value",polyJSON[0].length);
+        }
+        if(dayCnt > 1){
+            $("#btnmodalday1").show();
+            $("#btnmodalday1").attr("value",polyJSON[1].length);
+        }
+        if(dayCnt > 2){
+            $("#btnmodalday2").show();
+            $("#btnmodalday2").attr("value",polyJSON[2].length);
+        }
+        if($("#modalpolylist").val().indexOf("[]")!=-1){
+            alert("모든 날짜에 투어 일정을 추가해 주세요");
+            closeModal();
+        }
         var iIdx = 0;
         //배열안 날짜만큼 반복
         for(var i of polyJSON){
@@ -303,19 +283,22 @@
                 endIcon: naver.maps.PointingIcon.OPEN_ARROW
             });
             //polymarkerList에서 바운드 가져오기
-            var bounds = new naver.maps.LatLngBounds(polymarkerList[0].getPosition(), polymarkerList[1].getPosition());
-            for(var i=0;i<polymarkerList.length;i++){
-                var latLng = polymarkerList[i].getPosition();
-                bounds.extend(latLng);
+            if(polymarkerList.length>1) {
+                var bounds = new naver.maps.LatLngBounds(polymarkerList[0].getPosition(), polymarkerList[1].getPosition());
+                for (var i = 0; i < polymarkerList.length; i++) {
+                    var latLng = polymarkerList[i].getPosition();
+                    bounds.extend(latLng);
+                }
+                modalmap.fitBounds(bounds);
             }
-            modalmap.fitBounds(bounds);
             polyTotal.push(polyline);
             iIdx++;
         }
         console.log(polyTotal);
     });
 
-    $(document).on('btnmodalday0', 'click', function() {
+    //1일차 버튼
+    $(document).on('click', '#btnmodalday0', function() {
         var v = $(this).attr("value");
         console.log(v);
         for (var i=0;i<v;i++) {
@@ -327,39 +310,68 @@
         }
     });
 
+    //2일차 버튼
+    $(document).on('click', '#btnmodalday1', function() {
+        var v = parseInt($("#btnmodalday0").attr("value"));
+        console.log(v);
+        for (var i=v;i<parseInt($(this).attr("value")) + v;i++) {
+            if (polymarkerList[i].getAnimation() !== null) {
+                polymarkerList[i].setAnimation(null);
+            } else {
+                polymarkerList[i].setAnimation(naver.maps.Animation.BOUNCE);
+            }
+        }
+    });
+
+    //3일차 버튼
+    $(document).on('click', '#btnmodalday2', function() {
+        var v = parseInt($("#btnmodalday1").attr("value")) + parseInt($("#btnmodalday0").attr("value")) - 1;
+        console.log(v);
+        for (var i=v;i<parseInt($(this).attr("value")) + v;i++) {
+            if (polymarkerList[i].getAnimation() !== null) {
+                polymarkerList[i].setAnimation(null);
+            } else {
+                polymarkerList[i].setAnimation(naver.maps.Animation.BOUNCE);
+            }
+        }
+    });
+
     //모달 닫기
     $(document).on('click','#tour-cancel',function (){
-        $("#maketourmodal").hide();
+        closeModal();
     });
     //폼 받기전 데이터 확인
     function checkData(){
         if($("#modaltourname").val()==""){
             alert("투어명을 입력해주세요");
+            closeModal();
             return false;
         }
         if($("#modaltourinfo").val()==""){
             alert("투어소개을 입력해주세요");
+            closeModal();
             return false;
         }
         if($("#modaltourdate").val()==""){
             alert("투어일정을 선택해주세요");
+            closeModal();
             return false;
         }
         if($("#modaltourlist").val().indexOf('"tours":[]')!=-1){
             alert("투어할 카페를 선택해주세요");
+            closeModal();
             return false;
         }
         if($("#modaltourlist").val().indexOf('"visit_time":""')!=-1){
             alert("투어할 시간를 선택해주세요");
+            closeModal();
             return false;
         }
         alert("투어가 생성 되었습니다");
     }
-
     /*$(document).ready(function (){
         $("button.search-btn").trigger('click');
     })*/
-
     //로그인체크
     function loginCheck()
     {
@@ -370,7 +382,6 @@
             return false;
         }
     }
-
     //검색바 엔터키 입력
     $("input.cafe-search-bar").keydown(function(e){
         if(e.keyCode === 13)
@@ -378,7 +389,6 @@
             $("button.search-btn").trigger('click');
         }
     });
-
     //검색
     $("button.search-btn").click(function (){
         //검색어
@@ -421,7 +431,6 @@
                         }
                         s += "</div>";
                     });
-
                     //페이징 시작
                     //이전버튼
                     if (res.startPage > 1) {
@@ -450,31 +459,26 @@
             }//success
         });//$ajax"searchword"
     });//검색버튼
-
     //페이징 버튼 함수
     //페이지이동
     $(document).on('click','.btn-pagenum',function(){
         currentPage=parseInt($(this).text());
         $("button.search-btn").trigger('click');
     });
-
     //이전
     $(document).on('click','#btnback',function(){
         currentPage-=parseInt(perBlock);
         $("button.search-btn").trigger('click');
     });
-
     //다음
     $(document).on('click','#btnnext',function(){
         currentPage+=parseInt(perBlock);
         $("button.search-btn").trigger('click');
     });
-
     //검색결과 옆 지도아이콘 클릭시 해당 카페를 지도에 표시
     $(document).on('click','.map-icon',function(){
         moveMap($(this).attr("cf_id"));
     });
-
     //투어 만들기 버튼
     $(document).on('click','button.btn-make-tour',function (){
         if(loginCheck()==false){
@@ -484,7 +488,6 @@
         if(isMakingTour==true)
         {
             //열려있는 정보창 닫기
-            //for (var i=0, ii=infoWindowList.length; i<ii; i++){infoWindowList[i].close()}
             $(this).text("투어닫기");
             $("#maketour").show();
             $(".tour-icon-set").show();
@@ -495,7 +498,6 @@
             $(".tour-icon-set").hide();
         }
     });
-
     //datepicker 함수
     $('#tourdate').daterangepicker({
         "locale": {
@@ -520,7 +522,6 @@
         endDate=end.format('YYYY-MM-DD');
         tourDays=end.diff(start,"days") + 1;
         $("#tourdatewords").text(tourDays + " DAYS");
-
         //디테일에 일정바 추가
         var d="";
         for(var i=0; i<parseInt(tourDays); i++ ) {
@@ -533,13 +534,11 @@
         }
         $("div.tour-detail").html(d);
     });
-
     //날짜 bar 클릭시 활성화
     $(document).on('click','.detail-bar-date',function(){
-       $(this).parent().addClass('active-bar');
-       $(this).parent().siblings().removeClass('active-bar');
+        $(this).parent().addClass('active-bar');
+        $(this).parent().siblings().removeClass('active-bar');
     });
-
     //+ 아이콘 클릭시 투어 일정 추가
     $(document).on('click','.add-tour-icon',function(){
         var id = $(this).parent().parent().find('.map-icon').attr('cf_id');
@@ -558,7 +557,6 @@
             }
         });
     });
-
     //시간 설정시 시간별로 정렬
     $(document).on('change','input.visit_time',function(){
         $(this).parent().parent().children().each(function (i,day){
@@ -569,12 +567,10 @@
             })
         })
     });
-
     // 아이콘 클릭시 일정에서 삭제
     $(document).on('click','.rm-tour-icon',function(){
         $(this).parent().remove();
     });
-
     //경로확인전 일정 정보를 json형태로 변환
     function clttourlist()
     {
@@ -615,7 +611,6 @@
         $("#tourlist").attr("value",tourjson);
         $("#polylist").attr("value",polyjson);
     }
-
     //지도 옵션
     var mapOptions = {
         center:new naver.maps.LatLng(37.4993705, 127.0290175),
@@ -623,48 +618,43 @@
     };
     //지도 초기화
     var map =new naver.maps.Map('map', mapOptions);
-
     //좌표 마커를 찍어서 배열에 저장
     //map.getPanes().floatPane.appendChild(menuLayer[0]);
-
     //줌 이벤트 리스터 생성
-   /* naver.maps.Event.addListener(map, 'zoom_changed', function(zoom) {
-       // console.log(zoom);
-    });
-    //바운드 이벤트 리스터 생성
-    naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
-       // console.log('Center: ' + map.getCenter().toString() + ', Bounds: ' + bounds.toString());
-    });*/
-
+    /* naver.maps.Event.addListener(map, 'zoom_changed', function(zoom) {
+        // console.log(zoom);
+     });
+     //바운드 이벤트 리스터 생성
+     naver.maps.Event.addListener(map, 'bounds_changed', function(bounds) {
+        // console.log('Center: ' + map.getCenter().toString() + ', Bounds: ' + bounds.toString());
+     });*/
     //모든 카페 리스트 받기
     <c:forEach items="${list}" var="dto">
-        //카페 위치에 마커찍기
-        var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
-        var marker = new naver.maps.Marker({
-            position: position,
-            map: map,
-            title:"${dto.cf_nm}"
-        });
-
-        //정보창 생성
-        //평시
-        var infoWindow = new naver.maps.InfoWindow({
-            content: `<div class="info-window">
+    //카페 위치에 마커찍기
+    var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
+    var marker = new naver.maps.Marker({
+        position: position,
+        map: map,
+        title:"${dto.cf_nm}"
+    });
+    //정보창 생성
+    //평시
+    var infoWindow = new naver.maps.InfoWindow({
+        content: `<div class="info-window">
                          <span style="display:none">${dto.cf_id}</span>
                          <div>${dto.cf_nm}</div>
                       </div>`
-        });
-        //마커를 마커 배열에 넣기
-        markerList.push(marker);
-        //정보창을 정보창 배열에 넣기
-        infoWindowList.push(infoWindow);
+    });
+    //마커를 마커 배열에 넣기
+    markerList.push(marker);
+    //정보창을 정보창 배열에 넣기
+    infoWindowList.push(infoWindow);
     </c:forEach>
-
     // 해당 마커의 인덱스를 seq라는 클로저 변수로 저장하는 이벤트 핸들러를 반환합니다.
     function getClickHandler(seq) {
         return function(e) {
             var marker = markerList[seq],
-            infoWindow = infoWindowList[seq];
+                infoWindow = infoWindowList[seq];
             if (infoWindow.getMap()) {
                 infoWindow.close();
             } else {
@@ -672,23 +662,17 @@
             }
         }
     }
-
     //맵에 어떠한 변화가 있을때
     naver.maps.Event.addListener(map, 'idle', function() {
         updateMarkers(map, markerList);
     });
-
     //마커가 맵 밖에 있으면 숨기기
     function updateMarkers(map, markers) {
-
         var mapBounds = map.getBounds();
         var marker, position;
-
         for (var i = 0; i < markers.length; i++) {
-
             marker = markers[i]
             position = marker.getPosition();
-
             if (mapBounds.hasLatLng(position)) {
                 showMarker(map, marker);
             } else {
@@ -696,31 +680,29 @@
             }
         }
     }
-
     //마커배열의 길이 만큼 클릭 이벤트 생성
     for (var i=0, ii=markerList.length; i<ii; i++) {
         naver.maps.Event.addListener(markerList[i], 'click', getClickHandler(i));
     }
-
     //지도 이동 일반함수 해당 카페 아이디로
     function moveMap(cf_id)
     {
         map.setZoom(18);
         map.setCenter(markerList[cf_id-1].getPosition());
     }
-
     //마커보이기
     function showMarker(map, marker) {
-
         if (marker.getMap()) return;
         marker.setMap(map);
     }
-
     //마커숨기기
     function hideMarker(map, marker) {
-
         if (!marker.getMap()) return;
         marker.setMap(null);
+    }
+    //모달닫기
+    function closeModal(){
+        $("#maketourmodal").hide();
     }
 </script>
 </body>

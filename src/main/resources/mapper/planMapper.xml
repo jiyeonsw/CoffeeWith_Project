@@ -11,4 +11,13 @@
     <insert id="insertPlanLoc" parameterType="pllocdto">
         INSERT INTO  pl_loc VALUES (null, #{pl_id}, #{cf_id}, #{v_date}, #{seq}, #{v_time})
     </insert>
+    <select id="selectPlanCnt" parameterType="int" resultType="int">
+        SELECT count(*) FROM coffewith.pl WHERE ur_id = #{ur_id};
+    </select>
+    <select id="selectMyPlans" parameterType="int" resultType="pldto">
+        SELECT * FROM coffewith.pl WHERE ur_id = #{ur_id};
+    </select>
+    <select id="selectPlanLoc" parameterType="int" resultType="pllocdto">
+        SELECT * FROM coffewith.pl_loc WHERE pl_id = #{pl_id} ORDER BY v_date ASC , seq ASC;
+    </select>
 </mapper>
