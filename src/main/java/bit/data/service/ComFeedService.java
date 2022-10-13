@@ -70,5 +70,21 @@ public class ComFeedService implements ComFeedServiceInter{
         return daoInter.selectPhoto(fd_id);
     }
 
+    @Override
+    public void insertFeedLikes(int ur_id, int fd_id) {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("ur_id", ur_id);
+        map.put("fd_id",fd_id);
+        daoInter.insertFeedLikes(map);
+    }
+
+    @Override
+    public void deleteFeedLikes(int ur_id, int fd_id) {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("ur_id", ur_id);
+        map.put("fd_id",fd_id);
+        daoInter.deleteFeedLikes(map);
+    }
+
 
 }

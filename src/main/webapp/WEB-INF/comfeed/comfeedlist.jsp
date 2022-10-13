@@ -53,6 +53,10 @@
             flex-direction: column;
         }
 
+        .feed .idv{
+            text-align: center;
+        }
+
         .feed .row .idv {
             height: 20vw;
             width: 25%;
@@ -106,6 +110,7 @@
             <c:forEach var="dto" varStatus="i" items="${list}">
                 <div class="idv">
                     <img src="${root}/images/upload/${dto.fd_photo.split(",")[0]}" value="${dto.fd_id}">
+                    ${dto.likes}
                 </div>
                 <c:if test="${i.index%4==3}">
                     </div><div class="row">

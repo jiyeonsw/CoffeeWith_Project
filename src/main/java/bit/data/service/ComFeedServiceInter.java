@@ -15,4 +15,7 @@ public interface ComFeedServiceInter {
     public void updateLikes(int fd_id);
     public void insertPhoto(ComFeedDto dto);
     public List<String> selectPhoto(int fd_id);
+    public void insertFeedLikes(int ur_id, int cf_id);
+    public void deleteFeedLikes(int ur_id, int cf_id);
+
 }

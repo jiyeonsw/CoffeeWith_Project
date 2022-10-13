@@ -64,5 +64,15 @@ public class ComFeedDao implements ComFeedDaoInter{
         return session.selectList(ns+"selectPhoto",fd_id);
     }
 
+    @Override
+    public void insertFeedLikes(Map<String, Integer> map) {
+        session.insert(ns+"insertFeedLikes", map);
+    }
+
+    @Override
+    public void deleteFeedLikes(Map<String, Integer> map) {
+        session.delete(ns+"deleteFeedLikes", map);
+    }
+
 
 }
