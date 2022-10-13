@@ -16,5 +16,11 @@
     <select id="getMaxNum" resultType="int">
         select ifnull(max(tm_id),0) from tr_cmt
     </select>
-
+    <!--Update restep-->
+    <update id="updateRestep" parameterType="Map">
+        update tr_cmt set rs=rs+1 where rg=#{rg} and rs>#{rs}
+    </update>
+    <delete id="deleteAns" parameterType="int">
+        delete from tr_cmt where tm_id=#{num}
+    </delete>
 </mapper>

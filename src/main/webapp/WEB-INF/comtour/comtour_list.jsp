@@ -16,7 +16,8 @@
     <style type="text/css">
 
         div.flex {
-           margin-left: 150px;
+            margin-top: 30px;
+            margin-left: 110px;
         }
         div.cell {
             display: table-cell; vertical-align: middle;
@@ -111,7 +112,6 @@
 
 <%--헤터 부분 검색창 과 디테일 페이지 li 태그로 묶인 부분--%>
 <h1>총 ${totalCount}개의 모임이 존재합니다.</h1><br>
-
     <ul class="itemlist">
         <c:forEach var="dto" items="${list}" varStatus="i">
         <li id="detailview">

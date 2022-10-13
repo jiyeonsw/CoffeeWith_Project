@@ -6,7 +6,9 @@ import bit.data.dto.ComTourAnsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ComTourAnsService implements ComTourAnsServiceInter{
@@ -40,7 +42,9 @@ public class ComTourAnsService implements ComTourAnsServiceInter{
             rs=0;
             rl=0;
         } else { //num!=0 경우 즉, 답글인 경우
-
+            this.updateRestep(rg,rs);
+            rs++;
+            rl++;
         }
             dto.setRg(rg);
             dto.setRs(rs);
@@ -55,12 +59,15 @@ public class ComTourAnsService implements ComTourAnsServiceInter{
     }
 
     @Override
-    public void deleteAns(int tm_id) {
-
+    public void deleteAns(int num) {
+        ansDaoInter.deleteAns(num);
     }
 
     @Override
     public void updateRestep(int rg, int rs) {
-
+        Map<String, Integer> map = new HashMap<>();
+        map.put("rg",rg);
+        map.put("rs",rs);
+        ansDaoInter.updateRestep(map);
     }
 }

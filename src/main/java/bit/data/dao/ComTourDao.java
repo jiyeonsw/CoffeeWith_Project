@@ -43,8 +43,9 @@ public class ComTourDao implements ComTourDaoInter{
     }
 
     @Override
-    public void updateComTour(ComTourDto dto) {
-
+    public void updateComTour(ComTourDto dto)
+    {
+        session.update(ns+"updateList",dto);
     }
 
     @Override

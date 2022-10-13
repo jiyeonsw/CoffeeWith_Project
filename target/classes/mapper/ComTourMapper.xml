@@ -32,9 +32,13 @@
     <select id="selectByNum" parameterType="int" resultType="ctdto">
         SELECT * FROM tr INNER JOIN ur ON tr.ur_id=ur.ur_id where tr_id=#{tr_id}
     </select>
-    <!--게시글 지우기-->
+    <!--게시글(list페이지의) 지우기-->
     <delete id="deleteList" parameterType="int">
         delete from tr where tr_id=#{num}
     </delete>
+    <!--게시글 수정-->
+    <update id="updateList" parameterType="ctdto">
+        update tr set tr_nm=#{tr_nm},tr_txt=#{tr_txt},tr_loc=#{tr_loc},s_date=#{s_date},e_date=#{e_date} where tr_id=#{tr_id}
+    </update>
 </mapper>
 
