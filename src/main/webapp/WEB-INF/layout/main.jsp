@@ -320,63 +320,30 @@
         </div>
     </div>
     <div class="tr-container">
-        <div class="tr-tit-box tit"></div>
-        <div class="tr-card">
-            <div class="tr-img-box"></div>
-            <div class="tr-cont-box">
-                <div class="tr-cont-tit"></div>
-                <div class="tr-cont-txt"></div>
-                <div class="tr-cont-info"></div>
-            </div>
+        <div class="tr-tit-box"><span class="tr-tit tit">투어모집</span> <span class="tr-more-box"><a class="tr-more" href="${root}/comtour/list">더보기</a></span></div>
+        <div class="tr-cont-box">
+            <c:forEach items="${trlist}" var="trdto">
+                <div class="tr-card">
+                    <div class="tr-cont-tit"> 투어명 : ${trdto.tr_nm}</div>
+                    <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}"> ${trdto.ur_nk}</div>
+                    <div class="tr-cont-loc">투어장소 : ${trdto.tr_loc}</div>
+                    <div class="tr-cont-date">투어기간 : ${trdto.s_date}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ ${trdto.e_date}</div>
+                    <div class="tr-cont-tw">모집인원 : ${trdto.tw_cnt}/${trdto.tw_max}</div>
+                    <div class="tr-cont-txt">${trdto.tr_txt}</div>
+                </div>
+            </c:forEach>
         </div>
     </div>
     <div class="fd-container">
-        <div class="fd-tit-box tit"></div>
-        <div class="fd-img-box"></div>
-        <div class="fd-cont-box">
-            <div class="fd-cont-txt"></div>
-            <div class="fd-cont-info"></div>
-        </div>
-    </div>
-</div>
-
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-<div class="loc-container">
-    <div class="loc-tit-box tit">
-    </div>
-    <div class="loc-circle-box">
-    </div>
-</div>
-<div class="tr-container">
-    <div class="tr-tit-box"><span class="tr-tit tit">투어모집</span> <span class="tr-more-box"><a class="tr-more" href="${root}/comtour/list">더보기</a></span></div>
-    <div class="fd-cont-box">
-        <c:forEach items="${trlist}" var="trdto">
-            <div class="tr-card">
-                <div class="tr-cont-tit"> 투어명 : ${trdto.tr_nm}</div>
-                <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}"> ${trdto.ur_nk}</div>
-                <div class="tr-cont-loc">투어장소 : ${trdto.tr_loc}</div>
-                <div class="tr-cont-date">투어기간 : ${trdto.s_date}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ ${trdto.e_date}</div>
-                <div class="tr-cont-tw">모집인원 : ${trdto.tw_cnt}/${trdto.tw_max}</div>
-                <div class="tr-cont-txt">${trdto.tr_txt}</div>
-            </div>
-        </c:forEach>
-    </div>
-</div>
-<div class="fd-container">
-    <div class="fd-tit-box"><span class="fd-tit tit">커뮤니티</span> <span class="fd-more-box"><a class="fd-more" href="${root}/comfeed/main/">더보기</a></span></div>
+        <div class="fd-tit-box"><span class="fd-tit tit">커뮤니티</span> <span class="fd-more-box"><a class="fd-more" href="${root}/comfeed/main/">더보기</a></span></div>
         <div class="fd-cont-box">
             <c:set var="fdi_path" value="url('res/images/cafeimg/2카페_1.jpg')"/>
             <div class="fd-card">
                 <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
                 <div class="fd-txt-area">
-                <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
-                <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
+                    <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
+                    <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
                 </div>
             </div>
             <div class="fd-card">
@@ -401,8 +368,9 @@
                 </div>
             </div>
 
+        </div>
     </div>
-</div></div>
+</div>
 
 <script>
     var swiper = new Swiper(".best-slide", {

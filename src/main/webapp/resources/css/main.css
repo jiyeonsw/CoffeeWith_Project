@@ -192,6 +192,7 @@ div.swiper-wrapper {
     width: 950px;
     padding: 0;
     margin-left: 15px;
+}
 
 li{
     list-style: none;
@@ -202,7 +203,7 @@ div.tr-tit-box{
     display: grid;
     grid-template-columns: 850px 100px ;
 }
-div.fd-cont-box{
+div.tr-cont-box{
     margin-left: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr ;
