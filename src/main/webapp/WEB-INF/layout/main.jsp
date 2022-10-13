@@ -21,6 +21,7 @@
             integrity="sha512-c0NksyGPH0LUkeV3kgNU6p98oYwacImv508UsTDKqTWpEk1LFDMC8falFf9A2HZ8vt1ZIj3K4TNw2YT4Cid28Q=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
 </head>
 
 <body>
@@ -324,9 +325,9 @@
         <div class="tr-cont-box">
             <c:forEach items="${trlist}" var="trdto">
                 <div class="tr-card">
-                    <div class="tr-cont-tit"> 투어명 : ${trdto.tr_nm}</div>
+                    <span class="tr-cont-loc"><i class="bi bi-geo-alt-fill"></i>${trdto.tr_loc}</span>
+                    &nbsp;&nbsp;<span class="tr-cont-tit"> ${trdto.tr_nm}</span>
                     <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}"> ${trdto.ur_nk}</div>
-                    <div class="tr-cont-loc">투어장소 : ${trdto.tr_loc}</div>
                     <div class="tr-cont-date">투어기간 : ${trdto.s_date}<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ ${trdto.e_date}</div>
                     <div class="tr-cont-tw">모집인원 : ${trdto.tw_cnt}/${trdto.tw_max}</div>
@@ -338,36 +339,18 @@
     <div class="fd-container">
         <div class="fd-tit-box"><span class="fd-tit tit">커뮤니티</span> <span class="fd-more-box"><a class="fd-more" href="${root}/comfeed/main/">더보기</a></span></div>
         <div class="fd-cont-box">
-            <c:set var="fdi_path" value="url('res/images/cafeimg/2카페_1.jpg')"/>
-            <div class="fd-card">
-                <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
-                <div class="fd-txt-area">
-                    <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
-                    <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
+            <c:forEach items="${fdlist}" var="fddto">
+                <c:set var="fdi_path" value="url('${root}${fddto.ci_path}${fddto.ci_nm}')"/>
+               <div class="fd-card">
+                    <div class="fdi-nm" style="background-image:${fdi_path}">
+                        <a href="cafe/detail?cf_id=${fddto.cf_id}"><span class="fd_cf_nm"><i class="bi bi-geo-alt-fill" id="cf-loc"></i>&nbsp;${fddto.cf_nm}</span></a></div>
+                   <a href="${root}/comfeed/main/">
+                   <div class="fd-txt-area">
+                        <div class="fd-cont-info"><img class="tr-prf" src="${root}/res/prfimg/${fddto.ur_img}">&nbsp;&nbsp;${fddto.ur_nk}<span class="fd-lk-box">&nbsp;${fddto.likes}&nbsp;&nbsp;</span></div>
+                        <div class="fd-cont-txt">${fddto.fd_txt}</div>
+                    </div></a>
                 </div>
-            </div>
-            <div class="fd-card">
-                <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
-                <div class="fd-txt-area">
-                    <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
-                    <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
-                </div>
-            </div>
-            <div class="fd-card">
-                <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
-                <div class="fd-txt-area">
-                    <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
-                    <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
-                </div>
-            </div>
-            <div class="fd-card">
-                <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
-                <div class="fd-txt-area">
-                    <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
-                    <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
-                </div>
-            </div>
-
+            </c:forEach>
         </div>
     </div>
 </div>

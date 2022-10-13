@@ -10,11 +10,12 @@ body * {
     color: #664400;
     font-size: 20px;
 }
-
+/*
 .main-page-container div {
     border: 1px solid gray;
     min-height: 20px;
 }
+*/
 
 .main-page-container {
     display: grid;
@@ -207,30 +208,38 @@ div.tr-cont-box{
     margin-left: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr ;
+}
 
+.tr-cont-loc{
+    color: gray;
+    font-size: 15px;
+}
+.tr-cont-loc i{
+    color: gray;
+    font-size: 15px;
 }
 span.tr-tit{
-    float: left;
-    height: 55px;
+    padding: 0 30px 0 0;
+    font-size: 1.8rem;
 }
 span.tr-more-box{
-    float: right;
-    height: 55px;
-    line-height: 55px;
+    margin-top: 40px;
+    margin-bottom: 20px;
 }
 a.tr-more{
-    font-size: 1.5rem;
     color:gray;
+    font-size: 20px;
 }
 div.tr-card {
     width: 300px;
     overflow: hidden;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     margin-right: 10px;
+    padding: 10px 10px 10px 10px ;
 }
 img.tr-prf{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50px;
 }
 div.tr-cont-txt{
@@ -239,23 +248,22 @@ div.tr-cont-txt{
     white-space: nowrap;
     display: block;
 }
-/*fd-container*/
 
+/*fd-container*/
 div.fd-tit-box{
     display: grid;
     grid-template-columns: 850px 100px ;
 }
 span.fd-tit{
-    float: left;
-    height: 55px;
+    padding: 0 30px 0 0;
+    font-size: 1.8rem;
 }
 span.fd-more-box{
-    float: right;
-    height: 55px;
-    line-height: 55px;
+    margin-top: 40px;
+    margin-bottom: 20px;
 }
 a.fd-more{
-    font-size: 1.5rem;
+    font-size: 20px;
     color:gray;
 }
 div.fd-cont-box{
@@ -271,14 +279,19 @@ div.fd-cont-box{
     display: inline-block;
     width: 18px;
     height: 18px;
-    margin: 0 0 -3px 0;
+    margin: 0 0 -1px 0;
+
     background: url(../images/ico_lk.png) no-repeat;
 }
 div.fd-cont-txt{
-    text-overflow:ellipsis;
+    height:30px;
+    word-wrap:break-word;
+    display: -webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
     overflow: hidden;
-    white-space: nowrap;
-    display: block;
+    font-size: 15px;
+    margin-top: 5px;
 }
 div.fd-more-box{
     float : right;
@@ -286,12 +299,10 @@ div.fd-more-box{
 
 div.fd-card {
     width: 225px;
-    height: 270px;
+    height: 350px;
     overflow: hidden;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-
-div.fd-txt-area {
+    padding: 10px 10px 10px 10px;
 }
 
 div.fd-txt-area:hover {
@@ -300,7 +311,7 @@ div.fd-txt-area:hover {
 
 .fdi-nm {
     width: 100%;
-    height: 194px;
+    height: 250px;
     border-radius: 4px;
     background: 50% 50% no-repeat;
     background-size: cover;
@@ -314,4 +325,16 @@ div.fd-txt-area:hover {
     box-sizing: border-box;
     border: 1px solid #f1f1f1;
     margin-bottom: 10px;
+}
+span.fd_cf_nm {
+    color: white;
+    font-size: 15px;
+    margin-left: 5px;
+    padding: 10px 10px 10px 10px;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 100px;
+}
+#cf-loc{
+    color: white;
+    font-size: 12px;
 }
