@@ -23,12 +23,14 @@ public class ComTourController {
     ComTourServiceInter comTourService;
 
     @GetMapping("/comtour/form")
-    public String comtourform(){
+    public String comtourform()
+    {
         return "/comtour/comtour_form";
     }
 
     @GetMapping("/comtour/form2")
-    public String comtourform2(){
+    public String comtourform2()
+    {
         return "/bit/comtour/comtour_form";
     }
 
@@ -36,11 +38,8 @@ public class ComTourController {
     public String insert(ComTourDto dto){
 
         comTourService.insertComTour(dto);
-        int tr_id = dto.getTr_id();
-        int ur_id = dto.getUr_id(); // Db에서 꺼내오는 방법은 새로 호출해서 가져와야 하나?
 
-
-        return "redirect:list?ur_id="+ur_id;
+        return "redirect:list";
     }
 
     @GetMapping("/comtour/delete")
@@ -51,17 +50,24 @@ public class ComTourController {
         return "redirect:list";
     }
 
-    @GetMapping("/comtour/updateform")
+    @GetMapping("/comtour/updateform") // update form을 호춯
     public String updateform(int num, Model model)
     {
         //System.out.println(num);
-      ComTourDto dto = comTourService.getUserData(num);
-      //System.out.println("update Dto 정보:"+dto); //DB에는 없으나 DTO에 변수가 있으면 해당 값들은 null로 가져와 짐
+        ComTourDto dto = comTourService.getUserData(num);
+       // System.out.println("update Dto 정보:"+dto); //DB에는 없으나 DTO에 변수가 있으면 해당 값들은 null로 가져와 짐
         model.addAttribute("dto",dto);
         return "/bit/comtour/comtour_updateform";
     }
+    @PostMapping("/comtour/update") //DB를 통한 실지 업데이트
+    public String updatedata(ComTourDto dto)
+    {
+        System.out.println("수정된 정보확인: "+dto);
+        comTourService.updateComTour(dto);
+        return "redirect:list";
+    }
 
-    @GetMapping("/comtour/list")
+    @GetMapping("/comtour/list") //검색창 영역
     public String comtourlist(Model model,
                               @RequestParam(value = "searchcolumn", required = false) String sc,
                               @RequestParam(value = "searchword", required = false) String sw
@@ -82,15 +88,15 @@ public class ComTourController {
         return "/bit/comtour/comtour_list";
     }
 
-    @GetMapping("/comtour/detail") /*?num=3*/
+    @GetMapping("/comtour/detail") /*list 페이지에서 li 테크 클릭시 datail?num=3(tr_id:PK) 과 같이 좌측 정보를 넘겨 받음*/
     public ModelAndView detail(
             @RequestParam(value = "tr_id") int num,
             @RequestParam(defaultValue = "0") int rg,
             @RequestParam(defaultValue = "0") int rs,
             @RequestParam(defaultValue = "0") int rl,
-            @RequestParam(defaultValue = "0") int tm_id) /*answer의 PK*/
+            @RequestParam(defaultValue = "0") int tm_id) /*tr_cmt의 PK(tr_id는)*/
     {
-        ComTourDto dto = comTourService.getData(num);
+        ComTourDto dto = comTourService.getData(num); // tr 테이블의 정보가 dto에 담겨서 넘어오는데 조인임
         //System.out.println(dto);
         ModelAndView mview = new ModelAndView();
         mview.addObject("dto",dto);

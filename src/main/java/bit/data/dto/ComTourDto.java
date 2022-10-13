@@ -34,5 +34,6 @@ public class ComTourDto {
     private String status;
     private int report;
     private String ur_phnum;
+    private int tw_cnt;
 }
 

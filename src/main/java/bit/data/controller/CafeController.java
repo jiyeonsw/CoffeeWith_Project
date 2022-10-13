@@ -14,11 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import util.ChangeName;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,16 +95,17 @@ public class CafeController {
         List<CafeCmtDto> list_cm=cafeService.selectCMOrder(cf_id, cm_order, rl);
         for(CafeCmtDto dto:list_cm){
             dto.setImg(cafeService.selectCmtImg(dto.getCf_id(),dto.getCm_id()));
+            dto.setCm_cnt(cafeService.selectCMCntByRg(dto.getCm_id()));
         }
         return list_cm;
     }
 
     @PostMapping("/insert_cmt")
     @ResponseBody
-    public Map<String,Object> insertCafeCmt(CafeCmtDto dto, @RequestParam(required = false) List<MultipartFile> uploadFiles){
+    public Map<String,Object> insertCafeCmt(HttpServletRequest request, CafeCmtDto dto, @RequestParam(required = false) List<MultipartFile> uploadFiles){
         //cm_id를 위해 먼저 cmt table에 insert
         cafeService.insertCafeCmt(dto);
-        String path= "E://Java0711//semiproject//CoffeeWith//src//main//webapp//resources//images//upload";
+        String path = request.getSession().getServletContext().getRealPath("/resources/images/upload");
         System.out.println(path);
 
         //이미지 dto에 정보 넣기

@@ -25,8 +25,8 @@ public class ComFeedDao implements ComFeedDaoInter{
     }
 
     @Override
-    public ComFeedDto selectFeed(int num) {
-        return session.selectOne(ns+"selectFeed",num);
+    public ComFeedDto selectFeed(int fd_id) {
+        return session.selectOne(ns+"selectFeed",fd_id);
     }
 
     @Override
@@ -45,13 +45,24 @@ public class ComFeedDao implements ComFeedDaoInter{
     }
 
     @Override
-    public void deleteFeed(int num) {
-        session.delete(ns+"deleteFeed",num);
+    public void deleteFeed(int fd_id) {
+        session.delete(ns+"deleteFeed",fd_id);
     }
 
     @Override
-    public void updateLikes(int num) {
-        session.update(ns+"updateLikes",num);
+    public void updateLikes(int fd_id) {
+        session.update(ns+"updateLikes",fd_id);
     }
+
+    @Override
+    public void insertPhoto(ComFeedDto dto) {
+        session.insert(ns+"insertPhoto",dto);
+    }
+
+    @Override
+    public List<String> selectPhoto(int fd_id) {
+        return session.selectList(ns+"selectPhoto",fd_id);
+    }
+
 
 }

@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class PlanDao implements PlanDaoInter {
 
@@ -27,5 +29,20 @@ public class PlanDao implements PlanDaoInter {
     @Override
     public void insertPlanLoc(PlanLocDto dto) {
         session.insert(ns + "insertPlanLoc", dto);
+    }
+
+    @Override
+    public int selectPlanCnt(int ur_id) {
+        return session.selectOne(ns + "selectPlanCnt", ur_id);
+    }
+
+    @Override
+    public List<PlanDto> selectMyPlans(int ur_id) {
+        return session.selectList(ns + "selectMyPlans", ur_id);
+    }
+
+    @Override
+    public List<PlanLocDto> selectPlanLoc(int pl_id) {
+        return session.selectList(ns + "selectPlanLoc", pl_id);
     }
 }

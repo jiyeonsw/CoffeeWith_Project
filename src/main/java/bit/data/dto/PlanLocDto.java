@@ -13,4 +13,6 @@ public class PlanLocDto {
     private Date v_date;
     private Time v_time;
     private int seq;
+    private double loc_x;
+    private double loc_y;
 }

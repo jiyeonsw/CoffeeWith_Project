@@ -48,5 +48,8 @@
 	<select id="selectCMCntByCfid" parameterType="int" resultType="int">
 		SELECT count(*) FROM cf_cmt WHERE cf_id=#{cf_id}
 	</select>
+	<select id="selectCMCntByRg" parameterType="int" resultType="int">
+		SELECT count(*) FROM cf_cmt WHERE rg=#{cm_id}
+	</select>
 </mapper>
 

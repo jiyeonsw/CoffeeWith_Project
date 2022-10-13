@@ -22,8 +22,9 @@
 <body>
 
 ${dto}
+
 <form action="update" method="post">
-    <input type="hidden" name="ur_id" value="${sessionScope.login_id}">
+    <input type="hidden" name="tr_id" value="${dto.tr_id}">
     <div class="wholetable">
         <table class="table table-bordered" style="width: 1000px">
             <tr>
