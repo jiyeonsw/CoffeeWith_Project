@@ -14,8 +14,9 @@ public class ComTourAnsService implements ComTourAnsServiceInter{
     ComTourAnsDaoInter ansDaoInter;
 
     @Override
-    public int getMaxNum() {
-        return 0;
+    public int getMaxNum()
+    {
+        return ansDaoInter.getMaxNum();
     }
 
     @Override
@@ -25,7 +26,26 @@ public class ComTourAnsService implements ComTourAnsServiceInter{
     }
 
     @Override
-    public void insertAns(ComTourAnsDto dto) {
+    public void insertAns(ComTourAnsDto dto) //디테일 페이지 등록글 입력 메서드
+    /*tm_id=0, ur_id=7, tr_id=37, tm_txt=최종 테스트, w_date=null, u_date=null, rg=0, rs=0, rl=0*/
+    {
+        //새글 답글 판단(새글=0, 답글은 답급에 해당하는 숫자가 들어 있음)
+        int num = dto.getTm_id();
+        int rg = dto.getRg();
+        int rs = dto.getRs();
+        int rl = dto.getRl();
+        System.out.println(this.getMaxNum());
+        if(num==0) {
+            rg=this.getMaxNum()+1; //현재 25
+            rs=0;
+            rl=0;
+        } else { //num!=0 경우 즉, 답글인 경우
+
+        }
+            dto.setRg(rg);
+            dto.setRs(rs);
+            dto.setRl(rl);
+        System.out.println(rg);
         ansDaoInter.insertAns(dto);
     }
 

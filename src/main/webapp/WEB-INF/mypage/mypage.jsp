@@ -47,9 +47,11 @@
         }
 
         #header {
-            height: 90px;
+            height: 120px;
             text-align: center;
             grid-area: header;
+            z-index: 101;
+            box-shadow: 0 8px 8px rgb(0 0 0 / 5%);
         }
 
         #top {
@@ -68,9 +70,9 @@
             cursor: pointer;
         }
 
-        .main-mypage > div {
-            border: 1px solid gray;
-        }
+        /*   .main-mypage > div {
+               border: 1px solid gray;
+           }*/
 
     </style>
 </head>
@@ -79,7 +81,6 @@
     <div class="header" id="header">
         <tiles:insertAttribute name="header"/>
     </div>
-    <hr>
     <div class="main-mypage">
         <div class="main" id="top">
             <tiles:insertAttribute name="top"/>

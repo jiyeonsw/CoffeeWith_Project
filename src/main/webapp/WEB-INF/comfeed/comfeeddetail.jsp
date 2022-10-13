@@ -14,17 +14,23 @@
     <link rel="stylesheet" href="../res/css/style.css" type="text/css">
     <style type="text/css">
 
-        .table{
-            height: 700px;
-            margin-bottom: 0px;
-            border-radius: 50% 50%;
-            border-style: hidden;
+        a{
+            text-decoration: none;
+            color: black;
         }
 
         .fddata {
             width: 100%;
             text-align: center;
             margin: auto;
+        }
+
+        .table {
+            table-layout: fixed;
+            height: 700px;
+            margin-bottom: 0;
+            border-radius: 50% 50%;
+            border-style: hidden;
         }
 
         .table .photo {
@@ -38,6 +44,12 @@
         .table .profile {
             height: 5%;
             text-align: left;
+        }
+
+        .table .profile img {
+            height: 40px;
+            width: 40px;
+            border-radius: 100%;
         }
 
         .table .fdcontent {
@@ -55,21 +67,21 @@
             height: 5%;
         }
 
-        #showimg{
+        #imgdetail {
             width: 100%;
             height: 100%;
         }
 
-        #showimg .carousel-inner{
+        #imgdetail .carousel-inner {
             width: 100%;
             height: 100%;
         }
 
-        #showimg .carousel-item{
+        #imgdetail .carousel-item {
             height: 100%;
         }
 
-        #showimg .carousel-item img{
+        #imgdetail .carousel-item img {
             position: absolute;
             top: 0;
             left: 0;
@@ -85,28 +97,36 @@
 <div class="fddata">
     <table class="table table-bordered">
         <tr>
-            <td rowspan="4" class="photo">
-
+            <td rowspan="5" class="photo">
                 <!-- Carousel -->
-                <div id="showimg" class="carousel slide" data-bs-interval="false" style="display: none">
-
+                <div id="imgdetail" class="carousel slide" data-bs-interval="false">
                     <div class="carousel-inner" data-bs-interval="false">
-                        <c:forEach var="photo" items="${comfeeddto.fd_photo.split(',')}">
-                            <div class="carousel-item">
-                                <img src="${root}/images/upload/${photo}">
+                        <c:forEach var="photo" varStatus="i" items="${comfeeddto.fd_photo.split(',')}">
+                            <c:if test="${i.count==1}">
+                                <div class="carousel-item active">
+                            </c:if>
+                            <c:if test="${i.count!=1}">
+                                <div class="carousel-item">
+                            </c:if>
+                            <img src="${root}/images/upload/${photo}">
                             </div>
+                            <c:if test="${i.count==2}">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#imgdetail"
+                                        data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#imgdetail"
+                                        data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+                            </c:if>
                         </c:forEach>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#showimg" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#showimg" data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
                 </div>
             </td>
             <td class="profile">
-                ${comfeeddto.ur_id} ${photo}
+                <img src="${root}/res/prfimg/${userdto.ur_img}">
+                ${userdto.ur_nk}
             </td>
         </tr>
         <tr>
@@ -115,17 +135,26 @@
             </td>
         </tr>
         <tr>
-            <td class="fdcafe">
-                ${cafedto.cf_nm}
-            </td>
-        </tr>
-        <tr>
             <td class="fdtag">
                 ${comfeeddto.fg_nm}
             </td>
         </tr>
+        <tr>
+            <td class="fdcafe">
+                <a href="${root}/cafe/detail?cf_id=${cafedto.cf_id}">${cafedto.cf_nm}</a>
+            </td>
+         </tr>
+        <tr>
+            <td>
+
+            </td>
+        </tr>
     </table>
 </div>
-</body>
 
+<script>
+
+
+</script>
+</body>
 </html>

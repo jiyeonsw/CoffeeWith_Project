@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class PlanDto {
@@ -15,4 +16,5 @@ public class PlanDto {
     private Date e_date;
     private Timestamp w_date;
     private String pl_txt;
+    private List<PlanLocDto> pl_loc;
 }

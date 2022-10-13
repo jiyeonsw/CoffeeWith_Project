@@ -15,8 +15,9 @@ public class ComTourAnsDao implements ComTourAnsDaoInter{
     String ns = "bit.data.dao.ComTourAnsDao.";
 
     @Override
-    public int getMaxNum() {
-        return 0;
+    public int getMaxNum()
+    {
+        return session.selectOne(ns+"getMaxNum");
     }
 
     @Override

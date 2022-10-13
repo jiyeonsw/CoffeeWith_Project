@@ -40,6 +40,7 @@ public class LoginController {
                 session.setAttribute("login_ok", "yes");
                 session.setAttribute("login_id", dto.getUr_id());
                 session.setAttribute("login_nick", dto.getUr_nk());
+                session.setAttribute("login_img",dto.getUr_img());
             }
             return "redirect:../";
         } else {
@@ -53,6 +54,8 @@ public class LoginController {
         //로그아웃시 제거되어야할 세션
         session.removeAttribute("login_ok");
         session.removeAttribute("login_nick");
+        session.removeAttribute("login_img");
+
         // session.removeAttribute("login_id");
     }
 
@@ -95,6 +98,7 @@ public class LoginController {
 
         session.removeAttribute("login_ok");
         session.removeAttribute("login_id");
+        session.removeAttribute("login_img");
         session.removeAttribute("login_nick");
         session.removeAttribute("cfCmtCnt");
         session.removeAttribute("cfLkCnt'");

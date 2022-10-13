@@ -18,16 +18,21 @@
             display: grid;
             padding: 40px 20px 20px;
             grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 280px 280px 280px 280px 280px;
+            grid-template-rows: 280px 280px 280px 280px;
             gap: 20px 0px;
             justify-items: center;
-            min-height: 1600px;
+            min-height: 1300px;
         }
 
         div.bk-card {
             width: 270px;
             height: 270px;
             overflow: hidden;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
+
+        div.bk-txt-area {
+            margin-left: 20px;
         }
 
         div.bk-txt-area:hover {
@@ -68,6 +73,15 @@
 
         .pagination {
             justify-content: center;
+        }
+
+        .page-link {
+            color: #664400;
+        }
+
+        .page-item.active .page-link {
+            background-color: #664400;
+            border-color: #664400;
         }
     </style>
 </head>
