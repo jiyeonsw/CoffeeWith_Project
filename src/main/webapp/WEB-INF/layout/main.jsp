@@ -5,6 +5,7 @@
 <html>
 
 <head>
+    <c:set var="root" value="<%=request.getContextPath()%>"/>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link
@@ -12,17 +13,20 @@
             rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <title>CoffeeWith</title>
-    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="${root}/res/css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.css"
           integrity="sha512-rVfXYRlhHtd3C4PzoBxSaKhI/uYEi0/5K69RwK/cdxQld57PC6mZ7tkutR+KD96WrXZ6E/96qYeY4CVun7a0/w=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.js"
             integrity="sha512-c0NksyGPH0LUkeV3kgNU6p98oYwacImv508UsTDKqTWpEk1LFDMC8falFf9A2HZ8vt1ZIj3K4TNw2YT4Cid28Q=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+
 </head>
 
 <body>
 <div class="main-page-container">
+
     <div class="cf-best-container">
         <h3 class="cf-best-tit-box tit">
             <a>요즘 뜨는 카페</a>
@@ -58,7 +62,7 @@
             </ul>
         </div>
     </div>
-</div>
+
 <div class="loc-container">
     <div class="loc-tit-box tit">
     </div>
@@ -66,26 +70,57 @@
     </div>
 </div>
 <div class="tr-container">
-    <div class="tr-tit-box tit"></div>
-    <div class="tr-card">
-        <div class="tr-img-box"></div>
-        <div class="tr-cont-box">
-            <div class="tr-cont-tit"></div>
-            <div class="tr-cont-txt"></div>
-            <div class="tr-cont-info"></div>
-        </div>
+    <div class="tr-tit-box"><span class="tr-tit tit">투어모집</span> <span class="tr-more-box"><a class="tr-more" href="${root}/comtour/list">더보기</a></span></div>
+    <div class="fd-cont-box">
+        <c:forEach items="${trlist}" var="trdto">
+            <div class="tr-card">
+                <div class="tr-cont-tit"> 투어명 : ${trdto.tr_nm}</div>
+                <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}"> ${trdto.ur_nk}</div>
+                <div class="tr-cont-loc">투어장소 : ${trdto.tr_loc}</div>
+                <div class="tr-cont-date">투어기간 : ${trdto.s_date}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ ${trdto.e_date}</div>
+                <div class="tr-cont-tw">모집인원 : ${trdto.tw_cnt}/${trdto.tw_max}</div>
+                <div class="tr-cont-txt">${trdto.tr_txt}</div>
+            </div>
+        </c:forEach>
     </div>
 </div>
 <div class="fd-container">
-    <div class="fd-tit-box tit">커뮤니티</div>
-    <div class="fd-img-box"></div>
-    <div class="fd-cont-box">
-        <div class="fd-cont-txt"></div>
-        <div class="fd-cont-info"></div>
+    <div class="fd-tit-box"><span class="fd-tit tit">커뮤니티</span> <span class="fd-more-box"><a class="fd-more" href="${root}/comfeed/main/">더보기</a></span></div>
+        <div class="fd-cont-box">
+            <c:set var="fdi_path" value="url('res/images/cafeimg/2카페_1.jpg')"/>
+            <div class="fd-card">
+                <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
+                <div class="fd-txt-area">
+                <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
+                <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
+                </div>
+            </div>
+            <div class="fd-card">
+                <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
+                <div class="fd-txt-area">
+                    <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
+                    <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
+                </div>
+            </div>
+            <div class="fd-card">
+                <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
+                <div class="fd-txt-area">
+                    <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
+                    <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
+                </div>
+            </div>
+            <div class="fd-card">
+                <div class="fdi-nm" style="background-image:${fdi_path}"> </div>
+                <div class="fd-txt-area">
+                    <div class="fd-cont-info">ur_nk <span class="fd-lk-box">fd_likes</span></div>
+                    <div class="fd-cont-txt">fd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txtfd_txt</div>
+                </div>
+            </div>
+
     </div>
-</div>
-</div>
-<script src="main.js"></script>
+</div></div>
+<script src="${root}/res/js/main_ys.js"></script>
 </body>
 
 </html>
