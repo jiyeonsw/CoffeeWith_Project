@@ -15,6 +15,7 @@
         <typeAlias type="bit.data.dto.MyPageCafeCmtDto" alias="mpccdto"/>
         <typeAlias type="bit.data.dto.ComTourDto" alias="ctdto"/>
         <typeAlias type="bit.data.dto.ComTourAnsDto" alias="ctadto"/>
+        <typeAlias type="bit.data.dto.ComTourPartDto" alias="ctpdto"/>
         <typeAlias type="bit.data.dto.CafeCtgDto" alias="cgdto"/>
         <typeAlias type="bit.data.dto.PlanDto" alias="pldto"/>
         <typeAlias type="bit.data.dto.PlanLocDto" alias="pllocdto"/>
