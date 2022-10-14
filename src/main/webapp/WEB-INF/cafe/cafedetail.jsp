@@ -78,6 +78,7 @@
             overflow: visible;
             display: block;
             height: auto;
+            min-height: 120px;
         }
         div.cf-bottom{
             display: flex;
