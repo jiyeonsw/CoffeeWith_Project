@@ -1,5 +1,6 @@
 package bit.data.controller;
 
+import bit.data.dto.ComFeedDto;
 import bit.data.dto.ComTourDto;
 import bit.data.service.MainServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,16 @@ public class MainController {
         ModelAndView mview=new ModelAndView();
         //tr
         List<ComTourDto> trlist=mainService.selectTr3List();
+        for (ComTourDto trdto:trlist){
+            int tm_cnt=mainService.selectTMcntbyTrid(trdto.getTr_id());
+            trdto.setTm_cnt(tm_cnt);
+        }
+        //fd
+        List<ComFeedDto> fdlist=mainService.selectFd4list();
 
         //model에 넣기
         mview.addObject("trlist",trlist);
+        mview.addObject("fdlist",fdlist);
         mview.setViewName("/bit/layout/main");
         return mview;
     }

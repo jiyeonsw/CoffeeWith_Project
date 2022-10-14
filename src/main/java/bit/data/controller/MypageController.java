@@ -225,7 +225,6 @@ public class MypageController {
         // 예: 1페이지->0, 2페이지:12, 3페이지 : 24...
         startNum = (currentPage - 1) * perPage;
 
-
         // 각페이지당 출력할 시작번호 구하기
         // 예: 총글갯수가 23이라면 1페이지는 23,2페이지는 18,3페이지는 13...
         no = totalCount - (currentPage - 1) * perPage;
@@ -268,5 +267,18 @@ public class MypageController {
         model.addAttribute("list", slist);
 
         return "/cmain/mypage/cont_pl";
+    }
+    @GetMapping("/plandetail")
+    @ResponseBody
+    public PlanDto planDetail(@RequestParam String pl_nm)
+    {
+        PlanDto dto = planService.selectPlanByName(pl_nm);
+        List<PlanLocDto> loclist = planService.selectPlanLoc(dto.getPl_id());
+        for (PlanLocDto locdto:loclist){
+            locdto.setLoc_x(cafeService.selectCafe(locdto.getCf_id()).getLoc_x());
+            locdto.setLoc_y(cafeService.selectCafe(locdto.getCf_id()).getLoc_y());
+        }
+        dto.setPl_loc(loclist);
+        return dto;
     }
 }

@@ -47,6 +47,9 @@
             z-index: 101;
             box-shadow: 0 8px 8px rgb(0 0 0 / 5%);
         }
+        #main{
+            height: 680px;
+        }
 
     </style>
 </head>

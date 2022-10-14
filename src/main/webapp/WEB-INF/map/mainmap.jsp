@@ -21,7 +21,7 @@
         }
         #container{
             display: flex;
-            height: 550px;
+            height: 100%;
         }
         #map{
             float:right;
@@ -31,12 +31,49 @@
             width:20%;
             background-color: white;
         }
+        div.category{
+            height: 80px;
+            margin-top: 5px;
+        }
+        .categorybtn{
+            margin-left: 5px;
+            margin-bottom: 5px;
+            border-radius: 15px;
+            border: 1px solid #664400;
+        }
+        .categorybtn:hover{
+            color: white;
+            background-color: #664400;
+        }
+        button.btn-make-tour, #modalpopbtn, #tour-submit, #tour-cancel{
+            border-radius: 5px;
+            border: 1px solid #664400;
+        }
+        button.btn-make-tour:hover, #modalpopbtn:hover, #tour-submit:hover, #tour-cancel:hover{
+            color: white;
+            background-color: #664400;
+        }
+        div.search-list{
+            height: 470px;
+        }
+        .results{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border: 1px solid #dcdcdc;
+        }
+        div.search-result img{
+            margin-left: 7px;
+            width: 70px;
+            height: 70px;
+            border-radius: 3px;
+        }
         button.btn-make-tour{
             float: right;
         }
         div.paging{
             display: flex;
             flex-direction: row;
+            justify-content : center;
         }
         .map-icon{
             float: right;
@@ -47,10 +84,10 @@
             cursor: pointer;
         }
         .result-name{
-            font-size: 20px;
+            font-size: 25px;
         }
         .result-cnt{
-            font-size: 12px;
+            font-size: 15px;
         }
         #maketour{
             display: none;
@@ -58,36 +95,35 @@
             opacity: 80%;
             background-color: white;
             width: 300px;
-            height: 550px;
+            height: 100%;
             right: 0;
             z-index: 1;
         }
-        /* .tour-input-title{
-             text-align: center;
-         }*/
+        .tour-input-title{
+            text-align: center;
+            padding-top: 3px;
+        }
         #tourdatewords{
             text-align: center;
         }
         #tourdate{
             width:300px;
         }
-        #modalpopopbtn{
-            float:right;
-        }
         div.tour-detail{
             overflow-y: scroll;
-            height: 250px;
+            height: 330px;
+            text-align: center;
             -ms-overflow-style: none;
         }
         div.tour-detail::-webkit-scrollbar{
             display:none;
         }
         div.detail-bar-date{
-            background-color: aqua;
+            background-color: #D8CCA3;
             opacity: 80%;
         }
         div.active-bar{
-            border: 1px solid black;
+            border: 1px solid #B09B71;
         }
         .tour-icon-set{
             margin-left: 30px;
@@ -116,6 +152,24 @@
             cursor: default;
             background-color: #337ab7;
         }
+        #btnmodalday0{
+            background-color: red;
+            border: none;
+            border-radius: 5px;
+            display: none;
+        }
+        #btnmodalday1{
+            background-color: orange;
+            border: none;
+            border-radius: 5px;
+            display: none;
+        }
+        #btnmodalday2{
+            background-color: yellow;
+            border: none;
+            border-radius: 5px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -127,10 +181,13 @@
             <input type="text" class="form-control cafe-search-bar" placeholder="검색어를 입력하세요">
             <button type="button" class="btn btn-success search-btn">검색</button>
         </div>
-        <div class="search-list">
+        <div class="category">
+            <c:forEach var="dto" items="${ctglist}">
+                <button type="button" class="categorybtn" value="${dto.cg_id}">#${dto.cg_nm}</button>
+            </c:forEach>
         </div>
-        <div class="paging">
-        </div>
+        <div class="search-list"></div>
+        <div class="paging"></div>
     </div>
     <div id="map"></div>
     <div id="maketourmodal" class="modal">
@@ -155,7 +212,7 @@
     </div>
     <div id="maketour">
         <div class="tour-input">
-            <div for="tourname" class="tour-input-title">투어명<button type="button" id="modalpopopbtn">경로 확인</button></div>
+            <div for="tourname" class="tour-input-title">투어명</div>
             <input type="text" id="tourname" placeholder="투어명" class="form-control" name="tourname">
         </div>
         <hr>
@@ -176,6 +233,7 @@
         <div class="tour-detail">
             투어일정을 입력해주세요
         </div>
+        <button type="button" id="modalpopbtn">경로 확인</button>
     </div>
 </div>
 <script>
@@ -194,8 +252,12 @@
     let infoWindowList = [];
     //좌표 마커 스타일
     let menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
+    //페이지 로딩후 바로 실행
+    $(document).ready(function (){
+        $("button.search-btn").trigger('click');
+    })
     //모달 띄우기
-    $(document).on('click','#modalpopopbtn', function (){
+    $(document).on('click','#modalpopbtn', function (){
         //경로변수
         var polyTotal = [];
         polymarkerList = [];
@@ -276,10 +338,9 @@
                 map: modalmap,
                 path: polypath,
                 strokeColor: rainbow[iIdx],
-                strokeOpacity: 0.8,
-                strokeWeight: 6,
+                strokeOpacity: 0.6,
+                strokeWeight: 3,
                 zIndex: 2,
-                clickable: true,
                 endIcon: naver.maps.PointingIcon.OPEN_ARROW
             });
             //polymarkerList에서 바운드 가져오기
@@ -296,11 +357,12 @@
         }
         console.log(polyTotal);
     });
-
     //1일차 버튼
     $(document).on('click', '#btnmodalday0', function() {
+        for(var j of polymarkerList) {
+            j.setAnimation(null);
+        }
         var v = $(this).attr("value");
-        console.log(v);
         for (var i=0;i<v;i++) {
             if (polymarkerList[i].getAnimation() !== null) {
                 polymarkerList[i].setAnimation(null);
@@ -309,11 +371,12 @@
             }
         }
     });
-
     //2일차 버튼
     $(document).on('click', '#btnmodalday1', function() {
+        for(var j of polymarkerList) {
+            j.setAnimation(null);
+        }
         var v = parseInt($("#btnmodalday0").attr("value"));
-        console.log(v);
         for (var i=v;i<parseInt($(this).attr("value")) + v;i++) {
             if (polymarkerList[i].getAnimation() !== null) {
                 polymarkerList[i].setAnimation(null);
@@ -322,11 +385,12 @@
             }
         }
     });
-
     //3일차 버튼
     $(document).on('click', '#btnmodalday2', function() {
-        var v = parseInt($("#btnmodalday1").attr("value")) + parseInt($("#btnmodalday0").attr("value")) - 1;
-        console.log(v);
+        for(var j of polymarkerList) {
+            j.setAnimation(null);
+        }
+        var v = parseInt($("#btnmodalday1").attr("value")) + parseInt($("#btnmodalday0").attr("value"));
         for (var i=v;i<parseInt($(this).attr("value")) + v;i++) {
             if (polymarkerList[i].getAnimation() !== null) {
                 polymarkerList[i].setAnimation(null);
@@ -335,7 +399,6 @@
             }
         }
     });
-
     //모달 닫기
     $(document).on('click','#tour-cancel',function (){
         closeModal();
@@ -369,9 +432,6 @@
         }
         alert("투어가 생성 되었습니다");
     }
-    /*$(document).ready(function (){
-        $("button.search-btn").trigger('click');
-    })*/
     //로그인체크
     function loginCheck()
     {
@@ -391,6 +451,11 @@
     });
     //검색
     $("button.search-btn").click(function (){
+        //마커들 초기화
+        for (var mkr of markerList){
+            mkr.setAnimation(null);
+            mkr.setVisible(false);
+        }
         //검색어
         var searchword=$("input.cafe-search-bar").val();
         //검색결과 string
@@ -405,10 +470,17 @@
             data:{"searchword":searchword,"currentPage":currentPage},
             success: function(res) {
                 //검색 결과가 있을때
-                if (res.list.length != 0) {
-                    $.each(res.list, function (i, ele) {
-                        s += "<div class='search-result'>";
-                        s += "<div class='result-name'><a href='../cafe/detail?cf_id=" + ele.cf_id + "'>" + ele.cf_nm +"</a>";
+                if (res.slist.length != 0) {
+                    $.each(res.slist, function (i, ele) {
+                        s += "<div class='search-result results'>";
+                        s += "<div class='result-name'><a href='../cafe/detail?cf_id=" + ele.cf_id + "'>";
+                        //이름 너무 길면 짜르기
+                        var ncf_nm = ele.cf_nm;
+                        if(ncf_nm.length>20)
+                        {
+                            ncf_nm = ele.cf_nm.substring(0,19)+"...";
+                        }
+                        s += ncf_nm +"</a>";
                         s += "<span class='tour-icon-set' style='";
                         if(isMakingTour==true){
                             s += "display: '';'>";
@@ -417,10 +489,10 @@
                         }
                         s += "<i class='fa-solid fa-plus add-tour-icon'></i></span>";
                         s += "<i class='fa-solid fa-location-dot map-icon' cf_id='" + ele.cf_id + "'></i></div>";
-                        s += "<div class='result-cnt'>리뷰 수: " + ele.cm_cnt + " &nbsp;&nbsp; 좋아요 수: " + ele.ck_cnt + " ★ " + ele.cm_star + "</div>";
+                        s += "<div class='result-cnt'>리뷰 수: " + ele.cm_cnt + " &nbsp;&nbsp; 좋아요 수: " + ele.ck_cnt + "&nbsp;&nbsp;&nbsp;★" + ele.cm_star + "&nbsp;&nbsp;&nbsp;#" + ele.cg_nm +"</div>";
                         //사진 없으면
                         if (ele.img.length == 0) {
-                            s += "<img src='../images/noimage.png' style='width:70px;height:70px;'>";
+                            s += "<img src='../images/noimage.png'>";
                         } else {
                             $.each(ele.img, function (j, elet) {
                                 //보여질 사진 갯수
@@ -430,6 +502,7 @@
                             });
                         }
                         s += "</div>";
+                        markerList[ele.cf_id-1].setAnimation(naver.maps.Animation.BOUNCE);
                     });
                     //페이징 시작
                     //이전버튼
@@ -448,7 +521,7 @@
                     if (res.endPage < res.totalPage) {
                         p += "<button type='button' id='btnnext' class=‘page-link’>다음</button>";
                     }
-                    moveMap(res.list[0].cf_id);
+                    moveMap(res.slist[0].cf_id);
                 }else{
                     //검색어 검색결과가 없을때
                     s += searchword + "에 대한 검색 결과가 없습니다";
@@ -456,9 +529,36 @@
                 }
                 $("div.paging").html(p);
                 $("div.search-list").html(s);
+                //검색 결과를 제외한 마커 숨기기
+                if (res.list.length != 0){
+                    $.each(res.list, function (j, aele) {
+                        for(var i in markerList){
+                            if (aele.cf_id - 1 == i){
+                                markerList[i].setVisible(true);
+                            }
+                        }
+                    });
+                }
             }//success
         });//$ajax"searchword"
     });//검색버튼
+    //카테고리 검색
+    $(document).on('click','.categorybtn',function(){
+       $("input.cafe-search-bar").val($(this).text().substring(1));
+       $("button.search-btn").trigger('click');
+    });
+
+    //검색결과 hover시 그림자 추가
+    $(document).on('mouseover','.results',function (){
+        $(this).css({
+            'background-color': '#dcdcdc'
+        });
+    });
+    $(document).on('mouseout','.results',function (){
+        $(this).css({
+            'background-color': 'white'
+        });
+    });
     //페이징 버튼 함수
     //페이지이동
     $(document).on('click','.btn-pagenum',function(){
@@ -535,9 +635,9 @@
         $("div.tour-detail").html(d);
     });
     //날짜 bar 클릭시 활성화
-    $(document).on('click','.detail-bar-date',function(){
-        $(this).parent().addClass('active-bar');
-        $(this).parent().siblings().removeClass('active-bar');
+    $(document).on('click','.detail-div',function(){
+        $(this).addClass('active-bar');
+        $(this).siblings().removeClass('active-bar');
     });
     //+ 아이콘 클릭시 투어 일정 추가
     $(document).on('click','.add-tour-icon',function(){
@@ -549,8 +649,8 @@
             dataType: "json",
             data: {"cf_id":id},
             success: function(res){
-                s += "<div class='cafe-in-tour' value='" + id + "'>" + res.cf_nm;
-                s += "<input type='time' class='visit_time' required='required'>"
+                s += "<div class='cafe-in-tour results' value='" + id + "'>" + res.cf_nm;
+                s += "<br>방문 시간: &nbsp;<input type='time' class='visit_time' required='required'>"
                 s += "<i class='fa-solid fa-xmark rm-tour-icon'></i>";
                 s += "</div>";
                 $("div.active-bar").children(".detail-bar-cafe").append(s);
@@ -630,19 +730,20 @@
      });*/
     //모든 카페 리스트 받기
     <c:forEach items="${list}" var="dto">
-    //카페 위치에 마커찍기
+    //모든카페 위치에 마커찍기
     var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
     var marker = new naver.maps.Marker({
         position: position,
         map: map,
-        title:"${dto.cf_nm}"
+        title:"${dto.cf_nm}",
+        visible: false
     });
     //정보창 생성
     //평시
     var infoWindow = new naver.maps.InfoWindow({
         content: `<div class="info-window">
                          <span style="display:none">${dto.cf_id}</span>
-                         <div>${dto.cf_nm}</div>
+                         <a href="../cafe/detail?cf_id=${dto.cf_id}">${dto.cf_nm}</a>
                       </div>`
     });
     //마커를 마커 배열에 넣기
