@@ -45,11 +45,11 @@
             color: white;
             background-color: #664400;
         }
-        button.btn-make-tour, #modalpopbtn{
+        button.btn-make-tour, #modalpopbtn, #tour-submit, #tour-cancel{
             border-radius: 5px;
             border: 1px solid #664400;
         }
-        button.btn-make-tour:hover, #modalpopbtn:hover{
+        button.btn-make-tour:hover, #modalpopbtn:hover, #tour-submit:hover, #tour-cancel:hover{
             color: white;
             background-color: #664400;
         }
@@ -151,6 +151,24 @@
             color: #fff;
             cursor: default;
             background-color: #337ab7;
+        }
+        #btnmodalday0{
+            background-color: red;
+            border: none;
+            border-radius: 5px;
+            display: none;
+        }
+        #btnmodalday1{
+            background-color: orange;
+            border: none;
+            border-radius: 5px;
+            display: none;
+        }
+        #btnmodalday2{
+            background-color: yellow;
+            border: none;
+            border-radius: 5px;
+            display: none;
         }
     </style>
 </head>

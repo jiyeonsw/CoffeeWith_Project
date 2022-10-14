@@ -88,6 +88,7 @@
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
 <div class="bk_container">
+    <div id="planmodal" class="modal"></div>
     <c:if test="${totalCount==0}">
         <div>
             <h4>등록된 투어가 없습니다</h4>
@@ -100,6 +101,7 @@
                 <div class="bk-ci-nm" id="map${no}">
                     <script>
                         var markerList = [];
+                        var polypath = [];
                         //지도 생성
                         var mapOptions = {
                             center:new naver.maps.LatLng(37.4993705, 127.0290175),
@@ -112,6 +114,7 @@
                                     map : map${no}
                                 })
                                 markerList.push(marker);
+                                polypath.push(marker.getPosition());
                         </c:forEach>
                         if(markerList.length>1) {
                             var bounds = new naver.maps.LatLngBounds(markerList[0].getPosition(), markerList[1].getPosition());
@@ -121,13 +124,21 @@
                             }
                             map${no}.fitBounds(bounds);
                         }
+                        //색상배열
+                        var rainbow = ["red","orange","yellow","green","blue","indigo","purple"];
+                        //경로 생성
+                        var polyline = new naver.maps.Polyline({
+                            map: map${no},
+                            path: polypath,
+                            strokeColor: "red",
+                            strokeOpacity: 0.6,
+                            strokeWeight: 3,
+                            zIndex: 2,
+                            endIcon: naver.maps.PointingIcon.OPEN_ARROW
+                        });
                     </script>
-<%--                    <div class="un-bk" value="${dto.pl_id}">--%>
-<%--                        <i class="fa-solid fa-trash"></i>--%>
-<%--                    </div>--%>
                 </div>
-                <div class=" bk-txt-area" >
-<%--                    onclick="location.href='${root}/cafe/detail?cf_id=${dto.cf_id}'"--%>
+                <div class="bk-txt-area" value="${dto.pl_nm}">
                     <h5 class="bk-cf-nm">${dto.pl_nm}</h5>
                 </div>
             </div>
@@ -166,6 +177,20 @@
     </ul>
 </div>
 <script>
+    $(document).on('click','.bk-txt-area',function (){
+        var pl_nm = $(this).find("bk-cf-nm").text();
+        var s = "";
+        $.ajax({
+            type: "get",
+            url: "plandetail",
+            dataType: "json",
+            data:{"pl_nm":pl_nm},
+            success: function(res) {
+                s += "<div id='modalmap'>"+res.pl_id+"</div>"
+            }
+        })
+        $("#planmodal").show();
+    })
 
     <%--//투어 삭제(-) 클릭시 db data delete--%>
     <%--$(".un-bk").click(function () {--%>

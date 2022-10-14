@@ -268,4 +268,17 @@ public class MypageController {
 
         return "/cmain/mypage/cont_pl";
     }
+    @GetMapping("/plandetail")
+    @ResponseBody
+    public PlanDto planDetail(@RequestParam String pl_nm)
+    {
+        PlanDto dto = planService.selectPlanByName(pl_nm);
+        List<PlanLocDto> loclist = planService.selectPlanLoc(dto.getPl_id());
+        for (PlanLocDto locdto:loclist){
+            locdto.setLoc_x(cafeService.selectCafe(locdto.getCf_id()).getLoc_x());
+            locdto.setLoc_y(cafeService.selectCafe(locdto.getCf_id()).getLoc_y());
+        }
+        dto.setPl_loc(loclist);
+        return dto;
+    }
 }
