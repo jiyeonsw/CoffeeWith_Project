@@ -16,7 +16,7 @@ public interface CafeServiceInter {
     public List<CafeCmtDto> selectCafeCmt(int cf_id);
     public List<CafeCmtDto> selectCMOrder(int cf_id, String cm_order, int rl);
     public void insertCafeCmt(CafeCmtDto dto);
-    public List<CafeDto> selectSearchCafe(String searchword, int startnum, int perpage);
+    public List<CafeDto> selectSearchCafe(String searchword);
     public int selectTotalCount(String searchword);
     public int selectCkCntbyCfid(int cf_id);
     public void insertCafeLike(int ur_id, int cf_id);
@@ -32,4 +32,5 @@ public interface CafeServiceInter {
     public List<CafeCtgDto> selectCtgByCfid(int cf_id);
     public int selectCMCntByCfid(int cf_id);
     public int selectCMCntByRg(int cm_id);
+    public List<CafeCtgDto> selectAllCtg();
 }
