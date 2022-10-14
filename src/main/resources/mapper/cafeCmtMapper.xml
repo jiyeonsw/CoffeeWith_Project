@@ -7,7 +7,7 @@
 		from cf_cmt cm
 				 left join ur
 						   on cm.ur_id=ur.ur_id
-		where cm.cf_id = #{cf_id}
+		where cm.cf_id = #{cf_id} and cm.rl = 0
 		order by cm.w_date desc
 	</select>
 	<select id="selectCMOrder" parameterType="map" resultType="cmdto">
