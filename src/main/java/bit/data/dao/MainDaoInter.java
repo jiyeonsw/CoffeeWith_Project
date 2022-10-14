@@ -9,4 +9,5 @@ import java.util.List;
 public interface MainDaoInter {
     public List<ComTourDto> selectTr3List();
     public List<ComFeedDto> selectFd4list();
+    public int selectTMcntbyTrid(int tr_id);
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib  prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 
@@ -325,13 +326,39 @@
         <div class="tr-cont-box">
             <c:forEach items="${trlist}" var="trdto">
                 <div class="tr-card">
-                    <span class="tr-cont-loc"><i class="bi bi-geo-alt-fill"></i>${trdto.tr_loc}</span>
-                    &nbsp;&nbsp;<span class="tr-cont-tit"> ${trdto.tr_nm}</span>
+                <c:set var="loc" value="${trdto.tr_loc}"/>
+                <c:choose>
+                    <c:when test="${fn:contains(loc, '서울' )}">
+                        <div class="tri-card" style="background-image:url('${root}/images/서울.jpg')"></c:when>
+                    <c:when test="${fn:contains(loc, '대구' )}">
+                        <div class="tri-card" style="background-image:url('${root}/images/대구.jpg')"></c:when>
+                    <c:when test="${fn:contains(loc, '부산' )}">
+                        <div class="tri-card" style="background-image:url('${root}/images/부산.jpg')"></c:when>
+                    <c:when test="${fn:contains(loc, '인천' )}">
+                        <div class="tri-card" style="background-image:url('${root}/images/인천.jpg')"></c:when>
+                    <c:when test="${fn:contains(loc, '제주' )}">
+                        <div class="tri-card" style="background-image:url('${root}/images/제주.jpg')"></c:when>
+                    <c:otherwise> <div class="tri-card" style="background-image:url('${root}/images/한국.jpg')"></c:otherwise>
+                    </c:choose>
+                            <span class="tr-cont-loc"><i class="bi bi-geo-alt-fill"></i>${trdto.tr_loc}</span>
+                                <c:choose>
+                                    <c:when test="${trdto.tw_cnt<trdto.tw_max}">
+                                        <span class="tr-cont-tw-g">모집중<br> ${trdto.tw_cnt}/${trdto.tw_max} </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="tr-cont-tw-r">모집완료 <br> ${trdto.tw_cnt}/${trdto.tw_max} </span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                    <div class="tr-cont-card">
+                    <div class="tr-cont-tit"> ${trdto.tr_nm}</div>
                     <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}"> ${trdto.ur_nk}</div>
-                    <div class="tr-cont-date">투어기간 : ${trdto.s_date}<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ ${trdto.e_date}</div>
-                    <div class="tr-cont-tw">모집인원 : ${trdto.tw_cnt}/${trdto.tw_max}</div>
-                    <div class="tr-cont-txt">${trdto.tr_txt}</div>
+                    <div class="tr-cont-date"><i class="fa-regular fa-calendar"></i> &nbsp;${trdto.s_date}~ ${trdto.e_date}</div>
+                    <div class="tr-cont-txt"><i class="fa-regular fa-message"></i>&nbsp;${trdto.tr_txt}</div>
+                    <hr class="tr-card-hr">
+                    <fmt:formatDate var="u_date" value="${trdto.u_date}" pattern="yyyy/MM/dd"/>
+                    <div class="tr-cont-bottom"><span><i class="fa-regular fa-comments"></i> &nbsp;${trdto.tm_cnt}개</span><span>${u_date}</span></div>
+                    </div>
                 </div>
             </c:forEach>
         </div>

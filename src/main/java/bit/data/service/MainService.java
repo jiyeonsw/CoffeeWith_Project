@@ -23,4 +23,8 @@ public class MainService implements MainServiceInter{
     public List<ComFeedDto> selectFd4list() {
         return mainDao.selectFd4list();
     }
+    @Override
+    public int selectTMcntbyTrid(int tr_id) {
+        return mainDao.selectTMcntbyTrid(tr_id);
+    }
 }

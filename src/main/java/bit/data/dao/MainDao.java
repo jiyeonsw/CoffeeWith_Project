@@ -23,4 +23,9 @@ public class MainDao implements MainDaoInter {
     public List<ComFeedDto> selectFd4list() {
         return session.selectList(ns+"selectFd4list");
     }
+
+    @Override
+    public int selectTMcntbyTrid(int tr_id) {
+        return session.selectOne(ns+"selectTMcntbyTrid",tr_id);
+    }
 }

@@ -21,7 +21,10 @@ public class MainController {
         ModelAndView mview=new ModelAndView();
         //tr
         List<ComTourDto> trlist=mainService.selectTr3List();
-
+        for (ComTourDto trdto:trlist){
+            int tm_cnt=mainService.selectTMcntbyTrid(trdto.getTr_id());
+            trdto.setTm_cnt(tm_cnt);
+        }
         //fd
         List<ComFeedDto> fdlist=mainService.selectFd4list();
 
