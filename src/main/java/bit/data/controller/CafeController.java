@@ -34,14 +34,16 @@ public class CafeController {
     public ModelAndView selectCafe(int cf_id){
         ModelAndView mview=new ModelAndView();
         CafeDto dto=cafeService.selectCafe(cf_id);
-        //댓글수 댓글별점평균
-        List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
+
+        //댓글별점평균
+
         //리뷰수
         int cm_cnt=cafeService.selectCafeCmt(cf_id).size();
         dto.setCm_cnt(cm_cnt);
         //리뷰별점 평균
         int star_cnt=0;
         double sum=0;
+        List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
         for (CafeCmtDto dtom : listm){
             if(dtom.getStar()==0){continue;}
             sum+=dtom.getStar();
@@ -111,10 +113,12 @@ public class CafeController {
         //이미지 dto에 정보 넣기
         //System.out.println("cm_id:"+dto.getCm_id());
         //System.out.println("cf_id:"+dto.getCf_id());
+        int cm_id=cafeService.selectMaxNum();
+        System.out.println(cm_id);
 
         CafeImgDto cidto=new CafeImgDto();
         cidto.setCf_id(dto.getCf_id());
-        cidto.setCm_id(dto.getCm_id());
+        cidto.setCm_id(cm_id);
         int idx=1;
         int checkNull=1;
         for (MultipartFile multi : uploadFiles) {
@@ -137,10 +141,11 @@ public class CafeController {
         //리뷰 숫자
         Map<String,Object> map=new HashMap<>();
         int cm_cnt=cafeService.selectCMCntByCfid(dto.getCf_id());
-        List<CafeCmtDto> listm=cafeService.selectCafeCmt(dto.getCf_id());
+        System.out.println(cm_cnt);
         map.put("cm_cnt",cm_cnt);
 
         //리뷰별점 평균
+        List<CafeCmtDto> listm=cafeService.selectCafeCmt(dto.getCf_id());
         int star_cnt=0;
         double sum=0;
         for (CafeCmtDto dtom : listm){

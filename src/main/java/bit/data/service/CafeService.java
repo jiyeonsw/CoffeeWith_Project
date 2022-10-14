@@ -54,6 +54,8 @@ public class CafeService implements CafeServiceInter {
 
     @Override
     public void insertCafeCmt(CafeCmtDto dto) {
+        int cm_id=this.selectMaxNum()+1;
+        dto.setCm_id(cm_id);
         //System.out.println(dto.getCf_id());
         int rg=dto.getRg();
         int rs=dto.getRs();

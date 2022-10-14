@@ -58,10 +58,27 @@
             display: flex;
         }
 
-        span.ctg-box{
-            border: 1px solid #f1f1f1;
-            padding: 15px 20px 10px 15px;
+        .ctg-box{
+            border: 1px solid #664400;
             border-radius: 25px;
+            width: 100px;
+            margin: 0 4px;
+            color: #404040;
+            background: #fff;
+            min-width: 72px;
+            height: 35px;
+            font-size: 1rem;
+            line-height: 35px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+        }
+        .ctg-box:hover{
+            background: #664400;
+            color: #fff;
+            box-shadow: 2px 2px 2px 2px lightgray;
         }
         div.cf-txt{
             height:120px;
@@ -80,38 +97,39 @@
             height: auto;
             min-height: 120px;
         }
-        div.cf-bottom{
-            display: flex;
-            margin-left: auto;
-            margin-right: auto;
-            flex-wrap: wrap;
-        }
+
         div.cm-box{
             width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
+
         div.cf-middle{
-            display: flex;
+            display: grid;
+            grid-template-columns:  300px 300px 300px ;
             text-align: center;
             padding-top: 5px;
+            margin-left: 2px;
+
 
         }
         div.cf-middle div.btn-cf-mid{
-            font-size: 30px;
-            width: 300px;
+            font-size: 1.5rem;
             text-align: center;
             cursor: pointer;
-            height: 70px;
-            line-height: 70px;
+            height: 60px;
+            padding-bottom: 10px;
+            padding-top: 15px;
+            border: 2px solid white;
+            border-bottom-color: lightgray ;
         }
-        div.cf-middle div.btn-cf-mid:hover{
-            background-color: #664400;
-            color:#fff;
-        }
-        div.cf-middle div.btn-cf-mid:hover span.cm-cnt{
-            background-color: #664400;
-            color:#fff;
+
+        div.cf-bottom{
+            padding-top: 30px;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap;
         }
         div.carousel-inner{
             border-radius: 10px;
@@ -270,8 +288,17 @@
             border-radius: 15px;
         }
         div.cf-info{
-            width: 550px;
+            padding-top: 20px;
+            width: 500px;
             overflow: clip;
+        }
+        span.cf-info-key{
+            color: darkgray;
+            display: inline-block;
+            width: 65px;
+        }
+        span.cf-info-key i{
+            color: darkgray;
         }
         div.cm-list-box{
             display: flex;
@@ -279,14 +306,21 @@
         div.cm-cm-list{
             margin-top: 10px;
         }
-
+        #map{
+            margin-left: 20px;
+        }
+        div.cmt-show-hide{
+            display: none;
+        }
     </style>
     <script>
         $(function () {
             cf_id=${dto.cf_id};
             login_ok='${sessionScope.login_ok}';
             ur_id="${sessionScope.login_id }";
+            $("#btn-cf-info").css("border-bottom-color","Sienna");
             cfMap(cf_id);
+
         });//fun
 
     </script>
@@ -337,14 +371,14 @@
             <div><h1>${dto.cf_nm}</h1></div>
             <div style="margin-bottom: 15px;">
                 <c:forEach items="${listctg}" var="ctg">
-                    <span class="ctg-box">#${ctg.cg_nm}</span>&nbsp;
+                    <button class="ctg-box">#${ctg.cg_nm}</button>&nbsp;
                 </c:forEach>
             </div>
             <div class="cf-txt">${dto.cf_txt}</div>
             <br>
             <div class="loc-cm-lk">
-            <div><span >위치<i class="bi bi-geo-alt"></i></span>&nbsp;<span>${dto.loc_addr} </span></div>
-            <div><span>리뷰<i class="bi bi-chat-dots"></i></span>&nbsp;<span><span class="cm-cnt">${dto.cm_cnt}</span>
+            <div><span class="cf-info-key">위치<i class="bi bi-geo-alt"></i></span>&nbsp;<span>${dto.loc_addr} </span></div>
+            <div><span class="cf-info-key">리뷰<i class="bi bi-chat-dots"></i></span>&nbsp;<span><span class="cm-cnt">${dto.cm_cnt}</span>
                    <c:if test="${dto.cm_star==-1}">
                        (<span class="cm-star" style="color: gray">★</span><span class="cm-star-avg">-</span>)
                    </c:if>
@@ -361,23 +395,22 @@
         </div>
     </div> <!--cf_top-->
     <br>
-    <div class="cf-middle">
-        <div class="btn-cf-mid" id="btn-cf-info">카페정보</div><div id="btn-cm-link" class="btn-cf-mid" >리뷰(<span class="cm-cnt">${dto.cm_cnt}</span>)</div><div id="btn-ci-link" class="btn-cf-mid" >사진</div>
-    </div>
-    <hr style="margin-top: 0;">
-    <br>
-    <div class="cf-bottom">
-        <div id="map" y="${dto.loc_y}" x="${dto.loc_x}" style="width:300px;height:300px;"></div>
-        <div style="margin-left: 30px;" class="cf-info">
-            <div><span>영업시간)</span> <span>${dto.open_time}</span></div>
-            <div><span>휴무일)</span> <span>${dto.off_day}</span></div>
-            <div><span>전화번호)</span> <span>${dto.cf_tel}</span></div>
-            <div><span>주소)</span> <span>${dto.loc_addr}</span></div>
-            <div><span>대표메뉴)</span> <span>${dto.menu}</span></div>
+        <div class="cf-middle">
+            <div class="btn-cf-mid" id="btn-cf-info">카페정보</div><div id="btn-cm-link" class="btn-cf-mid" >리뷰(<span class="cm-cnt">${dto.cm_cnt}</span>)</div><div id="btn-ci-link" class="btn-cf-mid" >사진</div>
         </div>
-    </div>
+        <div class="cf-bottom">
+            <div id="map" y="${dto.loc_y}" x="${dto.loc_x}" style="width:320px;height:320px;"></div>
+            <div style="margin-left: 30px;" class="cf-info">
+                <div><span class="cf-info-key">영업시간</span> <span class="cf-info-val">${dto.open_time}</span></div>
+                <div><span class="cf-info-key">휴무일</span> <span class="cf-info-val">${dto.off_day}</span></div>
+                <div><span class="cf-info-key">전화번호</span> <span class="cf-info-val">${dto.cf_tel}</span></div>
+                <div><span class="cf-info-key">주소</span> <span class="cf-info-val">${dto.loc_addr}</span></div>
+                <div><span class="cf-info-key">대표메뉴</span> <span class="cf-info-val">${dto.menu}</span></div>
+            </div>
+        </div>
     <script>
         ////////////////////////////////////////////////////////////////// 카페메인정보 관련 함수 //////////////////////////////////////////////////////////////////
+
         //하트클릭
         $("div#btn-ck").click(function (){
 
@@ -432,6 +465,10 @@
         ////////////////////////////////////////////////////////////////// 카페상세정보 관련 함수 //////////////////////////////////////////////////////////////////
         //카페정보 클릭
         $("div#btn-cf-info").click(function (){
+            $("div#btn-cf-info").css("border-bottom-color","Sienna");
+            $("div#btn-cm-link").css("border-bottom-color","lightgray");
+            $("div#btn-ci-link").css("border-bottom-color","lightgray");
+
             var s="";
             $.ajax({
                 type: "get",
@@ -442,11 +479,11 @@
                     //console.log(res.loc_y);
                     s+='<div id="map" y="'+res.loc_y+'" x="'+res.loc_x+'" style="width:300px;height:300px;"></div>';
                     s+='<div style="margin-left: 30px;">';
-                    s+='<div><span>영업시간</span> <span>'+ res.open_time+'</span></div>';
-                    s+= '<div><span>휴무일</span> <span>'+res.off_day+'</span></div>';
-                    s+='<div><span>전화번호</span> <span>'+res.cf_tel+'</span></div>';
-                    s+='<div><span>주소</span> <span>'+res.loc_addr+'</span></div>';
-                    s+='<div><span>대표메뉴</span> <span>'+res.menu+'</span></div>';
+                    s+='<div><span class="cf-info-key">영업시간</span> <span>'+ res.open_time+'</span></div>';
+                    s+= '<div><span class="cf-info-key">휴무일</span> <span>'+res.off_day+'</span></div>';
+                    s+='<div><span class="cf-info-key">전화번호</span> <span>'+res.cf_tel+'</span></div>';
+                    s+='<div><span class="cf-info-key">주소</span> <span>'+res.loc_addr+'</span></div>';
+                    s+='<div><span class="cf-info-key">대표메뉴</span> <span>'+res.menu+'</span></div>';
                     s+='</div>';
                     $("div.cf-bottom").html(s);
                     cfMap(cf_id);
@@ -459,6 +496,9 @@
         //리뷰클릭
         $("div#btn-cm-link").click(function (){
             //console.log(cf_id);
+            $("div#btn-cf-info").css("border-bottom-color","lightgray");
+            $("div#btn-cm-link").css("border-bottom-color","Sienna");
+            $("div#btn-ci-link").css("border-bottom-color","lightgray");
             cmList();
         });//리뷰
 
@@ -621,17 +661,17 @@
                 ccf+='</form></div>';
             }
             $(this).next().find("div.cm-cm-form").html(ccf);
-            $(this).siblings("a.view-cm-cm").next().hide();
-            $(this).siblings("a.view-cm-cm").find("svg").addClass("fa-caret-down");
-            $(this).siblings("a.view-cm-cm").find("svg").removeClass("fa-caret-up");
-            $(this).siblings("a").next().find("form").removeClass("ccform");
+            $(this).parent().siblings("div.cm-box-each").find("div.cmt-show-hide").hide();
+            $(this).parent().siblings("div.cm-box-each").find("i.view-cmt").addClass("bi-caret-down-fill");
+            $(this).parent().siblings("div.cm-box-each").find("i.view-cmt").removeClass("bi-caret-up-fill");
+            $(this).parent().siblings("div.cm-box-each").find("form").removeClass("ccform");
             $(this).next().find("form").addClass("ccform");
-            $('.ccform')[0].reset();
+            if($("div").hasClass("ccform-div")){
+                $('.ccform')[0].reset();}
             ccList(${dto.cf_id},rg);
             $(this).next().slideToggle(500);
-            $(this).find("svg").toggleClass("fa-caret-down");
-            $(this).find("svg").toggleClass("fa-caret-up");
-
+            $(this).find("i.view-cmt").toggleClass("bi-caret-down-fill");
+            $(this).find("i.view-cmt").toggleClass("bi-caret-up-fill");
         });//리뷰댓글보기
 
         //리뷰댓글등록
@@ -660,6 +700,7 @@
                     ccList(cf_id,rg);
                     var cm_cnt = res.cm_cnt;
                     $("span.cm-cnt").text(cm_cnt);
+
                 }//succ
             });//ajax
         });//리뷰댓글등록
@@ -711,6 +752,9 @@
         ////////////////////////////////////////////////////////////////// 카페사진모음 관련 함수 //////////////////////////////////////////////////////////////////
         //사진클릭
         $("div#btn-ci-link").click(function (){
+            $("div#btn-cf-info").css("border-bottom-color","lightgray");
+            $("div#btn-cm-link").css("border-bottom-color","lightgray");
+            $("div#btn-ci-link").css("border-bottom-color","Sienna");
             //console.log(cf_id);
             $.ajax({
                 type: "get",
@@ -873,8 +917,8 @@
                                 cl+='<span class="carousel-control-next-icon"></span></button></div>';
                             }
                             cl+='<pre>'+elt.cm_txt+'</pre>';
-                            cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'>댓글보기 ('+(elt.cm_cnt-1)+') <i class="fa-solid fa-caret-down"></i></a>';
-                            cl+='<div style="display: none; " ><div class="cm-cm-form" ></div>';
+                            cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'><span class="view-cmt-txt"> 댓글보기 ('+(elt.cm_cnt-1)+')</span> <i class="bi bi-caret-down-fill view-cmt"></i> </a>';
+                            cl+='<div class="cmt-show-hide"><div class="cm-cm-form" ></div>';
                             cl+='<div class="cm-list-box"><i class="bi bi-arrow-return-right" style="margin-top: 10px;"></i>&nbsp;&nbsp;';
                             cl+='<div class="cm-cm-list">댓글이 없어요&nbsp;<i class="fa-regular fa-face-sad-tear"></i></div></div></div></div>';
                         }
@@ -927,10 +971,19 @@
             };
             var map =new naver.maps.Map('map', mapOptions);
             //console.log(map);
-            var marker = new naver.maps.Marker({
+            var markerOptions = {
                 position: position,
-                map: map
-            });
+                map: map,
+                icon: {
+                    content: '<img src="${root}/res/images/pin.png" '+
+                        'style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; ' +
+                        '-webkit-user-select: none; position: absolute; width: 30px; height: 30px; left: 0px; top: 0px;">',
+                    size: new naver.maps.Size(22, 35),
+                    anchor: new naver.maps.Point(11, 35),
+                },
+                animation: naver.maps.Animation.BOUNCE
+            };
+            var marker = new naver.maps.Marker(markerOptions);
         }//cfMap
 
         //돌아가기
