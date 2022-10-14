@@ -6,6 +6,8 @@ import bit.data.dto.ComTourPartDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ComTourPartService implements ComTourPartServiceInter{
 
@@ -14,7 +16,7 @@ public class ComTourPartService implements ComTourPartServiceInter{
 
     @Override
     public void insertPart(ComTourPartDto dto) {
-        System.out.println(dto);
+        //System.out.println("Service : "+dto);
         partDaoInter.insertPart(dto);
     }
 
@@ -36,5 +38,10 @@ public class ComTourPartService implements ComTourPartServiceInter{
     @Override
     public ComTourPartDto getData(int num) {
         return null;
+    }
+
+    @Override
+    public List<ComTourPartDto> getAllPartList(int tr_id) {
+        return partDaoInter.getAllPartList(tr_id);
     }
 }
