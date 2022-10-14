@@ -141,7 +141,7 @@
         })
     })
 
-    //세션제거
+    //세션제거(루트)
     $("#del-session-btn").click(function () {
         var root = '${root}';
         $.ajax({
@@ -149,7 +149,7 @@
             url: root + "/user/del_session",
             dataType: "text",
             success: function (res) {
-                location.reload();
+                location.href = root;
             }
         })
     })

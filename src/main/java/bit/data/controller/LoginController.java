@@ -48,9 +48,9 @@ public class LoginController {
             session.setAttribute("login_id", dto.getUr_id());
             session.setAttribute("login_nick", dto.getUr_nk());
             session.setAttribute("login_img", dto.getUr_img());
-            // 로그인시 메인 화면으로 보내기
-            //return "redirect:../";
-            return "/bit/layout/main";
+            // 로그인시 메인 공통 화면으로 보내기
+            return "redirect:../";
+            // return "/bit/layout/main";
         } else {
             // 아이디 또는 패스워드가 일치하지 않는 경우 (no)
             session.setAttribute("login_ok","no");
