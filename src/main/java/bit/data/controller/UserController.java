@@ -34,11 +34,11 @@ public class UserController {
         return "/bit/user/user_form";
     }
 
-    //로그인 폼 매핑
-    @GetMapping("/login_main")
-    public String loginForm() {
-        return "/bit/login/login_form";
-    }
+
+
+    // 로그아웃 - LoginCotroller 연결
+    @GetMapping("/logout")
+    public String logout() { return "/bit/logout";}
 
     //email_id 중복 체크
     @GetMapping("/id_check")

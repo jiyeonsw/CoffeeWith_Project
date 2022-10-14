@@ -49,8 +49,9 @@ public class ComTourService implements ComTourServiceInter{
 
 
     @Override
-    public void updateComTour(ComTourDto dto) {
-
+    public void updateComTour(ComTourDto dto)
+    {
+        daoInter.updateComTour(dto);
     }
 
     @Override

@@ -29,7 +29,7 @@
         .logotitle {
             font-family: 'GangwonEdu_OTFBoldA';
             font-style: oblique;
-            font-weight: bolder;
+            font-weight: bold;
             font-size: 30px;
         }
 
@@ -66,7 +66,7 @@
 <!-- 로고 버튼 누르면 홈으로 -->
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <a href="${root}/" class="logotitle">
-    <img src="${root}/images/logo1.png" class="rounded-circle" width="40" height="40">
+    <img src="${root}/images/logosimple.png" class="rounded-circle" width="40" height="40">
     <b> Coffee With </b></a>
 
 <!-- 메뉴 구성 -->
@@ -74,91 +74,59 @@
 <div class="menu">
     <ul>
         <!-- 1번째 메뉴 -->
-        <li class="main">
-            <a>홈페이지</a>
-        </li>
-
+        <li class="main"><a>홈페이지</a></li>
         <!-- 2번째 메뉴 -->
-        <li class="main">
-            <a href="${root}/map/mainmap">카페지도</a>
-        </li>
-
+        <li class="main"><a href="${root}/map/mainmap">카페지도</a></li>
         <!-- 3번째 메뉴 -->
-        <li class="main">
-            <a href="${root}/comtour/list">투어모집</a>
-        </li>
-
+        <li class="main"><a href="${root}/comtour/list">투어모집</a></li>
         <!--4번째 메뉴 -->
-        <li class="main">
-            <a href="${root}/comfeed/main">커뮤니티</a>
-        </li>
+        <li class="main"><a href="${root}/comfeed/main">커뮤니티</a></li>
     </ul>
 </div>
 
-<!-- 로그인  -->
 <span id="loginstate" style="text-align: right;">
+
+    <!-- 비로그인 상태일 때 -->
     <c:if test="${sessionScope.login_ok==null}">
+        <!-- 로그인 폼 이동  -->
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
-                onclick="location.href='${root}/login_main'">Login</button>
+                onclick="location.href='${root}/user/login_main'">Login</button>
+        <!-- 회원가입 폼 이동 -->
         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
                 onclick="location.href='${root}/user_form'">Sign Up</button>
-        <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">
-                세션주기</button>
+        <!-- [임시] 세션주기 -->
+        <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">세션주기</button>
     </c:if>
 
-<!-- 로그아웃 -->
-    <c:if test="${sessionScope.login_ok!=null}">
-        <b>${sessionScope.login_nick}님</b>
+    <!-- 로그인 실패한 상태일 때 -->
+     <c:if test="${sessionScope.login_ok=='no'}">
+         <!-- 로그인 폼 이동  -->
+         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
+                 onclick="location.href='${root}/user/login_main'">Login</button>
+         <!-- 회원가입 폼 이동 -->
+         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
+                 onclick="location.href='${root}/user_form'">Sign Up</button>
+         <!-- [임시] 세션주기 -->
+         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">세션주기</button>
+     </c:if>
+
+    <!-- 로그인 성공한 상태일 때 -->
+    <c:if test="${sessionScope.login_ok=='yes'}">
+        <!-- 회원 프로필 사진 -->
+        <img src="${root}/res/prfimg/${sessionScope.login_img}" class="rounded-circle" width="40" height="40">
+        <!-- 회원 닉네임 -->
+        <b>${sessionScope.login_nick} 님 </b>
+        <!-- 마이페이지 폼 이동 -->
         <button type="button" class="btn btn-secondary btn-sm" id="mypage-btn"
                 onclick="location.href='${root}/mypage/bookmarks'">My Page</button>
-        <button type="button" class="btn btn-secondary btn-sm" id="btnlogout">Logout</button>
-        <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">
-                세션제거</button>
+        <!-- 로그아웃 -->
+        <button type="button" class="btn btn-dark btn-sm" id="btnlogout"
+                onclick="location.href='${root}/user/logout'">Logout</button>
+        <!-- [임시] 세션제거 -->
+        <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">세션제거</button>
     </c:if>
-    </span>
-
-
-<!-- 스크립트 이벤트 -->
-<script type="text/javascript">
-
-    //로그인 버튼
-    $("#btnloginok").click(function () {
-        // 아이디와 비번 읽기
-        var id = $("#loginid").val();
-        var pass = $("#loginpass").val();
-        var root = '${root}';
-        console.log("root" + root);
-
-        $.ajax({
-            type: "get",
-            url: root + "/member/login",
-            dataType: "json",
-            data: {"id": id, "pass": pass},
-            success: function (res) {
-                if (res.result == 'fail') {
-                    alert("아이디나 비번이 맞지 않습니다");
-                } else {
-                    location.reload();
-                }
-            }
-        });
-    });
-
-    // 로그아웃
-    $("#btnlogout").click(function () {
-        var root = '${root}';
-
-        $.ajax({
-            type: "get",
-            url: root + "user/logout",
-            dataType: "text",
-
-            success: function (res) {
-                location.reload();
-            }
-        })
-    })
-
+</span>
+<script>
     //세션주기
     $("#call-session-btn").click(function () {
         var root = '${root}';
@@ -185,7 +153,6 @@
             }
         })
     })
-
 </script>
 </body>
 </html>

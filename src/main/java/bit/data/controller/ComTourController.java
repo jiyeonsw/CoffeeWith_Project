@@ -50,14 +50,21 @@ public class ComTourController {
         return "redirect:list";
     }
 
-    @GetMapping("/comtour/updateform")
+    @GetMapping("/comtour/updateform") // update form을 호춯
     public String updateform(int num, Model model)
     {
         //System.out.println(num);
-      ComTourDto dto = comTourService.getUserData(num);
-      //System.out.println("update Dto 정보:"+dto); //DB에는 없으나 DTO에 변수가 있으면 해당 값들은 null로 가져와 짐
+        ComTourDto dto = comTourService.getUserData(num);
+       // System.out.println("update Dto 정보:"+dto); //DB에는 없으나 DTO에 변수가 있으면 해당 값들은 null로 가져와 짐
         model.addAttribute("dto",dto);
         return "/bit/comtour/comtour_updateform";
+    }
+    @PostMapping("/comtour/update") //DB를 통한 실지 업데이트
+    public String updatedata(ComTourDto dto)
+    {
+        System.out.println("수정된 정보확인: "+dto);
+        comTourService.updateComTour(dto);
+        return "redirect:list";
     }
 
     @GetMapping("/comtour/list") //검색창 영역
