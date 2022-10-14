@@ -17,7 +17,7 @@
     <select id="selectFeed" parameterType="int" resultType="fddto">
         select *
         from fd
-        where fd_id=#{fd_id}
+        where fd_id=#{fd_id};
     </select>
     <select id="searchFeedByTag" parameterType="Map" resultType="fddto">
         select *
@@ -27,6 +27,11 @@
             like concat ('%',#{searchword},'%')
         </if>
         order by w_date desc;
+    </select>
+    <select id="searchBestFeed" resultType="fddto">
+        select top 10 *
+        from fd
+        order by likes desc;
     </select>
     <insert id="insertFeed" parameterType="fddto">
         insert into fd
@@ -58,16 +63,21 @@
     </insert>
     <select id="insertFeedLikes" parameterType="Map">
         insert into fd_lk
-        values (#{fd_id},#{ur_id})
+        values (#{fd_id},#{lg_id})
     </select>
     <delete id="deleteFeedLikes" parameterType="Map">
         delete from fd_lk
-        where fd_id=#{fd_id} and ur_id=#{ur_id}
+        where fd_id=#{fd_id} and ur_id=#{lg_id}
     </delete>
+    <update id="updateFeedLikes" parameterType="int">
+        update fd
+        set likes=(select count(*) from fd_lk where fd_id=#{fd_id})
+        where fd_id=#{fd_id}
+    </update>
     <select id="selectTotalFeedLikes" parameterType="int" resultType="int">
         SELECT count(*) FROM fd_lk WHERE fd_id=#{fd_id}
     </select>
     <select id="selectFeedLikesByUrid" parameterType="Map" resultType="int">
-        SELECT count(*) FROM fd_lk WHERE ur_id=#{ur_id} and fd_id=#{fd_id}
+        SELECT count(*) FROM fd_lk WHERE ur_id=#{lg_id} and fd_id=#{fd_id}
     </select>
 </mapper>
