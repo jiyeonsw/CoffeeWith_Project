@@ -240,15 +240,10 @@ public class MapController {
             int ck_cnt=cafeService.selectCkCntbyCfid(cf_id);
             dto.setCk_cnt(ck_cnt);
         }
-        System.out.println(scafelist);
-        System.out.println(startPage);
-        System.out.println(endPage);
-        System.out.println(currentPage);
-        System.out.println(totalPage);
-        System.out.println(no);
         //return 담을 공간
         Map<String,Object> map=new HashMap<>();
-        map.put("list",scafelist);
+        map.put("list",cafelist);
+        map.put("slist",scafelist);
         map.put("perPage",perPage);
         map.put("perBlock",perBlock);
         map.put("totalCount",totalCount);

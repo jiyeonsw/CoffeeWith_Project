@@ -45,10 +45,18 @@
             color: white;
             background-color: #664400;
         }
+        button.btn-make-tour, #modalpopbtn{
+            border-radius: 5px;
+            border: 1px solid #664400;
+        }
+        button.btn-make-tour:hover, #modalpopbtn:hover{
+            color: white;
+            background-color: #664400;
+        }
         div.search-list{
             height: 470px;
         }
-        div.search-result{
+        .results{
             padding-top: 10px;
             padding-bottom: 10px;
             border: 1px solid #dcdcdc;
@@ -101,23 +109,21 @@
         #tourdate{
             width:300px;
         }
-        .modalpopbtnc{
-            align:center;
-        }
         div.tour-detail{
             overflow-y: scroll;
             height: 330px;
+            text-align: center;
             -ms-overflow-style: none;
         }
         div.tour-detail::-webkit-scrollbar{
             display:none;
         }
         div.detail-bar-date{
-            background-color: aqua;
+            background-color: #D8CCA3;
             opacity: 80%;
         }
         div.active-bar{
-            border: 1px solid black;
+            border: 1px solid #B09B71;
         }
         .tour-icon-set{
             margin-left: 30px;
@@ -159,7 +165,7 @@
         </div>
         <div class="category">
             <c:forEach var="dto" items="${ctglist}">
-                <button type="button" class="categorybtn">#${dto.cg_nm}</button>
+                <button type="button" class="categorybtn" value="${dto.cg_id}">#${dto.cg_nm}</button>
             </c:forEach>
         </div>
         <div class="search-list"></div>
@@ -209,7 +215,7 @@
         <div class="tour-detail">
             투어일정을 입력해주세요
         </div>
-        <div class="modalpopbtnc"><button type="button" id="modalpopbtn">경로 확인</button></div>
+        <button type="button" id="modalpopbtn">경로 확인</button>
     </div>
 </div>
 <script>
@@ -233,7 +239,7 @@
         $("button.search-btn").trigger('click');
     })
     //모달 띄우기
-    $(document).on('click','#modalpopopbtn', function (){
+    $(document).on('click','#modalpopbtn', function (){
         //경로변수
         var polyTotal = [];
         polymarkerList = [];
@@ -427,6 +433,11 @@
     });
     //검색
     $("button.search-btn").click(function (){
+        //마커들 초기화
+        for (var mkr of markerList){
+            mkr.setAnimation(null);
+            mkr.setVisible(false);
+        }
         //검색어
         var searchword=$("input.cafe-search-bar").val();
         //검색결과 string
@@ -441,10 +452,17 @@
             data:{"searchword":searchword,"currentPage":currentPage},
             success: function(res) {
                 //검색 결과가 있을때
-                if (res.list.length != 0) {
-                    $.each(res.list, function (i, ele) {
-                        s += "<div class='search-result'>";
-                        s += "<div class='result-name'><a href='../cafe/detail?cf_id=" + ele.cf_id + "'>" + ele.cf_nm +"</a>";
+                if (res.slist.length != 0) {
+                    $.each(res.slist, function (i, ele) {
+                        s += "<div class='search-result results'>";
+                        s += "<div class='result-name'><a href='../cafe/detail?cf_id=" + ele.cf_id + "'>";
+                        //이름 너무 길면 짜르기
+                        var ncf_nm = ele.cf_nm;
+                        if(ncf_nm.length>20)
+                        {
+                            ncf_nm = ele.cf_nm.substring(0,19)+"...";
+                        }
+                        s += ncf_nm +"</a>";
                         s += "<span class='tour-icon-set' style='";
                         if(isMakingTour==true){
                             s += "display: '';'>";
@@ -466,6 +484,7 @@
                             });
                         }
                         s += "</div>";
+                        markerList[ele.cf_id-1].setAnimation(naver.maps.Animation.BOUNCE);
                     });
                     //페이징 시작
                     //이전버튼
@@ -484,7 +503,7 @@
                     if (res.endPage < res.totalPage) {
                         p += "<button type='button' id='btnnext' class=‘page-link’>다음</button>";
                     }
-                    moveMap(res.list[0].cf_id);
+                    moveMap(res.slist[0].cf_id);
                 }else{
                     //검색어 검색결과가 없을때
                     s += searchword + "에 대한 검색 결과가 없습니다";
@@ -492,16 +511,32 @@
                 }
                 $("div.paging").html(p);
                 $("div.search-list").html(s);
+                //검색 결과를 제외한 마커 숨기기
+                if (res.list.length != 0){
+                    $.each(res.list, function (j, aele) {
+                        for(var i in markerList){
+                            if (aele.cf_id - 1 == i){
+                                markerList[i].setVisible(true);
+                            }
+                        }
+                    });
+                }
             }//success
         });//$ajax"searchword"
     });//검색버튼
+    //카테고리 검색
+    $(document).on('click','.categorybtn',function(){
+       $("input.cafe-search-bar").val($(this).text().substring(1));
+       $("button.search-btn").trigger('click');
+    });
+
     //검색결과 hover시 그림자 추가
-    $(document).on('mouseover','.search-result',function (){
+    $(document).on('mouseover','.results',function (){
         $(this).css({
             'background-color': '#dcdcdc'
         });
     });
-    $(document).on('mouseout','.search-result',function (){
+    $(document).on('mouseout','.results',function (){
         $(this).css({
             'background-color': 'white'
         });
@@ -582,9 +617,9 @@
         $("div.tour-detail").html(d);
     });
     //날짜 bar 클릭시 활성화
-    $(document).on('click','.detail-bar-date',function(){
-        $(this).parent().addClass('active-bar');
-        $(this).parent().siblings().removeClass('active-bar');
+    $(document).on('click','.detail-div',function(){
+        $(this).addClass('active-bar');
+        $(this).siblings().removeClass('active-bar');
     });
     //+ 아이콘 클릭시 투어 일정 추가
     $(document).on('click','.add-tour-icon',function(){
@@ -596,8 +631,8 @@
             dataType: "json",
             data: {"cf_id":id},
             success: function(res){
-                s += "<div class='cafe-in-tour' value='" + id + "'>" + res.cf_nm;
-                s += "<input type='time' class='visit_time' required='required'>"
+                s += "<div class='cafe-in-tour results' value='" + id + "'>" + res.cf_nm;
+                s += "<br>방문 시간: &nbsp;<input type='time' class='visit_time' required='required'>"
                 s += "<i class='fa-solid fa-xmark rm-tour-icon'></i>";
                 s += "</div>";
                 $("div.active-bar").children(".detail-bar-cafe").append(s);
@@ -677,12 +712,13 @@
      });*/
     //모든 카페 리스트 받기
     <c:forEach items="${list}" var="dto">
-    //카페 위치에 마커찍기
+    //모든카페 위치에 마커찍기
     var position = new naver.maps.LatLng(${dto.loc_y}, ${dto.loc_x});
     var marker = new naver.maps.Marker({
         position: position,
         map: map,
-        title:"${dto.cf_nm}"
+        title:"${dto.cf_nm}",
+        visible: false
     });
     //정보창 생성
     //평시
