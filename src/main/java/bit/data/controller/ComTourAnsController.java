@@ -30,7 +30,7 @@ public class ComTourAnsController {
         return "/bit/comtour/comtour_list";
     }
 
-    @GetMapping("/answer/list") //디테일로 리텐되는 답글 표시 창을 말함
+    @GetMapping("/answer/list") //디테일로 리턴되는 답글 표시 창을 말함
     @ResponseBody
     public List<ComTourAnsDto> list(int tr_id)
     {

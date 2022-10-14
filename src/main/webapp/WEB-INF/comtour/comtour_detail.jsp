@@ -37,6 +37,7 @@
     <script> /*답글관련 스크립트*/
         var tr_id=${dto.tr_id}; /*tr_id는 answer 테이블에 등록된 것을 말하며 여러개의 답글을 말함 이때 tr_id는 list에서 넘어온 것*/
 
+
         $(function () {
 
             list(); // 처음 시작 시 답글 출력
@@ -89,7 +90,7 @@
                 data:{"tr_id":tr_id},
                 dataType: "json",
                 success:function(res){
-                    //alert(res);
+
                     s+="<table style='border-collapse: collapse'> 댓글목록";
                     $.each(res,function (i,elt){
                     s+="<tr><td style='width: 100px;'>";
@@ -117,6 +118,8 @@
 <h1>세션: 로그인 아이디: ${sessionScope.login_id}</h1>
 <h1>ur_id(글쓴이): ${dto.ur_id}</h1>
 <h1>tr_id(글번호): ${dto.tr_id}</h1>
+<h5>${dto}</h5>
+
 
 <!--dto 객체에 tr 테이블(inner join으로 ur 정보 포함)의 정보가 담겨 있어서 dto.xx 형태로 꺼내어 쓰면 됨-->
 <div class="wholetable">
@@ -173,22 +176,34 @@
                     <button type="button" class="btn btn-outline" onclick="location.href='updateform?num=${dto.tr_id}'">수정</button>
                 </c:if>
                 <c:if test="${sessionScope.login_ok!=null&&sessionScope.login_id==dto.ur_id}">
-                  <%--  <button type="button" class="btn btn-outline" onclick="location.href='delete?num=${dto.tr_id}'">삭제</button>--%>
                     <button type="button" class="btn btn-outline" id="delform">삭제</button>
                 </c:if>
 
             </td>
-            <td colspan="3" style="width: 300px; text-align: center">
-                <button type="submit" class="btn bnt-outline" id="partBtn">참여하기</button>
-                <b style="font-size: 25px">??/${dto.tw_max}</b>
+            <td style="width: 300px; text-align: left; vertical-align: middle">
+                <span class="plist" class="form-control">성공</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="trcrw" colspan="3" style="text-align: center;">
+                <c:if test="${dto.tr_cmp==1}">
+                    <span>모집완료</span>
+                </c:if>
+                <c:if test="${dto.tr_cmp==0}">
+                    <button type="submit" class="btn bnt-outline" id="partBtn">참여하기</button>
+                </c:if>
+
+                <span style="font-size: 30px;">/${dto.tw_max}</span>
             </td>
         </tr>
     </table>
 </div>
 
+
 <script> /*투어 모집글 관련 스크립트*/
     /*새글쓰기 버튼 클릭시 호출함수*/
     $("#nform").click(function (){
+
         location.href='form2';
     });
 
@@ -200,23 +215,87 @@
             alert("삭제되었습니다!")
         }
     });
+</script>
 
-    /*참여버튼 클릭시 이벤트*/
-$("#partBtn").click(function () {
-    var tr_id = ${dto.tr_id};
-    var ur_id = ${sessionScope.login_id};
+<script>
+/*참여버튼 클릭시 이벤트*/
+    plist();
 
-    $.ajax({
-        type: "post",
-        url: "../part/insert",
-        dataType: "text",
-        data: {"tr_id":tr_id, "ur_id":ur_id},
-        success: function (res) {
-            //countload(); 입력 숫자 변경함수 호출
+    var totalcnt=0;
+    $("#partBtn").click(function () {
+            var tr_id = ${dto.tr_id};
+            var ur_id = ${sessionScope.login_id};
+                    $.ajax({
+                        type: "post",
+                        url: "../part/insert",
+                        dataType: "text",
+                        data: {"tr_id":tr_id,"ur_id":ur_id},
+                        success: function (res) {
 
-        },
-    });//ajax
-});// 참여버튼 이벤트 종료
+                            alert("참가되었습니다!");
+                            //location.href="list";
+                            totalcnt=+1;
+                            plist();
+                        },
+                    });//ajax
+
+                        $.ajax({
+                            type: "post",
+                            url: "crwcount",
+                            dataType: "json",
+                            data: {"tr_id":tr_id,"ur_id":ur_id},
+                            success: function (res) {
+                                console.log(res.count);
+
+                            },
+                        });//ajax
+
+                                if(totalcnt==${dto.tw_max}){
+                                    $(".trcrw").empty();
+                                    $(".trcrw").text("모집완료")
+                                    ${dto.tr_cmp=1}
+
+                                    var tr_cmp = ${dto.tr_cmp};
+                                    var tr_id = ${dto.tr_id};
+                                    alert(tr_cmp);
+                                    $.ajax({
+                                        type:"post",
+                                        url: "./updatecrw",
+                                        data:{"tr_cmp":tr_cmp,"tr_id":tr_id},
+                                        dataType: "text",
+                                        success:function(res) {
+                                            location.reload();
+                                        },
+                                    }); //ajax
+                                }; //if
+    }); // 참여버튼 종료
+
+
+
+    /*List 일반함수*/
+    function plist(){
+        var login_ok = '${sessionScope.login_ok}';
+        var login_id = '${sessionScope.login_id}';
+        //alert(login_ok); yes
+
+        var s="";
+        $.ajax({
+            type:"get",
+            url: "../part/list",
+            data:{"tr_id":tr_id},
+            dataType: "json",
+            success:function(res){
+                s+="참여자 닉네임 : ";
+                $.each(res,function (i,elt){
+                    s+=elt.ur_nk+"&nbsp;&nbsp;";
+                    totalcnt+=1;
+
+                });//each 함수
+                $("span.plist").html(s);
+            }//success
+        })//a.jax
+
+    }//plist함수 종료
 
 </script>
 

@@ -5,7 +5,7 @@
    <!-- 게시글 입력-->
     <insert id="insertTour" parameterType="ctdto">
         INSERT INTO tr values (null,#{ur_id},#{tr_nm},#{tr_txt},#{tr_pw},#{tr_loc},#{tw_max},
-                               #{s_date},#{e_date},now(),now())
+                               #{s_date},#{e_date},now(),now(),#{tr_cmp})
     </insert>
 
     <!--게시글 전체 갯수-->
@@ -40,5 +40,14 @@
     <update id="updateList" parameterType="ctdto">
         update tr set tr_nm=#{tr_nm},tr_txt=#{tr_txt},tr_loc=#{tr_loc},s_date=#{s_date},e_date=#{e_date} where tr_id=#{tr_id}
     </update>
+
+    <!--모집완료-->
+    <update id="updatecrw" parameterType="Map">
+        update tr set  tr_cmp=#{tr_cmp} where tr_id=#{tr_id}
+    </update>
+    <!--참가 인원 구하기-->
+    <select id="getCrwCount" parameterType="Map" resultType="int">
+        select count(*) from tr_crw where ur_id=#{ur_id} and tr_id=#{tr_id}
+    </select>
 </mapper>
 
