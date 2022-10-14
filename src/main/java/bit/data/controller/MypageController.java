@@ -225,7 +225,6 @@ public class MypageController {
         // 예: 1페이지->0, 2페이지:12, 3페이지 : 24...
         startNum = (currentPage - 1) * perPage;
 
-
         // 각페이지당 출력할 시작번호 구하기
         // 예: 총글갯수가 23이라면 1페이지는 23,2페이지는 18,3페이지는 13...
         no = totalCount - (currentPage - 1) * perPage;

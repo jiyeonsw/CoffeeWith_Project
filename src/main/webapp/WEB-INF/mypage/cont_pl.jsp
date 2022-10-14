@@ -99,6 +99,7 @@
             <div class="bk-card">
                 <div class="bk-ci-nm" id="map${no}">
                     <script>
+                        var markerList = [];
                         //지도 생성
                         var mapOptions = {
                             center:new naver.maps.LatLng(37.4993705, 127.0290175),
@@ -110,7 +111,16 @@
                                     position : new naver.maps.LatLng(${pl_loc.loc_y},${pl_loc.loc_x}),
                                     map : map${no}
                                 })
+                                markerList.push(marker);
                         </c:forEach>
+                        if(markerList.length>1) {
+                            var bounds = new naver.maps.LatLngBounds(markerList[0].getPosition(), markerList[1].getPosition());
+                            for (var i = 0; i < markerList.length; i++) {
+                                var latLng = markerList[i].getPosition();
+                                bounds.extend(latLng);
+                            }
+                            map${no}.fitBounds(bounds);
+                        }
                     </script>
 <%--                    <div class="un-bk" value="${dto.pl_id}">--%>
 <%--                        <i class="fa-solid fa-trash"></i>--%>

@@ -8,18 +8,20 @@
 	<select id="selectAllCafe" resultType="cfdto">
 		SELECT * FROM cf ORDER BY cf_id ASC
 	</select>
-	<select id="selectSearchCafe" parameterType="Map" resultType="cfdto">
-		SELECT * FROM cf
-			<if test="searchword!=null">
-				WHERE cf_nm like concat ('%',#{searchword},'%')	OR loc_addr LIKE concat ('%',#{searchword},'%')
-			</if>
-		order by cf_nm ASC LIMIT #{startnum},#{perpage}
+	<select id="selectSearchCafe" parameterType="String" resultType="cfdto">
+		<if test="searchword==null">
+			SELECT * FROM cf
+		</if>
+		<if test="searchword!=null">
+			SELECT cf.cf_nm,cf.cf_id,cf.cf_tel,cf.open_time,cf.off_day,cf.loc_addr,cf.loc_ar,cf.loc_sigu,cf.loc_x,cf.loc_y,cf.cm_cnt,cf.ck_cnt,cf.menu,cf.cf_txt,ctg.cg_id,cg.cg_nm FROM cf AS cf LEFT JOIN cf_ctg_rel AS ctg ON cf.cf_id=ctg.cf_id LEFT JOIN cf_ctg AS cg on cg.cg_id=ctg.cg_id WHERE cf.cf_nm like concat ('%',#{searchword},'%') GROUP BY cf.cf_id
+			UNION
+			SELECT cf.cf_nm,cf.cf_id,cf.cf_tel,cf.open_time,cf.off_day,cf.loc_addr,cf.loc_ar,cf.loc_sigu,cf.loc_x,cf.loc_y,cf.cm_cnt,cf.ck_cnt,cf.menu,cf.cf_txt,ctg.cg_id,cg.cg_nm FROM cf AS cf LEFT JOIN cf_ctg_rel AS ctg ON cf.cf_id=ctg.cf_id LEFT JOIN cf_ctg AS cg on cg.cg_id=ctg.cg_id WHERE cf.loc_addr like concat ('%',#{searchword},'%') GROUP BY cf.cf_id
+			UNION
+			SELECT cf.cf_nm,cf.cf_id,cf.cf_tel,cf.open_time,cf.off_day,cf.loc_addr,cf.loc_ar,cf.loc_sigu,cf.loc_x,cf.loc_y,cf.cm_cnt,cf.ck_cnt,cf.menu,cf.cf_txt,ctg.cg_id,cg.cg_nm FROM cf AS cf LEFT JOIN cf_ctg_rel AS ctg ON cf.cf_id=ctg.cf_id LEFT JOIN cf_ctg AS cg on cg.cg_id=ctg.cg_id WHERE cg.cg_nm like concat ('%',#{searchword},'%') GROUP BY cf.cf_id
+		</if>
 	</select>
 	<select id="selectTotalCount" parameterType='String' resultType="int">
 		SELECT count(*) FROM cf
-		<if test="searchword!=null">
-			WHERE cf_nm like concat ('%',#{searchword},'%')	OR loc_addr LIKE concat ('%',#{searchword},'%')
-		</if>
 	</select>
 	<select id="selectCkCntbyCfid" parameterType="int" resultType="int">
 		SELECT count(*) FROM cf_lk WHERE cf_id=#{cf_id}
@@ -33,11 +35,13 @@
 	<delete id="deleteCafeLike" parameterType="Map">
 		DELETE FROM cf_lk WHERE ur_id=#{ur_id} AND cf_id=#{cf_id}
 	</delete>
-
 	<select id="selectCtgByCfid" parameterType="int" resultType="cgdto">
 		SELECT cg.cg_nm FROM cf_ctg_rel cgr
 			LEFT JOIN cf_ctg cg
 				ON cg.cg_id= cgr.cg_id
 		WHERE cf_id=#{cf_id}
+	</select>
+	<select id="selectAllCtg" resultType="cgdto">
+		SELECT * FROM cf_ctg
 	</select>
 </mapper>
