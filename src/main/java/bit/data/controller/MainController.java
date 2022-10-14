@@ -1,6 +1,7 @@
 package bit.data.controller;
 
 import bit.data.dto.BestCafeDto;
+import bit.data.dto.ComFeedDto;
 import bit.data.dto.ComTourDto;
 import bit.data.service.CafeServiceInter;
 import bit.data.service.MainServiceInter;
@@ -23,7 +24,7 @@ public class MainController {
     @GetMapping("/")
     public ModelAndView selectTr3List() {
         ModelAndView mview = new ModelAndView();
-        //tr
+     
         List<ComTourDto> trlist = mainService.selectTr3List();
         List<BestCafeDto> cflist = mainService.selectBestCafe();
 
@@ -32,9 +33,21 @@ public class MainController {
             dto.setCf_tag(cafeService.selectCtgByCfid(cf_id));
         }
 
+        //tr
+        List<ComTourDto> trlist=mainService.selectTr3List();
+        for (ComTourDto trdto:trlist){
+            int tm_cnt=mainService.selectTMcntbyTrid(trdto.getTr_id());
+            trdto.setTm_cnt(tm_cnt);
+        }
+        
+        //fd
+        List<ComFeedDto> fdlist=mainService.selectFd4list();
+
         //model에 넣기
-        mview.addObject("trlist", trlist);
         mview.addObject("cflist", cflist);
+        mview.addObject("trlist",trlist);
+        mview.addObject("fdlist",fdlist);
+
         mview.setViewName("/bit/layout/main");
         return mview;
     }

@@ -83,12 +83,8 @@ public class CafeService implements CafeServiceInter {
     }
 
     @Override
-    public List<CafeDto> selectSearchCafe(String searchword, int startnum, int perpage) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("searchword", searchword);
-        map.put("startnum", startnum);
-        map.put("perpage", perpage);
-        return cafeDao.selectSearchCafe(map);
+    public List<CafeDto> selectSearchCafe(String searchword) {
+        return cafeDao.selectSearchCafe(searchword);
     }
 
     @Override
@@ -177,5 +173,10 @@ public class CafeService implements CafeServiceInter {
     @Override
     public int selectCMCntByRg(int cm_id) {
         return cafeDao.selectCMCntByRg(cm_id);
+    }
+
+    @Override
+    public List<CafeCtgDto> selectAllCtg() {
+        return cafeDao.selectAllCtg();
     }
 }
