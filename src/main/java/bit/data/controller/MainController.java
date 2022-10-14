@@ -34,7 +34,6 @@ public class MainController {
         }
 
         //tr
-        List<ComTourDto> trlist=mainService.selectTr3List();
         for (ComTourDto trdto:trlist){
             int tm_cnt=mainService.selectTMcntbyTrid(trdto.getTr_id());
             trdto.setTm_cnt(tm_cnt);
