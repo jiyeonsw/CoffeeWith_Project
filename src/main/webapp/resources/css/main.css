@@ -5,17 +5,6 @@
     font-style: normal;
 }
 
-body * {
-    font-family: 'GangwonEdu_OTFBoldA';
-    color: #664400;
-    font-size: 20px;
-}
-/*
-.main-page-container div {
-    border: 1px solid gray;
-    min-height: 20px;
-}
-*/
 
 div.main-page-container {
     display: grid;
@@ -29,7 +18,6 @@ div.main-page-container {
     margin: 0 auto;
     text-align: left;
 }
-
 
 .cf-best-container {
     margin-top: 30px;
@@ -87,18 +75,19 @@ div.main-page-container {
 }
 
 
-div.cf-info .cf-lk-box::after {
-    top: 4px;
-    left: 5px;
-    width: 1px;
-    height: 12px;
-    background-color: #664400;
+div.cf-info span::after {
+    content: "|";
+    color: #664400;
+    opacity: 0.2;
 }
 
 i {
     font-style: normal;
 }
 
+span.cf-star-box > i {
+    margin-left: -3px;
+}
 
 .cf-img-box {
     height: 368px;
@@ -127,12 +116,18 @@ ul.swiper-wrapper li {
     list-style: none;
 }
 
+.cf-card {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
 p.cf-txt {
+    margin-top: 16px;
     word-wrap: break-word;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    height: 72px;
 }
 
 .swiper-pagination-bullet {
@@ -141,6 +136,12 @@ p.cf-txt {
 
 .swiper-pagination-bullet-active {
     background-color: #664400 !important;
+}
+
+.loc-container {
+    display: flex;
+    align-items: center;
+
 }
 
 .quick-search {

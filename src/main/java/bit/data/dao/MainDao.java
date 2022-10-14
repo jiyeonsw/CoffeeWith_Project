@@ -1,5 +1,7 @@
 package bit.data.dao;
 
+
+import bit.data.dto.BestCafeDto;
 import bit.data.dto.ComFeedDto;
 import bit.data.dto.ComTourDto;
 import org.apache.ibatis.session.SqlSession;
@@ -12,11 +14,16 @@ import java.util.List;
 public class MainDao implements MainDaoInter {
     @Autowired
     SqlSession session;
-    String ns="bit.data.dao.MainDao.";
+    String ns = "bit.data.dao.MainDao.";
 
     @Override
     public List<ComTourDto> selectTr3List() {
-        return session.selectList(ns+"selectTr3List");
+        return session.selectList(ns + "selectTr3List");
+    }
+
+    @Override
+    public List<BestCafeDto> selectBestCafe() {
+        return session.selectList(ns + "selectBestCafe");
     }
 
     @Override

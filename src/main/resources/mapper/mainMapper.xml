@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.data.dao.MainDao">
+
 	<select id="selectTr3List" resultType="ctdto">
 		SELECT tr.tr_id, tr_nm,tr.ur_id, ur.ur_img, tr_txt, tr_loc, tw_max, s_date, e_date, ur.ur_nk, count(tw.tr_id) tw_cnt, tr.u_date
 		FROM tr
@@ -12,6 +13,7 @@
 		group by tr_id
 		order by tr.u_date desc LIMIT 3
 	</select>
+  
 	<select id="selectTMcntbyTrid" parameterType="int" resultType="int">
 		SELECT count(*) FROM tr_cmt where tr_id=#{tr_id}
 	</select>
@@ -27,4 +29,25 @@
 			        on fd.cf_id=cf.cf_id
 		ORDER BY likes desc, fd.w_date desc LIMIT 4
 	</select>
+
+	<select id="selectBestCafe" resultType="bcdto">
+		select *
+		from (select c.cf_id,
+					 c.cf_nm,
+					 c.cf_txt,
+					 substring_index(c.loc_addr, ' ', '2')                            as addr,
+					 (select count(cl.ur_id) from cf_lk cl where c.cf_id = cl.cf_id)  as lk_cnt,
+					 (SELECT round(avg(cc.star), 1)
+					  FROM cf_cmt cc
+					  where c.cf_id = cc.cf_id
+						and cc.star not in (0))                                       as star_avg,
+					 (select count(cc.cf_id) from cf_cmt cc where c.cf_id = cc.cf_id) as cmt_cnt,
+					 (select ci.ci_nm
+					  from cf_img ci
+					  where c.cf_id = ci.cf_id
+					  group by c.cf_id)                                               as ci_img
+			  from cf as c
+			  order by cmt_cnt desc limit 9) as res;
+	</select>
+  
 </mapper>
