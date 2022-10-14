@@ -32,7 +32,7 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
 
-  window.Kakao.init('fcad60e8f1cd4acf78c679e37df5c9c7');
+  window.Kakao.init('faf782939186046125921704c4e2ad90');
   window.Kakao.Auth.setAccessToken(JSON.parse(sessionStorage.getItem('AccessKEY'))); //sessionStorage에 저장된 사용자 엑세스 토큰 받아온다.
 
   function kakaoLogout() {

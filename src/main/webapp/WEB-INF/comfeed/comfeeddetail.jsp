@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" href="../res/css/style.css" type="text/css">
     <style type="text/css">
 
@@ -62,7 +63,7 @@
         }
 
         .table .fdcontent {
-            height: 45%;
+            height: 35%;
             vertical-align: top;
             text-align: left;
         }
@@ -79,8 +80,16 @@
             padding-left: 10px;
         }
 
+        .table .fdlike{
+            border-bottom: hidden;
+            text-align: left;
+            padding: 0;
+            padding-left: 10px;
+            font-size: 10px;
+        }
+
         .table .fdcmt{
-            height: 42%;
+            height: 55%;
         }
 
         #imgdetail {
@@ -112,7 +121,7 @@
 <div class="fddata">
     <table class="table">
         <tr>
-            <td rowspan="6" class="photo">
+            <td rowspan="7" class="photo">
                 <!-- Carousel -->
                 <div id="imgdetail" class="carousel slide" data-bs-interval="false">
                     <div class="carousel-inner" data-bs-interval="false">
@@ -168,6 +177,13 @@
         </c:if>
          </tr>
         <tr>
+            <td class="fdlike">
+                <c:if test="${comfeeddto.likes==0}"><i class='far fa-heart' onclick="likeaction()" style="cursor: pointer"></i></c:if>
+                <c:if test="${comfeeddto.likes>0}"><i class='fas fa-heart' onclick="likeaction()" style="cursor: pointer"></i></c:if>
+                <span id="fl-cnt">${comfeeddto.likes}</span>
+            </td>
+        </tr>
+        <tr>
             <td class="fdcmt">
             </td>
         </tr>
@@ -175,9 +191,73 @@
 </div>
 
 <script>
+
+    lg_id = "${sessionScope.login_id}"
+    fd_id = "${comfeeddto.fd_id}"
+
     function updatemodal(){
-        var fd_id = ${comfeeddto.fd_id}
+
         $("#modaltmp .modal-content").load("update?fd_id=" + fd_id);
+    }
+
+    function likeaction(){
+        if(lg_id==""){
+            alert("로그인이 필요합니다")
+        }
+        else{
+            $.ajax({
+                type: "get",
+                url: "select_like",
+                dataType: "json",
+                data: {"lg_id": lg_id, "fd_id": fd_id},
+                success: function (res) {
+                    var fl_chk = res.fl_chk;
+                    if (fl_chk == 0) {
+                        $.ajax({
+                            type: "get",
+                            url: "insert_like",
+                            dataType: "json",
+                            data: {"lg_id": lg_id, "fd_id": fd_id},
+                            success: function (res) {
+                                var fl_cnt=res.fl_cnt;
+                                var pre_fl_cnt=$("#fl-cnt").text();
+                                if (pre_fl_cnt==0){
+                                    $(".fdlike").find("svg").removeClass("fa-regular");
+                                    $(".fdlike").find("svg").addClass("fa-solid");
+                                }
+                                $("#fl-cnt").html(fl_cnt);
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            type: "get",
+                            url: "delete_like",
+                            dataType: "json",
+                            data: {"lg_id": lg_id, "fd_id": fd_id},
+                            success: function (res) {
+                                var fl_cnt=res.fl_cnt;
+                                var pre_fl_cnt=$("#fl-cnt").text();
+                                if (pre_fl_cnt==1){
+                                    $(".fdlike").find("svg").removeClass("fa-solid");
+                                    $(".fdlike").find("svg").addClass("fa-regular");
+                                }
+                                $("#fl-cnt").html(fl_cnt);
+                            }
+                        });
+                    }
+
+                    $.ajax({
+                        type:"post",
+                        url:"update_like",
+                        dataType:"json",
+                        data:{"fd_id":fd_id},
+                        success: function (res){
+                            alert("좋아요")
+                        }
+                    })
+                }
+            })
+        }
     }
 
 </script>

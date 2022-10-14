@@ -22,5 +22,7 @@ public class CafeDto {
     private String cf_txt;
     private List<CafeImgDto> img;
     private double cm_star;
+    private int cg_id;
+    private String cg_nm;
 
 }

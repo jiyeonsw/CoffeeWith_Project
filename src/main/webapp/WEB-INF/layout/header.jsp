@@ -126,6 +126,33 @@
         <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">세션제거</button>
     </c:if>
 </span>
+<script>
+    //세션주기
+    $("#call-session-btn").click(function () {
+        var root = '${root}';
 
+        $.ajax({
+            type: "get",
+            url: root + "/user/call_session",
+            dataType: "text",
+            success: function (res) {
+                location.reload();
+            }
+        })
+    });
+
+    //세션제거
+    $("#del-session-btn").click(function () {
+        var root = '${root}';
+        $.ajax({
+            type: "get",
+            url: root + "/user/del_session",
+            dataType: "text",
+            success: function (res) {
+                location.reload();
+            }
+        })
+    });
+</script>
 </body>
 </html>

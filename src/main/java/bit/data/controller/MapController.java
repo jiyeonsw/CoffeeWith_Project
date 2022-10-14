@@ -1,9 +1,6 @@
 package bit.data.controller;
 
-import bit.data.dto.CafeCmtDto;
-import bit.data.dto.CafeDto;
-import bit.data.dto.PlanDto;
-import bit.data.dto.PlanLocDto;
+import bit.data.dto.*;
 import bit.data.service.CafeServiceInter;
 import bit.data.service.PlanServiceInter;
 import org.json.simple.JSONArray;
@@ -19,10 +16,7 @@ import util.ChangeDate;
 import javax.servlet.http.HttpSession;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/map")
@@ -37,6 +31,14 @@ public class MapController {
     @GetMapping("/mainmap")
     public String mainMap(Model model) {
         List<CafeDto> list = cafeService.selectAllCafe();
+        List<CafeCtgDto> ctglist = cafeService.selectAllCtg();
+        //카테고리 제한
+        //제한할 갯수
+        int pop = 7;
+        for(int i=0;i < pop; i++)
+        {
+            ctglist.remove(ctglist.size()-1);
+        }
        /* for(CafeDto dto:list){
             int cf_id=dto.getCf_id();
             //댓글수 댓글별점평균
@@ -57,6 +59,7 @@ public class MapController {
             };
         }*/
         model.addAttribute("list", list);
+        model.addAttribute("ctglist",ctglist);
         return "/bit/map/mainmap";
     }
 
@@ -156,8 +159,11 @@ public class MapController {
     public Map<String,Object> searchCafe(@RequestParam(defaultValue = "1") int currentPage,
                                          @RequestParam(value = "searchword", required = false) String sw) {
         //페이징 처리에 필요한 변수들
+        //검색결과
+        List<CafeDto> cafelist = cafeService.selectSearchCafe(sw);
+        List<CafeDto> scafelist = new ArrayList<>();
         //전체 갯수
-        int totalCount=cafeService.selectTotalCount(sw);
+        int totalCount=cafelist.size();
         int perPage=3;//한페이지당 보여질 글의 갯수
         int perBlock=5;//한블럭당 보여질 페이지의 갯수
         int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
@@ -192,9 +198,19 @@ public class MapController {
         //예: 총글갯수가 23이라면  1페이지는 23,2페이지는 18,3페이지는 13...
         no=totalCount-(currentPage-1)*perPage;
 
-        //검색결과
-        List<CafeDto> cafelist = cafeService.selectSearchCafe(sw,startNum,perPage);
-        for(CafeDto dto:cafelist)
+        int testNum = startNum + perPage;
+
+        for (int i = startNum; i < testNum; i++) {
+            try {
+                if (cafelist.get(i).getCf_nm() != null) {
+                    CafeDto scafeDto = cafelist.get(i);
+                    scafelist.add(scafeDto);
+                }
+            } catch (IndexOutOfBoundsException iobe) {
+                iobe.getMessage();
+            }
+        }
+        for(CafeDto dto:scafelist)
         {
             int cf_id=dto.getCf_id();
             //이미지 추가
@@ -227,6 +243,7 @@ public class MapController {
         //return 담을 공간
         Map<String,Object> map=new HashMap<>();
         map.put("list",cafelist);
+        map.put("slist",scafelist);
         map.put("perPage",perPage);
         map.put("perBlock",perBlock);
         map.put("totalCount",totalCount);

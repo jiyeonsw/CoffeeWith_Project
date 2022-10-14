@@ -16,4 +16,9 @@ public interface ComFeedDaoInter {
     public void updateLikes(int fd_id);
     public void insertPhoto(ComFeedDto dto);
     public List<String> selectPhoto(int fd_id);
+    public void insertFeedLikes(Map<String,Integer> map);
+    public void deleteFeedLikes(Map<String,Integer> map);
+    public int selectTotalFeedLikes(int fd_id);
+    public int selectFeedLikesByUrid(Map<String,Integer> map);
+    public void updateFeedLikes(int fd_id);
 }
