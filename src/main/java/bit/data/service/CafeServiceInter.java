@@ -35,4 +35,5 @@ public interface CafeServiceInter {
     public List<CafeCtgDto> selectAllCtg();
     public List<CafeImgDto> selectFdImgByCf(int cf_id);
     public List<CafeImgDto> selectCmImgByCf(int cf_id);
+    public List<CafeImgDto> selectCiNull(int cf_id);
 }

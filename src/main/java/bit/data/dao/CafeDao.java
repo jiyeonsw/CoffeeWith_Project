@@ -148,4 +148,8 @@ public class CafeDao implements CafeDaoInter {
     public List<CafeImgDto> selectCmImgByCf(int cf_id) {
         return session.selectList(nsi+"selectCmImgByCf",cf_id);
     }
+    @Override
+    public List<CafeImgDto> selectCiNull(int cf_id) {
+        return session.selectList(nsi+"selectCiNull",cf_id);
+    }
 }

@@ -208,6 +208,7 @@
         }
         div.mform{
             width: 700px;
+            margin-bottom: 15px;
         }
         #mform fieldset{
             display: flex;
@@ -299,8 +300,12 @@
             margin-right: 4px;
             margin-top: 20px;
         }
+        div.cm-order-box{
+            display: grid;
+            grid-template-columns: 100px 600px;
+        }
         #cm-order{
-            width: 700px;
+            width: 600px;
             text-align: right;
         }
 
@@ -435,7 +440,7 @@
                     <button class="ctg-box">#${ctg.cg_nm}</button>&nbsp;
                 </c:forEach>
             </div>
-            <div class="cf-txt">${dto.cf_txt} <i class="bi bi-caret-down-fill view-cmt"></i></div>
+            <div class="cf-txt">${dto.cf_txt}</div>
             <br>
             <div class="loc-cm-lk">
             <div><span class="cf-info-key">위치<i class="bi bi-geo-alt"></i></span>&nbsp;<span>${dto.loc_addr} </span></div>
@@ -562,6 +567,14 @@
             $("div#btn-ci-link").css("border-bottom-color","lightgray");
             cmList();
         });//리뷰
+        //리뷰사진만
+        $(document).on("click","#only-img-review",function (){
+            if($("#only-img-review").is(":checked")){
+                $("div.null_id_1").hide();
+            }else {
+                $("div.null_id_1").show();
+            }
+        })//리뷰사진만
 
         //리뷰 정렬
         $(document).on("click","a.cm-order",function (){
@@ -985,13 +998,12 @@
                 dataType: "json",
                 data: {"cf_id": cf_id,"cm_order":cm_order,"rl":0},
                 success: function (res) {
-                    cl+='<div id="cm-order" ><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
-                    cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></div><br><br>';
+                    cl+='<div class="cm-order-box"><label><input type="checkbox" id="only-img-review">&nbsp;사진리뷰만</input></label><span id="cm-order" ><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
+                    cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></span></div><br><br>';
                     var on_error="this.src='${root}/images/noprofile.jpg'";
                     $.each(res, function (i, elt) {
                         if(elt.rl==0){
-                            //console.dir(elt);
-                            cl+='<div class="cm-box-each"><div style="width: 660px;">';
+                            cl+='<div class="cm-box-each null_id_'+elt.img_null_id+'"><div style="width: 660px;">';
                             if (elt.ur_img==null){ elt.ur_img='noprofile.jpg';}
                             cl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="'+on_error+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
