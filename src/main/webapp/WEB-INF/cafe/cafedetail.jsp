@@ -112,7 +112,6 @@
             padding-top: 5px;
             margin-left: 2px;
 
-
         }
         div.cf-middle div.btn-cf-mid{
             font-size: 1.5rem;
@@ -124,7 +123,9 @@
             border: 2px solid white;
             border-bottom-color: lightgray ;
         }
-
+        div.cf-middle div.btn-cf-mid:hover{
+            border-bottom-color: Sienna ;
+        }
         div.cf-bottom{
             padding-top: 30px;
             display: flex;
@@ -882,9 +883,8 @@
         //사진카테고리클릭
         $(document).on("click",".btn-ci-card",function (){
             var ctg=$(this).attr("ctg");
-            console.log(ctg);
+            //console.log(ctg);
             var s="";
-
             $.ajax({
                 type: "get",
                 url: "img_ctg",

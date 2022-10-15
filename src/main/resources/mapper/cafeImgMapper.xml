@@ -14,7 +14,7 @@
 						   on fd.fd_id = ci.fd_id
 				 left join ur
 						   on ur.ur_id = cm.ur_id or ur.ur_id = fd.ur_id
-		WHERE ci.cf_id=251
+		WHERE ci.cf_id=#{cf_id}
 		ORDER BY ci.ci_id desc
 	</select>
 	<insert id="insertCmtImg" parameterType="cidto">
