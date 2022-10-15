@@ -132,6 +132,10 @@
             flex-wrap: wrap;
             margin-bottom: 100px;
         }
+        div.ci-container{
+            display: grid;
+            grid-template-rows: 40px auto;
+        }
         .btn-ci-card{
             border: 1px solid #664400;
             border-radius: 25px;
@@ -192,6 +196,14 @@
             overflow: hidden;
             cursor: pointer;
         }
+        .ci-mini-card-inr {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
 
         div.ci-mini-st {
             width: 225px;
@@ -204,6 +216,25 @@
             border: 1px solid #f1f1f1;
             margin-bottom: 10px;
         }
+        div.ci-mini-st-bk{
+            width: 225px;
+            height: 100%;
+            border-radius: 10px;
+            box-sizing: border-box;
+            border: 1px solid #f1f1f1;
+            margin-bottom: 10px;
+        }
+        div.ci-mini-bk-img{
+            width: 225px;
+            height: 100px;
+            border-radius: 10px;
+            background: 50% 100% no-repeat;
+            background-size: cover;
+            object-fit: cover;
+            box-sizing: border-box;
+            border: 1px solid #f1f1f1;
+        }
+
         div.mform{
             width: 700px;
             margin-bottom: 15px;
@@ -377,11 +408,14 @@
             border: 0px;
         }
     </style>
+    <c:set var="root" value="<%=request.getContextPath()%>"/>
     <script>
         $(function () {
             cf_id=${dto.cf_id};
             login_ok='${sessionScope.login_ok}';
             ur_id="${sessionScope.login_id }";
+            on_error_cf="this.src='${root}/images/logo1.png'";
+            on_error_prf="this.src='${root}/images/noprofile.jpg'";
             $("#btn-cf-info").css("border-bottom-color","Sienna");
             cfMap(cf_id);
 
@@ -395,7 +429,7 @@
 
 </head>
 <body>
-<c:set var="root" value="<%=request.getContextPath()%>"/>
+
 
 <div class="cafe-main-box">
 <div class="cafe-main-content">
@@ -848,29 +882,33 @@
                 dataType: "json",
                 data: {"cf_id": cf_id},
                 success: function (res) {
-                    var s="";
-                    var on_error="this.src='${root}/images/logo1.png'";
-                    s+='<button class="btn-ci-card" ctg="cf"><img class="img-ci-btn" src="${root}'+res.ci_path+res.cf_img+'" onError="'+on_error+'" >' +
+                    var s='<div class="ci-container">';
+                    s+='<div class="ci-ctg"><button class="btn-ci-card" ctg="all"><img class="img-ci-btn" src="${root}'+res.ci_path+res.cf_img+'" onError="'+on_error_cf+'" >' +
+                        '전체사진</button>';
+                    s+='<button class="btn-ci-card" ctg="cf"><img class="img-ci-btn" src="${root}'+res.ci_path+res.cf_img+'" onError="'+on_error_cf+'" >' +
                         '카페사진</button>';
-                    s+='<button class="btn-ci-card" ctg="cm"><img class="img-ci-btn" src="${root}'+res.cmi_path+res.cm_img+'" onError="'+on_error+'" >' +
+                    s+='<button class="btn-ci-card" ctg="cm"><img class="img-ci-btn" src="${root}'+res.cmi_path+res.cm_img+'" onError="'+on_error_cf+'" >' +
                         '리뷰사진</button>';
-                    s+='<button class="btn-ci-card" ctg="fd"><img class="img-ci-btn" src="${root}'+res.fdi_path+res.fd_img+'" onError="'+on_error+'" >' +
-                        '커뮤니티사진</button><div class="cf-btm-ci-card-box">';
+                    s+='<button class="btn-ci-card" ctg="fd"><img class="img-ci-btn" src="${root}'+res.fdi_path+res.fd_img+'" onError="'+on_error_cf+'" >' +
+                        '커뮤니티사진</button></div><div class="cf-btm-ci-card-box">';
                     $.each(res.all_img_list, function (i, elt) {
                         s+='<div class="ci-mini-card">';
                         var ci_path = '${root}'+elt.ci_path + elt.ci_nm ;
                         var ci_path_url="url('"+ci_path+"')";
+                        s+='<div class="ci-mini-card-inr">';
                         s+='<div class="ci-mini-st" style="background-image:'+ci_path_url+'" ';
                         s+='data-bs-toggle="modal" data-bs-target="#ciModal" ';
                         s+='modal-cm-txt="'+elt.cm_txt+'" modal-fd-txt="'+elt.fd_txt+'"';
                         s+='modal-ur-nk="'+elt.ur_nk+'" modal-ur-img="'+elt.ur_img+'">';
+                        s+='</div>';
                         s+='</div></div>';
                     });//each
-                    s+='</div>';
+                    s+='</div></div>';
                     $("div.cf-bottom").html(s);
                 }//succ
             });//ajax
-        });//사진 클릭
+        });//사진 클릭div.ci-mini-st-bk
+
 
         //사진각각클릭
         $(document).on("click",".ci-mini-st",function (){
@@ -882,17 +920,16 @@
             var modal_fd_txt= $(this).attr("modal-fd-txt");
             var ur_nk=$(this).attr("modal-ur-nk");
             var ur_img=$(this).attr("modal-ur-img");
-            var on_error="this.src='${root}/images/noprofile.jpg'";
             var s="";
             //console.log(modal_txt);
             if(modal_cm_txt!='null') {
-                s+='<img src="${root}/res/prfimg/'+ur_img+'" onError="'+on_error+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+ur_nk;
+                s+='<img src="${root}/res/prfimg/'+ur_img+'" onError="'+on_error_prf+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+ur_nk;
                 s+='<div style="text-align: center; margin-top: 20px" >'+modal_cm_txt+'</div>';
                 $(".modal-body").html(s);
                 $(".modal-body").css("height","100px");
                 $(".modal-body").css("padding","10px");
             }else if(modal_fd_txt!='null' ){
-                s+='<img src="${root}/res/prfimg/'+ur_img+'" onError="'+on_error+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+ur_nk;
+                s+='<img src="${root}/res/prfimg/'+ur_img+'" onError="'+on_error_prf+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+ur_nk;
                 s+='<div style="text-align: center; margin-top: 20px" >'+modal_fd_txt+'</div>';
                 $(".modal-body").html(s);
                 $(".modal-body").css("height","100px");
@@ -909,6 +946,7 @@
         $(document).on("click",".btn-ci-card",function (){
             var ctg=$(this).attr("ctg");
             //console.log(ctg);
+
             var s="";
             $.ajax({
                 type: "get",
@@ -920,19 +958,19 @@
                         s+='<div class="ci-mini-card">';
                         var ci_path = '${root}'+elt.ci_path + elt.ci_nm ;
                         var ci_path_url="url('"+ci_path+"')";
+                        s+='<div class="ci-mini-card-inr">';
                         s+='<div class="ci-mini-st" style="background-image:'+ci_path_url+'" ';
                         s+='data-bs-toggle="modal" data-bs-target="#ciModal" ';
                         s+='modal-cm-txt="'+elt.cm_txt+'" modal-fd-txt="'+elt.fd_txt+'"';
                         s+='modal-ur-nk="'+elt.ur_nk+'" modal-ur-img="'+elt.ur_img+'">';
+                        s+='</div>';
                         s+='</div></div>';
-                    })//each
+                    });//each
+                    s+='</div>';
                     $("div.cf-btm-ci-card-box").html(s);
                 }//su
             })//aj
         });//사진카테고리클릭
-
-
-
 
         ////////////////////////////////////////////////////////////////// 일반 함수 //////////////////////////////////////////////////////////////////
         //파일 사진 확인
@@ -1015,12 +1053,11 @@
                 success: function (res) {
                     cl+='<div class="cm-order-box"><label><input type="checkbox" id="only-img-review">&nbsp;사진리뷰만</input></label><span id="cm-order" ><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
                     cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></span></div><br><div id="cm-list_more">';
-                    var on_error="this.src='${root}/images/noprofile.jpg'";
                     $.each(res, function (i, elt) {
                         if(elt.rl==0){
                             cl+='<div class="cm-box-each null_id_'+elt.img_null_id+'"><div style="width: 660px;">';
                             if (elt.ur_img==null){ elt.ur_img='noprofile.jpg';}
-                            cl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="'+on_error+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
+                            cl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="'+on_error_prf+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 cl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 cl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'" cf_id="'+cf_id+'"></i></span>';}
@@ -1079,14 +1116,13 @@
                 data: {"cf_id": cf_id,"cm_order":"date_asc","rl":1},
                 success: function (res) {
                     var ccl='';
-                    var on_error="this.src='${root}/images/noprofile.jpg'";
                     var cnt=0;
                     $.each(res, function (i, elt) {
                         if(elt.rg==rg){
 
                             cnt++;
                             ccl+='<div style="width: 620px; ">';
-                            ccl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="'+on_error+'"  style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
+                            ccl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="'+on_error_prf+'"  style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 ccl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cc-edit" rg='+elt.rg+' cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 ccl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'" cf_id="'+cf_id+'"></i></span>';}

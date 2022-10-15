@@ -106,7 +106,6 @@ public class CafeController {
         map.put("all_img_list",all_img_list);
         return map;
     }
-
     @GetMapping("/img_ctg")
     @ResponseBody
     public List<CafeImgDto> selectImgCtg(int cf_id,String ctg){
@@ -117,10 +116,11 @@ public class CafeController {
             list= cafeService.selectCmImgByCf(cf_id);
         }else if(ctg.equals("fd")){
             list= cafeService.selectFdImgByCf(cf_id);
+        }else {
+            list= cafeService.selectCafeImgAll(cf_id);
         }
         return list;
     }
-
     @GetMapping("/select_cmt")
     @ResponseBody
     public List<CafeCmtDto> selectCafeCmt(int cf_id){
