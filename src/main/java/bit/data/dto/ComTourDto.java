@@ -18,6 +18,7 @@ public class ComTourDto {
     private String e_date;
     private Timestamp w_date;
     private Timestamp u_date;
+    private int tr_cmp;
 
 
     private String ur_nk;

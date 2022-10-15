@@ -54,6 +54,8 @@
         }
 
         .feed .row .idv {
+            position: relative;
+            text-align: center;
             height: 20vw;
             width: 25%;
             padding-top: 12px;
@@ -65,8 +67,15 @@
             top: 0;
             width: 100%;
             height: 100%;
-            padding: 5px 5px 5px 5px;
             cursor: pointer;
+            text-align: center;
+        }
+
+        .feed .idv .textcenter{
+            position: absolute;
+            top: 50%;
+            left: 45%;
+            display: none;
         }
 
         div .closemodal{
@@ -106,6 +115,9 @@
             <c:forEach var="dto" varStatus="i" items="${list}">
                 <div class="idv">
                     <img src="${root}/images/upload/${dto.fd_photo.split(",")[0]}" value="${dto.fd_id}">
+                    <div class="textcenter">
+                        <i class='fas fa-heart'></i>&nbsp;&nbsp;${dto.likes}
+                    </div>
                 </div>
                 <c:if test="${i.index%4==3}">
                     </div><div class="row">
@@ -149,6 +161,18 @@
         }
     })
 
+    var imgsrc="";
+
+    $(".idv img").mouseover(function (){
+        imgsrc = $(this).attr("src");
+        $(this).css("opacity","0.5");
+        $(this).parent().find(".textcenter").css("display","initial")
+    })
+
+    $(".idv img").mouseout(function (){
+        $(this).css("opacity","1");
+        $(this).parent().find(".textcenter").css("display","none")
+    })
 
 </script>
 </body>

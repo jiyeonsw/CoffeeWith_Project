@@ -24,11 +24,8 @@
 			<when test="cm_order == 'star_asc'">cm.star asc</when>
 		</choose>
 	</select>
-	<insert id="insertCafeCmt" parameterType="cmdto" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO cf_cmt VALUES (null, #{cf_id}, #{ur_id}, #{cm_txt}, now(),#{rg},#{rs},#{rl}, #{star})
-		<selectKey keyProperty="cm_id" resultType="Integer" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
+	<insert id="insertCafeCmt" parameterType="cmdto">
+		INSERT INTO cf_cmt VALUES (#{cm_id}, #{cf_id}, #{ur_id}, #{cm_txt}, now(),#{rg},#{rs},#{rl}, #{star})
 	</insert>
 	<delete id="deleteCafeCmt" parameterType="int">
 		DELETE FROM cf_cmt WHERE cm_id=#{cm_id}
@@ -46,7 +43,7 @@
 		UPDATE cf_cmt SET rs=rs+1 WHERE rg=#{rg} and rs>#{rs}
 	</update>
 	<select id="selectCMCntByCfid" parameterType="int" resultType="int">
-		SELECT count(*) FROM cf_cmt WHERE cf_id=#{cf_id}
+		SELECT count(*) FROM cf_cmt WHERE cf_id=#{cf_id} and rl = 0
 	</select>
 	<select id="selectCMCntByRg" parameterType="int" resultType="int">
 		SELECT count(*) FROM cf_cmt WHERE rg=#{cm_id}

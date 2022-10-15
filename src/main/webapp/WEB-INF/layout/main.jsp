@@ -33,238 +33,36 @@
         </div>
         <div class="swiper-container best-slide">
             <ul class="swiper-wrapper">
-                <li class="swiper-slide cf-card" style="width: 306px; margin-right: 16px;">
-                    <div class="cf-img-box">
-                        <img src="https://static-file.jejupass.com/download/82148.webp?width=736&height=736">
-                    </div>
-                    <a class="cf-cont-box">
-                        <div class="cf-nm">
-                            귤당리
+                <c:forEach var="dto" items="${cflist}">
+                    <li class="swiper-slide cf-card" style="width: 306px;" value="${dto.cf_id}">
+                        <div class="cf-img-box">
+                            <img src="${root}/images/cafeimg/${dto.ci_img}">
                         </div>
-                        <div class="cf-info">
+                        <a class="cf-cont-box">
+                            <div class="cf-nm">
+                                    ${dto.cf_nm}
+                            </div>
+                            <div class="cf-info">
                                 <span class="cf-lk-box" title="북마크 개수">
-                                    1000
+                                        ${dto.lk_cnt}
                                 </span>
-                            <span class="cf-star-box" title="평균평점">
-                                    4.3
-                                    <i title="리뷰 갯수">(341)</i>
+                                <span class="cf-star-box" title="평균평점">
+                                    ${dto.star_avg}
+                                    <i title="리뷰 갯수">(${dto.cmt_cnt})</i>
                                 </span>
-                            <span class="cf-addr" title="위치정보">제주시 한경면</span>
-                        </div>
-                        <p class="cf-txt">제주 스노클링의 성지 판포포구에 위치한 귤당리에요 이곳의 자랑거리는 푸른 에메랄드 빛 오션뷰를 품은 야외테라스죠. 가슴이 확 트이는
-                            바다를
-                            바라보며
-                            귤청과 우유로 만든 파도빛깔의 바다라떼 한잔 어때요?
-                        </p>
-                        <p class="cf-tag-box">
-                            <span class="tag">#제주카페</span>
-                            <span class="tag">#바다뷰카페</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="swiper-slide cf-card" style="width: 306px; margin-right: 16px;">
-                    <div class="cf-img-box">
-                        <img src="https://static-file.jejupass.com/download/82148.webp?width=736&height=736">
-                    </div>
-                    <a class="cf-cont-box">
-                        <div class="cf-nm">
-                            귤당리
-                        </div>
-                        <div class="cf-info">
-                                <span class="cf-lk-box" title="북마크 개수">
-                                    1000
-                                </span>
-                            <span class="cf-star-box" title="평균평점">
-                                    4.3
-                                    <i title="리뷰 갯수">(341)</i>
-                                </span>
-                            <span class="cf-addr" title="위치정보">제주시 한경면</span>
-                        </div>
-                        <p class="cf-txt">제주 스노클링의 성지 판포포구에 위치한 귤당리에요 이곳의 자랑거리는 푸른 에메랄드 빛 오션뷰를 품은 야외테라스죠. 가슴이 확 트이는
-                            바다를
-                            바라보며
-                            귤청과 우유로 만든 파도빛깔의 바다라떼 한잔 어때요?
-                        </p>
-                        <p class="cf-tag-box">
-                            <span class="tag">#제주카페</span>
-                            <span class="tag">#바다뷰카페</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="swiper-slide cf-card" style="width: 306px; margin-right: 16px;">
-                    <div class="cf-img-box">
-                        <img src="https://static-file.jejupass.com/download/82148.webp?width=736&height=736">
-                    </div>
-                    <a class="cf-cont-box">
-                        <div class="cf-nm">
-                            귤당리
-                        </div>
-                        <div class="cf-info">
-                                <span class="cf-lk-box" title="북마크 개수">
-                                    1000
-                                </span>
-                            <span class="cf-star-box" title="평균평점">
-                                    4.3
-                                    <i title="리뷰 갯수">(341)</i>
-                                </span>
-                            <span class="cf-addr" title="위치정보">제주시 한경면</span>
-                        </div>
-                        <p class="cf-txt">제주 스노클링의 성지 판포포구에 위치한 귤당리에요 이곳의 자랑거리는 푸른 에메랄드 빛 오션뷰를 품은 야외테라스죠. 가슴이 확 트이는
-                            바다를
-                            바라보며
-                            귤청과 우유로 만든 파도빛깔의 바다라떼 한잔 어때요?
-                        </p>
-                        <p class="cf-tag-box">
-                            <span class="tag">#제주카페</span>
-                            <span class="tag">#바다뷰카페</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="swiper-slide cf-card" style="width: 306px; margin-right: 16px;">
-                    <div class="cf-img-box">
-                        <img src="https://static-file.jejupass.com/download/82148.webp?width=736&height=736">
-                    </div>
-                    <a class="cf-cont-box">
-                        <div class="cf-nm">
-                            귤당리
-                        </div>
-                        <div class="cf-info">
-                                <span class="cf-lk-box" title="북마크 개수">
-                                    1000
-                                </span>
-                            <span class="cf-star-box" title="평균평점">
-                                    4.3
-                                    <i title="리뷰 갯수">(341)</i>
-                                </span>
-                            <span class="cf-addr" title="위치정보">제주시 한경면</span>
-                        </div>
-                        <p class="cf-txt">제주 스노클링의 성지 판포포구에 위치한 귤당리에요 이곳의 자랑거리는 푸른 에메랄드 빛 오션뷰를 품은 야외테라스죠. 가슴이 확 트이는
-                            바다를
-                            바라보며
-                            귤청과 우유로 만든 파도빛깔의 바다라떼 한잔 어때요?
-                        </p>
-                        <p class="cf-tag-box">
-                            <span class="tag">#제주카페</span>
-                            <span class="tag">#바다뷰카페</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="swiper-slide cf-card" style="width: 306px; margin-right: 16px;">
-                    <div class="cf-img-box">
-                        <img src="https://static-file.jejupass.com/download/82148.webp?width=736&height=736">
-                    </div>
-                    <a class="cf-cont-box">
-                        <div class="cf-nm">
-                            귤당리
-                        </div>
-                        <div class="cf-info">
-                                <span class="cf-lk-box" title="북마크 개수">
-                                    1000
-                                </span>
-                            <span class="cf-star-box" title="평균평점">
-                                    4.3
-                                    <i title="리뷰 갯수">(341)</i>
-                                </span>
-                            <span class="cf-addr" title="위치정보">제주시 한경면</span>
-                        </div>
-                        <p class="cf-txt">제주 스노클링의 성지 판포포구에 위치한 귤당리에요 이곳의 자랑거리는 푸른 에메랄드 빛 오션뷰를 품은 야외테라스죠. 가슴이 확 트이는
-                            바다를
-                            바라보며
-                            귤청과 우유로 만든 파도빛깔의 바다라떼 한잔 어때요?
-                        </p>
-                        <p class="cf-tag-box">
-                            <span class="tag">#제주카페</span>
-                            <span class="tag">#바다뷰카페</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="swiper-slide cf-card" style="width: 306px; margin-right: 16px;">
-                    <div class="cf-img-box">
-                        <img src="https://static-file.jejupass.com/download/82148.webp?width=736&height=736">
-                    </div>
-                    <a class="cf-cont-box">
-                        <div class="cf-nm">
-                            귤당리
-                        </div>
-                        <div class="cf-info">
-                                <span class="cf-lk-box" title="북마크 개수">
-                                    1000
-                                </span>
-                            <span class="cf-star-box" title="평균평점">
-                                    4.3
-                                    <i title="리뷰 갯수">(341)</i>
-                                </span>
-                            <span class="cf-addr" title="위치정보">제주시 한경면</span>
-                        </div>
-                        <p class="cf-txt">제주 스노클링의 성지 판포포구에 위치한 귤당리에요 이곳의 자랑거리는 푸른 에메랄드 빛 오션뷰를 품은 야외테라스죠. 가슴이 확 트이는
-                            바다를
-                            바라보며
-                            귤청과 우유로 만든 파도빛깔의 바다라떼 한잔 어때요?
-                        </p>
-                        <p class="cf-tag-box">
-                            <span class="tag">#제주카페</span>
-                            <span class="tag">#바다뷰카페</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="swiper-slide cf-card" style="width: 306px; margin-right: 16px;">
-                    <div class="cf-img-box">
-                        <img src="https://static-file.jejupass.com/download/82148.webp?width=736&height=736">
-                    </div>
-                    <a class="cf-cont-box">
-                        <div class="cf-nm">
-                            귤당리
-                        </div>
-                        <div class="cf-info">
-                                <span class="cf-lk-box" title="북마크 개수">
-                                    1000
-                                </span>
-                            <span class="cf-star-box" title="평균평점">
-                                    4.3
-                                    <i title="리뷰 갯수">(341)</i>
-                                </span>
-                            <span class="cf-addr" title="위치정보">제주시 한경면</span>
-                        </div>
-                        <p class="cf-txt">제주 스노클링의 성지 판포포구에 위치한 귤당리에요 이곳의 자랑거리는 푸른 에메랄드 빛 오션뷰를 품은 야외테라스죠. 가슴이 확 트이는
-                            바다를
-                            바라보며
-                            귤청과 우유로 만든 파도빛깔의 바다라떼 한잔 어때요?
-                        </p>
-                        <p class="cf-tag-box">
-                            <span class="tag">#제주카페</span>
-                            <span class="tag">#바다뷰카페</span>
-                        </p>
-                    </a>
-                </li>
-                <li class="swiper-slide cf-card" style="width: 306px; margin-right: 16px;">
-                    <div class="cf-img-box">
-                        <img src="https://static-file.jejupass.com/download/82148.webp?width=736&height=736">
-                    </div>
-                    <a class="cf-cont-box">
-                        <div class="cf-nm">
-                            귤당리
-                        </div>
-                        <div class="cf-info">
-                                <span class="cf-lk-box" title="북마크 개수">
-                                    1000
-                                </span>
-                            <span class="cf-star-box" title="평균평점">
-                                    4.3
-                                    <i title="리뷰 갯수">(341)</i>
-                                </span>
-                            <span class="cf-addr" title="위치정보">제주시 한경면</span>
-                        </div>
-                        <p class="cf-txt">제주 스노클링의 성지 판포포구에 위치한 귤당리에요 이곳의 자랑거리는 푸른 에메랄드 빛 오션뷰를 품은 야외테라스죠. 가슴이 확 트이는
-                            바다를
-                            바라보며
-                            귤청과 우유로 만든 파도빛깔의 바다라떼 한잔 어때요?
-                        </p>
-                        <p class="cf-tag-box">
-                            <span class="tag">#제주카페</span>
-                            <span class="tag">#바다뷰카페</span>
-                        </p>
-                    </a>
-                </li>
+                                <span class="cf-addr" title="위치정보">${dto.addr}</span>
+                            </div>
+                            <p class="cf-txt">
+                                    ${dto.cf_txt}
+                            </p>
+                            <p class="cf-tag-box">
+                                <c:forEach var="cf_tag" items="${dto.cf_tag}">
+                                    <span class="tag">#${cf_tag.cg_nm}&nbsp;</span>
+                                </c:forEach>
+                            </p>
+                        </a>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
         <div class="swiper-pagination" style="position:relative;">
@@ -275,7 +73,8 @@
     <div class="loc-container">
         <div class="loc-slide swiper-container">
             <div class="quick-search swiper-wrapper">
-                <a href="#" class="icon swiper-slide"><span class="label">선호지역 ></span></a>
+                <a href="#" class="icon swiper-slide" style="background-color: #664400;"><span
+                        class="label">선호지역 ></span></a>
                 <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/apgujeong"
                    style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706apgujeong.jpg?small200);"><span
                         class="label">압구정 / 청담</span></a>
@@ -322,6 +121,7 @@
         </div>
     </div>
     <div class="tr-container">
+        <c:set var="on_error" value="this.src='${root}/images/noprofile.jpg'"/>
         <div class="tr-tit-box"><span class="tr-tit tit">투어모집</span> <span class="tr-more-box"><a class="tr-more" href="${root}/comtour/list">더보기</a></span></div>
         <div class="tr-cont-box">
             <c:forEach items="${trlist}" var="trdto">
@@ -352,7 +152,8 @@
                             </div>
                     <div class="tr-cont-card">
                     <div class="tr-cont-tit"> ${trdto.tr_nm}</div>
-                    <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}"> ${trdto.ur_nk}</div>
+
+                    <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}" onError="${on_error}"> ${trdto.ur_nk}</div>
                     <div class="tr-cont-date"><i class="fa-regular fa-calendar"></i> &nbsp;${trdto.s_date}~ ${trdto.e_date}</div>
                     <div class="tr-cont-txt"><i class="fa-regular fa-message"></i>&nbsp;${trdto.tr_txt}</div>
                     <hr class="tr-card-hr">
@@ -373,7 +174,8 @@
                         <a href="cafe/detail?cf_id=${fddto.cf_id}"><span class="fd_cf_nm"><i class="bi bi-geo-alt-fill" id="cf-loc"></i>&nbsp;${fddto.cf_nm}</span></a></div>
                    <a href="${root}/comfeed/main/">
                    <div class="fd-txt-area">
-                        <div class="fd-cont-info"><img class="tr-prf" src="${root}/res/prfimg/${fddto.ur_img}">&nbsp;&nbsp;${fddto.ur_nk}<span class="fd-lk-box">&nbsp;${fddto.likes}&nbsp;&nbsp;</span></div>
+
+                        <div class="fd-cont-info"><img class="tr-prf" src="${root}/res/prfimg/${fddto.ur_img}" onError="${on_error}">&nbsp;&nbsp;${fddto.ur_nk}<span class="fd-lk-box">&nbsp;${fddto.likes}&nbsp;&nbsp;</span></div>
                         <div class="fd-cont-txt">${fddto.fd_txt}</div>
                     </div></a>
                 </div>
@@ -383,7 +185,7 @@
 </div>
 
 <script>
-    var swiper = new Swiper(".best-slide", {
+    var best_swiper = new Swiper(".best-slide", {
         slidesPerView: 3, // 동시에 보여줄 슬라이드 갯수
         spaceBetween: 30, // 슬라이드간 간격
         slidesPerGroup: 3, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
@@ -395,6 +197,15 @@
             clickable: true,
             bulletClass: "swiper-pagination-bullet",
             bulletActiveClass: "swiper-pagination-bullet-active"
+        }
+    })
+
+    var loc_swiper = new Swiper(".loc-slide ", {
+        slidesPerView: 8, // 동시에 보여줄 슬라이드 갯수
+        spaceBetween: 25, // 슬라이드간 간격
+        loopFillGroupWithBlank: true,
+        pagination: {
+            clickable: true
         }
     })
 </script>

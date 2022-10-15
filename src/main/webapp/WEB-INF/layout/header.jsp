@@ -139,7 +139,7 @@
                 location.reload();
             }
         })
-    })
+    });
 
     //세션제거
     $("#del-session-btn").click(function () {
@@ -152,7 +152,7 @@
                 location.reload();
             }
         })
-    })
+    });
 </script>
 </body>
 </html>
