@@ -1,7 +1,10 @@
 package bit.data.controller;
 
 import bit.data.dto.*;
-import bit.data.service.*;
+import bit.data.service.CafeServiceInter;
+import bit.data.service.MypageServiceInter;
+import bit.data.service.PlanServiceInter;
+import bit.data.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -268,17 +271,38 @@ public class MypageController {
 
         return "/cmain/mypage/cont_pl";
     }
+
     @GetMapping("/plandetail")
     @ResponseBody
-    public PlanDto planDetail(@RequestParam String pl_nm)
-    {
-        PlanDto dto = planService.selectPlanByName(pl_nm);
-        List<PlanLocDto> loclist = planService.selectPlanLoc(dto.getPl_id());
-        for (PlanLocDto locdto:loclist){
-            locdto.setLoc_x(cafeService.selectCafe(locdto.getCf_id()).getLoc_x());
-            locdto.setLoc_y(cafeService.selectCafe(locdto.getCf_id()).getLoc_y());
-        }
-        dto.setPl_loc(loclist);
-        return dto;
+    public List<PlanLocDto> planDetail(int pl_id) {
+        List<PlanLocDto> list = planService.selectPlanLoc(pl_id);
+        return list;
     }
+
+    @GetMapping("/sel_pl_cf_list")
+    @ResponseBody
+    public List<PlanCfTimeDto> PlanCfTimeList(String v_date) {
+
+        java.sql.Date sql_date = java.sql.Date.valueOf(v_date);
+
+        List<PlanCfTimeDto> list = planService.selectPlCfList(sql_date);
+//        System.out.println("Test v_date : " + v_date);
+//        System.out.println("Test sql date : " + sql_date););
+//        System.out.println("Test cf nm : " + list.get(0).getCf_nm();
+        return list;
+    }
+
+//    @GetMapping("/plandetail")
+//    @ResponseBody
+//    public PlanDto planDetail(@RequestParam String pl_nm)
+//    {
+//        PlanDto dto = planService.selectPlanByName(pl_nm);
+//        List<PlanLocDto> loclist = planService.selectPlanLoc(dto.getPl_id());
+//        for (PlanLocDto locdto:loclist){
+//            locdto.setLoc_x(cafeService.selectCafe(locdto.getCf_id()).getLoc_x());
+//            locdto.setLoc_y(cafeService.selectCafe(locdto.getCf_id()).getLoc_y());
+//        }
+//        dto.setPl_loc(loclist);
+//        return dto;
+//    }
 }

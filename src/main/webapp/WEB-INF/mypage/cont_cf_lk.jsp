@@ -144,7 +144,6 @@
     </ul>
 </div>
 <script>
-    
     //북마크 제거 버튼(-) 클릭시 db data delete
     $(".un-bk").click(function () {
         var ur_id = '${sessionScope.login_id }';

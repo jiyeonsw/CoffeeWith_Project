@@ -38,6 +38,11 @@
             box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
         }
 
+        a.cmt-cf-nm-box:hover {
+            text-decoration: rgba(50, 50, 93, 0.25) underline;
+            text-underline-position: under;
+        }
+
         div.cf-cmt-img {
             grid-area: cfimg;
             width: 90px;
@@ -122,13 +127,17 @@
 <div class="cmt-container">
     <c:forEach var="dto" items="${list}">
         <div class="cmt-box">
-            <div class="cf-cmt-img">
-                <img src="${root}/images/cafeimg/${dto.ci_nm}"
-                     onError="this.onerror=null; this.src='${root}/images/noimage.png'">
-            </div>
-            <div class="cmt-cf-nm">
-                    ${dto.cf_nm}
-            </div>
+            <a href="${root}/cafe/detail?cf_id=${dto.cf_id}">
+                <div class="cf-cmt-img">
+                    <img src="${root}/images/cafeimg/${dto.ci_nm}"
+                         onError="this.onerror=null; this.src='${root}/images/noimage.png'">
+                </div>
+            </a>
+            <a href="${root}/cafe/detail?cf_id=${dto.cf_id}" class="cmt-cf-nm-box">
+                <div class="cmt-cf-nm">
+                        ${dto.cf_nm}
+                </div>
+            </a>
             <div class="cmt-icon-box">
                 <span class="my-cmt-update" cm_id="${dto.cm_id}" star="${dto.star}" txt="${dto.cm_txt}">
                     <i class="fa-solid fa-pen-to-square"></i>

@@ -1,11 +1,13 @@
 package bit.data.dao;
 
+import bit.data.dto.PlanCfTimeDto;
 import bit.data.dto.PlanDto;
 import bit.data.dto.PlanLocDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -45,4 +47,10 @@ public class PlanDao implements PlanDaoInter {
     public List<PlanLocDto> selectPlanLoc(int pl_id) {
         return session.selectList(ns + "selectPlanLoc", pl_id);
     }
+
+    @Override
+    public List<PlanCfTimeDto> selectPlCfList(Date v_date) {
+        return session.selectList(ns + "selectPlCfList", v_date);
+    }
+
 }
