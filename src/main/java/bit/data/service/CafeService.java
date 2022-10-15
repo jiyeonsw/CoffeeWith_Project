@@ -181,4 +181,14 @@ public class CafeService implements CafeServiceInter {
     public List<CafeCtgDto> selectAllCtg() {
         return cafeDao.selectAllCtg();
     }
+
+    @Override
+    public List<CafeImgDto> selectFdImgByCf(int cf_id) {
+        return cafeDao.selectFdImgByCf(cf_id);
+    }
+
+    @Override
+    public List<CafeImgDto> selectCmImgByCf(int cf_id) {
+        return cafeDao.selectCmImgByCf(cf_id);
+    }
 }

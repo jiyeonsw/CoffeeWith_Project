@@ -121,6 +121,7 @@
         </div>
     </div>
     <div class="tr-container">
+        <c:set var="on_error" value="this.src='${root}/images/noprofile.jpg'"/>
         <div class="tr-tit-box"><span class="tr-tit tit">투어모집</span> <span class="tr-more-box"><a class="tr-more" href="${root}/comtour/list">더보기</a></span></div>
         <div class="tr-cont-box">
             <c:forEach items="${trlist}" var="trdto">
@@ -151,7 +152,8 @@
                             </div>
                     <div class="tr-cont-card">
                     <div class="tr-cont-tit"> ${trdto.tr_nm}</div>
-                    <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}"> ${trdto.ur_nk}</div>
+
+                    <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}" onError="${on_error}"> ${trdto.ur_nk}</div>
                     <div class="tr-cont-date"><i class="fa-regular fa-calendar"></i> &nbsp;${trdto.s_date}~ ${trdto.e_date}</div>
                     <div class="tr-cont-txt"><i class="fa-regular fa-message"></i>&nbsp;${trdto.tr_txt}</div>
                     <hr class="tr-card-hr">
@@ -172,7 +174,8 @@
                         <a href="cafe/detail?cf_id=${fddto.cf_id}"><span class="fd_cf_nm"><i class="bi bi-geo-alt-fill" id="cf-loc"></i>&nbsp;${fddto.cf_nm}</span></a></div>
                    <a href="${root}/comfeed/main/">
                    <div class="fd-txt-area">
-                        <div class="fd-cont-info"><img class="tr-prf" src="${root}/res/prfimg/${fddto.ur_img}">&nbsp;&nbsp;${fddto.ur_nk}<span class="fd-lk-box">&nbsp;${fddto.likes}&nbsp;&nbsp;</span></div>
+
+                        <div class="fd-cont-info"><img class="tr-prf" src="${root}/res/prfimg/${fddto.ur_img}" onError="${on_error}">&nbsp;&nbsp;${fddto.ur_nk}<span class="fd-lk-box">&nbsp;${fddto.likes}&nbsp;&nbsp;</span></div>
                         <div class="fd-cont-txt">${fddto.fd_txt}</div>
                     </div></a>
                 </div>

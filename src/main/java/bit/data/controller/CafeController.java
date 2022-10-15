@@ -16,6 +16,7 @@ import util.ChangeName;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,8 +79,46 @@ public class CafeController {
     }
     @GetMapping("/img")
     @ResponseBody
-    public List<CafeImgDto> selectCafeImgAll(int cf_id){
-        return cafeService.selectCafeImgAll(cf_id);
+    public Map<String,Object> selectCafeImgAll(int cf_id){
+        Map<String,Object> map=new HashMap<>();
+        List<CafeImgDto> all_img_list=cafeService.selectCafeImgAll(cf_id);
+        int ci_cnt=cafeService.selectCafeImg(cf_id).size();
+        int cmi_cnt=cafeService.selectCmImgByCf(cf_id).size();
+        int fdi_cnt=cafeService.selectFdImgByCf(cf_id).size();
+
+        if (ci_cnt>0){
+            String cf_img =cafeService.selectCafeImg(cf_id).get(0).getCi_nm();
+            map.put("cf_img",cf_img);
+            map.put("ci_path",cafeService.selectCafeImg(cf_id).get(0).getCi_path());
+            //System.out.println(cafeService.selectCafeImg(cf_id).get(0).getCi_path());
+        }
+        if (cmi_cnt>0){
+            String cm_img =cafeService.selectCmImgByCf(cf_id).get(0).getCi_nm();
+            map.put("cm_img",cm_img);
+            map.put("cmi_path",cafeService.selectCmImgByCf(cf_id).get(0).getCi_path());}
+
+        if (fdi_cnt>0){
+            String fd_img =cafeService.selectFdImgByCf(cf_id).get(0).getCi_nm();
+            map.put("fd_img",fd_img);
+            map.put("fdi_path",cafeService.selectFdImgByCf(cf_id).get(0).getCi_path());
+        }
+
+        map.put("all_img_list",all_img_list);
+        return map;
+    }
+
+    @GetMapping("/img_ctg")
+    @ResponseBody
+    public List<CafeImgDto> selectImgCtg(int cf_id,String ctg){
+        List<CafeImgDto> list=new ArrayList<>();
+        if(ctg.equals("cf")){
+            list= cafeService.selectCafeImg(cf_id);
+        }else if(ctg.equals("cm")){
+            list= cafeService.selectCmImgByCf(cf_id);
+        }else if(ctg.equals("fd")){
+            list= cafeService.selectFdImgByCf(cf_id);
+        }
+        return list;
     }
 
     @GetMapping("/select_cmt")
