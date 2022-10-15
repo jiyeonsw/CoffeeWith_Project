@@ -123,9 +123,7 @@
             border: 2px solid white;
             border-bottom-color: lightgray ;
         }
-        div.cf-middle div.btn-cf-mid:hover{
-            border-bottom-color: Sienna ;
-        }
+
         div.cf-bottom{
             padding-top: 30px;
             display: flex;
@@ -387,6 +385,10 @@
             $("#btn-cf-info").css("border-bottom-color","Sienna");
             cfMap(cf_id);
 
+            $("div.btn-cf-mid").mouseover(function (){
+                $(this).siblings().css("border-bottom-color","lightgray");
+                $(this).css("border-bottom-color","Sienna");
+            });
         });//fun
 
     </script>
@@ -650,28 +652,30 @@
         $(document).on("click",".cm-del",function (){
             var cm_id=$(this).attr("cm_id");
             var cf_id=$(this).attr("cf_id");
-            //console.log(cm_id);
-            $.ajax({
-                type: "get",
-                url: "delete_cmt",
-                data: {"cm_id": cm_id, "cf_id": cf_id},
-                dataType: "json",
-                success: function (res) {
-                    $("div#btn-cm-link").trigger('click');
-                    var cm_cnt = res.cm_cnt;
-                    var cm_star=res.cm_star;
-                    console.log(cm_star);
-                    $("span.cm-cnt").text(cm_cnt);
-                    var pre_star = $("span.cm-star-avg").text();
-                    console.log(pre_star);
-                    if (cm_star==-1){
-                        $("span.cm-star").css("color",'gray');
-                        $("span.cm-star-avg").text("-");
-                    }else {
-                        $("span.cm-star-avg").text(cm_star);
-                    }
-                }//succ
-            });//ajax
+            if (confirm("정말 삭제하실 건가요? ")) {
+                //console.log(cm_id);
+                $.ajax({
+                    type: "get",
+                    url: "delete_cmt",
+                    data: {"cm_id": cm_id, "cf_id": cf_id},
+                    dataType: "json",
+                    success: function (res) {
+                        $("div#btn-cm-link").trigger('click');
+                        var cm_cnt = res.cm_cnt;
+                        var cm_star = res.cm_star;
+                        console.log(cm_star);
+                        $("span.cm-cnt").text(cm_cnt);
+                        var pre_star = $("span.cm-star-avg").text();
+                        console.log(pre_star);
+                        if (cm_star == -1) {
+                            $("span.cm-star").css("color", 'gray');
+                            $("span.cm-star-avg").text("-");
+                        } else {
+                            $("span.cm-star-avg").text(cm_star);
+                        }
+                    }//succ
+                });//ajax
+            }
         });//리뷰삭제
 
         // 리뷰수정클릭시 내용 넣기
@@ -718,7 +722,11 @@
             var rg=$(this).attr("rg");
             var rs=$(this).attr("rs");
             var rl=$(this).attr("rl");
+            $(this).parent().find("a").attr("id","other-cmt");
+            $(this).attr("id","this-cmt");
 
+            var comment='댓글 로딩 중 &nbsp;<i class="fa-solid fa-spinner"></i>';
+            $("div.cm-cm-list").html(comment);
             if(login_ok=="yes"){
                 ccf+='<div class="ccform-div">';
                 ccf+='<form class="ccform">';
@@ -743,13 +751,15 @@
             if($("div").hasClass("ccform-div")){
                 $('.ccform')[0].reset();}
             ccList(${dto.cf_id},rg);
-            $(this).next().slideToggle(500);
+            $(this).next().slideToggle(1000);
             $(this).find("i.view-cmt").toggleClass("bi-caret-down-fill");
             $(this).find("i.view-cmt").toggleClass("bi-caret-up-fill");
         });//리뷰댓글보기
 
         //리뷰댓글등록
         $(document).on("click",".btn-cc-save",function (){
+            var cmcm_cnt = Number($("#this-cmt").find("span.cmcm-cnt").text());
+
             var rg=$(this).attr("rg");
             //console.log(rg);
             var cf_id=$(this).attr("cf_id");
@@ -774,7 +784,9 @@
                     ccList(cf_id,rg);
                     var cm_cnt = res.cm_cnt;
                     $("span.cm-cnt").text(cm_cnt);
-
+                    cmcm_cnt = cmcm_cnt+1;
+                    console.log(cmcm_cnt);
+                    $("#this-cmt").find("span.cmcm-cnt").text(cmcm_cnt);
                 }//succ
             });//ajax
         });//리뷰댓글등록
@@ -919,6 +931,9 @@
             })//aj
         });//사진카테고리클릭
 
+
+
+
         ////////////////////////////////////////////////////////////////// 일반 함수 //////////////////////////////////////////////////////////////////
         //파일 사진 확인
         function checkExtension(fileName,fileSize){
@@ -953,7 +968,7 @@
 
         // 리뷰리스트
         function cmList(){
-            var s="<div class='cm-box'>";
+            var s='<div class="cm-box">';
             var cm_cnt=${dto.cm_cnt};
             if(cm_cnt==0){s+='<div>아직 리뷰가 없습니다. 첫번째 리뷰를 남겨주세요!</div><br>';}
             if(login_ok=="yes"){
@@ -991,7 +1006,7 @@
 
         //리뷰리스트출력
         function cmListOnly(cm_order){
-            var cl="";
+            var cl='';
             $.ajax({
                 type: "get",
                 url: "select_cmt_order",
@@ -999,7 +1014,7 @@
                 data: {"cf_id": cf_id,"cm_order":cm_order,"rl":0},
                 success: function (res) {
                     cl+='<div class="cm-order-box"><label><input type="checkbox" id="only-img-review">&nbsp;사진리뷰만</input></label><span id="cm-order" ><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
-                    cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></span></div><br><br>';
+                    cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></span></div><br><div id="cm-list_more">';
                     var on_error="this.src='${root}/images/noprofile.jpg'";
                     $.each(res, function (i, elt) {
                         if(elt.rl==0){
@@ -1041,15 +1056,14 @@
                                 cl+='<span class="carousel-control-next-icon"></span></button></div>';
                             }
                             cl+='<pre>'+elt.cm_txt+'</pre>';
-                            cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'><span class="view-cmt-txt"> 댓글보기 ('+(elt.cm_cnt-1)+')</span> <i class="bi bi-caret-down-fill view-cmt"></i> </a>';
+                            cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'><span class="view-cmt-txt"> 댓글보기 (<span class="cmcm-cnt">'+ (elt.cm_cnt-1)+'</span>)</span> <i class="bi bi-caret-down-fill view-cmt"></i> </a>';
                             cl+='<div class="cmt-show-hide"><div class="cm-cm-form" ></div>';
                             cl+='<div class="cm-list-box"><i class="bi bi-arrow-return-right" style="margin-top: 10px;"></i>&nbsp;&nbsp;';
-                            cl+='<div class="cm-cm-list">댓글이 없어요&nbsp;<i class="fa-regular fa-face-sad-tear"></i></div></div></div></div>';
+                            cl+='<div class="cm-cm-list">댓글 로딩 중&nbsp;<i class="fa-solid fa-spinner"></i></div></div></div></div>';
                         }
                     });//each
-                    cl+='</div>';
+                    cl+='</div></div>';
                     $("div.cf-bottom-cmlist").html(cl);
-
                 }//succ
             });//ajax
         }
@@ -1066,8 +1080,11 @@
                 success: function (res) {
                     var ccl='';
                     var on_error="this.src='${root}/images/noprofile.jpg'";
+                    var cnt=0;
                     $.each(res, function (i, elt) {
                         if(elt.rg==rg){
+
+                            cnt++;
                             ccl+='<div style="width: 620px; ">';
                             ccl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="'+on_error+'"  style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
@@ -1077,8 +1094,11 @@
                             ccl+='<div><span>'+elt.w_date+'</span></div>';
                             ccl+='<pre>'+elt.cm_txt+'</pre><hr>';
                         }
-                        $("div.cm-cm-list").html(ccl);
                     });//each
+                    if(cnt===0){
+                        ccl+='댓글이 없어요 &nbsp;<i class="fa-regular fa-face-sad-tear"></i>';
+                    }
+                    $("div.cm-cm-list").html(ccl);
                 }
             });//ajax
         }//리뷰댓글리스트
