@@ -91,7 +91,7 @@
 <div class="bk_container">
     <c:if test="${totalCount==0}">
         <div>
-            <h4>등록된 글이 없습니다</h4>
+            <h4>등록된 북마크가 없습니다</h4>
         </div>
     </c:if>
     <c:if test="${totalCount>0}">

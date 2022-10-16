@@ -46,15 +46,16 @@
 
         .btnA {
             width: 100px;
-            border: #664400;
+            border: 1px solid #664400;
+            border-radius: 5px;
             color: #664400;
-
             background-color: white;
         }
 
         .btnB {
             width: 100%;
-            border: #664400;
+            border: 1px solid #664400;
+            border-radius: 5px;
             background-color: #664400;
             background-color: white;
         }
@@ -72,6 +73,10 @@
             width: 15px; /*Desired width*/
             height: 15px; /*Desired height*/
             cursor: pointer;
+        }
+
+        a {
+            color: #664400;
         }
 
     </style>
@@ -237,8 +242,10 @@
             data: {"emailId": inpEmail},
             success: function (res) {
                 $("#inp-email").attr("disabled", false);
-                if (res.countId == 0) {
+                if (inpEmail == "") {
                     // console.log(res.countId)
+                    $("div.id-success").text("입력하신 이메일 아이디가 없습니다.").attr("value", "");
+                } else if (res.countId == 0) {
                     $("div.id-success").text("해당 이메일 아이디로 가입하실 수 있습니다.").attr("value", "Y");
                 } else {
                     $("div.id-success").text("해당 이메일 아이디는 가입이 불가능합니다.").attr("value", "N");

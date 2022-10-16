@@ -10,7 +10,7 @@
 
 div.bk-card {
     width: 270px;
-    height: 270px;
+    height: 280px;
     overflow: hidden;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
@@ -66,4 +66,52 @@ div.bk-txt-area:hover {
 .page-item.active .page-link {
     background-color: #664400;
     border-color: #664400;
+}
+
+.pl-md-head {
+    padding: 15px;
+}
+
+.pl_md_body {
+    padding: 10px;
+}
+
+.pl_md_date {
+    margin-bottom: 10px;
+}
+
+.pl-md-detail {
+    display: grid;
+}
+
+.pl_detail_date {
+    display: grid;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    padding: 20px;
+    gap: 10px;
+}
+
+.pl_detail_time {
+    display: grid;
+    grid-template-areas:
+            "cf_img cf_nm"
+            "cf_img v_time";
+    grid-template-columns: 80px 1fr;
+}
+
+.pl_cf_img {
+    grid-area: cf_img;
+}
+
+.pl_cf_nm {
+    grid-area: cf_nm;
+}
+
+.pl_v_time {
+    grid-area: v_time;
+}
+
+span.pl-cf-nm:hover {
+    text-decoration: rgba(50, 50, 93, 0.25) underline;
+    text-underline-position: under;
 }

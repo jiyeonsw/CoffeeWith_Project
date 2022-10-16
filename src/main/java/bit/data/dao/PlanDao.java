@@ -7,8 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PlanDao implements PlanDaoInter {
@@ -49,8 +49,8 @@ public class PlanDao implements PlanDaoInter {
     }
 
     @Override
-    public List<PlanCfTimeDto> selectPlCfList(Date v_date) {
-        return session.selectList(ns + "selectPlCfList", v_date);
+    public List<PlanCfTimeDto> selectPlCfList(Map map) {
+        return session.selectList(ns + "selectPlCfList", map);
     }
 
 }

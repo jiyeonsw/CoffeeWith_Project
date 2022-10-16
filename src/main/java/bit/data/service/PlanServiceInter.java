@@ -20,5 +20,5 @@ public interface PlanServiceInter {
 
     public List<PlanLocDto> selectPlanLoc(int pl_id);
 
-    public List<PlanCfTimeDto> selectPlCfList(Date v_date);
+    public List<PlanCfTimeDto> selectPlCfList(Date v_date, int pl_id);
 }

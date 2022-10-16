@@ -41,10 +41,14 @@ public class MypageController {
 //        System.out.println("mypage logId:" + loginId);
             int cfLkCnt = mypageService.selectCfLkCnt(loginId);
             int cfCmtCnt = mypageService.selectCfCmtCnt(loginId);
-//        System.out.println("cflk :" + cfLkCnt);
+            int myPlCnt = mypageService.selectMyPlCnt(loginId);
 //        System.out.println("cfCmt :" + cfCmtCnt);
+
             session.setAttribute("cfLkCnt", cfLkCnt);
             session.setAttribute("cfCmtCnt", cfCmtCnt);
+            session.setAttribute("myPlCnt", myPlCnt);
+
+            System.out.println("myPlCnt :" + myPlCnt);
 
             return "/cwith/mypage/mypage";
         }
@@ -92,12 +96,6 @@ public class MypageController {
         no = totalCount - (currentPage - 1) * perPage;
 
         testNum = startNum + perPage;
-
-//        System.out.println("startPage : " + startPage);
-//        System.out.println("endPage : " + endPage);
-//        System.out.println("startNum : " + startNum);
-//        System.out.println("no : " + no);
-//        System.out.println("testNum" + testNum);
 
         List<MyPageCafeLikeDto> list = mypageService.selectLikeCfInfo(loginId);
         List<MyPageCafeLikeDto> slist = new ArrayList<>();
@@ -181,8 +179,6 @@ public class MypageController {
         int loginId = (int) session.getAttribute("login_id");
         UserDto dto = userService.selectDataById(loginId);
 
-//        System.out.println(dto.getLoc_si());
-//        System.out.println(dto.getLoc_gu());
         model.addAttribute("email_id", dto.getEmail_id());
         model.addAttribute("ur_nm", dto.getUr_nm());
         model.addAttribute("ur_nk", dto.getUr_nk());
@@ -233,12 +229,6 @@ public class MypageController {
         no = totalCount - (currentPage - 1) * perPage;
         testNum = startNum + perPage;
 
-//        System.out.println("startPage : " + startPage);
-//        System.out.println("endPage : " + endPage);
-//        System.out.println("startNum : " + startNum);
-//        System.out.println("no : " + no);
-//        System.out.println("testNum" + testNum);
-
         List<PlanDto> list = planService.selectMyPlans(loginId);
         List<PlanDto> slist = new ArrayList<>();
 
@@ -281,28 +271,13 @@ public class MypageController {
 
     @GetMapping("/sel_pl_cf_list")
     @ResponseBody
-    public List<PlanCfTimeDto> PlanCfTimeList(String v_date) {
+    public List<PlanCfTimeDto> PlanCfTimeList(String v_date, int pl_id) {
 
         java.sql.Date sql_date = java.sql.Date.valueOf(v_date);
 
-        List<PlanCfTimeDto> list = planService.selectPlCfList(sql_date);
-//        System.out.println("Test v_date : " + v_date);
-//        System.out.println("Test sql date : " + sql_date););
-//        System.out.println("Test cf nm : " + list.get(0).getCf_nm();
+        List<PlanCfTimeDto> list = planService.selectPlCfList(sql_date, pl_id);
+
         return list;
     }
 
-//    @GetMapping("/plandetail")
-//    @ResponseBody
-//    public PlanDto planDetail(@RequestParam String pl_nm)
-//    {
-//        PlanDto dto = planService.selectPlanByName(pl_nm);
-//        List<PlanLocDto> loclist = planService.selectPlanLoc(dto.getPl_id());
-//        for (PlanLocDto locdto:loclist){
-//            locdto.setLoc_x(cafeService.selectCafe(locdto.getCf_id()).getLoc_x());
-//            locdto.setLoc_y(cafeService.selectCafe(locdto.getCf_id()).getLoc_y());
-//        }
-//        dto.setPl_loc(loclist);
-//        return dto;
-//    }
 }

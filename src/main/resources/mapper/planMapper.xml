@@ -29,7 +29,7 @@
         ORDER BY v_date ASC, seq ASC;
     </select>
 
-    <select id="selectPlCfList" resultType="plctdto" parameterType="Date">
+    <select id="selectPlCfList" resultType="plctdto" parameterType="Map">
         SELECT c.cf_nm, c.ci_nm, c.cf_id, po.v_time
         FROM pl_loc po
                  LEFT JOIN (SELECT c.cf_id, c.cf_nm, ci.ci_nm
@@ -39,5 +39,6 @@
                             GROUP BY c.cf_nm) AS c
                            ON po.cf_id = c.cf_id
         WHERE v_date = #{v_date}
+          AND pl_id = #{pl_id}
     </select>
 </mapper>

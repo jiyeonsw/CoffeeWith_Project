@@ -4,8 +4,8 @@ import bit.data.dto.PlanCfTimeDto;
 import bit.data.dto.PlanDto;
 import bit.data.dto.PlanLocDto;
 
-import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface PlanDaoInter {
     public void insertPlan(PlanDto dto);
@@ -20,5 +20,5 @@ public interface PlanDaoInter {
 
     public List<PlanLocDto> selectPlanLoc(int pl_id);
 
-    public List<PlanCfTimeDto> selectPlCfList(Date v_date);
+    public List<PlanCfTimeDto> selectPlCfList(Map map);
 }

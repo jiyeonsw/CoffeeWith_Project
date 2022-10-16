@@ -77,8 +77,8 @@
                     </div>
                     <div class="pl-date">
                         <span>
-                            <fmt:formatDate value="${dto.s_date}" pattern="MM-dd" type="date"/> ~ <fmt:formatDate
-                                value="${dto.e_date}" pattern="MM-dd" type="date"/>
+                            <fmt:formatDate value="${dto.s_date}" pattern="MM월 dd일" type="date"/> ~ <fmt:formatDate
+                                value="${dto.e_date}" pattern="MM월 dd일" type="date"/>
                         </span>
                     </div>
                 </div>
@@ -131,15 +131,16 @@
                 </button>
             </div>
             <div class="pl-md-body mx-3">
-                <div class="pl-md-nm">
-                    <h4></h4>
-                </div>
-                <div class="pl-md-intro">
-                </div>
-                <div class="pl-md-date">
+                <div class="pl-md-head">
+                    <div class="pl-md-nm">
+                        <h4></h4>
+                    </div>
+                    <div class="pl-md-intro">
+                    </div>
+                    <div class="pl-md-date">
+                    </div>
                 </div>
                 <div class="pl-md-detail">
-
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
                     <button type="submit" class="close" data-bs-dismiss="modal">닫기</button>
@@ -168,20 +169,21 @@
             async: false, // 동기처리하기
             success: function (res) {
                 $.each(res, function (i, ele) {
-                    s += '<div class="pl_detail_date">' + ele.v_date;
+                    s += '<div class="pl_detail_date">';
+                    s += '<h5>' + ele.v_date + '</h5>';
                     let v_date = ele.v_date;
                     $.ajax({
                         type: "get",
                         url: "sel_pl_cf_list",
                         dataType: "json",
-                        data: {"v_date": v_date},
+                        data: {"v_date": v_date, "pl_id": pl_id},
                         async: false, // 동기처리하기
                         success: function (res2) {
                             $.each(res2, function (idx, item) {
-                                s += '<a href="${root}/cafe/detail?cf_id=' + item.cf_id + '">';
-                                s += '<span>' + item.cf_nm + '</span>';
-                                s += '<span><img src="${root}/images/cafeimg/' + item.ci_nm + '" onerror="${root}/images/noprofile.jpg" style="width:30px"></span>';
-                                s += '<span>' + item.v_time + '</span>';
+                                s += '<a class="pl_detail_time" href="${root}/cafe/detail?cf_id=' + item.cf_id + '">';
+                                s += '<span class="pl_cf_img"><img src="${root}/images/cafeimg/' + item.ci_nm + '" onerror="${root}/images/noprofile.jpg" style="width:60px"></span>';
+                                s += '<span class="pl_cf_nm">' + item.cf_nm + '</span>';
+                                s += '<span class="pl_v_time">' + item.v_time + '</span>';
                                 s += '</a>';
                             })
                         }

@@ -125,6 +125,12 @@
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
 <div class="cmt-container">
+    <c:if test="${sessionScope.cfCmtCnt==0}">
+        <div>
+            <h4>등록된 리뷰가 없습니다</h4>
+        </div>
+    </c:if>
+    <c:if test="${sessionScope.cfCmtCnt>0}">
     <c:forEach var="dto" items="${list}">
         <div class="cmt-box">
             <a href="${root}/cafe/detail?cf_id=${dto.cf_id}">
@@ -200,6 +206,7 @@
         </div>
     </div>
 </div>
+</c:if>
 <script>
 
     /* 수정 버튼 클릭시 modal */
