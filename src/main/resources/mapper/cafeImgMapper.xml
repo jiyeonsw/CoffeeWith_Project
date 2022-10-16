@@ -6,17 +6,35 @@
 		SELECT * FROM cf_img WHERE cf_id=#{cf_id} AND fd_id IS NULL AND cm_id IS NULL
 	</select>
 	<select id="selectCafeImgAll" parameterType="int" resultType="cidto">
-		SELECT ci.ci_id, ci.cf_id, ci.ci_nm, ci.ci_path, cm.cm_txt
+		SELECT ci.ci_id, ci.cf_id, ci.ci_nm, ci.ci_path, cm.cm_txt, fd.fd_txt, ur.ur_id, ur.ur_nk, ur.ur_img
 		FROM cf_img ci
-		    left join cf_cmt cm
-		        on ci.cm_id = cm.cm_id
+				 left join cf_cmt cm
+						   on ci.cm_id = cm.cm_id
+				 left join fd
+						   on fd.fd_id = ci.fd_id
+				 left join ur
+						   on ur.ur_id = cm.ur_id or ur.ur_id = fd.ur_id
 		WHERE ci.cf_id=#{cf_id}
-		ORDER BY ci.ci_id desc;
+		ORDER BY ci.ci_id desc
 	</select>
 	<insert id="insertCmtImg" parameterType="cidto">
 		INSERT INTO cf_img (cf_id, ci_nm, ci_path, w_date, cm_id) VALUES (#{cf_id}, #{ci_nm}, '/images/upload/',now(), #{cm_id} )
 	</insert>
 	<select id="selectCmtImg" parameterType="Map" resultType="cidto">
 		SELECT * FROM cf_img WHERE cf_id=#{cf_id} AND fd_id IS NULL AND cm_id =#{cm_id}
+	</select>
+	<select id="selectFdImgByCf" parameterType="int" resultType="cidto">
+		SELECT * FROM cf_img WHERE cf_id=#{cf_id} AND fd_id IS NOT NULL AND cm_id IS NULL
+	</select>
+	<select id="selectCmImgByCf" parameterType="int" resultType="cidto">
+		SELECT * FROM cf_img WHERE cf_id=#{cf_id} AND fd_id IS NULL AND cm_id IS NOT NULL
+	</select>
+	<select id="selectCiNull" parameterType="int" resultType="cidto">
+		select cm.cm_id
+		from cf_cmt cm
+				 left join cf_img ci
+						   on cm.cm_id=ci.cm_id
+		where cm.cf_id = ${cf_id} and ci.ci_nm is null
+
 	</select>
 </mapper>

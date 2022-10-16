@@ -16,6 +16,7 @@ import util.ChangeName;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,14 +35,16 @@ public class CafeController {
     public ModelAndView selectCafe(int cf_id){
         ModelAndView mview=new ModelAndView();
         CafeDto dto=cafeService.selectCafe(cf_id);
-        //댓글수 댓글별점평균
-        List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
+
+        //댓글별점평균
+
         //리뷰수
         int cm_cnt=cafeService.selectCafeCmt(cf_id).size();
         dto.setCm_cnt(cm_cnt);
         //리뷰별점 평균
         int star_cnt=0;
         double sum=0;
+        List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
         for (CafeCmtDto dtom : listm){
             if(dtom.getStar()==0){continue;}
             sum+=dtom.getStar();
@@ -76,10 +79,48 @@ public class CafeController {
     }
     @GetMapping("/img")
     @ResponseBody
-    public List<CafeImgDto> selectCafeImgAll(int cf_id){
-        return cafeService.selectCafeImgAll(cf_id);
-    }
+    public Map<String,Object> selectCafeImgAll(int cf_id){
+        Map<String,Object> map=new HashMap<>();
+        List<CafeImgDto> all_img_list=cafeService.selectCafeImgAll(cf_id);
+        int ci_cnt=cafeService.selectCafeImg(cf_id).size();
+        int cmi_cnt=cafeService.selectCmImgByCf(cf_id).size();
+        int fdi_cnt=cafeService.selectFdImgByCf(cf_id).size();
 
+        if (ci_cnt>0){
+            String cf_img =cafeService.selectCafeImg(cf_id).get(0).getCi_nm();
+            map.put("cf_img",cf_img);
+            map.put("ci_path",cafeService.selectCafeImg(cf_id).get(0).getCi_path());
+            //System.out.println(cafeService.selectCafeImg(cf_id).get(0).getCi_path());
+        }
+        if (cmi_cnt>0){
+            String cm_img =cafeService.selectCmImgByCf(cf_id).get(0).getCi_nm();
+            map.put("cm_img",cm_img);
+            map.put("cmi_path",cafeService.selectCmImgByCf(cf_id).get(0).getCi_path());}
+
+        if (fdi_cnt>0){
+            String fd_img =cafeService.selectFdImgByCf(cf_id).get(0).getCi_nm();
+            map.put("fd_img",fd_img);
+            map.put("fdi_path",cafeService.selectFdImgByCf(cf_id).get(0).getCi_path());
+        }
+
+        map.put("all_img_list",all_img_list);
+        return map;
+    }
+    @GetMapping("/img_ctg")
+    @ResponseBody
+    public List<CafeImgDto> selectImgCtg(int cf_id,String ctg){
+        List<CafeImgDto> list=new ArrayList<>();
+        if(ctg.equals("cf")){
+            list= cafeService.selectCafeImg(cf_id);
+        }else if(ctg.equals("cm")){
+            list= cafeService.selectCmImgByCf(cf_id);
+        }else if(ctg.equals("fd")){
+            list= cafeService.selectFdImgByCf(cf_id);
+        }else {
+            list= cafeService.selectCafeImgAll(cf_id);
+        }
+        return list;
+    }
     @GetMapping("/select_cmt")
     @ResponseBody
     public List<CafeCmtDto> selectCafeCmt(int cf_id){
@@ -93,9 +134,18 @@ public class CafeController {
     @ResponseBody
     public List<CafeCmtDto> selectCMOrder(int cf_id, String cm_order, int rl){
         List<CafeCmtDto> list_cm=cafeService.selectCMOrder(cf_id, cm_order, rl);
+        List<CafeImgDto> list_null=cafeService.selectCiNull(cf_id);
         for(CafeCmtDto dto:list_cm){
             dto.setImg(cafeService.selectCmtImg(dto.getCf_id(),dto.getCm_id()));
             dto.setCm_cnt(cafeService.selectCMCntByRg(dto.getCm_id()));
+            int null_id=0;
+            for (CafeImgDto cmdto: list_null){
+                if(dto.getCm_id() == cmdto.getCm_id()){
+                    null_id=1;
+                    break;
+                }
+            }
+            dto.setImg_null_id(null_id);
         }
         return list_cm;
     }
@@ -111,10 +161,12 @@ public class CafeController {
         //이미지 dto에 정보 넣기
         //System.out.println("cm_id:"+dto.getCm_id());
         //System.out.println("cf_id:"+dto.getCf_id());
+        int cm_id=cafeService.selectMaxNum();
+        System.out.println(cm_id);
 
         CafeImgDto cidto=new CafeImgDto();
         cidto.setCf_id(dto.getCf_id());
-        cidto.setCm_id(dto.getCm_id());
+        cidto.setCm_id(cm_id);
         int idx=1;
         int checkNull=1;
         for (MultipartFile multi : uploadFiles) {
@@ -137,10 +189,11 @@ public class CafeController {
         //리뷰 숫자
         Map<String,Object> map=new HashMap<>();
         int cm_cnt=cafeService.selectCMCntByCfid(dto.getCf_id());
-        List<CafeCmtDto> listm=cafeService.selectCafeCmt(dto.getCf_id());
+        System.out.println(cm_cnt);
         map.put("cm_cnt",cm_cnt);
 
         //리뷰별점 평균
+        List<CafeCmtDto> listm=cafeService.selectCafeCmt(dto.getCf_id());
         int star_cnt=0;
         double sum=0;
         for (CafeCmtDto dtom : listm){

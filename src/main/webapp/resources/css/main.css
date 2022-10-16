@@ -194,7 +194,7 @@ li{
 /*tr-container*/
 div.tr-tit-box{
     display: grid;
-    grid-template-columns: 850px 100px ;
+    grid-template-columns: 900px 50px ;
 }
 span.tr-tit{
     padding: 0 30px 0 0;
@@ -203,6 +203,7 @@ span.tr-tit{
 span.tr-more-box{
     margin-top: 40px;
     margin-bottom: 20px;
+    text-align: right;
 }
 a.tr-more{
     color:gray;
@@ -222,10 +223,10 @@ div.tr-card {
 div.tri-card {
     width: 300px;
     overflow: hidden;
-    opacity: 0.5;
+    opacity: 0.7;
     background: 50% 50% no-repeat;
     padding: 10px 10px 10px 10px ;
-    height: 200px;
+    height: 270px;
     display: grid;
     grid-template-columns: 5fr 1fr ;
 }
@@ -233,7 +234,10 @@ div.tri-card {
 div.tr-cont-card{
     padding: 10px 10px 10px 10px;
 }
+
 span.tr-cont-tw-g{
+    position: relative;
+    left: 210px;
     text-align: center;
     padding: 15px 10px 10px 10px;
     width: 70px;
@@ -246,6 +250,8 @@ span.tr-cont-tw-g{
     font-size: 15px;
 }
 span.tr-cont-tw-r{
+    position: relative;
+    left: 210px;
     text-align: center;
     padding: 15px 10px 10px 10px;
     width: 70px;
@@ -258,12 +264,17 @@ span.tr-cont-tw-r{
     font-size: 15px;
 }
 .tr-cont-loc{
-    color: black;
-    font-size: 15px;
-    opacity: 1;
+    position: absolute;
+    margin-top: 5px;
+    color: white;
+    font-size: 0.8rem;
+    margin-left: 3px;
+    padding: 7px 10px 3px 7px;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 100px;
 }
 .tr-cont-loc i{
-    color: black;
+    color: white;
     font-size: 15px;
     opacity: 1;
 }
@@ -302,12 +313,17 @@ div.tr-cont-bottom{
 }
 div.tr-cont-bottom span{
     font-size: 1rem;
+    color: gray;
+}
+div.tr-cont-bottom span svg{
+    font-size: 1rem;
+    color: gray;
 }
 
 /*fd-container*/
 div.fd-tit-box{
     display: grid;
-    grid-template-columns: 850px 100px ;
+    grid-template-columns: 900px 50px ;
 }
 span.fd-tit{
     padding: 0 30px 0 0;
@@ -316,6 +332,7 @@ span.fd-tit{
 span.fd-more-box{
     margin-top: 40px;
     margin-bottom: 20px;
+    text-align: right;
 }
 a.fd-more{
     font-size: 20px;
@@ -359,8 +376,12 @@ div.fd-card {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     padding: 10px 10px 10px 10px;
     margin-bottom: 30px;
+    background-color: white;
 }
 
+div.fd-card:hover {
+    transform: scale(1.1);
+}
 div.fd-txt-area:hover {
     cursor: pointer;
 }
@@ -377,11 +398,13 @@ div.fdi-nm {
     margin-bottom: 10px;
 }
 
-span.fd_cf_nm {
+.fd_cf_nm {
+    position: absolute;
+    margin-top: 8px;
     color: white;
-    font-size: 15px;
+    font-size: 0.8rem;
     margin-left: 5px;
-    padding: 10px 10px 10px 10px;
+    padding: 7px 10px 3px 7px;
     background-color: rgba(0,0,0,0.6);
     border-radius: 100px;
 }
