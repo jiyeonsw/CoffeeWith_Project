@@ -60,6 +60,50 @@ public class LoginController {
         }
     }
 
+    @GetMapping("/naver_callback")
+    public String naverCallback(HttpSession session) {
+        return "/bit/login/naver_callback";
+    }
+
+    //네이버 회원가입&로그인
+
+//    @PostMapping("/loginnaver")
+//    @ResponseBody
+//
+//    public Map<String, String> usernaverloginprocess(String email_id, HttpSession session, UserDto dto){
+//        Map<String, String> map=new HashMap<String, String>();
+//        int result = userService.getUserIdSearch(email_id);  //user 가입된 이메일 있으면 가입 안됨.
+//
+//        // 해당 email로 가입된 유저 정보가 없으면 DB insert로 진행
+//        if(result==0) {   // 아닐 때
+//            System.out.println(result);
+//            dto.setEmail_id("0");
+//            dto.setUr_pw("0");
+//            dto.setStatus("정상");
+//            userService.insertUser(dto);
+//            //유지 시간 설정
+//            session.setMaxInactiveInterval(60*60*4);//4시간
+//
+//            //로그인한 아이디에 대한 정보를 얻어서 세션에 저장
+//            UserDto userDto=userService.selectDataByNaver(email_id);
+//            session.setAttribute("loginok", "yes");
+//            session.setAttribute("loginid", email_id);
+//            session.setAttribute("loginname", userDto.getUr_nm());
+//        }else{
+//            // 로그인으로
+//            //유지 시간 설정 //4시간
+//            session.setMaxInactiveInterval(60*60*4);
+//            //로그인한 아이디에 대한 정보를 얻어서 세션에 저장s
+//            UserDto userDto=userService.selectDataByNaver(email_id);
+//            session.setAttribute("loginok", "yes");
+//            session.setAttribute("loginid", email_id);
+//            session.setAttribute("loginname", userDto.getUr_nm());
+//        }
+//        map.put("result",email_id!=null?"success":"fail");
+//        System.out.println(map);
+//        return map;
+//    }
+
     // 로그아웃 하기
     @GetMapping("/logout")
     public String logout(HttpSession session) {
@@ -83,29 +127,34 @@ public class LoginController {
         return "/bit/login/find_id";
     }
 
+    @PostMapping("/submit_find_id")
+    public String submitFindId(String ur_nm, HttpSession session) {
+        String email = userService.getUserEmailByName(ur_nm);
+        System.out.println("hittt starst " + ur_nm + " email: " + email);
+        session.setAttribute("find_id_email", email);
+        return "redirect:/user/find_id?email=" + email;
+    }
+
     // 비밀번호 찾기
     @GetMapping("/find_pw")
     public String findpw() {
         return "/bit/login/find_pw";
     }
 
+    ////////////////////////////////////////
+
     //[임시] 세션 저장
     @GetMapping("/call_session")
     @ResponseBody
     public void callSession(HttpSession session) {
         session.setMaxInactiveInterval(60 * 60 * 12);
-
         UserDto dto = userService.selectDataById(2);
-//        System.out.println(dto.getUr_id());
-//        System.out.println(dto.getEmail_id());
-//        System.out.println(dto.getUr_nk());
 
         session.setAttribute("login_ok", "yes");
         session.setAttribute("login_id", dto.getUr_id());
         session.setAttribute("login_nick", dto.getUr_nk());
         session.setAttribute("login_img", dto.getUr_img());
     }
-
 
     //[임시] 세션 제거
     @GetMapping("/del_session")

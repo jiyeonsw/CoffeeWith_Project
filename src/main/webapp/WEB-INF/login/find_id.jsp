@@ -39,61 +39,37 @@
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
 
-<div id="container" class="container">
-    <p class="titid">아이디 찾기</p>
-    <p>회원정보에 등록된 정보로 아이디를 찾을 수 있습니다.</p>
-    <br>
-    <fieldset>
-        <div class="inp-frm">
-            <label for="inp-name" class="titLab">이름</label>
-            <div class="inpA">
-                <input type="email" id="inp-name" placeholder="특수문자 없이 입력해주세요" class="form-control"
-                       required="required" name="email_id">
+<form name="mForm" method="post" action="submit_find_id" >
+    <div id="container" class="container">
+        <p class="titid">아이디 찾기</p>
+        <p>회원정보에 등록된 정보로 아이디를 찾을 수 있습니다.</p>
+        <br>
+        <fieldset>
+            <div class="inp-frm">
+                <label for="ur_nm" class="titLab">이름을 입력해주세요</label>
+                <div class="inpA">
+                    <input id="ur_nm" placeholder="ex) 홍길동" class="form-control" value="김이름"
+                           required="required" name="ur_nm">
+                </div>
+                <div class="id-success"></div>
             </div>
-            <div class="id-success"></div>
-        </div>
-        <br>
-        <div class="inp-frm">
-            <label for="inp-pass" class="titLab">비밀번호</label>
-            <div class="inpB">
-                <input type="password" id="inp-pass" placeholder="영문,숫자,특수문자 8~16자이내" class="form-control"
-                       required="required" name="ur_pw">
+            <br>
+            <%--        인증번호 입력폼 1--%>
+            <div class="inp-frm">
+                <button type="submit" id="btn-submit" class="btn btn-outline-info">
+                    아이디 찾기</button>
             </div>
-            <div class="pass-success"></div>
-        </div>
-        <br>
-        <div class="inp-frm">
-            <label for="inp-repass" class="titLab">비밀번호 확인</label>
-            <div class="inpB">
-                <input type="password" id="inp-repass" placeholder="확인을 위해 한번 더 입력해주세요" class="form-control"
-                       required="required">
-            </div>
-            <div class="repass-success"></div>
-        </div>
-        <br>
-
-        <div class="inp-frm">
-            <label for="inp-email" class="titLab">이메일</label>
-            <div class="inpA">
-                <input type="email" id="inp-email" placeholder="ex) coffeewith@gmail.com" class="form-control"
-                       required="required" name="email_id">
-            </div>
-            <div class="id-success"></div>
-        </div>
-        <br>
-<%--        인증번호 입력폼 1--%>
-        <div class="inp-frm">
-            <button type="button" id="btn-id-chk" class="btn btn-outline-info">
-                본인 확인 이메일 전송</button>
-
-                <input type="password" id="oknum" placeholder="이메일에 전송된 인증번호를 5분 이내로 입력해주세요" class="form-control"
-                       required="required">
-        </div>
-        <br>
-        <button type="submit" id="inp-btn" class="btn btn-primary btnB">본인 인증이 완료되었습니다</button>
-    </fieldset>
-</div>
-</div>
-
+            <c:if test="${not empty param.email}">
+                <div>
+                    이메일 아이디를 찾았습니다:
+                    <div class="alert alert-info" role="alert">
+                            ${param.email}
+                    </div>
+                </div>
+            </c:if>
+        </fieldset>
+    </div>
+    </div>
+</form>
 </body>
 </html>

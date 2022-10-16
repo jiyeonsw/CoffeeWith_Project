@@ -10,11 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
-    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+<%--    <link rel="stylesheet" href="/resources/css/style.css" type="text/css">--%>
     <!-- icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Naver API -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+    <!-- Naver API 버전 에러 주의 -->
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
     <!-- Kakao API -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <title>Login Page</title>
@@ -74,7 +74,7 @@
         <a href="javascript:kakaoLogin();">
             <img src="${root}/images/login_kakao.png" alt="카카오계정 로그인" style="width: 220px; height: 40px;"/></a>&nbsp;
         <!-- 네이버 로그인 버튼 -->
-        <button class="btn" id="naverIdLogin"></button><%-- <div id="naverIdLogin"></div> --%>
+        <a onclick="naverLogin()"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
 
         <%-- 등록되지 않은 아이디 or 아이디/비밀번호 불일치 시 --%>
         <%-- <p tabindex="0" id="pwErrorArea" class="input-error"></p>--%>
@@ -110,44 +110,16 @@
         }
     });
 </script>
-
-<%-- Naver Login 정보 노출금지 --%>
-<script type="text/javascript">
-    var naverLogin = new naver.LoginWithNaverId(
-        {
-            clientId: "4mIUzgdcLi_AnfbYvRiW", // 보안
-            callbackUrl: "http://localhost:9000/mini/callback",
-            isPopup: false,
-            loginButton: {color: "green", type: 4, height: 40}
+<%--Naver Login 개인정보 노출금지--%>
+    <script type="text/javascript">
+        function naverLogin() {
+            const url = new URL("https://nid.naver.com/oauth2.0/authorize");
+            url.searchParams.append("redirect_uri", "https://ff88-221-147-38-46.jp.ngrok.io/mini/user/naver_callback");
+            url.searchParams.append("client_id", "4mIUzgdcLi_AnfbYvRiW");
+            url.searchParams.append("state", "RANDOM_STATE");
+            url.searchParams.append("response_type", "code");
+            window.location.href = url.href
         }
-    );
-    naverLogin.init();
-</script>
-
-<%-- Kakao Login 정보 노출금지 --%>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script>
-    window.Kakao.init('faf782939186046125921704c4e2ad90'); // 보안
-
-    function kakaoLogin() {
-        window.Kakao.Auth.login({
-            scope: 'profile_nickname, profile_image, account_email, gender, age_range, birthday, story_permalink', // 동의항목 개인정보 보호값
-            success: function(response) {
-                console.log(response) // 로그인 성공하면 받아오는 데이터
-                window.Kakao.API.request({ // 사용자 정보 가져오기
-                    url: '/v2/user/me',
-                    success: (res) => {
-                        const kakao_account = res.kakao_account;
-                        console.log(kakao_account)
-                    }
-                });
-                // window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드
-            },
-            fail: function(error) {
-                console.log(error);
-            }
-        });
-    }
 </script>
 </body>
 </html>
