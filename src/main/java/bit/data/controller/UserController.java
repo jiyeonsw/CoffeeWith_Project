@@ -2,7 +2,7 @@ package bit.data.controller;
 
 import bit.data.dto.UserDto;
 import bit.data.service.UserServiceInter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,16 +24,15 @@ import java.util.regex.Pattern;
 @Controller
 //앞에 공통적으로 들어가는 매핑 설정
 @RequestMapping("/")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    UserServiceInter userService;
+    private final UserServiceInter userService;
 
     //회원가입 폼 매핑
     @GetMapping("/user_form")
     public String userform() {
         return "/bit/user/user_form";
     }
-
 
 
     // 로그아웃 - LoginCotroller 연결
@@ -116,7 +115,7 @@ public class UserController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return "redirect:/login_main";
+        return "redirect:/user/login_main";
     }
 
     // 유저 정보 수정
@@ -154,9 +153,6 @@ public class UserController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-//            System.out.println("upnk:" + dto.getUr_nk());
-//            System.out.println("upimg:" + dto.getUr_img());
-//            System.out.println("upsi:" + dto.getLoc_si());
 
             session.setAttribute("login_nick", dto.getUr_nk());
             session.setAttribute("login_img", dto.getUr_img());
@@ -165,7 +161,7 @@ public class UserController {
         }
     }
 
-    //유저 비밀번호 변경 : 기존 비밀번호 정상 체크
+    //유저 비밀번호 변경 기능 : 기존 비밀번호 정상 체크
     @PostMapping("exi_pass_chk")
     @ResponseBody
     public boolean exiPassCheck(int ur_id, String exi_pass) {
@@ -179,7 +175,7 @@ public class UserController {
         return check;
     }
 
-    // 유저 비밀번호 변경 : db update
+    // 유저 비밀번호 변경 기능 : db update
     @PostMapping("/update_pass")
     public String updateUserPass(HttpSession session, String new_pass) {
         int login_id = (int) session.getAttribute("login_id");
@@ -189,6 +185,6 @@ public class UserController {
         LoginController loginController = new LoginController();
         loginController.delSession(session);
 
-        return "redirect:/login_main";
+        return "redirect:/user/login_main";
     }
 }

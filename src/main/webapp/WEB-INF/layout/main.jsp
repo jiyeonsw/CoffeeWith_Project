@@ -34,32 +34,34 @@
         <div class="swiper-container best-slide">
             <ul class="swiper-wrapper">
                 <c:forEach var="dto" items="${cflist}">
-                    <li class="swiper-slide cf-card" style="width: 306px;" value="${dto.cf_id}">
-                        <div class="cf-img-box">
-                            <img src="${root}/images/cafeimg/${dto.ci_img}">
-                        </div>
-                        <a class="cf-cont-box">
-                            <div class="cf-nm">
-                                    ${dto.cf_nm}
+                    <li class="swiper-slide cf-card" style="width: 368px; margin-right: 16px">
+                        <a href="cafe/detail?cf_id=${dto.cf_id}" class="cf-cont-box">
+                            <div class="cf-img-box">
+                                <img src="${root}/images/cafeimg/${dto.ci_img}">
                             </div>
-                            <div class="cf-info">
+                            <div class="txt-info">
+                                <div class="cf-nm">
+                                        ${dto.cf_nm}
+                                </div>
+                                <div class="cf-info">
                                 <span class="cf-lk-box" title="북마크 개수">
                                         ${dto.lk_cnt}
                                 </span>
-                                <span class="cf-star-box" title="평균평점">
+                                    <span class="cf-star-box" title="평균평점">
                                     ${dto.star_avg}
                                     <i title="리뷰 갯수">(${dto.cmt_cnt})</i>
                                 </span>
-                                <span class="cf-addr" title="위치정보">${dto.addr}</span>
+                                    <span class="cf-addr" title="위치정보">${dto.addr}</span>
+                                </div>
+                                <span class="cf-txt">
+                                        ${dto.cf_txt}
+                                </span>
+                                <span class="cf-tag-box">
+                                    <c:forEach var="cf_tag" items="${dto.cf_tag}">
+                                        <span class="tag">#${cf_tag.cg_nm}&nbsp;</span>
+                                    </c:forEach>
+                                </span>
                             </div>
-                            <p class="cf-txt">
-                                    ${dto.cf_txt}
-                            </p>
-                            <p class="cf-tag-box">
-                                <c:forEach var="cf_tag" items="${dto.cf_tag}">
-                                    <span class="tag">#${cf_tag.cg_nm}&nbsp;</span>
-                                </c:forEach>
-                            </p>
                         </a>
                     </li>
                 </c:forEach>
@@ -71,8 +73,11 @@
         </div>
     </div>
     <div class="loc-container">
+        <div class="loc-tit-box tit" style="text-align: left;">
+            <a>지역별 카페 바로가기</a>
+        </div>
         <div class="loc-slide swiper-container">
-            <div class="quick-search swiper-wrapper">
+            <div class="quick-search swiper-wrapper"
                 <a href="#" class="icon swiper-slide" style="background-color: #664400;"><span
                         class="label">선호지역 ></span></a>
                 <a class="swiper-slide" href="map/mainmap?lat=37.5252228&lng=127.0349241&zoom=15"
@@ -144,6 +149,7 @@
                     <div class="tri-card" style="background-image:url('${root}/images/대구.jpg')"></c:when>
                         <c:when test="${fn:contains(loc, '부산' )}">
                         <div class="tri-card" style="background-image:url('${root}/images/부산.jpg')"></c:when>
+
                     <c:when test="${fn:contains(loc, '인천' )}">
                         <div class="tri-card" style="background-image:url('${root}/images/인천.jpg')"></c:when>
                     <c:when test="${fn:contains(loc, '제주' )}">
@@ -202,33 +208,30 @@
         </div>
     </div>
 </div>
-
-                    <script>
-                        var best_swiper = new Swiper(".best-slide", {
-                            slidesPerView: 3, // 동시에 보여줄 슬라이드 갯수
-                            spaceBetween: 30, // 슬라이드간 간격
-                            slidesPerGroup: 3, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
-                            // 그룹수가 맞지 않을 경우 빈칸으로 메우기
-                            // 3개가 나와야 되는데 1개만 있다면 2개는 빈칸으로 채워서 3개를 만듬
-                            loopFillGroupWithBlank: true,
-                            pagination: {
-                                el: ".swiper-pagination",
-                                clickable: true,
-                                bulletClass: "swiper-pagination-bullet",
-                                bulletActiveClass: "swiper-pagination-bullet-active"
-                            }
-                        })
-
-
+<script>
+    var best_swiper = new Swiper(".best-slide", {
+        slidesPerView: 'auto', // 동시에 보여줄 슬라이드 갯수
+        spaceBetween: 16, // 슬라이드간 간격
+        slidesPerGroup: 3, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
+        // 그룹수가 맞지 않을 경우 빈칸으로 메우기
+        // 3개가 나와야 되는데 1개만 있다면 2개는 빈칸으로 채워서 3개를 만듬
+        loopFillGroupWithBlank: true,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            bulletClass: "swiper-pagination-bullet",
+            bulletActiveClass: "swiper-pagination-bullet-active"
+        }
+    })
     var loc_swiper = new Swiper(".loc-slide ", {
-        slidesPerView: 8, // 동시에 보여줄 슬라이드 갯수
-        spaceBetween: 25, // 슬라이드간 간격
+        slidesPerView: 7, // 동시에 보여줄 슬라이드 갯수
+        spaceBetween: 32, // 슬라이드간 간격
         loopFillGroupWithBlank: true,
         pagination: {
             clickable: true
         }
     })
-
+                        
     //tr
     $("div.tr-card").hover(function (){
         $(this).find("div.tri-card").css("height","200px");
@@ -237,13 +240,7 @@
         $(this).find("div.tri-card").css("height","270px");
         $(this).find("div.tr-cont-show").hide();
     });//tr card hover
-
-    //fd
-    $("div.fd-card").hover(function (){
-        $(this).css();
-    }, function (){
-        $(this).css()
-    });//tr card hover
+    
 </script>
 </body>
 

@@ -214,7 +214,7 @@
             <a href="${root}/mypage/plan" class="inner">
                 <div class="txt my-tr-plan">
                     투어 플랜
-                    <span class="num"></span>
+                    <span class="num">${sessionScope.myPlCnt}</span>
                 </div>
             </a>
         </div>
