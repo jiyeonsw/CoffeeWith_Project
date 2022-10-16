@@ -19,7 +19,7 @@
     <%--icon--%>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
-    <title>CoffeeWith</title>
+    <title>Coffee With</title>
     <style>
         @font-face {
             font-family: 'GangwonEdu_OTFBoldA';

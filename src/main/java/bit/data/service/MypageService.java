@@ -25,6 +25,11 @@ public class MypageService implements MypageServiceInter {
     }
 
     @Override
+    public int selectMyPlCnt(int loginId) {
+        return mypageDao.selectMyPlCnt(loginId);
+    }
+
+    @Override
     public List<MyPageCafeLikeDto> selectLikeCfInfo(int urId) {
         return mypageDao.selectLikeCfInfo(urId);
     }

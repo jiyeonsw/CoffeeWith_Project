@@ -26,6 +26,11 @@ public class MypageDao implements MypageDaoInter {
         return session.selectOne(ns + "selectCfCmtCnt", loginId);
     }
 
+    @Override
+    public int selectMyPlCnt(int loginId) {
+        return session.selectOne(ns + "selectMyPlCnt", loginId);
+    }
+
     public List<MyPageCafeLikeDto> selectLikeCfInfo(int urId) {
         return session.selectList(ns + "selectLikeCfInfo", urId);
     }
