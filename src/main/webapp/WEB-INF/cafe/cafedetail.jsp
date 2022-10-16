@@ -58,10 +58,28 @@
             display: flex;
         }
 
-        span.ctg-box{
-            border: 1px solid #f1f1f1;
-            padding: 15px 20px 10px 15px;
+        .ctg-box{
+            border: 1px solid #664400;
             border-radius: 25px;
+            margin: 0 4px;
+            color: #404040;
+            background: #fff;
+            min-width: 72px;
+            height: 35px;
+            font-size: 1rem;
+            line-height: 35px;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .ctg-box:hover{
+            background: #664400;
+            color: #fff;
+            box-shadow: 2px 2px 2px 2px lightgray;
         }
         div.cf-txt{
             height:120px;
@@ -80,38 +98,78 @@
             height: auto;
             min-height: 120px;
         }
-        div.cf-bottom{
-            display: flex;
-            margin-left: auto;
-            margin-right: auto;
-            flex-wrap: wrap;
-        }
+
         div.cm-box{
             width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
+
         div.cf-middle{
-            display: flex;
+            display: grid;
+            grid-template-columns:  300px 300px 300px ;
             text-align: center;
             padding-top: 5px;
+            margin-left: 2px;
 
         }
         div.cf-middle div.btn-cf-mid{
-            font-size: 30px;
-            width: 300px;
+            font-size: 1.5rem;
             text-align: center;
             cursor: pointer;
-            height: 70px;
-            line-height: 70px;
+            height: 60px;
+            padding-bottom: 10px;
+            padding-top: 15px;
+            border: 2px solid white;
+            border-bottom-color: lightgray ;
         }
-        div.cf-middle div.btn-cf-mid:hover{
-            background-color: #664400;
-            color:#fff;
+
+        div.cf-bottom{
+            padding-top: 30px;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap;
+            margin-bottom: 100px;
         }
-        div.cf-middle div.btn-cf-mid:hover span.cm-cnt{
-            background-color: #664400;
-            color:#fff;
+        div.ci-container{
+            display: grid;
+            grid-template-rows: 40px auto;
+        }
+        .btn-ci-card{
+            border: 1px solid #664400;
+            border-radius: 25px;
+            margin: 0 4px;
+            color: #404040;
+            background: #fff;
+            min-width: 72px;
+            font-size: 1rem;
+            overflow: hidden;
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+            text-align: left;
+            padding: 3px 7px 3px 3px;
+        }
+        .btn-ci-card:hover{
+            background: #664400;
+            color: #fff;
+            box-shadow: 2px 2px 2px 2px lightgray;
+        }
+        img.img-ci-btn{
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+            margin-right: 5px;
+        }
+
+        div.cf-btm-ci-card-box{
+            padding-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            margin-left: auto;
+            margin-right: auto;
+            flex-wrap: wrap;
         }
         div.carousel-inner{
             border-radius: 10px;
@@ -136,6 +194,15 @@
         div.ci-mini-card {
             height: 225px;
             overflow: hidden;
+            cursor: pointer;
+        }
+        .ci-mini-card-inr {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
         }
 
         div.ci-mini-st {
@@ -149,8 +216,28 @@
             border: 1px solid #f1f1f1;
             margin-bottom: 10px;
         }
+        div.ci-mini-st-bk{
+            width: 225px;
+            height: 100%;
+            border-radius: 10px;
+            box-sizing: border-box;
+            border: 1px solid #f1f1f1;
+            margin-bottom: 10px;
+        }
+        div.ci-mini-bk-img{
+            width: 225px;
+            height: 100px;
+            border-radius: 10px;
+            background: 50% 100% no-repeat;
+            background-size: cover;
+            object-fit: cover;
+            box-sizing: border-box;
+            border: 1px solid #f1f1f1;
+        }
+
         div.mform{
             width: 700px;
+            margin-bottom: 15px;
         }
         #mform fieldset{
             display: flex;
@@ -242,21 +329,15 @@
             margin-right: 4px;
             margin-top: 20px;
         }
+        div.cm-order-box{
+            display: grid;
+            grid-template-columns: 100px 600px;
+        }
         #cm-order{
-            width: 700px;
+            width: 600px;
             text-align: right;
         }
-        #ciModal{
-            background-color: rgba(0,0,0,0.5);
-        }
-        #ciModal-content{
-            width: 550px;
-            position:absolute;
-            top:50%;
-            left:50%;
-            margin-left:-275px;
-            margin-top: 50px;
-        }
+
         div.cm-box-each{
             padding: 10px 10px 10px 10px;
             border: 1px solid #dee2e6;
@@ -270,8 +351,17 @@
             border-radius: 15px;
         }
         div.cf-info{
-            width: 550px;
+            padding-top: 20px;
+            width: 500px;
             overflow: clip;
+        }
+        span.cf-info-key{
+            color: darkgray;
+            display: inline-block;
+            width: 65px;
+        }
+        span.cf-info-key i{
+            color: darkgray;
         }
         div.cm-list-box{
             display: flex;
@@ -279,25 +369,71 @@
         div.cm-cm-list{
             margin-top: 10px;
         }
-
+        #map{
+            margin-left: 20px;
+            border: 1px solid #664400;
+            border-radius: 20px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
+        div.cmt-show-hide{
+            display: none;
+        }
+        /*modal*/
+        #ciModal{
+            background-color: rgba(0,0,0,0.5);
+        }
+        #ciModal-content{
+            width: 500px;
+            position:absolute;
+            top:50%;
+            left:50%;
+            margin-left:-275px;
+            margin-top: 50px;
+            border: 0px;
+            border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+        }
+        div.modal-img img{
+            border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+        }
+        button.modal-close{
+            position: absolute;
+            top: 20px;
+            left: 460px;
+            background-color: lightgray;
+            border-radius: 50px;
+            opacity: 0.5;
+        }
+        div.modal-header{
+            padding: 0px 0px 0px 0px;
+            border: 0px;
+        }
     </style>
+    <c:set var="root" value="<%=request.getContextPath()%>"/>
     <script>
         $(function () {
             cf_id=${dto.cf_id};
             login_ok='${sessionScope.login_ok}';
             ur_id="${sessionScope.login_id }";
+            on_error_cf="this.src='${root}/images/logo1.png'";
+            on_error_prf="this.src='${root}/images/noprofile.jpg'";
+            $("#btn-cf-info").css("border-bottom-color","Sienna");
             cfMap(cf_id);
+
+            $("div.btn-cf-mid").mouseover(function (){
+                $(this).siblings().css("border-bottom-color","lightgray");
+                $(this).css("border-bottom-color","Sienna");
+            });
         });//fun
 
     </script>
 
 </head>
 <body>
-<c:set var="root" value="<%=request.getContextPath()%>"/>
-<!-- The Modal -->
+
 
 <div class="cafe-main-box">
 <div class="cafe-main-content">
+
     <div>&nbsp<a class="back" href="javascript:back();"><i class="fa-solid fa-map-location-dot"></i>&nbsp;맵으로 돌아가기</a></div><br>
     <div class="cf-top">
         <!-- Carousel -->
@@ -337,14 +473,14 @@
             <div><h1>${dto.cf_nm}</h1></div>
             <div style="margin-bottom: 15px;">
                 <c:forEach items="${listctg}" var="ctg">
-                    <span class="ctg-box">#${ctg.cg_nm}</span>&nbsp;
+                    <button class="ctg-box">#${ctg.cg_nm}</button>&nbsp;
                 </c:forEach>
             </div>
             <div class="cf-txt">${dto.cf_txt}</div>
             <br>
             <div class="loc-cm-lk">
-            <div><span >위치<i class="bi bi-geo-alt"></i></span>&nbsp;<span>${dto.loc_addr} </span></div>
-            <div><span>리뷰<i class="bi bi-chat-dots"></i></span>&nbsp;<span><span class="cm-cnt">${dto.cm_cnt}</span>
+            <div><span class="cf-info-key">위치<i class="bi bi-geo-alt"></i></span>&nbsp;<span>${dto.loc_addr} </span></div>
+            <div><span class="cf-info-key">리뷰<i class="bi bi-chat-dots"></i></span>&nbsp;<span><span class="cm-cnt">${dto.cm_cnt}</span>
                    <c:if test="${dto.cm_star==-1}">
                        (<span class="cm-star" style="color: gray">★</span><span class="cm-star-avg">-</span>)
                    </c:if>
@@ -361,23 +497,22 @@
         </div>
     </div> <!--cf_top-->
     <br>
-    <div class="cf-middle">
-        <div class="btn-cf-mid" id="btn-cf-info">카페정보</div><div id="btn-cm-link" class="btn-cf-mid" >리뷰(<span class="cm-cnt">${dto.cm_cnt}</span>)</div><div id="btn-ci-link" class="btn-cf-mid" >사진</div>
-    </div>
-    <hr style="margin-top: 0;">
-    <br>
-    <div class="cf-bottom">
-        <div id="map" y="${dto.loc_y}" x="${dto.loc_x}" style="width:300px;height:300px;"></div>
-        <div style="margin-left: 30px;" class="cf-info">
-            <div><span>영업시간)</span> <span>${dto.open_time}</span></div>
-            <div><span>휴무일)</span> <span>${dto.off_day}</span></div>
-            <div><span>전화번호)</span> <span>${dto.cf_tel}</span></div>
-            <div><span>주소)</span> <span>${dto.loc_addr}</span></div>
-            <div><span>대표메뉴)</span> <span>${dto.menu}</span></div>
+        <div class="cf-middle">
+            <div class="btn-cf-mid" id="btn-cf-info">카페정보</div><div id="btn-cm-link" class="btn-cf-mid" >리뷰(<span class="cm-cnt">${dto.cm_cnt}</span>)</div><div id="btn-ci-link" class="btn-cf-mid" >사진</div>
         </div>
-    </div>
+        <div class="cf-bottom">
+            <div id="map" y="${dto.loc_y}" x="${dto.loc_x}" style="width:320px;height:320px;"></div>
+            <div style="margin-left: 30px;" class="cf-info">
+                <div><span class="cf-info-key">영업시간</span> <span class="cf-info-val">${dto.open_time}</span></div>
+                <div><span class="cf-info-key">휴무일</span> <span class="cf-info-val">${dto.off_day}</span></div>
+                <div><span class="cf-info-key">전화번호</span> <span class="cf-info-val">${dto.cf_tel}</span></div>
+                <div><span class="cf-info-key">주소</span> <span class="cf-info-val">${dto.loc_addr}</span></div>
+                <div><span class="cf-info-key">대표메뉴</span> <span class="cf-info-val">${dto.menu}</span></div>
+            </div>
+        </div>
     <script>
         ////////////////////////////////////////////////////////////////// 카페메인정보 관련 함수 //////////////////////////////////////////////////////////////////
+
         //하트클릭
         $("div#btn-ck").click(function (){
 
@@ -432,6 +567,10 @@
         ////////////////////////////////////////////////////////////////// 카페상세정보 관련 함수 //////////////////////////////////////////////////////////////////
         //카페정보 클릭
         $("div#btn-cf-info").click(function (){
+            $("div#btn-cf-info").css("border-bottom-color","Sienna");
+            $("div#btn-cm-link").css("border-bottom-color","lightgray");
+            $("div#btn-ci-link").css("border-bottom-color","lightgray");
+
             var s="";
             $.ajax({
                 type: "get",
@@ -442,11 +581,11 @@
                     //console.log(res.loc_y);
                     s+='<div id="map" y="'+res.loc_y+'" x="'+res.loc_x+'" style="width:300px;height:300px;"></div>';
                     s+='<div style="margin-left: 30px;">';
-                    s+='<div><span>영업시간</span> <span>'+ res.open_time+'</span></div>';
-                    s+= '<div><span>휴무일</span> <span>'+res.off_day+'</span></div>';
-                    s+='<div><span>전화번호</span> <span>'+res.cf_tel+'</span></div>';
-                    s+='<div><span>주소</span> <span>'+res.loc_addr+'</span></div>';
-                    s+='<div><span>대표메뉴</span> <span>'+res.menu+'</span></div>';
+                    s+='<div><span class="cf-info-key">영업시간</span> <span>'+ res.open_time+'</span></div>';
+                    s+= '<div><span class="cf-info-key">휴무일</span> <span>'+res.off_day+'</span></div>';
+                    s+='<div><span class="cf-info-key">전화번호</span> <span>'+res.cf_tel+'</span></div>';
+                    s+='<div><span class="cf-info-key">주소</span> <span>'+res.loc_addr+'</span></div>';
+                    s+='<div><span class="cf-info-key">대표메뉴</span> <span>'+res.menu+'</span></div>';
                     s+='</div>';
                     $("div.cf-bottom").html(s);
                     cfMap(cf_id);
@@ -459,8 +598,19 @@
         //리뷰클릭
         $("div#btn-cm-link").click(function (){
             //console.log(cf_id);
+            $("div#btn-cf-info").css("border-bottom-color","lightgray");
+            $("div#btn-cm-link").css("border-bottom-color","Sienna");
+            $("div#btn-ci-link").css("border-bottom-color","lightgray");
             cmList();
         });//리뷰
+        //리뷰사진만
+        $(document).on("click","#only-img-review",function (){
+            if($("#only-img-review").is(":checked")){
+                $("div.null_id_1").hide();
+            }else {
+                $("div.null_id_1").show();
+            }
+        })//리뷰사진만
 
         //리뷰 정렬
         $(document).on("click","a.cm-order",function (){
@@ -536,28 +686,30 @@
         $(document).on("click",".cm-del",function (){
             var cm_id=$(this).attr("cm_id");
             var cf_id=$(this).attr("cf_id");
-            //console.log(cm_id);
-            $.ajax({
-                type: "get",
-                url: "delete_cmt",
-                data: {"cm_id": cm_id, "cf_id": cf_id},
-                dataType: "json",
-                success: function (res) {
-                    $("div#btn-cm-link").trigger('click');
-                    var cm_cnt = res.cm_cnt;
-                    var cm_star=res.cm_star;
-                    console.log(cm_star);
-                    $("span.cm-cnt").text(cm_cnt);
-                    var pre_star = $("span.cm-star-avg").text();
-                    console.log(pre_star);
-                    if (cm_star==-1){
-                        $("span.cm-star").css("color",'gray');
-                        $("span.cm-star-avg").text("-");
-                    }else {
-                        $("span.cm-star-avg").text(cm_star);
-                    }
-                }//succ
-            });//ajax
+            if (confirm("정말 삭제하실 건가요? ")) {
+                //console.log(cm_id);
+                $.ajax({
+                    type: "get",
+                    url: "delete_cmt",
+                    data: {"cm_id": cm_id, "cf_id": cf_id},
+                    dataType: "json",
+                    success: function (res) {
+                        $("div#btn-cm-link").trigger('click');
+                        var cm_cnt = res.cm_cnt;
+                        var cm_star = res.cm_star;
+                        console.log(cm_star);
+                        $("span.cm-cnt").text(cm_cnt);
+                        var pre_star = $("span.cm-star-avg").text();
+                        console.log(pre_star);
+                        if (cm_star == -1) {
+                            $("span.cm-star").css("color", 'gray');
+                            $("span.cm-star-avg").text("-");
+                        } else {
+                            $("span.cm-star-avg").text(cm_star);
+                        }
+                    }//succ
+                });//ajax
+            }
         });//리뷰삭제
 
         // 리뷰수정클릭시 내용 넣기
@@ -604,7 +756,11 @@
             var rg=$(this).attr("rg");
             var rs=$(this).attr("rs");
             var rl=$(this).attr("rl");
+            $(this).parent().find("a").attr("id","other-cmt");
+            $(this).attr("id","this-cmt");
 
+            var comment='댓글 로딩 중 &nbsp;<i class="fa-solid fa-spinner"></i>';
+            $("div.cm-cm-list").html(comment);
             if(login_ok=="yes"){
                 ccf+='<div class="ccform-div">';
                 ccf+='<form class="ccform">';
@@ -621,21 +777,23 @@
                 ccf+='</form></div>';
             }
             $(this).next().find("div.cm-cm-form").html(ccf);
-            $(this).siblings("a.view-cm-cm").next().hide();
-            $(this).siblings("a.view-cm-cm").find("svg").addClass("fa-caret-down");
-            $(this).siblings("a.view-cm-cm").find("svg").removeClass("fa-caret-up");
-            $(this).siblings("a").next().find("form").removeClass("ccform");
+            $(this).parent().siblings("div.cm-box-each").find("div.cmt-show-hide").hide();
+            $(this).parent().siblings("div.cm-box-each").find("i.view-cmt").addClass("bi-caret-down-fill");
+            $(this).parent().siblings("div.cm-box-each").find("i.view-cmt").removeClass("bi-caret-up-fill");
+            $(this).parent().siblings("div.cm-box-each").find("form").removeClass("ccform");
             $(this).next().find("form").addClass("ccform");
-            $('.ccform')[0].reset();
+            if($("div").hasClass("ccform-div")){
+                $('.ccform')[0].reset();}
             ccList(${dto.cf_id},rg);
-            $(this).next().slideToggle(500);
-            $(this).find("svg").toggleClass("fa-caret-down");
-            $(this).find("svg").toggleClass("fa-caret-up");
-
+            $(this).next().slideToggle(1000);
+            $(this).find("i.view-cmt").toggleClass("bi-caret-down-fill");
+            $(this).find("i.view-cmt").toggleClass("bi-caret-up-fill");
         });//리뷰댓글보기
 
         //리뷰댓글등록
         $(document).on("click",".btn-cc-save",function (){
+            var cmcm_cnt = Number($("#this-cmt").find("span.cmcm-cnt").text());
+
             var rg=$(this).attr("rg");
             //console.log(rg);
             var cf_id=$(this).attr("cf_id");
@@ -660,6 +818,9 @@
                     ccList(cf_id,rg);
                     var cm_cnt = res.cm_cnt;
                     $("span.cm-cnt").text(cm_cnt);
+                    cmcm_cnt = cmcm_cnt+1;
+                    console.log(cmcm_cnt);
+                    $("#this-cmt").find("span.cmcm-cnt").text(cmcm_cnt);
                 }//succ
             });//ajax
         });//리뷰댓글등록
@@ -711,6 +872,9 @@
         ////////////////////////////////////////////////////////////////// 카페사진모음 관련 함수 //////////////////////////////////////////////////////////////////
         //사진클릭
         $("div#btn-ci-link").click(function (){
+            $("div#btn-cf-info").css("border-bottom-color","lightgray");
+            $("div#btn-cm-link").css("border-bottom-color","lightgray");
+            $("div#btn-ci-link").css("border-bottom-color","Sienna");
             //console.log(cf_id);
             $.ajax({
                 type: "get",
@@ -718,38 +882,95 @@
                 dataType: "json",
                 data: {"cf_id": cf_id},
                 success: function (res) {
-                    var s="";
-                    $.each(res, function (i, elt) {
+                    var s='<div class="ci-container">';
+                    s+='<div class="ci-ctg"><button class="btn-ci-card" ctg="all"><img class="img-ci-btn" src="${root}'+res.ci_path+res.cf_img+'" onError="'+on_error_cf+'" >' +
+                        '전체사진</button>';
+                    s+='<button class="btn-ci-card" ctg="cf"><img class="img-ci-btn" src="${root}'+res.ci_path+res.cf_img+'" onError="'+on_error_cf+'" >' +
+                        '카페사진</button>';
+                    s+='<button class="btn-ci-card" ctg="cm"><img class="img-ci-btn" src="${root}'+res.cmi_path+res.cm_img+'" onError="'+on_error_cf+'" >' +
+                        '리뷰사진</button>';
+                    s+='<button class="btn-ci-card" ctg="fd"><img class="img-ci-btn" src="${root}'+res.fdi_path+res.fd_img+'" onError="'+on_error_cf+'" >' +
+                        '커뮤니티사진</button></div><div class="cf-btm-ci-card-box">';
+                    $.each(res.all_img_list, function (i, elt) {
                         s+='<div class="ci-mini-card">';
                         var ci_path = '${root}'+elt.ci_path + elt.ci_nm ;
                         var ci_path_url="url('"+ci_path+"')";
+                        s+='<div class="ci-mini-card-inr">';
                         s+='<div class="ci-mini-st" style="background-image:'+ci_path_url+'" ';
                         s+='data-bs-toggle="modal" data-bs-target="#ciModal" ';
-                        var cm_txt=elt.cm_txt;
-                        s+='modal-cm-txt="'+cm_txt+'">';
+                        s+='modal-cm-txt="'+elt.cm_txt+'" modal-fd-txt="'+elt.fd_txt+'"';
+                        s+='modal-ur-nk="'+elt.ur_nk+'" modal-ur-img="'+elt.ur_img+'">';
+                        s+='</div>';
                         s+='</div></div>';
                     });//each
+                    s+='</div></div>';
                     $("div.cf-bottom").html(s);
                 }//succ
             });//ajax
-        });//사진 클릭
+        });//사진 클릭div.ci-mini-st-bk
+
 
         //사진각각클릭
         $(document).on("click",".ci-mini-st",function (){
             var modal_img=$(this).css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1');
             //console.log(modal_img);
             var modal_img_tag='<img src="'+modal_img+'" width="500px;">';
-           $(".modal-body").html(modal_img_tag);
-            var modal_txt=$(this).attr("modal-cm-txt");
+           $(".modal-img").html(modal_img_tag);
+            var modal_cm_txt=$(this).attr("modal-cm-txt");
+            var modal_fd_txt= $(this).attr("modal-fd-txt");
+            var ur_nk=$(this).attr("modal-ur-nk");
+            var ur_img=$(this).attr("modal-ur-img");
+            var s="";
             //console.log(modal_txt);
-            if(modal_txt!='null'){
-                var modal_txt_tag='<div style="text-align: center">'+modal_txt+'</div>';
-                $(".modal-footer").html(modal_txt_tag);
-            }else {
-                $(".modal-footer").html("");
+            if(modal_cm_txt!='null') {
+                s+='<img src="${root}/res/prfimg/'+ur_img+'" onError="'+on_error_prf+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+ur_nk;
+                s+='<div style="text-align: center; margin-top: 20px" >'+modal_cm_txt+'</div>';
+                $(".modal-body").html(s);
+                $(".modal-body").css("height","100px");
+                $(".modal-body").css("padding","10px");
+            }else if(modal_fd_txt!='null' ){
+                s+='<img src="${root}/res/prfimg/'+ur_img+'" onError="'+on_error_prf+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+ur_nk;
+                s+='<div style="text-align: center; margin-top: 20px" >'+modal_fd_txt+'</div>';
+                $(".modal-body").html(s);
+                $(".modal-body").css("height","100px");
+                $(".modal-body").css("padding","10px");
             }
-
+            else {
+                $(".modal-body").html("");
+                $(".modal-body").css("height","0px");
+                $(".modal-body").css("padding","0px");
+            }
         });//사진각각클릭
+
+        //사진카테고리클릭
+        $(document).on("click",".btn-ci-card",function (){
+            var ctg=$(this).attr("ctg");
+            //console.log(ctg);
+
+            var s="";
+            $.ajax({
+                type: "get",
+                url: "img_ctg",
+                dataType: "json",
+                data: {"cf_id": cf_id,"ctg": ctg},
+                success: function (res) {
+                    $.each(res, function (i, elt) {
+                        s+='<div class="ci-mini-card">';
+                        var ci_path = '${root}'+elt.ci_path + elt.ci_nm ;
+                        var ci_path_url="url('"+ci_path+"')";
+                        s+='<div class="ci-mini-card-inr">';
+                        s+='<div class="ci-mini-st" style="background-image:'+ci_path_url+'" ';
+                        s+='data-bs-toggle="modal" data-bs-target="#ciModal" ';
+                        s+='modal-cm-txt="'+elt.cm_txt+'" modal-fd-txt="'+elt.fd_txt+'"';
+                        s+='modal-ur-nk="'+elt.ur_nk+'" modal-ur-img="'+elt.ur_img+'">';
+                        s+='</div>';
+                        s+='</div></div>';
+                    });//each
+                    s+='</div>';
+                    $("div.cf-btm-ci-card-box").html(s);
+                }//su
+            })//aj
+        });//사진카테고리클릭
 
         ////////////////////////////////////////////////////////////////// 일반 함수 //////////////////////////////////////////////////////////////////
         //파일 사진 확인
@@ -785,7 +1006,7 @@
 
         // 리뷰리스트
         function cmList(){
-            var s="<div class='cm-box'>";
+            var s='<div class="cm-box">';
             var cm_cnt=${dto.cm_cnt};
             if(cm_cnt==0){s+='<div>아직 리뷰가 없습니다. 첫번째 리뷰를 남겨주세요!</div><br>';}
             if(login_ok=="yes"){
@@ -823,21 +1044,20 @@
 
         //리뷰리스트출력
         function cmListOnly(cm_order){
-            var cl="";
+            var cl='';
             $.ajax({
                 type: "get",
                 url: "select_cmt_order",
                 dataType: "json",
                 data: {"cf_id": cf_id,"cm_order":cm_order,"rl":0},
                 success: function (res) {
-                    cl+='<div id="cm-order" ><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
-                    cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></div><br><br>';
+                    cl+='<div class="cm-order-box"><label><input type="checkbox" id="only-img-review">&nbsp;사진리뷰만</input></label><span id="cm-order" ><a class="cm-order" href="#cm-order" cm_order="date_desc">최신순</a>&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_desc">별점높은순</a>';
+                    cl+='&nbsp;|&nbsp;<a class="cm-order" href="#cm-order" cm_order="star_asc">별점낮은순</a></span></div><br><div id="cm-list_more">';
                     $.each(res, function (i, elt) {
                         if(elt.rl==0){
-                            //console.dir(elt);
-                            cl+='<div class="cm-box-each"><div style="width: 660px;">';
+                            cl+='<div class="cm-box-each null_id_'+elt.img_null_id+'"><div style="width: 660px;">';
                             if (elt.ur_img==null){ elt.ur_img='noprofile.jpg';}
-                            cl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="${root}/images/noprofile.jpg" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
+                            cl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="'+on_error_prf+'" style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 cl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cm-edit" cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 cl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'" cf_id="'+cf_id+'"></i></span>';}
@@ -873,15 +1093,14 @@
                                 cl+='<span class="carousel-control-next-icon"></span></button></div>';
                             }
                             cl+='<pre>'+elt.cm_txt+'</pre>';
-                            cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'>댓글보기 ('+(elt.cm_cnt-1)+') <i class="fa-solid fa-caret-down"></i></a>';
-                            cl+='<div style="display: none; " ><div class="cm-cm-form" ></div>';
+                            cl+='<a href="javascript:;" class="view-cm-cm" rg='+elt.rg+' rs='+elt.rs+' rl='+elt.rl+'><span class="view-cmt-txt"> 댓글보기 (<span class="cmcm-cnt">'+ (elt.cm_cnt-1)+'</span>)</span> <i class="bi bi-caret-down-fill view-cmt"></i> </a>';
+                            cl+='<div class="cmt-show-hide"><div class="cm-cm-form" ></div>';
                             cl+='<div class="cm-list-box"><i class="bi bi-arrow-return-right" style="margin-top: 10px;"></i>&nbsp;&nbsp;';
-                            cl+='<div class="cm-cm-list">댓글이 없어요&nbsp;<i class="fa-regular fa-face-sad-tear"></i></div></div></div></div>';
+                            cl+='<div class="cm-cm-list">댓글 로딩 중&nbsp;<i class="fa-solid fa-spinner"></i></div></div></div></div>';
                         }
                     });//each
-                    cl+='</div>';
+                    cl+='</div></div>';
                     $("div.cf-bottom-cmlist").html(cl);
-
                 }//succ
             });//ajax
         }
@@ -897,10 +1116,13 @@
                 data: {"cf_id": cf_id,"cm_order":"date_asc","rl":1},
                 success: function (res) {
                     var ccl='';
+                    var cnt=0;
                     $.each(res, function (i, elt) {
                         if(elt.rg==rg){
+
+                            cnt++;
                             ccl+='<div style="width: 620px; ">';
-                            ccl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="${root}/images/noprofile.jpg"  style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
+                            ccl+='<img src="${root}/res/prfimg/'+elt.ur_img+'" onError="'+on_error_prf+'"  style="width: 30px; height: 30px; border-radius: 100px;">&nbsp;'+elt.ur_nk;
                             if(elt.ur_id=='${sessionScope.login_id }'){
                                 ccl+='<span class="cm-edit-del"><i class="fa-solid fa-pen-to-square cc-edit" rg='+elt.rg+' cm_id="'+elt.cm_id+'" ></i>&nbsp;&nbsp;';
                                 ccl+='<i class="fa-solid fa-trash cm-del" cm_id="'+elt.cm_id+'" cf_id="'+cf_id+'"></i></span>';}
@@ -908,8 +1130,11 @@
                             ccl+='<div><span>'+elt.w_date+'</span></div>';
                             ccl+='<pre>'+elt.cm_txt+'</pre><hr>';
                         }
-                        $("div.cm-cm-list").html(ccl);
                     });//each
+                    if(cnt===0){
+                        ccl+='댓글이 없어요 &nbsp;<i class="fa-regular fa-face-sad-tear"></i>';
+                    }
+                    $("div.cm-cm-list").html(ccl);
                 }
             });//ajax
         }//리뷰댓글리스트
@@ -927,10 +1152,19 @@
             };
             var map =new naver.maps.Map('map', mapOptions);
             //console.log(map);
-            var marker = new naver.maps.Marker({
+            var markerOptions = {
                 position: position,
-                map: map
-            });
+                map: map,
+                icon: {
+                    content: '<img src="${root}/res/images/pin.png" '+
+                        'style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; ' +
+                        '-webkit-user-select: none; position: absolute; width: 30px; height: 30px; left: 0px; top: 0px;">',
+                    size: new naver.maps.Size(22, 35),
+                    anchor: new naver.maps.Point(11, 35),
+                },
+                animation: naver.maps.Animation.BOUNCE
+            };
+            var marker = new naver.maps.Marker(markerOptions);
         }//cfMap
 
         //돌아가기
@@ -953,15 +1187,12 @@
     <div class="modal-dialog modal-xl" id="ciModal-dialog">
         <div class="modal-content" id="ciModal-content">
             <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-img"></div>
+                <button type="button" class="btn-close modal-close" data-bs-dismiss="modal"></button>
             </div>
             <!-- Modal body -->
             <div class="modal-body" style="text-align: center">
             </div>
-            <!-- Modal footer -->
-            <div class="modal-footer justify-content-center">
-            </div>
-
         </div>
     </div>
 </div>

@@ -54,6 +54,8 @@ public class CafeService implements CafeServiceInter {
 
     @Override
     public void insertCafeCmt(CafeCmtDto dto) {
+        int cm_id=this.selectMaxNum()+1;
+        dto.setCm_id(cm_id);
         //System.out.println(dto.getCf_id());
         int rg=dto.getRg();
         int rs=dto.getRs();
@@ -178,5 +180,20 @@ public class CafeService implements CafeServiceInter {
     @Override
     public List<CafeCtgDto> selectAllCtg() {
         return cafeDao.selectAllCtg();
+    }
+
+    @Override
+    public List<CafeImgDto> selectFdImgByCf(int cf_id) {
+        return cafeDao.selectFdImgByCf(cf_id);
+    }
+
+    @Override
+    public List<CafeImgDto> selectCmImgByCf(int cf_id) {
+        return cafeDao.selectCmImgByCf(cf_id);
+    }
+
+    @Override
+    public List<CafeImgDto> selectCiNull(int cf_id){
+        return cafeDao.selectCiNull(cf_id);
     }
 }
