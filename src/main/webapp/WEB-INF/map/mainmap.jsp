@@ -236,6 +236,20 @@
         <button type="button" id="modalpopbtn">경로 확인</button>
     </div>
 </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
     //전역변수 선언
     let isMakingTour= false;
@@ -254,7 +268,22 @@
     let menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
     //페이지 로딩후 바로 실행
     $(document).ready(function (){
-        $("button.search-btn").trigger('click');
+        var lng = ${lng};
+        var lat = ${lat};
+        var zoom = ${zoom};
+        if(lng==127.0290175){
+            $("button.search-btn").trigger('click');
+        }else{
+            var pos = new naver.maps.LatLng(lat, lng);
+            map.setZoom(zoom);
+            map.setCenter(pos);
+            for (var mkr of markerList){
+                mkr.setAnimation(null);
+                mkr.setVisible(true);
+            }
+        }
+        /*$("input.cafe-search-bar").val("${sw}");
+        $("button.search-btn").trigger('click');*/
     })
     //모달 띄우기
     $(document).on('click','#modalpopbtn', function (){
@@ -338,8 +367,8 @@
                 map: modalmap,
                 path: polypath,
                 strokeColor: rainbow[iIdx],
-                strokeOpacity: 0.6,
-                strokeWeight: 3,
+                strokeOpacity: 0.8,
+                strokeWeight: 5,
                 zIndex: 2,
                 endIcon: naver.maps.PointingIcon.OPEN_ARROW
             });
@@ -544,8 +573,8 @@
     });//검색버튼
     //카테고리 검색
     $(document).on('click','.categorybtn',function(){
-       $("input.cafe-search-bar").val($(this).text().substring(1));
-       $("button.search-btn").trigger('click');
+        $("input.cafe-search-bar").val($(this).text().substring(1));
+        $("button.search-btn").trigger('click');
     });
 
     //검색결과 hover시 그림자 추가
@@ -650,7 +679,7 @@
             data: {"cf_id":id},
             success: function(res){
                 s += "<div class='cafe-in-tour results' value='" + id + "'>" + res.cf_nm;
-                s += "<br>방문 시간: &nbsp;<input type='time' class='visit_time' required='required'>"
+                s += "<br>방문 시간: &nbsp;<input type='time' class='visit_time' required='required' value='" + moment().format("HH:mm") + "'>"
                 s += "<i class='fa-solid fa-xmark rm-tour-icon'></i>";
                 s += "</div>";
                 $("div.active-bar").children(".detail-bar-cafe").append(s);
@@ -766,6 +795,9 @@
     //맵에 어떠한 변화가 있을때
     naver.maps.Event.addListener(map, 'idle', function() {
         updateMarkers(map, markerList);
+        console.log(map.getZoom());
+        console.log(map.getCenter());
+
     });
     //마커가 맵 밖에 있으면 숨기기
     function updateMarkers(map, markers) {
@@ -806,5 +838,3 @@
         $("#maketourmodal").hide();
     }
 </script>
-</body>
-</html>

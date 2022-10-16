@@ -77,66 +77,61 @@
             <a>지역별 카페 바로가기</a>
         </div>
         <div class="loc-slide swiper-container">
-            <div class="quick-search swiper-wrapper">
-                <a href="#" class="icon swiper-slide" style="background-color: #664400;">
-                    <span class="label">선호지역 ></span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/apgujeong"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706apgujeong.jpg?small200);">
-                    <span class="label">압구정 / 청담</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/itaewon"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706itaewon.jpg?small200);">
-                    <span class="label">이태원 / 한남</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/busan"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/busan_.jpg?small200);">
-                    <span class="label">부산</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/seongsu"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706sungsoo.jpg?small200);">
-                    <span class="label">성수</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/gwanghwamun"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706gwanghwamun.jpg?small200);">
-                    <span class="label">광화문 / 종로</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/gangnam"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706gangnam.jpg?small200);">
-                    <span class="label">강남 / 역삼</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/hongdae"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md_2022/0609_location_hapjeong,mangwon.png?small200);">
-                    <span class="label">합정 / 망원</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/hongdae"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706hongdae.jpg?small200);">
-                    <span class="label">홍대 / 신촌</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/yeouido"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706yeouido.jpg?small200);">
-                    <span class="label">여의도</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/bukchon"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706bukchon_0331.jpg?small200);">
-                    <span class="label">북촌 / 삼청</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/euljiro"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706euljiro_0331.jpg?small200);">
-                    <span class="label">을지로</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/jeju"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/jeju_.jpg?small200);">
-                    <span class="label">제주</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/seorae"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706surraevillage_0331.jpg?small200);">
-                    <span class="label">서래마을</span>
-                </a>
-                <a class="swiper-slide" href="https://app.catchtable.co.kr/ct/search/list/daegu"
-                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md_2022/0307_location_daegu@2x.png?small200);">
-                    <span class="label">대구</span>
-                </a>
+            <div class="quick-search swiper-wrapper"
+                <a href="#" class="icon swiper-slide" style="background-color: #664400;"><span
+                        class="label">선호지역 ></span></a>
+                <a class="swiper-slide" href="map/mainmap?lat=37.5252228&lng=127.0349241&zoom=15"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706apgujeong.jpg?small200);"><span
+                        class="label">압구정 / 청담</span></a>
+                <a class="swiper-slide" href="map/mainmap?lat=37.5371848&lng=127.0000191&zoom=16"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706itaewon.jpg?small200);"><span
+                        class="label">이태원 / 한남</span></a>
+                <a class="swiper-slide"  href="map/mainmap?lat=35.1693901&lng=129.0576209&zoom=12"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/busan_.jpg?small200);"><span
+                        class="label">부산</span></a>
+                <a class="swiper-slide"  href="map/mainmap?lat=37.543568&lng=127.0486798&zoom=15"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706sungsoo.jpg?small200);"><span
+                        class="label">성수</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=37.5750588&lng=126.9837018&zoom=16"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706gwanghwamun.jpg?small200);"><span
+                        class="label">광화문 / 종로</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=37.4989472&lng=127.0318722&zoom=17"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706gangnam.jpg?small200);"><span
+                        class="label">강남 / 역삼</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=37.5529216&lng=126.9100076&zoom=16"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md_2022/0609_location_hapjeong,mangwon.png?small200);"><span
+                        class="label">합정 / 망원</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=37.555779&lng=126.9302984&zoom=16"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706hongdae.jpg?small200);"><span
+                        class="label">홍대 / 신촌</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=37.5253369&lng=126.9262646&zoom=15"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706yeouido.jpg?small200);"><span
+                        class="label">여의도</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=37.5829184&lng=126.9843904&zoom=16"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706bukchon_0331.jpg?small200);"><span
+                        class="label">북촌 / 삼청</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=37.5637299&lng=126.9894542&zoom=16"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706euljiro_0331.jpg?small200);"><span
+                        class="label">을지로</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=33.3825901&lng=126.5619928&zoom=11"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/jeju_.jpg?small200);"><span
+                        class="label">제주</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=37.4985397&lng=126.9970601&zoom=15"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md/0706surraevillage_0331.jpg?small200);"><span
+                        class="label">서래마을</span></a>
+                <a class="swiper-slide"
+                   href="map/mainmap?lat=35.8429727&lng=128.5828967&zoom=12"
+                   style="background-image: url(https://d21sjc85fy47a6.cloudfront.net/aaaaaqx/md_2022/0307_location_daegu@2x.png?small200);"><span
+                        class="label">대구</span></a>
             </div>
         </div>
     </div>
@@ -213,8 +208,6 @@
         </div>
     </div>
 </div>
-
-
 <script>
     var best_swiper = new Swiper(".best-slide", {
         slidesPerView: 'auto', // 동시에 보여줄 슬라이드 갯수
@@ -230,7 +223,6 @@
             bulletActiveClass: "swiper-pagination-bullet-active"
         }
     })
-
     var loc_swiper = new Swiper(".loc-slide ", {
         slidesPerView: 7, // 동시에 보여줄 슬라이드 갯수
         spaceBetween: 32, // 슬라이드간 간격
