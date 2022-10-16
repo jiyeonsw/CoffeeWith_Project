@@ -11,7 +11,7 @@ ul {
 div.main-page-container {
     display: grid;
     width: 1136px;
-    grid-auto-rows: 1fr 300px 500px 400px;
+    grid-auto-rows: 1fr 300px 500px 500px;
     grid-template-areas:
                 "best"
                 "loc"
@@ -194,7 +194,7 @@ li{
 /*tr-container*/
 div.tr-tit-box{
     display: grid;
-    grid-template-columns: 900px 50px ;
+    grid-template-columns: 1080px 50px ;
 }
 span.tr-tit{
     padding: 0 30px 0 0;
@@ -212,16 +212,16 @@ a.tr-more{
 div.tr-cont-box{
     margin-left: 5px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr ;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 div.tr-card {
-    width: 300px;
+    width: 270px;
     height: 400px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     margin-right: 10px;
 }
 div.tri-card {
-    width: 300px;
+    width: 270px;
     overflow: hidden;
     opacity: 0.7;
     background: 50% 50% no-repeat;
@@ -237,7 +237,8 @@ div.tr-cont-card{
 
 span.tr-cont-tw-g{
     position: relative;
-    left: 210px;
+    top:7px;
+    left:180px;
     text-align: center;
     padding: 15px 10px 10px 10px;
     width: 70px;
@@ -251,7 +252,8 @@ span.tr-cont-tw-g{
 }
 span.tr-cont-tw-r{
     position: relative;
-    left: 210px;
+    top:7px;
+    left: 180px;
     text-align: center;
     padding: 15px 10px 10px 10px;
     width: 70px;
@@ -323,7 +325,7 @@ div.tr-cont-bottom span svg{
 /*fd-container*/
 div.fd-tit-box{
     display: grid;
-    grid-template-columns: 900px 50px ;
+    grid-template-columns: 1080px 50px ;
 }
 span.fd-tit{
     padding: 0 30px 0 0;
@@ -370,8 +372,8 @@ div.fd-more-box{
 }
 
 div.fd-card {
-    width: 225px;
-    height: 330px;
+    width: 270px;
+    height: 370px;
     overflow: hidden;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     padding: 10px 10px 10px 10px;
@@ -388,7 +390,7 @@ div.fd-txt-area:hover {
 
 div.fdi-nm {
     width: 100%;
-    height: 205px;
+    height: 255px;
     border-radius: 4px;
     background: 50% 50% no-repeat;
     background-size: cover;
