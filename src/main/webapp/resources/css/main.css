@@ -283,6 +283,10 @@ span.tr-cont-tw-r{
 .tr-cont-tit{
     text-align: center;
     font-size: 1.5rem;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 15px;
 }
 
 img.tr-prf{
