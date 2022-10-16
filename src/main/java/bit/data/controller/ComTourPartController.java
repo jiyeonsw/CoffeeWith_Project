@@ -6,11 +6,15 @@ import bit.data.dto.ComTourPartDto;
 import bit.data.service.ComTourPartServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ComTourPartController {
@@ -29,7 +33,20 @@ public class ComTourPartController {
     @ResponseBody
     public List<ComTourPartDto> list(int tr_id)
     {
-        //System.out.println(tr_id);
+
        return partService.getAllPartList(tr_id);
     }
+    @GetMapping("/part/data")
+    @ResponseBody
+    public Map<String,Integer> getTotalCount(int num)
+    {
+        Map<String, Integer> map = new HashMap<>();
+
+        int totalCount = partService.getTotalCount(num);
+        System.out.println("넘오온 숫자: "+totalCount);
+        map.put("totalCount",totalCount);
+
+        return map;
+    }
+
 }

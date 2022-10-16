@@ -43,7 +43,7 @@
 
     <!--모집완료-->
     <update id="updatecrw" parameterType="Map">
-        update tr set  tr_cmp=#{tr_cmp} where tr_id=#{tr_id}
+        update tr set tr_cmp=#{tr_cmp} where tr_id=#{tr_id}
     </update>
     <!--참가 인원 구하기-->
     <select id="getCrwCount" parameterType="Map" resultType="int">

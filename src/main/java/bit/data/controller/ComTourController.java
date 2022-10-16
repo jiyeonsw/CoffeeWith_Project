@@ -80,6 +80,7 @@ public class ComTourController {
     {
         Map<String, Integer> map = new HashMap<>();
         int count = comTourService.getCrwCount(ur_id, tr_id);
+        //System.out.println("넘오온 숫자:"+count);
         map.put("count", count);
         return map;
 

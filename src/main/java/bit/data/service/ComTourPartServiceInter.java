@@ -9,7 +9,7 @@ public interface ComTourPartServiceInter {
     public void insertPart(ComTourPartDto dto);
     public void updatePart(ComTourPartDto dto);
     public void deletePart(int num);
-    public ComTourPartDto getTotalCount(int num);
+    public int getTotalCount(int num);
     public ComTourPartDto getData(int num);
     public List<ComTourPartDto> getAllPartList(int tr_id);
 }
