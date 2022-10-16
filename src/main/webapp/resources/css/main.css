@@ -245,6 +245,8 @@ div.tr-cont-card{
 }
 
 span.tr-cont-tw-g{
+    position: relative;
+    left: 210px;
     text-align: center;
     padding: 15px 10px 10px 10px;
     width: 70px;
@@ -257,6 +259,8 @@ span.tr-cont-tw-g{
     font-size: 15px;
 }
 span.tr-cont-tw-r{
+    position: relative;
+    left: 210px;
     text-align: center;
     padding: 15px 10px 10px 10px;
     width: 70px;
@@ -269,12 +273,17 @@ span.tr-cont-tw-r{
     font-size: 15px;
 }
 .tr-cont-loc{
-    color: black;
-    font-size: 1.2rem;
-    opacity: 1;
+    position: absolute;
+    margin-top: 5px;
+    color: white;
+    font-size: 0.8rem;
+    margin-left: 3px;
+    padding: 7px 10px 3px 7px;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 100px;
 }
 .tr-cont-loc i{
-    color: black;
+    color: white;
     font-size: 15px;
     opacity: 1;
 }
