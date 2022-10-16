@@ -1,5 +1,6 @@
 package bit.data.service;
 
+import bit.data.dao.UserDaoInter;
 import bit.data.dto.UserDto;
 
 import java.util.List;
@@ -28,4 +29,9 @@ public interface UserServiceInter {
 
     public UserDto selectEmailId(String email_id);
 
+    public String getUserEmailByName(String ur_nm);
+
+    public String getUserPwByEmail(String email_id);
+
+    public UserDto selectDataByNaver (String naver_id);
 }

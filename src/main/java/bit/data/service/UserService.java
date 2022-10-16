@@ -78,4 +78,19 @@ public class UserService implements UserServiceInter {
     public void updateUserData(UserDto dto) {
         userDao.updateUserData(dto);
     }
+
+    @Override
+    public String getUserEmailByName(String ur_nm) {
+        return userDao.getUserEmailByName(ur_nm);
+    }
+
+    @Override
+    public String getUserPwByEmail(String email_id) {
+        return userDao.getUserPwByEmail(email_id);
+    }
+
+    @Override
+    public UserDto selectDataByNaver(String naver_id) {
+        return userDao.selectDataByNaver(naver_id);
+    }
 }

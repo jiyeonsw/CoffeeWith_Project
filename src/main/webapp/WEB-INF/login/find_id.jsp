@@ -39,7 +39,7 @@
 <body>
 <c:set var="root" value="<%=request.getContextPath() %>"/>
 
-<form name="mForm" method="post" action="submit_find_id" >
+<form name="mForm" method="post" action="submit_find_id">
     <div id="container" class="container">
         <p class="titid">아이디 찾기</p>
         <p>회원정보에 등록된 정보로 아이디를 찾을 수 있습니다.</p>
@@ -59,6 +59,7 @@
                 <button type="submit" id="btn-submit" class="btn btn-outline-info">
                     아이디 찾기</button>
             </div>
+            <br><br>
             <c:if test="${not empty param.email}">
                 <div>
                     이메일 아이디를 찾았습니다:

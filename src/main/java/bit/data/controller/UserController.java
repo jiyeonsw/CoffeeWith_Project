@@ -103,12 +103,10 @@ public class UserController {
         return list;
     }
 
-    //회원가입 정보 DB insert
+    //회원가입 //  정보 DB insert
     @PostMapping("/insert_user")
     public String insertUser(UserDto dto) {
-//        System.out.println(dto.getEmail_id());
-//        System.out.println(dto.getLoc_si());
-
+        //       System.out.println(dto.getEmail_id());
         try {
             //db.insert
             userService.insertUser(dto);
@@ -116,7 +114,8 @@ public class UserController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return "redirect:/login_main";
+//        return "redirect:/login_main";
+        return "/bit/login/login_form";
     }
 
     // 유저 정보 수정

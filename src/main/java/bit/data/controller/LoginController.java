@@ -128,10 +128,8 @@ public class LoginController {
     }
 
     @PostMapping("/submit_find_id")
-    public String submitFindId(String ur_nm, HttpSession session) {
+    public String submitFindId(String ur_nm) {
         String email = userService.getUserEmailByName(ur_nm);
-        System.out.println("hittt starst " + ur_nm + " email: " + email);
-        session.setAttribute("find_id_email", email);
         return "redirect:/user/find_id?email=" + email;
     }
 
@@ -139,6 +137,13 @@ public class LoginController {
     @GetMapping("/find_pw")
     public String findpw() {
         return "/bit/login/find_pw";
+    }
+
+    @PostMapping("/submit_find_pw")
+    public String submitFindPw(String email_id) {
+        String pw = userService.getUserPwByEmail(email_id);
+        String maskedPw = pw.length() < 3 ? pw : pw.substring(0, pw.length() - 3) + "***";
+        return "redirect:/user/find_pw?pw=" + maskedPw;
     }
 
     ////////////////////////////////////////

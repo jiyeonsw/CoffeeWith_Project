@@ -29,5 +29,11 @@ public interface UserDaoInter {
     public void updateUserPass(Map map);
 
     public void updateUserData(UserDto dto);
+
+    public UserDto selectDataByNaver (String naver_id);
+
+    public String getUserEmailByName (String ur_nm);
+
+    public String getUserPwByEmail (String email_id);
 }
 

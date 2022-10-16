@@ -47,6 +47,18 @@
             <version>1.2.2</version>
         </dependency>
 
+<!--        &lt;!&ndash; 이메일 인증번호 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-context-support</artifactId>-->
+<!--            <version>${org.springframework-version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.sun.mail</groupId>-->
+<!--            <artifactId>javax.mail</artifactId>-->
+<!--            <version>1.6.2</version>-->
+<!--        </dependency>-->
+
 <!--        <version>${org.springframework-version}</version> &lt;!&ndash; 알아서 버전을 맞춰준다는 코드 추가 &ndash;&gt;-->
 
 <!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.mail/mail &ndash;&gt; &lt;!&ndash; 이메일 본인 인증 API 추가&ndash;&gt;-->

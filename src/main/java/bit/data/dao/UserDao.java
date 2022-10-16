@@ -75,4 +75,19 @@ public class UserDao implements UserDaoInter {
     public int getIdPassCheck(Map<String, String> map) {
         return session.selectOne(ns + "loginIdPassCheck", map);
     }
+    // 네이버 간편 로그인을 위한 중복 아이디 체크
+    @Override
+    public String getUserEmailByName(String ur_nm) {
+        return session.selectOne(ns+"getUserEmailByName", ur_nm);
+    }
+
+    @Override
+    public String getUserPwByEmail(String email_id) {
+        return session.selectOne(ns+"getUserPwByEmail", email_id);
+    }
+    // 네이버 아이디
+    @Override
+    public UserDto selectDataByNaver(String naver_id) {
+        return session.selectOne(ns+"selectDataByNaver", naver_id);
+    }
 }
