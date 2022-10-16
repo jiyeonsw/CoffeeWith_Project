@@ -17,4 +17,11 @@ public class ComFeedDto {
     private Timestamp u_date;
     private int likes;
     private int acount;
+
+    //메인페이지용 추가
+    private String cf_nm;
+    private String ur_nk;
+    private String ci_path;
+    private String ci_nm;
+    private String ur_img;
 }

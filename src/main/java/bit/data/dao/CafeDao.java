@@ -64,8 +64,8 @@ public class CafeDao implements CafeDaoInter {
     }
 
     @Override
-    public List<CafeDto> selectSearchCafe(Map<String, Object> map) {
-        return session.selectList(ns + "selectSearchCafe", map);
+    public List<CafeDto> selectSearchCafe(String searchword) {
+        return session.selectList(ns + "selectSearchCafe", searchword);
     }
 
     @Override
@@ -132,9 +132,24 @@ public class CafeDao implements CafeDaoInter {
     }
     @Override
     public int selectCMCntByCfid(int cf_id){return session.selectOne(nsm+"selectCMCntByCfid",cf_id);}
-
     @Override
     public int selectCMCntByRg(int cm_id) {
         return session.selectOne(nsm+"selectCMCntByRg",cm_id);
+    }
+    @Override
+    public List<CafeCtgDto> selectAllCtg() {
+        return session.selectList(ns + "selectAllCtg");
+    }
+    @Override
+    public List<CafeImgDto> selectFdImgByCf(int cf_id) {
+        return session.selectList(nsi+"selectFdImgByCf", cf_id);
+    }
+    @Override
+    public List<CafeImgDto> selectCmImgByCf(int cf_id) {
+        return session.selectList(nsi+"selectCmImgByCf",cf_id);
+    }
+    @Override
+    public List<CafeImgDto> selectCiNull(int cf_id) {
+        return session.selectList(nsi+"selectCiNull",cf_id);
     }
 }

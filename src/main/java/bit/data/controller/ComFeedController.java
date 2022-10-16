@@ -48,6 +48,8 @@ public class ComFeedController {
                 photo.substring(0,photo.length()-1);
             }
             dto.setFd_photo(photo);
+            int fd_lk = comFeedService.selectTotalFeedLikes(dto.getFd_id());
+            dto.setLikes(fd_lk);
         }
 
         int totalCount = comFeedService.selectTotalCount(sc, sw);
@@ -58,15 +60,59 @@ public class ComFeedController {
         return "/bit/comfeed/comfeedlist";
     }
 
+    @GetMapping("/toplist")
+    @ResponseBody
+    public List<ComFeedDto> toplist() {
+
+        List<ComFeedDto> list = comFeedService.searchBestFeed();
+
+        for(ComFeedDto dto:list){
+            List<String> list1 = comFeedService.selectPhoto(dto.getFd_id());
+            String photo="";
+            for(String str:list1){
+                photo+=(str+",");
+                photo.substring(0,photo.length()-1);
+            }
+            dto.setFd_photo(photo);
+            int fd_lk = comFeedService.selectTotalFeedLikes(dto.getFd_id());
+            dto.setLikes(fd_lk);
+        }
+
+        return list;
+    }
+
+    @GetMapping("/feedctg")
+    @ResponseBody
+    public List<ComFeedDto> feedctg(String cg_nm){
+
+        List<ComFeedDto> list = comFeedService.searchFeedByCtg(cg_nm);
+
+        for(ComFeedDto dto:list){
+            List<String> list1 = comFeedService.selectPhoto(dto.getFd_id());
+            String photo="";
+            for(String str:list1){
+                photo+=(str+",");
+                photo.substring(0,photo.length()-1);
+            }
+            dto.setFd_photo(photo);
+            int fd_lk = comFeedService.selectTotalFeedLikes(dto.getFd_id());
+            dto.setLikes(fd_lk);
+        }
+
+        return list;
+    }
+
     @PostMapping("/insert")
     public String insert(ComFeedDto dto, List<MultipartFile> upload, HttpServletRequest request) {
 
         String ntxt = dto.getFd_txt().replaceAll("\r\n","<br>");
         dto.setFd_txt(ntxt);
 
+        dto.setCf_id(comFeedService.selectCafeByCfnm(dto.getCf_nm()));
         comFeedService.insertFeed(dto);
         int fd_id = comFeedService.selectMaxNum();
         dto.setFd_id(fd_id);
+
 
         String path = request.getSession().getServletContext().getRealPath("/resources/images/upload");
 
@@ -94,6 +140,7 @@ public class ComFeedController {
 
         ComFeedDto comFeedDto = comFeedService.selectFeed(fd_id);
         List<String> list = comFeedService.selectPhoto(fd_id);
+
         String photo="";
         for(String str:list){
             photo+=(str+",");
@@ -106,22 +153,15 @@ public class ComFeedController {
         int ur_id = comFeedDto.getUr_id();
         UserDto userDto = userService.selectDataById(ur_id);
 
+        int fd_lk = comFeedService.selectTotalFeedLikes(fd_id);
+        comFeedDto.setLikes(fd_lk);
+
         mview.addObject("comfeeddto", comFeedDto);
         mview.addObject("cafedto",cafeDto);
         mview.addObject("userdto",userDto);
 
         mview.setViewName("comfeed/comfeeddetail");
         return mview;
-    }
-
-    @GetMapping("/likes")
-    @ResponseBody
-    public Map<String, Integer> likes(int num) {
-        comFeedService.updateLikes(num);
-        int likes = comFeedService.selectFeed(num).getLikes();
-        Map<String, Integer> map = new HashMap<>();
-        map.put("likes", likes);
-        return map;
     }
 
     @GetMapping("/form")
@@ -172,6 +212,7 @@ public class ComFeedController {
         String ntxt = dto.getFd_txt().replaceAll("\r\n","<br>");
         dto.setFd_txt(ntxt);
 
+        dto.setCf_id(comFeedService.selectCafeByCfnm(dto.getCf_nm()));
         comFeedService.updateFeed(dto);
 
         String path = request.getSession().getServletContext().getRealPath("/resources/images/upload");
@@ -192,5 +233,42 @@ public class ComFeedController {
         }
         return "redirect:main";
     }
+
+    @GetMapping("/insert_like")
+    @ResponseBody
+    public Map<String,Integer> insertFeedLikes(int lg_id, int fd_id){
+        comFeedService.insertFeedLikes(lg_id,fd_id);
+        Map<String,Integer> map=new HashMap<>();
+        int fl_cnt = comFeedService.selectTotalFeedLikes(fd_id);
+        map.put("fl_cnt",fl_cnt);
+        return map;
+    }
+
+    @GetMapping("/select_like")
+    @ResponseBody
+    public Map<String,Integer> selectCKCntbyUridNCfid(int lg_id, int fd_id){
+        Map<String,Integer> map=new HashMap<>();
+        int fl_chk=comFeedService.selectFeedLikesByUrid(lg_id,fd_id);
+        //System.out.println(ck_chk);
+        map.put("fl_chk",fl_chk);
+        return map;
+    }
+
+    @GetMapping("/delete_like")
+    @ResponseBody
+    public Map<String,Integer> deleteFeedLikes(int lg_id, int fd_id){
+        comFeedService.deleteFeedLikes(lg_id,fd_id);
+        Map<String,Integer> map=new HashMap<>();
+        int fl_cnt = comFeedService.selectTotalFeedLikes(fd_id);
+        map.put("fl_cnt",fl_cnt);
+        return map;
+    }
+
+    @PostMapping("/update_like")
+    @ResponseBody
+    public void updateFeedLikes(int fd_id){
+        comFeedService.updateFeedLikes(fd_id);
+    }
+
 }
 

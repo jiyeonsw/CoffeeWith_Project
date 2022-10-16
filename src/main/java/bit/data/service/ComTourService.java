@@ -47,6 +47,24 @@ public class ComTourService implements ComTourServiceInter{
         return daoInter.getData(num);
     }
 
+    @Override
+    public void updatecrw(int tr_cmp, int tr_id) {
+        Map<String, Integer> map=new HashMap<>();
+        map.put("tr_cmp",tr_cmp);
+        map.put("tr_id",tr_id);
+
+        daoInter.updatecrw(map);
+    }
+
+    @Override
+    public int getCrwCount(int ur_id, int tr_id) {
+        Map<String,Integer> map=new HashMap<>();
+        map.put("ur_id",ur_id);
+        map.put("tr_id",tr_id);
+
+        return daoInter.getCrwCount(map);
+    }
+
 
     @Override
     public void updateComTour(ComTourDto dto)

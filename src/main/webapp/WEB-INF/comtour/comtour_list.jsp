@@ -60,7 +60,7 @@
     <script>
 
        var login_ok="<%=(String)session.getAttribute("login_ok")%>";
-
+        //alert(login_ok);
         $(function (){
             //새글쓰기 모달창
             $("#btnform").click(function (){
@@ -72,16 +72,6 @@
                     $("#modalform .modal-content").load("form");
                 }
             }); // 새글쓰기 모달창 종료
-
-          /*  //디테일 페이지 모달창 시작
-            $("li").on("click",function (e){
-                e.preventDefault();
-                var tr_id = $("#detailview input").val();
-                alert(tr_id);
-                $("#modaldetail").modal("toggle");
-                $("#modaldetail .modal-content").load("detail");
-
-            }) // 디테일 페이지 모달창 종료*/
 
         });//스크립트 전체 함수 영역
     </script>
@@ -119,26 +109,29 @@
             <input type="hidden" value="${dto.tr_id}">
                 <div class="detailbox">
                     <table class="table table-bordered">
-                        <tr style="height: 80px;">
-                            <th>
+                        <tr>
+                            <th style="text-align: center">
                                 <fmt:parseDate var="start" value="${dto.s_date}"  pattern="yyyy-MM-dd"/>
                                 <fmt:formatDate value="${start}" pattern="MM월" /><br>
                                 <b style="font-size: 25px;"><fmt:formatDate value="${start}" pattern="dd일" /></b>
                             </th>
-                            <th>>></th>
-                            <th>
+                            <th style="text-align: center; vertical-align: middle">>></th>
+                            <th style="text-align: center">
                                 <fmt:parseDate var="end" value="${dto.e_date}"  pattern="yyyy-MM-dd"/>
                                 <fmt:formatDate value="${end}" pattern="MM월" /><br>
-                                <b style="font-size: 25px;"><fmt:formatDate value="${start}" pattern="dd일"/></b>
+                                <b style="font-size: 25px;"><fmt:formatDate value="${end}" pattern="dd일"/></b>
                             </th>
-                            <th>모집</th>
+                            <th style="text-align: center; vertical-align: middle">
+                                <c:if test="${dto.tr_cmp!=1}"><b>모집중</b></c:if>
+                                <c:if test="${dto.tr_cmp==1}"><b style="color:red">모집<br>완료</b></c:if>
+                            </th>
                         </tr>
                         <tr>
                             <td colspan="4">title: ${dto.tr_nm}</td>
                         </tr>
                         <tr>
                             <td colspan="4">
-                                <img src="${root}/res/prfimg/${dto.ur_img}" style="width: 50px;" class="rounded-circle">
+                                <img src="${root}/res/prfimg/${dto.ur_img}" style="width: 40px;" class="rounded-circle">
                                 주최자: ${dto.ur_nm}
                             </td>
                         </tr>
@@ -156,24 +149,8 @@
     </ul>
 </div> <!--wrapper-->
 
-
-
-
-
-
-
-
-
-
-
     <%--새 글 모달 영역--%>
 <div class="modal" id="modalform">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content"></div>
-    </div>
-</div>
-    <%--디테일 모달 영역--%>
-<div class="modal" id="modaldetail">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content"></div>
     </div>

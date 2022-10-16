@@ -17,7 +17,7 @@
     <select id="selectFeed" parameterType="int" resultType="fddto">
         select *
         from fd
-        where fd_id=#{fd_id}
+        where fd_id=#{fd_id};
     </select>
     <select id="searchFeedByTag" parameterType="Map" resultType="fddto">
         select *
@@ -28,9 +28,20 @@
         </if>
         order by w_date desc;
     </select>
+    <select id="searchFeedByCtg" parameterType="Map" resultType="fddto">
+        select *
+        from fd
+        join cf_ctg_rel on fd.cf_id = cf_ctg_rel.cf_id
+        where cg_id = (select cg_id from cf_ctg where cg_nm=#{cg_nm}) order by w_date desc;
+    </select>
+    <select id="searchBestFeed" resultType="fddto">
+        select *
+        from fd
+        order by likes desc limit 10;
+    </select>
     <insert id="insertFeed" parameterType="fddto">
         insert into fd
-        values (null,#{cf_id},#{ur_id},#{fd_txt},now(),null,0)
+        values (null,#{cf_id},#{ur_id},#{fd_txt},now(),null,0);
     </insert>
     <update id="updateFeed" parameterType="fddto">
         update fd
@@ -41,11 +52,6 @@
         delete from fd
         where fd_id=#{fd_id}
     </delete>
-    <update id="updateLikes" parameterType="int">
-        update fd
-        set likes = likes+1
-        where fd_id=#{fd_id}
-    </update>
     <insert id="insertPhoto" parameterType="fddto">
         insert into cf_img
         values (null,#{cf_id},#{fd_photo},'/images/upload/',now(),#{fd_id},null)
@@ -56,9 +62,30 @@
         inner join fd
         on fd.fd_id=#{fd_id} and cf_img.fd_id=#{fd_id}
     </select>
-    <insert id="insertTag" parameterType="fddto">
-        insert ingore into fg_tag
-            (fg_id,fg_nm)
-        values (#{fg_id},#{fg_nm})
+    <insert id="insertFeedTag" parameterType="fddto">
+        insert into fd_tag
+        values (null,#{fg_nm})
     </insert>
+    <select id="insertFeedLikes" parameterType="Map">
+        insert into fd_lk
+        values (#{fd_id},#{lg_id})
+    </select>
+    <delete id="deleteFeedLikes" parameterType="Map">
+        delete from fd_lk
+        where fd_id=#{fd_id} and ur_id=#{lg_id}
+    </delete>
+    <update id="updateFeedLikes" parameterType="int">
+        update fd
+        set likes=(select count(*) from fd_lk where fd_id=#{fd_id})
+        where fd_id=#{fd_id}
+    </update>
+    <select id="selectTotalFeedLikes" parameterType="int" resultType="int">
+        SELECT count(*) FROM fd_lk WHERE fd_id=#{fd_id}
+    </select>
+    <select id="selectFeedLikesByUrid" parameterType="Map" resultType="int">
+        SELECT count(*) FROM fd_lk WHERE ur_id=#{lg_id} and fd_id=#{fd_id}
+    </select>
+    <select id="selectCafeByCfnm" parameterType="Map" resultType="int">
+        SELECT cf_id FROM cf WHERE cf_nm=#{cf_nm}
+    </select>
 </mapper>

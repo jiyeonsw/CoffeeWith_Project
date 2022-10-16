@@ -29,6 +29,31 @@
         .search-bar input {
             width: 100%;
             text-align: center;
+            border: 1px solid #f1f1f1;
+            border-radius: 25px;
+        }
+
+        .ctg{
+            width: 60%;
+            margin: 15px 20% 0 20%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ctg .ctg1{
+            margin: auto;
+            margin-bottom: 10px;
+        }
+
+        .ctg .ctg2{
+            margin: auto;
+        }
+
+        .ctg .ctg-box{
+            border: 1px solid #f1f1f1;
+            padding: 5px;
+            border-radius: 25px;
+            font-size: 15px;
         }
 
         .feedmenu {
@@ -54,6 +79,8 @@
         }
 
         .feed .row .idv {
+            position: relative;
+            text-align: center;
             height: 20vw;
             width: 25%;
             padding-top: 12px;
@@ -65,8 +92,15 @@
             top: 0;
             width: 100%;
             height: 100%;
-            padding: 5px 5px 5px 5px;
             cursor: pointer;
+            text-align: center;
+        }
+
+        .feed .idv .textcenter{
+            position: absolute;
+            top: 50%;
+            left: 45%;
+            display: none;
         }
 
         div .closemodal{
@@ -84,15 +118,34 @@
     <div class="search-bar">
         <input type="text" style="font-family: bootstrap-icons" placeholder="&#xF52A;검색">
     </div>
+    <div class="ctg">
+        <div class="ctg1">
+            <button class="ctg-box" value="디저트카페">#디저트카페</button>
+            <button class="ctg-box" value="서울카페">#서울카페</button>
+            <button class="ctg-box" value="감성카페">#감성카페</button>
+            <button class="ctg-box" value="브런치카페">#브런치카페</button>
+            <button class="ctg-box" value="인천카페">#인천카페</button>
+            <button class="ctg-box" value="오션뷰카페">#오션뷰카페</button>
+        </div>
+        <div class="ctg2">
+            <button class="ctg-box" value="차맛집">#차맛집</button>
+            <button class="ctg-box" value="부산카페">#부산카페</button>
+            <button class="ctg-box" value="한강카페">#한강카페</button>
+            <button class="ctg-box" value="공항근처카페">#공항근처카페</button>
+            <button class="ctg-box" value="대구카페">#대구카페</button>
+            <button class="ctg-box" value="베이커리카페">#베이커리카페</button>
+            <button class="ctg-box" value="제주카페">#제주카페</button>
+        </div>
+    </div>
     <div class="suggestions-cap"></div>
     <div class="suggestions-container">
         <ul class="suggestions-list"></ul>
     </div>
-    <br>
 </div>
 <div class="feedmenu">
     <a type="button" class="btn" id="btnrank"><i class="bi bi-trophy"></i></a>
     <a type="button" class="btn" id="btnform"><i class="bi bi-plus-square"></i></a>
+    <a type="button" class="btn" id="btnmain" onclick="location.reload()"><i class="bi bi-house-door"></i></a>
 </div>
 <br>
 
@@ -106,6 +159,9 @@
             <c:forEach var="dto" varStatus="i" items="${list}">
                 <div class="idv">
                     <img src="${root}/images/upload/${dto.fd_photo.split(",")[0]}" value="${dto.fd_id}">
+                    <div class="textcenter">
+                        <i class='fas fa-heart'></i>&nbsp;&nbsp;${dto.likes}
+                    </div>
                 </div>
                 <c:if test="${i.index%4==3}">
                     </div><div class="row">
@@ -128,12 +184,6 @@
 <script>
     var login_ok = "<%=(String)session.getAttribute("login_ok")%>"
 
-    $(".idv img").click(function () {
-        var fd_id = $(this).attr("value");
-        $("#modaltmp").modal("show");
-        $("#modaltmp .modal-content").load("detail?fd_id=" + fd_id);
-    })
-
     $("#btnform").click(function () {
         if (login_ok !== "yes") {
             alert("로그인을 먼저 해주세요")
@@ -149,6 +199,85 @@
         }
     })
 
+    var imgsrc="";
+
+    $("#btnrank").click(function (){
+
+        $.ajax({
+            type:"get",
+            url:"toplist",
+            dataType:"json",
+            success: function (res){
+                $(".feed").empty();
+                var s="<div class='row'>";
+
+                $.each(res, function(i, item){
+                    s+="<div class='idv'>";
+                    s+="<img src='${root}/images/upload/"+item.fd_photo.split(",")[0]+"' value='"+item.fd_id+"'>";
+                    s+="<div class='textcenter'><i class='fas fa-heart'></i>&nbsp;&nbsp;"+item.likes;
+                    s+="</div></div>";
+                    if(i%4==3){
+                        s+="</div><div class='row'>";
+                    }
+                })
+                s+="</div>"
+
+                $(".feed").append(s);
+            }
+        })
+    })
+    $(document).on('click','.idv img', function (){
+        var fd_id = $(this).attr("value");
+        $("#modaltmp").modal("show");
+        $("#modaltmp .modal-content").load("detail?fd_id=" + fd_id);
+    })
+
+    $(document).on('mouseover','.idv img', function (){
+        imgsrc = $(this).attr("src");
+        $(this).css("opacity","0.5");
+        $(this).parent().find(".textcenter").css("display","initial")
+    })
+
+    $(document).on('mouseout','.idv img', function (){
+        $(this).css("opacity","1");
+        $(this).parent().find(".textcenter").css("display","none")
+    })
+
+    $(".ctg-box").click(function (){
+        $(this).parents().find(".ctg-box").css({"background-color":"buttonface","color":"#664400"})
+        $(this).css({"background-color":"#664400","color":"white"})
+
+        cg_nm = $(this).attr("value");
+
+        $.ajax({
+            type: "get",
+            data: {"cg_nm":cg_nm},
+            url: "feedctg",
+            dataType: "json",
+            success: function (res){
+                $(".feed").empty();
+
+                if(res==""){
+                    $(".feed").html("<h2 style='text-align: center'>찾으시는 게시물이 없습니다</h2>")
+                }
+
+                var s="<div class='row'>";
+
+                $.each(res, function(i, item){
+                    s+="<div class='idv'>";
+                    s+="<img src='${root}/images/upload/"+item.fd_photo.split(",")[0]+"' value='"+item.fd_id+"'>";
+                    s+="<div class='textcenter'><i class='fas fa-heart'></i>&nbsp;&nbsp;"+item.likes;
+                    s+="</div></div>";
+                    if(i%4==3){
+                        s+="</div><div class='row'>";
+                    }
+                })
+                s+="</div>"
+
+                $(".feed").append(s);
+            }
+        })
+    })
 
 </script>
 </body>

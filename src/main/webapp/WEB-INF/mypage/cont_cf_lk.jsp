@@ -91,7 +91,7 @@
 <div class="bk_container">
     <c:if test="${totalCount==0}">
         <div>
-            <h4>등록된 글이 없습니다</h4>
+            <h4>등록된 북마크가 없습니다</h4>
         </div>
     </c:if>
     <c:if test="${totalCount>0}">
@@ -144,7 +144,6 @@
     </ul>
 </div>
 <script>
-    
     //북마크 제거 버튼(-) 클릭시 db data delete
     $(".un-bk").click(function () {
         var ur_id = '${sessionScope.login_id }';

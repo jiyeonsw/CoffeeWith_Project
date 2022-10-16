@@ -15,4 +15,6 @@ public interface ComTourServiceInter {
     public List<ComTourDto> getPagingList(String searchcolumn, String searchword);
     public ComTourDto getUserData(int num);
     public ComTourDto getData(int num);
+    public void updatecrw(int tr_cmp,int tr_id);
+    public int getCrwCount(int ur_id, int tr_id);
 }
