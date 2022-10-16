@@ -32,8 +32,8 @@ public class ComTourPartDao implements ComTourPartDaoInter{
     }
 
     @Override
-    public ComTourPartDto getTotalCount(int num) {
-        return null;
+    public int getTotalCount(int num) {
+        return session.selectOne(ns+"getTotalCount",num);
     }
 
     @Override

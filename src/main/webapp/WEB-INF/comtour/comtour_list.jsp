@@ -110,20 +110,20 @@
                 <div class="detailbox">
                     <table class="table table-bordered">
                         <tr>
-                            <th>
+                            <th style="text-align: center">
                                 <fmt:parseDate var="start" value="${dto.s_date}"  pattern="yyyy-MM-dd"/>
                                 <fmt:formatDate value="${start}" pattern="MM월" /><br>
                                 <b style="font-size: 25px;"><fmt:formatDate value="${start}" pattern="dd일" /></b>
                             </th>
-                            <th>>></th>
-                            <th>
+                            <th style="text-align: center; vertical-align: middle">>></th>
+                            <th style="text-align: center">
                                 <fmt:parseDate var="end" value="${dto.e_date}"  pattern="yyyy-MM-dd"/>
                                 <fmt:formatDate value="${end}" pattern="MM월" /><br>
-                                <b style="font-size: 25px;"><fmt:formatDate value="${start}" pattern="dd일"/></b>
+                                <b style="font-size: 25px;"><fmt:formatDate value="${end}" pattern="dd일"/></b>
                             </th>
-                            <th>
+                            <th style="text-align: center; vertical-align: middle">
                                 <c:if test="${dto.tr_cmp!=1}"><b>모집중</b></c:if>
-                                <c:if test="${dto.tr_cmp==1}"><b style="color:red">모집완료</b></c:if>
+                                <c:if test="${dto.tr_cmp==1}"><b style="color:red">모집<br>완료</b></c:if>
                             </th>
                         </tr>
                         <tr>

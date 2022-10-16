@@ -31,8 +31,8 @@ public class ComTourPartService implements ComTourPartServiceInter{
     }
 
     @Override
-    public ComTourPartDto getTotalCount(int num) {
-        return null;
+    public int getTotalCount(int num) {
+        return partDaoInter.getTotalCount(num);
     }
 
     @Override

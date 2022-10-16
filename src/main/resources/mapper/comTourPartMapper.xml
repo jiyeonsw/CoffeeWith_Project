@@ -10,4 +10,9 @@
     <select id="selectAllPartData" parameterType="int" resultType="ctpdto">
         SELECT * FROM tr_crw INNER JOIN ur ON tr_crw.ur_id=ur.ur_id where tr_id=#{tr_id}
     </select>
+
+    <!--참석인원에 대한 숫자-->
+    <select id="getTotalCount" parameterType="int" resultType="int">
+        SELECT count(*) FROM tr_crw where tr_id=#{tr_id}
+    </select>
 </mapper>
