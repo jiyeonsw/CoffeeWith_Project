@@ -18,7 +18,6 @@
         .fddata a{
             text-decoration: none;
             color: black;
-            font-size: 13px;
         }
 
         .fddata {
@@ -56,6 +55,10 @@
             padding-left: 10px;
         }
 
+        .table .fdcafe a{
+            font-size: 16px;
+        }
+
         .table .profile img {
             height: 40px;
             width: 40px;
@@ -63,33 +66,59 @@
         }
 
         .table .fdcontent {
-            height: 35%;
+            height: 5%;
             vertical-align: top;
             text-align: left;
         }
 
-        .table .fdtag {
+        .table .fdcmt{
+            height: 95%;
             border: hidden;
-            height: 3%;
+            text-align: left;
         }
 
         .table .fdmpl{
-            height: 2%;
-            padding: 0;
-            text-align: left;
-            padding-left: 10px;
+            height: 20px;
+            padding: 10px;
+            text-align: right;
         }
 
-        .table .fdlike{
+        .table .fdmpl a{
+            font-size: 13px;
+        }
+
+        .table .fdlkdt{
+            height: 50px;
             border-bottom: hidden;
-            text-align: left;
-            padding: 0;
-            padding-left: 10px;
-            font-size: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .table .fdcmt{
-            height: 55%;
+        .table .fdlkdt .fddate{
+            font-size: 13px;
+        }
+
+        .table .fdcmtform{
+            height: 50px;
+            padding: 10px;
+            flex-direction: row;
+            align-items: center;
+            position: relative;
+            display: flex;
+            border: none;
+        }
+
+        .table .fdcmtform input{
+            height: 30px;
+            width: 80%;
+            border: none;
+        }
+
+        .table .fdcmtform button{
+            border: none;
+            width: 20%;
+            height: 30px;
         }
 
         #imgdetail {
@@ -164,27 +193,39 @@
             </td>
         </tr>
         <tr>
-            <td class="fdtag">
-                ${comfeeddto.fg_nm}
+            <td class="fdcmt">
             </td>
         </tr>
         <tr>
         <c:if test="${sessionScope.login_id==comfeeddto.ur_id}">
             <td class="fdmpl">
                 <a id="updatefd" onclick="updatemodal()">수정하기</a>&nbsp;&nbsp;&nbsp;
-                <a id="deletefd" onclick="location.href='delete?fd_id=${comfeeddto.fd_id}'">삭제하기</a>
+                <a id="deletefd" onclick="deletemodal()">삭제하기</a>
             </td>
         </c:if>
          </tr>
         <tr>
-            <td class="fdlike">
-                <c:if test="${comfeeddto.likes==0}"><i class='far fa-heart' onclick="likeaction()" style="cursor: pointer"></i></c:if>
-                <c:if test="${comfeeddto.likes>0}"><i class='fas fa-heart' onclick="likeaction()" style="cursor: pointer"></i></c:if>
-                <span id="fl-cnt">${comfeeddto.likes}</span>
+            <td class="fdlkdt">
+                <div class="fdlikes">
+                    <c:if test="${comfeeddto.likes==0}"><i class='far fa-heart' onclick="likeaction()" style="cursor: pointer"></i></c:if>
+                    <c:if test="${comfeeddto.likes>0}"><i class='fas fa-heart' onclick="likeaction()" style="cursor: pointer"></i></c:if>
+                    <span id="fl-cnt">${comfeeddto.likes}</span>
+                </div>
+                <div class="fddate">
+                    <c:if test="${comfeeddto.u_date!=null}">
+                        수정됨&nbsp;&nbsp;&nbsp;
+                        <fmt:formatDate value="${comfeeddto.u_date}" type="date" pattern="yyyy-MM-dd"></fmt:formatDate>
+                    </c:if>
+                    <c:if test="${comfeeddto.u_date==null}">
+                        <fmt:formatDate value="${comfeeddto.w_date}" type="date" pattern="yyyy-MM-dd"></fmt:formatDate>
+                    </c:if>
+                </div>
             </td>
         </tr>
         <tr>
-            <td class="fdcmt">
+            <td class="fdcmtform">
+                <input type="text" placeholder="댓글 달기...">
+                <button type="submit">등록</button>
             </td>
         </tr>
     </table>
@@ -196,8 +237,12 @@
     fd_id = "${comfeeddto.fd_id}"
 
     function updatemodal(){
-
         $("#modaltmp .modal-content").load("update?fd_id=" + fd_id);
+    }
+
+    function deletemodal(){
+        location.href="delete?fd_id=${comfeeddto.fd_id}"
+        alert("삭제 완료")
     }
 
     function likeaction(){
@@ -222,8 +267,8 @@
                                 var fl_cnt=res.fl_cnt;
                                 var pre_fl_cnt=$("#fl-cnt").text();
                                 if (pre_fl_cnt==0){
-                                    $(".fdlike").find("svg").removeClass("fa-regular");
-                                    $(".fdlike").find("svg").addClass("fa-solid");
+                                    $(".fdlike").find("svg").removeClass("fas");
+                                    $(".fdlike").find("svg").addClass("far");
                                 }
                                 $("#fl-cnt").html(fl_cnt);
                             }
@@ -238,8 +283,8 @@
                                 var fl_cnt=res.fl_cnt;
                                 var pre_fl_cnt=$("#fl-cnt").text();
                                 if (pre_fl_cnt==1){
-                                    $(".fdlike").find("svg").removeClass("fa-solid");
-                                    $(".fdlike").find("svg").addClass("fa-regular");
+                                    $(".fdlike").find("svg").removeClass("far");
+                                    $(".fdlike").find("svg").addClass("fas");
                                 }
                                 $("#fl-cnt").html(fl_cnt);
                             }

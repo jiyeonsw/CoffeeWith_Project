@@ -41,6 +41,18 @@ public class ComFeedService implements ComFeedServiceInter{
     }
 
     @Override
+    public List<ComFeedDto> searchFeedByCtg(String cg_nm) {
+        Map<String, String> map=new HashMap<>();
+        map.put("cg_nm",cg_nm);
+        return daoInter.searchFeedByCtg(map);
+    }
+
+    @Override
+    public List<ComFeedDto> searchBestFeed() {
+        return daoInter.searchBestFeed();
+    }
+
+    @Override
     public void insertFeed(ComFeedDto dto) {
         daoInter.insertFeed(dto);
     }
@@ -101,6 +113,13 @@ public class ComFeedService implements ComFeedServiceInter{
     @Override
     public void updateFeedLikes(int fd_id) {
         daoInter.updateFeedLikes(fd_id);
+    }
+
+    @Override
+    public int selectCafeByCfnm(String cf_nm) {
+        Map<String,String> map=new HashMap<>();
+        map.put("cf_nm",cf_nm);
+        return daoInter.selectCafeByCfnm(map);
     }
 
 }

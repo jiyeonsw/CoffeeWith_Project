@@ -28,10 +28,16 @@
         </if>
         order by w_date desc;
     </select>
-    <select id="searchBestFeed" resultType="fddto">
-        select top 10 *
+    <select id="searchFeedByCtg" parameterType="Map" resultType="fddto">
+        select *
         from fd
-        order by likes desc;
+        join cf_ctg_rel on fd.cf_id = cf_ctg_rel.cf_id
+        where cg_id = (select cg_id from cf_ctg where cg_nm=#{cg_nm}) order by w_date desc;
+    </select>
+    <select id="searchBestFeed" resultType="fddto">
+        select *
+        from fd
+        order by likes desc limit 10;
     </select>
     <insert id="insertFeed" parameterType="fddto">
         insert into fd
@@ -57,9 +63,8 @@
         on fd.fd_id=#{fd_id} and cf_img.fd_id=#{fd_id}
     </select>
     <insert id="insertFeedTag" parameterType="fddto">
-        insert ignore into fg_tag
-            (fg_id,fg_nm)
-        values (#{fg_id},#{fg_nm})
+        insert into fd_tag
+        values (null,#{fg_nm})
     </insert>
     <select id="insertFeedLikes" parameterType="Map">
         insert into fd_lk
@@ -79,5 +84,8 @@
     </select>
     <select id="selectFeedLikesByUrid" parameterType="Map" resultType="int">
         SELECT count(*) FROM fd_lk WHERE ur_id=#{lg_id} and fd_id=#{fd_id}
+    </select>
+    <select id="selectCafeByCfnm" parameterType="Map" resultType="int">
+        SELECT cf_id FROM cf WHERE cf_nm=#{cf_nm}
     </select>
 </mapper>
