@@ -29,7 +29,12 @@ public class MapController {
     PlanServiceInter planService;
 
     @GetMapping("/mainmap")
-    public String mainMap(Model model) {
+    public String mainMap(Model model,
+                          @RequestParam(defaultValue = "37.4993705") String lat,
+                          @RequestParam(defaultValue = "127.0290175") String lng,
+                          @RequestParam(defaultValue = "10") String zoom)
+                          //@RequestParam(defaultValue = "") String sw)
+    {
         List<CafeDto> list = cafeService.selectAllCafe();
         List<CafeCtgDto> ctglist = cafeService.selectAllCtg();
         //카테고리 제한
@@ -39,26 +44,14 @@ public class MapController {
         {
             ctglist.remove(ctglist.size()-1);
         }
-       /* for(CafeDto dto:list){
-            int cf_id=dto.getCf_id();
-            //댓글수 댓글별점평균
-            List<CafeCmtDto> listm=cafeService.selectCafeCmt(cf_id);
-            //리뷰별점 평균
-            int star_cnt=0;
-            double sum=0;
-            for (CafeCmtDto dtom : listm){
-                if(dtom.getStar()==0){continue;}
-                sum+=dtom.getStar();
-                star_cnt++;
-            }
-            if(star_cnt==0){
-                dto.setCm_star(0);
-            }else {
-                double avg=Math.round(sum/star_cnt*10)/10.0;
-                dto.setCm_star(avg);
-            };
-        }*/
+        var dlat = Double.parseDouble(lat);
+        var dlng = Double.parseDouble(lng);
+        var dzoom = Integer.parseInt(zoom);
+        model.addAttribute("zoom", dzoom);
+        model.addAttribute("lat", dlat);
+        model.addAttribute("lng", dlng);
         model.addAttribute("list", list);
+        //model.addAttribute("sw", sw);
         model.addAttribute("ctglist",ctglist);
         return "/bit/map/mainmap";
     }
