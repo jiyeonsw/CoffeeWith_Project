@@ -151,8 +151,10 @@
                                 </c:choose>
                             </div>
                     <div class="tr-cont-card">
-                    <div class="tr-cont-tit"> ${trdto.tr_nm}</div>
 
+                    <div class="tr-cont-tit">
+                        <a onclick="window.open('${root}/comtour/detail?tr_id=${trdto.tr_id}','${trdto.ur_nk}님의 글','width=430', 'height=500')">${trdto.tr_nm}</a>
+                    </div>
                     <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}" onError="${on_error}"> ${trdto.ur_nk}</div>
                     <div class="tr-cont-date"><i class="fa-regular fa-calendar"></i> &nbsp;${trdto.s_date}~ ${trdto.e_date}</div>
                     <div class="tr-cont-show" style="display: none;">
@@ -176,7 +178,7 @@
                     <div class="fdi-nm" style="background-image:${fdi_path}">
                         <a href="cafe/detail?cf_id=${fddto.cf_id}" class="fd_cf_loc"><span class="fd_cf_nm"><i class="bi bi-geo-alt-fill" id="cf-loc"></i>
                             &nbsp;${fddto.cf_nm}</span></a></div>
-                   <a href="${root}/comfeed/main/">
+                   <a onclick="window.open('${root}/comfeed/detail?fd_id=${fddto.fd_id}','${fddto.ur_nk}님의 글','width=430', 'height=500')">
                    <div class="fd-txt-area">
                         <div class="fd-cont-info"><img class="tr-prf" src="${root}/res/prfimg/${fddto.ur_img}" onError="${on_error}">
                             &nbsp;&nbsp;${fddto.ur_nk}<span class="fd-lk-box">&nbsp;${fddto.likes}&nbsp;&nbsp;</span></div>
