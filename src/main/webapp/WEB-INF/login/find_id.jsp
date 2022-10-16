@@ -48,7 +48,7 @@
             <div class="inp-frm">
                 <label for="ur_nm" class="titLab">이름을 입력해주세요</label>
                 <div class="inpA">
-                    <input id="ur_nm" placeholder="ex) 홍길동" class="form-control" value="김이름"
+                    <input id="ur_nm" placeholder="ex) 홍길동" class="form-control"
                            required="required" name="ur_nm">
                 </div>
                 <div class="id-success"></div>
