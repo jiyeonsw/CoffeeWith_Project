@@ -140,42 +140,51 @@
                         <div class="tri-card" style="background-image:url('${root}/images/제주.jpg')"></c:when>
                     <c:otherwise> <div class="tri-card" style="background-image:url('${root}/images/한국.jpg')"></c:otherwise>
                     </c:choose>
-                            <span class="tr-cont-loc"><i class="bi bi-geo-alt-fill"></i>${trdto.tr_loc}</span>
-                                <c:choose>
-                                    <c:when test="${trdto.tw_cnt<trdto.tw_max}">
-                                        <span class="tr-cont-tw-g">모집중<br> ${trdto.tw_cnt}/${trdto.tw_max} </span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="tr-cont-tw-r">모집완료 <br> ${trdto.tw_cnt}/${trdto.tw_max} </span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
+                        <span class="tr-cont-loc"><i class="bi bi-geo-alt-fill"></i>&nbsp;${trdto.tr_loc}</span>
+                            <c:choose>
+                                <c:when test="${trdto.tw_cnt<trdto.tw_max}">
+                                    <span class="tr-cont-tw-g">모집중<br> ${trdto.tw_cnt}/${trdto.tw_max} </span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="tr-cont-tw-r">모집완료 <br> ${trdto.tw_cnt}/${trdto.tw_max} </span>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    <a onclick="window.open('${root}/comtour/detail?tr_id=${trdto.tr_id}',
+                            '_blank','width=1000,height=800,toolbars=no,scrollbars=no'); return false;">
                     <div class="tr-cont-card">
-                    <div class="tr-cont-tit"> ${trdto.tr_nm}</div>
 
+                    <div class="tr-cont-tit">${trdto.tr_nm}
+                    </div>
                     <div class="tr-cont-ur"> <img class="tr-prf" src="${root}/res/prfimg/${trdto.ur_img}" onError="${on_error}"> ${trdto.ur_nk}</div>
                     <div class="tr-cont-date"><i class="fa-regular fa-calendar"></i> &nbsp;${trdto.s_date}~ ${trdto.e_date}</div>
-                    <div class="tr-cont-txt"><i class="fa-regular fa-message"></i>&nbsp;${trdto.tr_txt}</div>
-                    <hr class="tr-card-hr">
-                    <fmt:formatDate var="u_date" value="${trdto.u_date}" pattern="yyyy/MM/dd"/>
-                    <div class="tr-cont-bottom"><span><i class="fa-regular fa-comments"></i> &nbsp;${trdto.tm_cnt}개</span><span>${u_date}</span></div>
+                    <div class="tr-cont-show" style="display: none;">
+                        <div class="tr-cont-txt"><i class="fa-regular fa-message"></i>&nbsp;${trdto.tr_txt}</div>
+                        <hr class="tr-card-hr">
+                        <fmt:formatDate var="u_date" value="${trdto.u_date}" pattern="yyyy/MM/dd"/>
+                        <div class="tr-cont-bottom"><span><i class="fa-regular fa-comments"></i> &nbsp;${trdto.tm_cnt}개</span><span>${u_date}</span></div>
                     </div>
+                    </div></a>
                 </div>
             </c:forEach>
         </div>
     </div>
     <div class="fd-container">
-        <div class="fd-tit-box"><span class="fd-tit tit">커뮤니티</span> <span class="fd-more-box"><a class="fd-more" href="${root}/comfeed/main/">더보기</a></span></div>
+        <div class="fd-tit-box"><span class="fd-tit tit">커뮤니티</span> <span class="fd-more-box">
+            <a class="fd-more" href="${root}/comfeed/main/">더보기</a></span></div>
         <div class="fd-cont-box">
             <c:forEach items="${fdlist}" var="fddto">
                 <c:set var="fdi_path" value="url('${root}${fddto.ci_path}${fddto.ci_nm}')"/>
+
                <div class="fd-card">
                     <div class="fdi-nm" style="background-image:${fdi_path}">
-                        <a href="cafe/detail?cf_id=${fddto.cf_id}"><span class="fd_cf_nm"><i class="bi bi-geo-alt-fill" id="cf-loc"></i>&nbsp;${fddto.cf_nm}</span></a></div>
-                   <a href="${root}/comfeed/main/">
+                        <a href="cafe/detail?cf_id=${fddto.cf_id}" class="fd_cf_loc"><span class="fd_cf_nm"><i class="bi bi-geo-alt-fill" id="cf-loc"></i>
+                            &nbsp;${fddto.cf_nm}</span></a></div>
+                   <a onclick="window.open('${root}/comfeed/detail?fd_id=${fddto.fd_id}',
+                           '_blank','width=1000,height=800,toolbars=no,scrollbars=no'); return false;">
                    <div class="fd-txt-area">
-
-                        <div class="fd-cont-info"><img class="tr-prf" src="${root}/res/prfimg/${fddto.ur_img}" onError="${on_error}">&nbsp;&nbsp;${fddto.ur_nk}<span class="fd-lk-box">&nbsp;${fddto.likes}&nbsp;&nbsp;</span></div>
+                        <div class="fd-cont-info"><img class="tr-prf" src="${root}/res/prfimg/${fddto.ur_img}" onError="${on_error}">
+                            &nbsp;&nbsp;${fddto.ur_nk}<span class="fd-lk-box">&nbsp;${fddto.likes}&nbsp;&nbsp;</span></div>
                         <div class="fd-cont-txt">${fddto.fd_txt}</div>
                     </div></a>
                 </div>
@@ -208,6 +217,22 @@
             clickable: true
         }
     })
+
+    //tr
+    $("div.tr-card").hover(function (){
+        $(this).find("div.tri-card").css("height","200px");
+        $(this).find("div.tr-cont-show").show();
+    }, function (){
+        $(this).find("div.tri-card").css("height","270px");
+        $(this).find("div.tr-cont-show").hide();
+    });//tr card hover
+
+    //fd
+    $("div.fd-card").hover(function (){
+        $(this).css();
+    }, function (){
+        $(this).css()
+    });//tr card hover
 </script>
 </body>
 

@@ -106,7 +106,6 @@ public class CafeController {
         map.put("all_img_list",all_img_list);
         return map;
     }
-
     @GetMapping("/img_ctg")
     @ResponseBody
     public List<CafeImgDto> selectImgCtg(int cf_id,String ctg){
@@ -117,10 +116,11 @@ public class CafeController {
             list= cafeService.selectCmImgByCf(cf_id);
         }else if(ctg.equals("fd")){
             list= cafeService.selectFdImgByCf(cf_id);
+        }else {
+            list= cafeService.selectCafeImgAll(cf_id);
         }
         return list;
     }
-
     @GetMapping("/select_cmt")
     @ResponseBody
     public List<CafeCmtDto> selectCafeCmt(int cf_id){
@@ -134,9 +134,18 @@ public class CafeController {
     @ResponseBody
     public List<CafeCmtDto> selectCMOrder(int cf_id, String cm_order, int rl){
         List<CafeCmtDto> list_cm=cafeService.selectCMOrder(cf_id, cm_order, rl);
+        List<CafeImgDto> list_null=cafeService.selectCiNull(cf_id);
         for(CafeCmtDto dto:list_cm){
             dto.setImg(cafeService.selectCmtImg(dto.getCf_id(),dto.getCm_id()));
             dto.setCm_cnt(cafeService.selectCMCntByRg(dto.getCm_id()));
+            int null_id=0;
+            for (CafeImgDto cmdto: list_null){
+                if(dto.getCm_id() == cmdto.getCm_id()){
+                    null_id=1;
+                    break;
+                }
+            }
+            dto.setImg_null_id(null_id);
         }
         return list_cm;
     }

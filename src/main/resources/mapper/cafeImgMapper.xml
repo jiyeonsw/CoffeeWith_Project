@@ -14,7 +14,7 @@
 						   on fd.fd_id = ci.fd_id
 				 left join ur
 						   on ur.ur_id = cm.ur_id or ur.ur_id = fd.ur_id
-		WHERE ci.cf_id=251
+		WHERE ci.cf_id=#{cf_id}
 		ORDER BY ci.ci_id desc
 	</select>
 	<insert id="insertCmtImg" parameterType="cidto">
@@ -28,5 +28,13 @@
 	</select>
 	<select id="selectCmImgByCf" parameterType="int" resultType="cidto">
 		SELECT * FROM cf_img WHERE cf_id=#{cf_id} AND fd_id IS NULL AND cm_id IS NOT NULL
+	</select>
+	<select id="selectCiNull" parameterType="int" resultType="cidto">
+		select cm.cm_id
+		from cf_cmt cm
+				 left join cf_img ci
+						   on cm.cm_id=ci.cm_id
+		where cm.cf_id = ${cf_id} and ci.ci_nm is null
+
 	</select>
 </mapper>
