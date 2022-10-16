@@ -57,14 +57,14 @@
         </fieldset>
         <br>
         <div class="inp-frm">
-            <button type="submit" id="btn-id-chk" class="btn btn-outline-info">
+            <button type="submit" id="btn-id-chk" class="btn btn-outline-success">
                 비밀번호 앞자리 확인</button>
         </div>
         <br><br>
         <c:if test="${not empty param.pw}">
             <div>
                 비밀번호를 찾았습니다:
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-success" role="alert">
                         ${param.pw}
                 </div>
             </div>
