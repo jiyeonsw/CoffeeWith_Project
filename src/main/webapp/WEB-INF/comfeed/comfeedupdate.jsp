@@ -159,7 +159,7 @@
             </tr>
             <tr>
                 <td class="fdcafe">
-                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_id" value="${cafedto.cf_nm}">
+                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_nm" value="${cafedto.cf_nm}">
                 </td>
             </tr>
             <tr>

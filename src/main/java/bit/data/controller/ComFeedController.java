@@ -60,15 +60,59 @@ public class ComFeedController {
         return "/bit/comfeed/comfeedlist";
     }
 
+    @GetMapping("/toplist")
+    @ResponseBody
+    public List<ComFeedDto> toplist() {
+
+        List<ComFeedDto> list = comFeedService.searchBestFeed();
+
+        for(ComFeedDto dto:list){
+            List<String> list1 = comFeedService.selectPhoto(dto.getFd_id());
+            String photo="";
+            for(String str:list1){
+                photo+=(str+",");
+                photo.substring(0,photo.length()-1);
+            }
+            dto.setFd_photo(photo);
+            int fd_lk = comFeedService.selectTotalFeedLikes(dto.getFd_id());
+            dto.setLikes(fd_lk);
+        }
+
+        return list;
+    }
+
+    @GetMapping("/feedctg")
+    @ResponseBody
+    public List<ComFeedDto> feedctg(String cg_nm){
+
+        List<ComFeedDto> list = comFeedService.searchFeedByCtg(cg_nm);
+
+        for(ComFeedDto dto:list){
+            List<String> list1 = comFeedService.selectPhoto(dto.getFd_id());
+            String photo="";
+            for(String str:list1){
+                photo+=(str+",");
+                photo.substring(0,photo.length()-1);
+            }
+            dto.setFd_photo(photo);
+            int fd_lk = comFeedService.selectTotalFeedLikes(dto.getFd_id());
+            dto.setLikes(fd_lk);
+        }
+
+        return list;
+    }
+
     @PostMapping("/insert")
     public String insert(ComFeedDto dto, List<MultipartFile> upload, HttpServletRequest request) {
 
         String ntxt = dto.getFd_txt().replaceAll("\r\n","<br>");
         dto.setFd_txt(ntxt);
 
+        dto.setCf_id(comFeedService.selectCafeByCfnm(dto.getCf_nm()));
         comFeedService.insertFeed(dto);
         int fd_id = comFeedService.selectMaxNum();
         dto.setFd_id(fd_id);
+
 
         String path = request.getSession().getServletContext().getRealPath("/resources/images/upload");
 
@@ -168,6 +212,7 @@ public class ComFeedController {
         String ntxt = dto.getFd_txt().replaceAll("\r\n","<br>");
         dto.setFd_txt(ntxt);
 
+        dto.setCf_id(comFeedService.selectCafeByCfnm(dto.getCf_nm()));
         comFeedService.updateFeed(dto);
 
         String path = request.getSession().getServletContext().getRealPath("/resources/images/upload");

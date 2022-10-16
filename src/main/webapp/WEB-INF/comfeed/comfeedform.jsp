@@ -144,7 +144,7 @@
             </tr>
             <tr>
                 <td class="fdcafe">
-                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_id"
+                    <input onkeyup="filter()" type="text" class="inputtext" required="required" name="cf_nm"
                            placeholder="카페 추가">
                 </td>
             </tr>

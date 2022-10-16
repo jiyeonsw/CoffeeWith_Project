@@ -36,6 +36,16 @@ public class ComFeedDao implements ComFeedDaoInter{
     }
 
     @Override
+    public List<ComFeedDto> searchFeedByCtg(Map<String, String> map) {
+        return session.selectList(ns+"searchFeedByCtg", map);
+    }
+
+    @Override
+    public List<ComFeedDto> searchBestFeed() {
+        return session.selectList(ns+"searchBestFeed");
+    }
+
+    @Override
     public void insertFeed(ComFeedDto dto) {
         session.insert(ns+"insertFeed",dto);
     }
@@ -90,5 +100,8 @@ public class ComFeedDao implements ComFeedDaoInter{
         session.update(ns+"updateFeedLikes",fd_id);
     }
 
-
+    @Override
+    public int selectCafeByCfnm(Map<String, String> map) {
+        return session.selectOne(ns+"selectCafeByCfnm",map);
+    }
 }
