@@ -1,12 +1,16 @@
 package bit.data.service;
 
 import bit.data.dao.PlanDaoInter;
+import bit.data.dto.PlanCfTimeDto;
 import bit.data.dto.PlanDto;
 import bit.data.dto.PlanLocDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PlanService implements PlanServiceInter {
@@ -43,4 +47,15 @@ public class PlanService implements PlanServiceInter {
     public List<PlanLocDto> selectPlanLoc(int pl_id) {
         return planDao.selectPlanLoc(pl_id);
     }
+
+    @Override
+    public List<PlanCfTimeDto> selectPlCfList(Date v_date, int pl_id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("v_date", v_date);
+        map.put("pl_id", pl_id);
+
+        return planDao.selectPlCfList(map);
+    }
+
+
 }

@@ -10,6 +10,8 @@ public interface MypageServiceInter {
 
     public int selectCfCmtCnt(int loginId);
 
+    public int selectMyPlCnt(int loginId);
+
     public List<MyPageCafeLikeDto> selectLikeCfInfo(int urId);
 
     public List<MyPageCafeCmtDto> selectMyCmtCf(int loginId);

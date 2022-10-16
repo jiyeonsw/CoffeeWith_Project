@@ -21,5 +21,6 @@
         <typeAlias type="bit.data.dto.PlanLocDto" alias="pllocdto"/>
         <typeAlias type="bit.data.dto.ComTourPartDto" alias="ctpdto"/>
         <typeAlias type="bit.data.dto.BestCafeDto" alias="bcdto"/>
+        <typeAlias type="bit.data.dto.PlanCfTimeDto" alias="plctdto"/>
     </typeAliases>
 </configuration>

@@ -12,12 +12,33 @@
         INSERT INTO  pl_loc VALUES (null, #{pl_id}, #{cf_id}, #{v_date}, #{seq}, #{v_time})
     </insert>
     <select id="selectPlanCnt" parameterType="int" resultType="int">
-        SELECT count(*) FROM coffewith.pl WHERE ur_id = #{ur_id};
+        SELECT count(*)
+        FROM coffewith.pl
+        WHERE ur_id = #{ur_id};
     </select>
     <select id="selectMyPlans" parameterType="int" resultType="pldto">
-        SELECT * FROM coffewith.pl WHERE ur_id = #{ur_id};
+        SELECT *
+        FROM coffewith.pl
+        WHERE ur_id = #{ur_id};
     </select>
     <select id="selectPlanLoc" parameterType="int" resultType="pllocdto">
-        SELECT * FROM coffewith.pl_loc WHERE pl_id = #{pl_id} ORDER BY v_date ASC , seq ASC;
+        SELECT *
+        FROM coffewith.pl_loc
+        WHERE pl_id = #{pl_id}
+        GROUP BY v_date
+        ORDER BY v_date ASC, seq ASC;
+    </select>
+
+    <select id="selectPlCfList" resultType="plctdto" parameterType="Map">
+        SELECT c.cf_nm, c.ci_nm, c.cf_id, po.v_time
+        FROM pl_loc po
+                 LEFT JOIN (SELECT c.cf_id, c.cf_nm, ci.ci_nm
+                            FROM cf c
+                                     LEFT JOIN cf_img ci
+                                               ON c.cf_id = ci.cf_id
+                            GROUP BY c.cf_nm) AS c
+                           ON po.cf_id = c.cf_id
+        WHERE v_date = #{v_date}
+          AND pl_id = #{pl_id}
     </select>
 </mapper>
