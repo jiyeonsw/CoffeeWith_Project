@@ -11,7 +11,7 @@
 				 left join tr_crw tw
 						   on tr.tr_id=tw.tr_id
 		group by tr_id
-		order by tr.u_date desc LIMIT 3
+		order by tr.u_date desc LIMIT 4
 	</select>
   
 	<select id="selectTMcntbyTrid" parameterType="int" resultType="int">
