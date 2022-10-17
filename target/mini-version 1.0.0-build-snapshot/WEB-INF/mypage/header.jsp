@@ -74,7 +74,7 @@
 <div class="menu">
     <ul>
         <!-- 1번째 메뉴 -->
-        <li class="main"><a>홈페이지</a></li>
+        <li class="main"><a href="${root}">홈페이지</a></li>
         <!-- 2번째 메뉴 -->
         <li class="main"><a href="${root}/map/mainmap">카페지도</a></li>
         <!-- 3번째 메뉴 -->
