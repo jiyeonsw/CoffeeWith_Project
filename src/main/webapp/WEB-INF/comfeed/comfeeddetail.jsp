@@ -11,13 +11,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" href="../res/css/style.css" type="text/css">
     <style type="text/css">
 
         .fddata a{
             text-decoration: none;
             color: black;
-            font-size: 13px;
         }
 
         .fddata {
@@ -55,6 +55,10 @@
             padding-left: 10px;
         }
 
+        .table .fdcafe a{
+            font-size: 16px;
+        }
+
         .table .profile img {
             height: 40px;
             width: 40px;
@@ -62,25 +66,59 @@
         }
 
         .table .fdcontent {
-            height: 45%;
+            height: 5%;
             vertical-align: top;
             text-align: left;
         }
 
-        .table .fdtag {
+        .table .fdcmt{
+            height: 95%;
             border: hidden;
-            height: 3%;
+            text-align: left;
         }
 
         .table .fdmpl{
-            height: 2%;
-            padding: 0;
-            text-align: left;
-            padding-left: 10px;
+            height: 20px;
+            padding: 10px;
+            text-align: right;
         }
 
-        .table .fdcmt{
-            height: 42%;
+        .table .fdmpl a{
+            font-size: 13px;
+        }
+
+        .table .fdlkdt{
+            height: 50px;
+            border-bottom: hidden;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .table .fdlkdt .fddate{
+            font-size: 13px;
+        }
+
+        .table .fdcmtform{
+            height: 50px;
+            padding: 10px;
+            flex-direction: row;
+            align-items: center;
+            position: relative;
+            display: flex;
+            border: none;
+        }
+
+        .table .fdcmtform input{
+            height: 30px;
+            width: 80%;
+            border: none;
+        }
+
+        .table .fdcmtform button{
+            border: none;
+            width: 20%;
+            height: 30px;
         }
 
         #imgdetail {
@@ -112,7 +150,7 @@
 <div class="fddata">
     <table class="table">
         <tr>
-            <td rowspan="6" class="photo">
+            <td rowspan="7" class="photo">
                 <!-- Carousel -->
                 <div id="imgdetail" class="carousel slide" data-bs-interval="false">
                     <div class="carousel-inner" data-bs-interval="false">
@@ -155,29 +193,116 @@
             </td>
         </tr>
         <tr>
-            <td class="fdtag">
-                ${comfeeddto.fg_nm}
+            <td class="fdcmt">
             </td>
         </tr>
         <tr>
         <c:if test="${sessionScope.login_id==comfeeddto.ur_id}">
             <td class="fdmpl">
                 <a id="updatefd" onclick="updatemodal()">수정하기</a>&nbsp;&nbsp;&nbsp;
-                <a id="deletefd" onclick="location.href='delete?fd_id=${comfeeddto.fd_id}'">삭제하기</a>
+                <a id="deletefd" onclick="deletemodal()">삭제하기</a>
             </td>
         </c:if>
          </tr>
         <tr>
-            <td class="fdcmt">
+            <td class="fdlkdt">
+                <div class="fdlikes">
+                    <c:if test="${comfeeddto.likes==0}"><i class='far fa-heart' onclick="likeaction()" style="cursor: pointer"></i></c:if>
+                    <c:if test="${comfeeddto.likes>0}"><i class='fas fa-heart' onclick="likeaction()" style="cursor: pointer"></i></c:if>
+                    <span id="fl-cnt">${comfeeddto.likes}</span>
+                </div>
+                <div class="fddate">
+                    <c:if test="${comfeeddto.u_date!=null}">
+                        수정됨&nbsp;&nbsp;&nbsp;
+                        <fmt:formatDate value="${comfeeddto.u_date}" type="date" pattern="yyyy-MM-dd"></fmt:formatDate>
+                    </c:if>
+                    <c:if test="${comfeeddto.u_date==null}">
+                        <fmt:formatDate value="${comfeeddto.w_date}" type="date" pattern="yyyy-MM-dd"></fmt:formatDate>
+                    </c:if>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="fdcmtform">
+                <input type="text" placeholder="댓글 달기...">
+                <button type="submit">등록</button>
             </td>
         </tr>
     </table>
 </div>
 
 <script>
+
+    lg_id = "${sessionScope.login_id}"
+    fd_id = "${comfeeddto.fd_id}"
+
     function updatemodal(){
-        var fd_id = ${comfeeddto.fd_id}
         $("#modaltmp .modal-content").load("update?fd_id=" + fd_id);
+    }
+
+    function deletemodal(){
+        location.href="delete?fd_id=${comfeeddto.fd_id}"
+        alert("삭제 완료")
+    }
+
+    function likeaction(){
+        if(lg_id==""){
+            alert("로그인이 필요합니다")
+        }
+        else{
+            $.ajax({
+                type: "get",
+                url: "select_like",
+                dataType: "json",
+                data: {"lg_id": lg_id, "fd_id": fd_id},
+                success: function (res) {
+                    var fl_chk = res.fl_chk;
+                    if (fl_chk == 0) {
+                        $.ajax({
+                            type: "get",
+                            url: "insert_like",
+                            dataType: "json",
+                            data: {"lg_id": lg_id, "fd_id": fd_id},
+                            success: function (res) {
+                                var fl_cnt=res.fl_cnt;
+                                var pre_fl_cnt=$("#fl-cnt").text();
+                                if (pre_fl_cnt==0){
+                                    $(".fdlike").find("svg").removeClass("fas");
+                                    $(".fdlike").find("svg").addClass("far");
+                                }
+                                $("#fl-cnt").html(fl_cnt);
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            type: "get",
+                            url: "delete_like",
+                            dataType: "json",
+                            data: {"lg_id": lg_id, "fd_id": fd_id},
+                            success: function (res) {
+                                var fl_cnt=res.fl_cnt;
+                                var pre_fl_cnt=$("#fl-cnt").text();
+                                if (pre_fl_cnt==1){
+                                    $(".fdlike").find("svg").removeClass("far");
+                                    $(".fdlike").find("svg").addClass("fas");
+                                }
+                                $("#fl-cnt").html(fl_cnt);
+                            }
+                        });
+                    }
+
+                    $.ajax({
+                        type:"post",
+                        url:"update_like",
+                        dataType:"json",
+                        data:{"fd_id":fd_id},
+                        success: function (res){
+                            alert("좋아요")
+                        }
+                    })
+                }
+            })
+        }
     }
 
 </script>

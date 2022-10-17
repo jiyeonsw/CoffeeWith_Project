@@ -23,4 +23,6 @@ public class CafeCmtDto {
     private List<CafeImgDto> img;
     private String ur_img;
     private int cm_cnt;
+
+    private int img_null_id;
 }

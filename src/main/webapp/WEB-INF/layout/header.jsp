@@ -74,7 +74,7 @@
 <div class="menu">
     <ul>
         <!-- 1번째 메뉴 -->
-        <li class="main"><a>홈페이지</a></li>
+        <li class="main"><a href="${root}">홈페이지</a></li>
         <!-- 2번째 메뉴 -->
         <li class="main"><a href="${root}/map/mainmap">카페지도</a></li>
         <!-- 3번째 메뉴 -->
@@ -88,26 +88,26 @@
 
     <!-- 비로그인 상태일 때 -->
     <c:if test="${sessionScope.login_ok==null}">
-        <!-- 로그인 폼 이동  -->
+        <!-- 로그인 폼 이동 -->
         <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
                 onclick="location.href='${root}/user/login_main'">Login</button>
         <!-- 회원가입 폼 이동 -->
         <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
                 onclick="location.href='${root}/user_form'">Sign Up</button>
-        <!-- [임시] 세션주기 -->
-        <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">세션주기</button>
+        <%--        <!-- [임시] 세션주기 -->--%>
+        <%--        <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">세션주기</button>--%>
     </c:if>
 
     <!-- 로그인 실패한 상태일 때 -->
      <c:if test="${sessionScope.login_ok=='no'}">
-         <!-- 로그인 폼 이동  -->
+         <!-- 로그인 폼 이동 -->
          <button type="button" class="btn btn-secondary btn-sm" id="btnlogin"
                  onclick="location.href='${root}/user/login_main'">Login</button>
          <!-- 회원가입 폼 이동 -->
          <button type="button" class="btn btn-secondary btn-sm" id="signup-btn"
                  onclick="location.href='${root}/user_form'">Sign Up</button>
-         <!-- [임시] 세션주기 -->
-         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">세션주기</button>
+         <%--         <!-- [임시] 세션주기 -->--%>
+         <%--         <button type="button" class="btn btn-primary btn-sm" id="call-session-btn">세션주기</button>--%>
      </c:if>
 
     <!-- 로그인 성공한 상태일 때 -->
@@ -122,37 +122,37 @@
         <!-- 로그아웃 -->
         <button type="button" class="btn btn-dark btn-sm" id="btnlogout"
                 onclick="location.href='${root}/user/logout'">Logout</button>
-        <!-- [임시] 세션제거 -->
-        <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">세션제거</button>
+        <%--        <!-- [임시] 세션제거 -->--%>
+        <%--        <button type="button" class="btn btn-danger btn-sm" id="del-session-btn">세션제거</button>--%>
     </c:if>
 </span>
 <script>
-    //세션주기
-    $("#call-session-btn").click(function () {
-        var root = '${root}';
+    <%--//세션주기--%>
+    <%--$("#call-session-btn").click(function () {--%>
+    <%--    var root = '${root}';--%>
 
-        $.ajax({
-            type: "get",
-            url: root + "/user/call_session",
-            dataType: "text",
-            success: function (res) {
-                location.reload();
-            }
-        })
-    });
+    <%--    $.ajax({--%>
+    <%--        type: "get",--%>
+    <%--        url: root + "/user/call_session",--%>
+    <%--        dataType: "text",--%>
+    <%--        success: function (res) {--%>
+    <%--            location.reload();--%>
+    <%--        }--%>
+    <%--    })--%>
+    <%--});--%>
 
-    //세션제거
-    $("#del-session-btn").click(function () {
-        var root = '${root}';
-        $.ajax({
-            type: "get",
-            url: root + "/user/del_session",
-            dataType: "text",
-            success: function (res) {
-                location.reload();
-            }
-        })
-    });
+    <%--//세션제거--%>
+    <%--$("#del-session-btn").click(function () {--%>
+    <%--    var root = '${root}';--%>
+    <%--    $.ajax({--%>
+    <%--        type: "get",--%>
+    <%--        url: root + "/user/del_session",--%>
+    <%--        dataType: "text",--%>
+    <%--        success: function (res) {--%>
+    <%--            location.reload();--%>
+    <%--        }--%>
+    <%--    })--%>
+    <%--});--%>
 </script>
 </body>
 </html>

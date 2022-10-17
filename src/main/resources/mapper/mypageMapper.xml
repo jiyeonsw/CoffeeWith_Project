@@ -17,6 +17,13 @@
         WHERE u.ur_id = #{loginId};
     </select>
 
+    <!--MyPage top : 작성한 투어 플랜 수-->
+    <select id="selectMyPlCnt" resultType="int" parameterType="int">
+        select count(*)
+        from pl
+        where ur_id = 2;
+    </select>
+
     <!--MyPage contents : 북마크 카페id,카페이름,카페이미지(첫번째)-->
     <select id="selectLikeCfInfo" parameterType="int" resultType="mpcldto">
         select cl.cf_id,

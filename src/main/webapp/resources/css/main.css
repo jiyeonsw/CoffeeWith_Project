@@ -4,23 +4,15 @@
     font-weight: normal;
     font-style: normal;
 }
-
-body * {
-    font-family: 'GangwonEdu_OTFBoldA';
-    color: #664400;
-    font-size: 20px;
+ul {
+    padding: 0;
 }
 
-.main-page-container div {
-    border: 1px solid gray;
-    min-height: 20px;
-}
-
-.main-page-container {
+div.main-page-container {
     display: grid;
-    width: 950px;
-    grid-auto-rows: 1fr 300px 350px 400px;
-    grid-template-areas: 
+    width: 1136px;
+    grid-auto-rows: 1fr 300px 500px 500px;
+    grid-template-areas:
                 "best"
                 "loc"
                 "tr"
@@ -29,14 +21,16 @@ body * {
     text-align: left;
 }
 
-
 .cf-best-container {
     margin-top: 30px;
+    overflow: hidden;
+    position: relative;
     grid-area: best;
 }
 
 .loc-container {
     grid-area: loc;
+    margin-top: 30px;
 }
 
 .tr-container {
@@ -49,7 +43,7 @@ body * {
 
 .tit {
     margin-top: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     height: 33px;
     line-height: 1.3;
     font-weight: 900;
@@ -63,8 +57,8 @@ body * {
 
 .cf-img-box > img {
     object-fit: cover;
-    width: 100%;
-    height: 100%;
+    width: 320px;
+    height: 240px;
 }
 
 .cf-lk-box:before {
@@ -86,12 +80,10 @@ body * {
 }
 
 
-div.cf-info .cf-lk-box::after {
-    top: 4px;
-    left: 5px;
-    width: 1px;
-    height: 12px;
-    background-color: #664400;
+div.cf-info span::after {
+    content: "|";
+    color: #664400;
+    opacity: 0.2;
 }
 
 i {
@@ -99,13 +91,17 @@ i {
 }
 
 
-.cf-img-box {
-    height: 368px;
+a.cf-cont-box {
+    display: block;
+    padding: 23px;
+    border-radius: 12px;
+    border: 1px solid rgb(0 0 0 / 12%);
 }
 
-.cf-cont-box {
-    display: block;
-    margin-top: 22px;
+a.cf-cont-box .txt-info {
+    margin-top: 0;
+    padding-top: 16px;
+    text-align: left;
 }
 
 a {
@@ -115,23 +111,20 @@ a {
     box-sizing: border-box;
 }
 
-ul.swiper-wrapper {
-    width: 950px;
-    height: 600px;
-    padding: 0;
-}
-
-
 ul.swiper-wrapper li {
     list-style: none;
 }
 
-p.cf-txt {
+
+span.cf-txt {
+    margin-top: 16px;
+    margin-bottom: 16px;
     word-wrap: break-word;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    height: 72px;
 }
 
 .swiper-pagination-bullet {
@@ -142,6 +135,7 @@ p.cf-txt {
     background-color: #664400 !important;
 }
 
+
 .quick-search {
     display: flex;
 }
@@ -149,8 +143,8 @@ p.cf-txt {
 .quick-search a {
     display: block;
     min-width: 60px;
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     background: 50% 50% no-repeat;
     background-size: cover;
@@ -191,7 +185,6 @@ p.cf-txt {
 div.swiper-wrapper {
     width: 950px;
     padding: 0;
-    margin-left: 15px;
 }
 
 li{
@@ -201,61 +194,154 @@ li{
 /*tr-container*/
 div.tr-tit-box{
     display: grid;
-    grid-template-columns: 850px 100px ;
+    grid-template-columns: 1080px 50px ;
+}
+span.tr-tit{
+    padding: 0 30px 0 0;
+    font-size: 1.8rem;
+}
+span.tr-more-box{
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: right;
+}
+a.tr-more{
+    color:gray;
+    font-size: 20px;
 }
 div.tr-cont-box{
     margin-left: 5px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr ;
-
-}
-span.tr-tit{
-    float: left;
-    height: 55px;
-}
-span.tr-more-box{
-    float: right;
-    height: 55px;
-    line-height: 55px;
-}
-a.tr-more{
-    font-size: 1.5rem;
-    color:gray;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 div.tr-card {
-    width: 300px;
-    overflow: hidden;
+    width: 270px;
+    height: 400px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     margin-right: 10px;
 }
+div.tri-card {
+    width: 270px;
+    overflow: hidden;
+    opacity: 0.7;
+    background: 50% 50% no-repeat;
+    padding: 10px 10px 10px 10px ;
+    height: 270px;
+    display: grid;
+    grid-template-columns: 5fr 1fr ;
+}
+
+div.tr-cont-card{
+    padding: 10px 10px 10px 10px;
+}
+
+span.tr-cont-tw-g{
+    position: relative;
+    top:7px;
+    left:180px;
+    text-align: center;
+    padding: 15px 10px 10px 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 100px;
+    box-sizing: border-box;
+    background-color: yellowgreen;
+    opacity: 1;
+    color: white;
+    font-size: 15px;
+}
+span.tr-cont-tw-r{
+    position: relative;
+    top:7px;
+    left: 180px;
+    text-align: center;
+    padding: 15px 10px 10px 10px;
+    width: 70px;
+    height: 70px;
+    border-radius: 100px;
+    box-sizing: border-box;
+    background-color: orangered;
+    opacity: 1;
+    color: white;
+    font-size: 15px;
+}
+.tr-cont-loc{
+    position: absolute;
+    margin-top: 5px;
+    color: white;
+    font-size: 0.8rem;
+    margin-left: 3px;
+    padding: 7px 10px 3px 7px;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 100px;
+}
+.tr-cont-loc i{
+    color: white;
+    font-size: 15px;
+    opacity: 1;
+}
+.tr-cont-tit{
+    text-align: center;
+    font-size: 1.5rem;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 15px;
+}
+
 img.tr-prf{
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border-radius: 50px;
+}
+div.tr-cont-ur{
+    font-size: 1rem;
+}
+
+div.tr-cont-date{
+    margin-top: 10px;
+    font-size: 1rem;
 }
 div.tr-cont-txt{
     text-overflow:ellipsis;
     overflow: hidden;
     white-space: nowrap;
     display: block;
+    font-size: 1rem;
+    margin-bottom: 15px;
 }
-/*fd-container*/
+.tr-card-hr{
+    margin: 5px 0 10px 0;
+}
+div.tr-cont-bottom{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+div.tr-cont-bottom span{
+    font-size: 1rem;
+    color: gray;
+}
+div.tr-cont-bottom span svg{
+    font-size: 1rem;
+    color: gray;
+}
 
+/*fd-container*/
 div.fd-tit-box{
     display: grid;
-    grid-template-columns: 850px 100px ;
+    grid-template-columns: 1080px 50px ;
 }
 span.fd-tit{
-    float: left;
-    height: 55px;
+    padding: 0 30px 0 0;
+    font-size: 1.8rem;
 }
 span.fd-more-box{
-    float: right;
-    height: 55px;
-    line-height: 55px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: right;
 }
 a.fd-more{
-    font-size: 1.5rem;
+    font-size: 20px;
     color:gray;
 }
 div.fd-cont-box{
@@ -271,42 +357,44 @@ div.fd-cont-box{
     display: inline-block;
     width: 18px;
     height: 18px;
-    margin: 0 0 -3px 0;
+    margin: 0 0 -1px 0;
+
     background: url(../images/ico_lk.png) no-repeat;
 }
 div.fd-cont-txt{
-    text-overflow:ellipsis;
+    height:45px;
+    word-wrap:break-word;
+    display: -webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
     overflow: hidden;
-    white-space: nowrap;
-    display: block;
+    font-size: 15px;
+    margin-top: 5px;
 }
 div.fd-more-box{
     float : right;
 }
 
 div.fd-card {
-    width: 225px;
-    height: 270px;
+    width: 270px;
+    height: 370px;
     overflow: hidden;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 30px;
+    background-color: white;
 }
 
-div.fd-txt-area {
+div.fd-card:hover {
+    transform: scale(1.1);
 }
-
 div.fd-txt-area:hover {
     cursor: pointer;
 }
 
-.fdi-nm {
+div.fdi-nm {
     width: 100%;
-    height: 194px;
-    border-radius: 4px;
-    background: 50% 50% no-repeat;
-    background-size: cover;
-    object-fit: cover;
-    box-sizing: border-box;
-    border: 1px solid #f1f1f1;
+    height: 255px;
     border-radius: 4px;
     background: 50% 50% no-repeat;
     background-size: cover;
@@ -314,4 +402,19 @@ div.fd-txt-area:hover {
     box-sizing: border-box;
     border: 1px solid #f1f1f1;
     margin-bottom: 10px;
+}
+
+.fd_cf_nm {
+    position: absolute;
+    margin-top: 8px;
+    color: white;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    padding: 7px 10px 3px 7px;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 100px;
+}
+#cf-loc{
+    color: white;
+    font-size: 12px;
 }
