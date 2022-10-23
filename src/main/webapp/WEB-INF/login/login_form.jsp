@@ -74,6 +74,7 @@
         <a href="javascript:kakaoLogin();">
             <img src="${root}/images/login_kakao.png" alt="카카오계정 로그인" style="width: 220px; height: 40px;"/></a>&nbsp;
         <!-- 네이버 로그인 버튼 -->
+<%--        <div id="naver_id_login"></div>--%>
         <a onclick="naverLogin()"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
 
         <%-- 등록되지 않은 아이디 or 아이디/비밀번호 불일치 시 --%>
